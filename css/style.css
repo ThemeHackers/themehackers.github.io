@@ -8,7 +8,51 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+.glow-text {
+  font-size: 2.5em; 
+  font-weight: bold; 
+  color: transparent; 
+  background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff); 
+  background-size: 300%; 
+  background-clip: text;
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; 
+  animation: moveRight 3s linear infinite; 
+  text-shadow: 
+    0 0 10px #ff00ff, 
+}
 
+@keyframes moveRight {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%; 
+  }
+}
+.form-control {
+  border: 2px solid transparent; 
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #fff;
+  position: relative;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.form-control:focus {
+  outline: none; 
+  border-color: transparent; 
+  animation: glow 2.5s linear infinite;
+}
+
+@keyframes glow {
+  25% {
+    box-shadow: 0 0 5px 1px #ff00ff, 0 0 10px 2px #00ffff; 
+  }
+  75% {
+    box-shadow: 0 0 7px 1px #00ffff, 0 0 12px 3px #ff00ff;
+  }
+}
 body {
   background: #fff;
   color: #666666;
