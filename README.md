@@ -24,4 +24,7 @@ Feel free to reach out with questions, suggestions, or collaboration opportuniti
 ---
 
 Visit us at [Dashsecurity Society](https://themehackers.github.io) to learn more and join us in building a more secure digital world!
+## Feedback
+We are receiving offers from our website visitors to improve our website efficiency. Please feel free to contact us.
 
+---
