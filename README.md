@@ -14,7 +14,7 @@ Dashsecurity Society aims to:
 
 ## Current Status
 - The website is **under active development** to expand content and functionality.
-- Currently managed by **Phubadee Thanakarn**, with plans for team expansion.
+- Currently managed by **Phubadee Thanakhan**, with plans for team expansion.
 
 ## Contact Information
 Feel free to reach out with questions, suggestions, or collaboration opportunities:
