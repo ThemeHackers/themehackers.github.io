@@ -30,6 +30,28 @@
     background-position: 100% 50%; 
   }
 }
+.glow-text-decorate {
+  font-size: 2.5em; 
+  font-weight: bold; 
+  color: transparent; 
+  background: linear-gradient(90deg, #ffe600, #00ffff, #ff00ff); 
+  background-size: 300%; 
+  background-clip: text;
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; 
+  animation: moveRight 3s linear infinite; 
+  text-shadow: 
+    0 0 10px #00ffff,
+}
+
+@keyframes moveRight {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%; 
+  }
+}
 .form-control {
   border: 2px solid transparent; 
   border-radius: 8px;
