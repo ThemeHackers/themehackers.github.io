@@ -383,7 +383,25 @@ h6 {
   padding: 0;
   list-style: none;
 }
+.glow-text-nav {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: transparent;
+  background: linear-gradient(90deg, #00aaff, #00ff55, #ffff00, #00aaff);
+  background-size: 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glowingText 4s linear infinite;
+  position: relative;
+  top: -26px; 
+}
 
+@keyframes glowingText {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 .nav-menu ul {
   position: absolute;
   display: none;
