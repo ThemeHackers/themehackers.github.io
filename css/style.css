@@ -74,6 +74,24 @@
     background-position: 100% 50%; 
   }
 }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #333d3d;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+th, td {
+  border: 4px solid #ffffff;
+  padding: 10px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+th {
+  background-color: #ee34ff;
+}
+tr:nth-child(even) {
+  background-color: #333d3d;
+}
 
 .form-control {
   border: 2px solid transparent; 
