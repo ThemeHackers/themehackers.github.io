@@ -110,8 +110,8 @@
           <div class="carousel-background"><img src="img/intro-carousel/1.png" alt=""></div>
           <div class="carousel-container">
             <div class="carousel-content">
-              <h2 class="glow-text-learning">Dashsecurity Learning</h2>
-              <a href="#about" class="btn-get-started scrollto">Learn More</a>
+              <h2 class="glow-text-learning">Network Security</h2>
+              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
         </div>
@@ -120,8 +120,8 @@
           <div class="carousel-background"><img src="img/intro-carousel/2.jpg" alt=""></div>
           <div class="carousel-container">
             <div class="carousel-content">
-              <h2 class="glow-text-learning">Dashsecurity Learning</h2>
-              <a href="#about" class="btn-get-started scrollto">Learn More</a>
+              <h2 class="glow-text-learning">Network Security</h2>
+              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
         </div>
@@ -130,8 +130,8 @@
           <div class="carousel-background"><img src="img/intro-carousel/3.jpg" alt=""></div>
           <div class="carousel-container">
             <div class="carousel-content">
-              <h2 class="glow-text-learning">Dashsecurity Learning</h2>
-              <a href="#about" class="btn-get-started scrollto">Learn More</a>
+              <h2 class="glow-text-learning">Network Security</h2>
+              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
         </div>
@@ -151,7 +151,49 @@
     </div>
   </div>
 </section><!-- #intro -->
+<main id="main">
 
+  <!--==========================
+      About Us Section
+    ============================-->
+  <section id="learn"><br><br>
+    <div class="container">
+      <header class="section-header">
+        <h3 class="glow-text">The OSI Model</h3>
+        <p>The OSI ("Open Systems Interconnection") model represents an easy and intuitive way to standardize the different parts required to communicate across networks.
+
+          The model makes it clear what is required to communicate on a network by splitting the requirements into multiple layers.</p>
+      </header>
+      <table>
+        <thead>
+            <tr>
+                <th>Security Layer</th>
+                <th>Name</th>
+                <th>Function</th>
+            </tr>
+        </thead>
+        <tbody id="securityTable">
+        </tbody>
+    </table>
+    <script>
+        const securityLayers = [
+            { layer: 7, name: "Application", function: "Directly interacts with users, providing services like web browsing, email, and file transfer." },
+            { layer: 6, name: "Presentation", function: "Translates, compresses, and encrypts data for proper application interpretation, e.g., SSL/TLS, JPEG." },
+            { layer: 5, name: "Session", function: "Manages session establishment, maintenance, and termination between applications, such as login sessions." },
+            { layer: 4, name: "Transport", function: "Ensures end-to-end communication, error handling, and flow control using protocols like TCP and UDP." },
+            { layer: 3, name: "Network Layer", function: "Handles packet forwarding, addressing, and routing using IP addresses and routing protocols like IP and ICMP." },
+            { layer: 2, name: "Data Link", function: "Manages data framing, media access control, and error detection using MAC addresses." },
+            { layer: 1, name: "Physical", function: "Transmits data as electrical or electromagnetic signals through physical media like cables or radio waves." }
+        ];
+
+        const tableBody = document.getElementById("securityTable");
+        securityLayers.forEach(layer => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${layer.layer}</td><td>${layer.name}</td><td>${layer.function}</td>`;
+            tableBody.appendChild(row);
+        });
+    </script>
+</main>
 
 <!--==========================
     Footer
@@ -169,7 +211,7 @@
         <div class="col-lg-3 col-md-6 footer-links">
           <h4 class="glow-text-decorate">Useful Links</h4>
           <ul>
-            <li><i class="ion-ios-arrow-right"></i> <a href="#about">Home</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a href="#osi">Home</a></li>
             <!-- <li><i class="ion-ios-arrow-right"></i> <a href="#">Official Page</a></li> -->
             <li><i class="ion-ios-arrow-right"></i> <a href="#events">Events</a></li>
             <li><i class="ion-ios-arrow-right"></i> <a href="/404.html">GET STARTED NOW</a></li>
