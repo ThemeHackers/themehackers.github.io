@@ -154,13 +154,54 @@
 <main id="main">
 
   <!--==========================
-      About Us Section
+      Cooming Soon ... Us Section
     ============================-->
   <section id="learn"><br><br>
     <div class="container">
       <header class="section-header">
         <h3 class="glow-text">Cooming Soon ...</h3>
-        <p></p>
+        <style>
+          body {
+              background-color: black;
+              color: limegreen;
+              font-family: monospace;
+              padding: 20px;
+          }
+          #terminal {
+              width: 600px;
+              height: 300px;
+              background-color: black;
+              border: 2px solid limegreen;
+              padding: 10px;
+              overflow-y: auto;
+              white-space: pre-wrap;
+          }
+        </style>
+        <p>
+          <div id="terminal"></div>
+          <script>
+            const terminal = document.getElementById("terminal");
+            const text = "Coming Soon ...\n";
+            let index = 0;
+
+            function typeText() {
+              if (index < text.length) {
+                terminal.innerHTML += text[index];
+                index++;
+                setTimeout(typeText, 150);
+              } else {
+                setTimeout(() => {
+                  terminal.innerHTML = "user@web:~$ ";
+                  index = 0;
+                  setTimeout(typeText, 500);
+                }, 1000);
+              }
+            }
+
+            terminal.innerHTML = "user@web:~$ ";
+            setTimeout(typeText, 500);
+          </script>
+        </p>
       </header>
 </main>
 
