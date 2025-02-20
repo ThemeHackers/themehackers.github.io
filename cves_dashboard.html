@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>★彡[CVEs Dashboard]彡★</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/animate/animate.css" rel="stylesheet">
+    <link href="css/animate/animate.min.css" rel="stylesheet">
+    <!-- =======================================================
+    Theme Name: BizPage
+    Theme URL: https://bootstrapmade.com/bizpage-bootstrap-business-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+
+        #content {
+            display: none;
+        }
+    </style>
+
+<body>
+    <!-- Loader -->
+    <div id="loader">
+        <img src="./img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById("loader").style.display = "none";
+            document.body.style.overflow = "auto";
+        }, 3000);
+    </script>
+</body>
+
+</head>
+<!--==========================
+    Header
+  ============================-->
+<header id="header">
+    <div class="container-fluid">
+
+        <div id="logo" class="pull-left">
+            <h1><a href="#intro" class="scrollto">TH Dashsecurity</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+
+        </div>
+
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                <li class="menu-active"><a href="/learning.html">Back</a></li>
+
+            </ul>
+        </nav><!-- #nav-menu-container -->
+    </div>
+</header><!-- #header -->
+
+<!--==========================
+    Intro Section
+  ============================-->
+<section id="intro">
+    <div class="intro-container">
+        <div id="introCarousel" class="carousel  slide carousel-fade" data-ride="carousel">
+
+            <ol class="carousel-indicators"></ol>
+
+            <div class="carousel-inner" role="listbox">
+
+                <div class="carousel-item active">
+                    <div class="carousel-background"><img src="img/intro-carousel/1.png" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text-learning">CVEs Dashboard</h2>
+                            <a href="#cves_dashboard" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="carousel-background"><img src="img/intro-carousel/2.jpg" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text-learning">CVEs Dashboard</h2>
+                            <a href="#cves_dashboard" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="carousel-background"><img src="img/intro-carousel/3.jpg" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text-learning">CVEs Dashboard</h2>
+                            <a href="#cves_dashboard" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <a class="carousel-control-prev" href="#introCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon ion-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+
+            <a class="carousel-control-next" href="#introCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon ion-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+
+        </div>
+    </div>
+</section><!-- #intro -->
+
+<main id="main">
+
+    <section id="events"><br><br>
+        <div class="container">
+
+            <header class="section-header wow fadeInUp">
+                <h3 id="cves_dashboard" class="glow-text text-center mb-3">📌 CVE Dashboard (2024 - 2025)</h3>
+                <p class="text-center mb-3">List of Common Vulnerabilities and Exposures (CVE) published between 2024
+                    and 2025.<a>
+                        <p class="text-center mb-3">If you want to access the table efficiently, it is recommended to
+                            access it via a computer or iPad.</p>
+                        <p class="terminal-text"></p>
+
+                        <script>
+                            const text = "Please wait, data is currently being loaded from NVD ...";
+                            let index = 0;
+                            const speed = 100;
+                            let typingInterval;
+
+                            function typeEffect() {
+                                if (index < text.length) {
+                                    document.querySelector(".terminal-text").textContent += text[index];
+                                    index++;
+                                    setTimeout(typeEffect, speed);
+                                }
+                            }
+                            function checkDataLoaded() {
+                                let tableRows = document.querySelectorAll("#cve-table tr");
+                                if (tableRows.length >= 18) {
+                                    document.querySelector(".terminal-text").textContent = ""; 
+                                    clearInterval(checkDataInterval); 
+                                }
+                            }
+                            typeEffect();      
+                            let checkDataInterval = setInterval(checkDataLoaded, 500);
+                        </script>
+            </header>
+            <p id="totalCVE" class="text-center fw-bold text-primary"></p>
+
+            <div class="row g-2 mb-3">
+                <div class="col-md-6 search-container">
+                    <input type="text" id="searchInput" class="search-box" placeholder="🔍 Search CVE..."
+                        oninput="renderTable()">
+                </div>
+            </div>
+        </div>
+
+        <canvas id="severityChart" class="mb-4"></canvas>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>CVE ID</th>
+                        <th>Description</th>
+                        <th>Severity</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody id="cve-table"></tbody>
+            </table>
+        </div>
+
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item"><button class="page-link" onclick="prevPage()">◀ Prev</button></li>
+                <li class="page-item"><span class="page-link" id="page-number">1</span></li>
+                <li class="page-item"><button class="page-link" onclick="nextPage()">Next ▶</button></li>
+            </ul>
+        </nav>
+
+        <script>
+            let currentPage = 0;
+            const resultsPerPage = 18;
+            let allCVEData = [];
+            let severityCounts = { Critical: 0, High: 0, Medium: 0, Low: 0 };
+            let severityChart;
+
+            async function loadCVE() {
+                const today = new Date();
+                const past7Days = new Date();
+                past7Days.setDate(today.getDate() - 120);
+                const startDate = past7Days.toISOString();
+                const endDate = today.toISOString();
+                const url = `https://services.nvd.nist.gov/rest/json/cves/2.0/?pubStartDate=${startDate}&pubEndDate=${endDate}`;
+
+                try {
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    if (!data.vulnerabilities) return;
+
+                    allCVEData = data.vulnerabilities;
+                    currentPage = 0;
+                    calculateSeverityCounts();
+                    renderTable();
+                    updateChart();
+                } catch (error) {
+                    console.error("Error fetching CVE data:", error);
+                }
+            }
+
+            function renderTable() {
+                let tableBody = document.getElementById("cve-table");
+                tableBody.innerHTML = "";
+                let searchQuery = document.getElementById("searchInput").value.toLowerCase();
+                let filteredData = allCVEData.filter(vuln =>
+                    vuln.cve.id.toLowerCase().includes(searchQuery) ||
+                    (vuln.cve.descriptions[0]?.value || "").toLowerCase().includes(searchQuery)
+                );
+                let start = currentPage * resultsPerPage;
+                let end = start + resultsPerPage;
+                let pageData = filteredData.slice(start, end);
+
+                pageData.forEach(vuln => {
+                    let id = vuln.cve.id || "Unknown";
+                    let description = vuln.cve.descriptions?.[0]?.value || "No description";
+                    let severity = vuln.cve.metrics?.cvssMetricV31?.[0]?.cvssData?.baseSeverity || "Unknown";
+                    let row = `<tr>
+                    <td>${id}</td>
+                    <td>${description}</td>
+                    <td>${severity}</td>
+                    <td><a href="https://nvd.nist.gov/vuln/detail/${id}" target="_blank">🔗 View</a></td>
+                </tr>`;
+                    tableBody.innerHTML += row;
+                });
+                document.getElementById("page-number").innerText = currentPage + 1;
+            }
+
+            function calculateSeverityCounts() {
+                severityCounts = { Critical: 0, High: 0, Medium: 0, Low: 0, None: 0 };
+                allCVEData.forEach(vuln => {
+                    let score = vuln.cve.metrics?.cvssMetricV31?.[0]?.cvssData?.baseScore || 0;
+                    if (score >= 9.0) severityCounts.Critical++;
+                    else if (score >= 7.0) severityCounts.High++;
+                    else if (score >= 4.0) severityCounts.Medium++;
+                    else if (score >= 0.1) severityCounts.Low++;
+                    else severityCounts.None++;
+                });
+            }
+
+            function updateChart() {
+                if (severityChart) severityChart.destroy();
+                const ctx = document.getElementById("severityChart").getContext("2d");
+                severityChart = new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: ["Critical", "High", "Medium", "Low"],
+                        datasets: [{
+                            label: "Number of CVEs",
+                            data: [severityCounts.Critical, severityCounts.High, severityCounts.Medium, severityCounts.Low],
+                            backgroundColor: ["red", "orange", "yellow", "green"]
+                        }]
+                    }
+                });
+            }
+
+            function nextPage() { if ((currentPage + 1) * resultsPerPage < allCVEData.length) { currentPage++; renderTable(); } }
+            function prevPage() { if (currentPage > 0) { currentPage--; renderTable(); } }
+            document.addEventListener("DOMContentLoaded", loadCVE);
+        </script>
+    </section>
+</main>
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+<div id="preloader"></div>
+
+<!-- JavaScript Libraries -->
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/jquery/jquery-migrate.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/superfish/hoverIntent.js"></script>
+<script src="lib/superfish/superfish.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/isotope/isotope.pkgd.min.js"></script>
+<script src="lib/lightbox/js/lightbox.min.js"></script>
+<script src="lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Contact Form JavaScript File -->
+<script src="contactform/contactform.js"></script>
+
+<!-- Template Main Javascript File -->
+<script src="js/main.js"></script>
+
+
+
+</body>
+
+</html>
