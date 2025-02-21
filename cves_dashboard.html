@@ -278,9 +278,9 @@
 
             async function loadCVE() {
                 const today = new Date();
-                const past7Days = new Date();
-                past7Days.setDate(today.getDate() - 120);
-                const startDate = past7Days.toISOString();
+                const past120Days = new Date();
+                past120Days.setDate(today.getDate() - 120);
+                const startDate = past120Days.toISOString();
                 const endDate = today.toISOString();
                 const url = `https://services.nvd.nist.gov/rest/json/cves/2.0/?pubStartDate=${startDate}&pubEndDate=${endDate}`;
 
