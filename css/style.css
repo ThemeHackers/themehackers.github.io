@@ -14,42 +14,48 @@
   padding-right: 5px;
   animation: blinkCursor 0.8s infinite;
 }
+
 @keyframes blinkCursor {
-  50% { border-color: transparent; }
+  50% {
+    border-color: transparent;
+  }
 }
+
 .glow-text {
-  font-size: 2.5em; 
-  font-weight: bold; 
-  color: transparent; 
-  background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff); 
-  background-size: 300%; 
+  font-size: 2.5em;
+  font-weight: bold;
+  color: transparent;
+  background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+  background-size: 300%;
   background-clip: text;
-  -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent; 
-  animation: moveRight 3s linear infinite; 
-  text-shadow: 
-    0 0 10px #ff00ff, 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: moveRight 3s linear infinite;
+  text-shadow:
+    0 0 10px #ff00ff,
 }
 
 @keyframes moveRight {
   0% {
     background-position: 0% 50%;
   }
+
   100% {
-    background-position: 100% 50%; 
+    background-position: 100% 50%;
   }
 }
+
 .glow-text-decorate {
-  font-size: 2.5em; 
-  font-weight: bold; 
-  color: transparent; 
-  background: linear-gradient(90deg, #ffe600, #00ffff, #ff00ff); 
-  background-size: 300%; 
+  font-size: 2.5em;
+  font-weight: bold;
+  color: transparent;
+  background: linear-gradient(90deg, #ffe600, #00ffff, #ff00ff);
+  background-size: 300%;
   background-clip: text;
-  -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent; 
-  animation: moveRight 3s linear infinite; 
-  text-shadow: 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: moveRight 3s linear infinite;
+  text-shadow:
     0 0 10px #00ffff,
 }
 
@@ -57,21 +63,23 @@
   0% {
     background-position: 0% 50%;
   }
+
   100% {
-    background-position: 100% 50%; 
+    background-position: 100% 50%;
   }
 }
+
 .glow-text-learning {
-  font-size: 2.5em; 
-  font-weight: bold; 
-  color: transparent; 
-  background: linear-gradient(90deg, #15ff00, #ffa537, #eeff00); 
-  background-size: 300%; 
+  font-size: 2.5em;
+  font-weight: bold;
+  color: transparent;
+  background: linear-gradient(90deg, #15ff00, #ffa537, #eeff00);
+  background-size: 300%;
   background-clip: text;
-  -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent; 
-  animation: moveRight 3s linear infinite; 
-  text-shadow: 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: moveRight 3s linear infinite;
+  text-shadow:
     0 0 10px #15ff00,
 }
 
@@ -79,16 +87,48 @@
   0% {
     background-position: 0% 50%;
   }
+
   100% {
-    background-position: 100% 50%; 
+    background-position: 100% 50%;
   }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #262727;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+td {
+  font-size: 14px;
 }
 
 .table-responsive {
   width: 95%;
   margin: auto;
   overflow-x: auto;
-  
+
 }
 
 
@@ -165,54 +205,54 @@
 
 @media (max-width: 992px) {
   .table-responsive {
-      width: 100%;
-      
+    width: 100%;
+
   }
 
   .table {
-      font-size: 0.9rem;
+    font-size: 0.9rem;
   }
 
   .table th,
   .table td {
-      padding: 10px;
+    padding: 10px;
   }
 }
 
 @media (max-width: 768px) {
   .table {
-      font-size: 0.85rem;
+    font-size: 0.85rem;
   }
 
   .table th,
   .table td {
-      padding: 8px;
-      white-space: nowrap;
+    padding: 8px;
+    white-space: nowrap;
   }
 
-  
+
   .table-responsive {
-      overflow-x: auto;
-      display: block;
+    overflow-x: auto;
+    display: block;
   }
 }
 
 @media (max-width: 480px) {
   .table {
-      font-size: 0.8rem;
+    font-size: 0.8rem;
   }
 
   .table th,
   .table td {
-      padding: 6px;
+    padding: 6px;
   }
 
- 
+
   .table th:nth-child(3),
   .table td:nth-child(3),
   .table th:nth-child(4),
   .table td:nth-child(4) {
-      display: none;
+    display: none;
   }
 }
 
@@ -253,8 +293,9 @@
 .search-button:hover {
   background-color: #0056b3;
 }
+
 .form-control {
-  border: 2px solid transparent; 
+  border: 2px solid transparent;
   border-radius: 8px;
   padding: 10px;
   background-color: #fff;
@@ -263,19 +304,21 @@
 }
 
 .form-control:focus {
-  outline: none; 
-  border-color: transparent; 
+  outline: none;
+  border-color: transparent;
   animation: glow 2.5s linear infinite;
 }
 
 @keyframes glow {
   25% {
-    box-shadow: 0 0 5px 1px #ff00ff, 0 0 10px 2px #00ffff; 
+    box-shadow: 0 0 5px 1px #ff00ff, 0 0 10px 2px #00ffff;
   }
+
   75% {
     box-shadow: 0 0 7px 1px #00ffff, 0 0 12px 3px #ff00ff;
   }
 }
+
 body {
   background: #fff;
   color: #666666;
@@ -584,6 +627,7 @@ h6 {
   padding: 0;
   list-style: none;
 }
+
 .glow-text-nav {
   font-size: 2.5em;
   font-weight: bold;
@@ -595,13 +639,21 @@ h6 {
   -webkit-text-fill-color: transparent;
   animation: glowingText 4s linear infinite;
   position: relative;
-  top: -26px; 
+  top: -26px;
 }
 
 @keyframes glowingText {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .nav-menu ul {
@@ -617,12 +669,12 @@ h6 {
   white-space: nowrap;
 }
 
-.nav-menu > li {
+.nav-menu>li {
   float: left;
 }
 
-.nav-menu li:hover > ul,
-.nav-menu li.sfHover > ul {
+.nav-menu li:hover>ul,
+.nav-menu li.sfHover>ul {
   display: block;
 }
 
@@ -675,12 +727,12 @@ h6 {
   outline: none;
 }
 
-.nav-menu li:hover > a,
-.nav-menu > .menu-active > a {
+.nav-menu li:hover>a,
+.nav-menu>.menu-active>a {
   color: #18d26e;
 }
 
-.nav-menu > li {
+.nav-menu>li {
   margin-left: 10px;
 }
 
@@ -704,7 +756,7 @@ h6 {
   text-transform: none;
 }
 
-.nav-menu ul li:hover > a {
+.nav-menu ul li:hover>a {
   color: #18d26e;
 }
 
@@ -957,9 +1009,9 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #about .about-col .img {
   position: relative;
-  border: 5px solid black; 
-  margin: 10px; 
-  
+  border: 5px solid black;
+  margin: 10px;
+
 }
 
 #about .about-col .img img {
@@ -976,7 +1028,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   border-radius: 50%;
   text-align: center;
   border: 4px solid #fff;
-  left: calc( 50% - 32px);
+  left: calc(50% - 32px);
   bottom: -30px;
   transition: 0.3s;
 }
@@ -1803,6 +1855,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 --------------------------------------------------------------*/
 
 @media (min-width: 768px) {
+
   #contact .contact-address,
   #contact .contact-phone,
   #contact .contact-email {
