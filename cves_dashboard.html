@@ -159,11 +159,12 @@
         <div class="container">
 
             <header class="section-header wow fadeInUp">
-                <h3 id="cves_dashboard" class="glow-text text-center mb-3">📌 CVE Dashboard (2024 - 2025)</h3>
+                <h3 id="cves_dashboard" class="glow-text text-center mb-3">CVE Dashboard (2024 - 2025)</h3>
                 <p class="text-center mb-3">List of Common Vulnerabilities and Exposures (CVE) published between 2024
                     and 2025.<a>
                         <p class="text-center mb-3">If you want to access the table efficiently, it is recommended to
                             access it via a computer or iPad.</p>
+
                         <p class="terminal-text"></p>
 
                         <script>
@@ -182,13 +183,59 @@
                             function checkDataLoaded() {
                                 let tableRows = document.querySelectorAll("#cve-table tr");
                                 if (tableRows.length >= 18) {
-                                    document.querySelector(".terminal-text").textContent = ""; 
-                                    clearInterval(checkDataInterval); 
+                                    document.querySelector(".terminal-text").textContent = "";
+                                    clearInterval(checkDataInterval);
                                 }
                             }
-                            typeEffect();      
+                            typeEffect();
                             let checkDataInterval = setInterval(checkDataLoaded, 500);
                         </script>
+                        <h3 id="cves_dashboard" class="glow-text text-center mb-3">Qualitative Severity Ratings</h3>
+                        <p class="text-center mb-3">On this website I use CVSS v3.x Ratings</p>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Severity</th>
+                                    <th>CVSS v2.0 Rating</th>
+                                    <th>CVSS v3.x Rating</th>
+                                    <th>CVSS v4.0 Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>None</td>
+                                    <td>0.0</td>
+                                    <td>0.0</td>
+                                    <td>0.0</td>
+                                </tr>
+                                <tr>
+                                    <td>Low</td>
+                                    <td>0.0–3.9</td>
+                                    <td>0.1–3.9</td>
+                                    <td>0.1–3.9</td>
+                                </tr>
+                                <tr>
+                                    <td>Medium</td>
+                                    <td>4.0–6.9</td>
+                                    <td>4.0–6.9</td>
+                                    <td>4.0–6.9</td>
+                                </tr>
+                                <tr>
+                                    <td>High</td>
+                                    <td>7.0–10.0</td>
+                                    <td>7.0–8.9</td>
+                                    <td>7.0–8.9</td>
+                                </tr>
+                                <tr>
+                                    <td>Critical</td>
+                                    <td>9.0–10.0</td>
+                                    <td>9.0–10.0</td>
+                                    <td>9.0–10.0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
             </header>
             <p id="totalCVE" class="text-center fw-bold text-primary"></p>
 
@@ -285,13 +332,15 @@
                 severityCounts = { Critical: 0, High: 0, Medium: 0, Low: 0, None: 0 };
                 allCVEData.forEach(vuln => {
                     let score = vuln.cve.metrics?.cvssMetricV31?.[0]?.cvssData?.baseScore || 0;
+
                     if (score >= 9.0) severityCounts.Critical++;
-                    else if (score >= 7.0) severityCounts.High++;
-                    else if (score >= 4.0) severityCounts.Medium++;
-                    else if (score >= 0.1) severityCounts.Low++;
+                    else if (score >= 7.0 && score < 9.0) severityCounts.High++;
+                    else if (score >= 4.0 && score < 7.0) severityCounts.Medium++;
+                    else if (score >= 0.1 && score < 4.0) severityCounts.Low++;
                     else severityCounts.None++;
                 });
             }
+
 
             function updateChart() {
                 if (severityChart) severityChart.destroy();
