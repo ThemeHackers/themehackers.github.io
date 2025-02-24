@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Plot with Plotly.js</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #2e2d2d, #8e9eab);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .glow-text {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: transparent;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+            background-size: 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveRight 3s linear infinite;
+            text-shadow:
+                0 0 10px #ff00ff,
+        }
+
+        @keyframes moveRight {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .glow-text-decorate {
+            font-size: 1em;
+            font-weight: bold;
+            color: transparent;
+            background: linear-gradient(90deg, #ffe600, #00ffff, #ff00ff);
+            background-size: 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveRight 3s linear infinite;
+            text-shadow:
+                0 0 10px #00ffff,
+        }
+
+        @keyframes moveRight {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        h1 {
+            margin-top: 10px;
+            font-size: 24px;
+        }
+
+        #plot {
+            width: 90vw;
+            height: 70vh;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            background: white;
+        }
+
+        .controls {
+            margin: 10px;
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #6ea8fe, #007bff);
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2), -3px -3px 6px rgba(255, 255, 255, 0.3);
+            outline: none;
+        }
+
+        button:hover {
+            background: linear-gradient(145deg, #0056b3, #004085);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(1px);
+            box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.2), inset -3px -3px 6px rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="glow-text">3D Vector Visualization</h1>
+    <p class="glow-text-decorate">Group 2</p>
+    <div class="controls">
+        <button onclick="resetView()">Reset View</button>
+        <button onclick="toggleGrid()">Toggle Grid</button>
+        <button onclick="changeColor()">Change Edge Color</button>
+    </div>
+    <div id="plot"></div>
+
+    <script>
+        const points = {
+            'M': [-1, 4, 5], 'N': [-5, 4, 5], 'O': [-5, 5, 4], 'P': [-1, 5, 4],
+            'Q': [-5, 5, 2], 'R': [-1, 5, 2], 'S': [-1, 4, 3], 'T': [-5, 4, 3],
+            'A': [-1, 0, 8], 'B': [-5, 0, 8], 'C': [-5, 10, 8], 'D': [-1, 10, 8],
+            'E': [-1, 10, 5], 'F': [-5, 10, 5], 'G': [-5, 3, 5], 'H': [-1, 3, 5],
+            'I': [-1, 3, 0], 'J': [-5, 3, 0], 'K': [-5, 0, 0], 'L': [-1, 0, 0]
+        };
+
+        const edges = [
+            ['M', 'N'], ['N', 'O'], ['O', 'P'], ['P', 'M'], ['O', 'Q'], ['P', 'R'], ['Q', 'R'],
+            ['Q', 'T'], ['R', 'S'], ['S', 'T'], ['M', 'S'], ['N', 'T'],
+            ['A', 'B'], ['B', 'C'], ['C', 'D'], ['D', 'A'], ['D', 'E'], ['C', 'F'], ['E', 'F'],
+            ['F', 'G'], ['G', 'H'], ['H', 'E'], ['G', 'J'], ['H', 'I'], ['I', 'J'], ['J', 'K'],
+            ['K', 'L'], ['L', 'I'], ['K', 'B'], ['L', 'A']
+        ];
+
+        let edgeColor = '#007bff';
+        let gridVisible = true;
+
+        function createPlot() {
+            const traceEdges = edges.map((edge, index) => ({
+                type: 'scatter3d',
+                mode: 'lines',
+                name: `Edge ${index + 1}`,
+                x: [points[edge[0]][0], points[edge[1]][0], null],
+                y: [points[edge[0]][1], points[edge[1]][1], null],
+                z: [points[edge[0]][2], points[edge[1]][2], null],
+                line: { color: edgeColor, width: 3 }
+            }));
+
+            const tracePoints = {
+                type: 'scatter3d',
+                mode: 'markers+text',
+                name: 'Nodes',
+                x: Object.values(points).map(p => p[0]),
+                y: Object.values(points).map(p => p[1]),
+                z: Object.values(points).map(p => p[2]),
+                marker: { size: 6, color: '#ff5733' },
+                text: Object.keys(points),
+                textposition: 'top center'
+            };
+
+            let layout = {
+                margin: { l: 0, r: 0, b: 0, t: 0 },
+                scene: {
+                    xaxis: { title: 'X', showgrid: gridVisible },
+                    yaxis: { title: 'Y', showgrid: gridVisible },
+                    zaxis: { title: 'Z', showgrid: gridVisible }
+                }
+            };
+
+            Plotly.newPlot('plot', [...traceEdges, tracePoints], layout);
+        }
+
+        function resetView() {
+            createPlot();
+        }
+
+        function toggleGrid() {
+            gridVisible = !gridVisible;
+            createPlot();
+        }
+
+        function changeColor() {
+            edgeColor = edgeColor === '#007bff' ? '#ff5733' : '#007bff';
+            createPlot();
+        }
+
+        createPlot();
+    </script>
+</body>
+
+</html>
