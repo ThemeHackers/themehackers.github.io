@@ -11,7 +11,7 @@
         body {
             text-align: center;
             font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #2e2d2d, #8e9eab);
+            background: linear-gradient(to right, #252424, #252424);
             color: white;
             display: flex;
             flex-direction: column;
@@ -155,7 +155,7 @@
 
             return [...traceEdges, tracePoints];
         }
-
+        
         function createPlot() {
             layout = {
                 margin: { l: 0, r: 0, b: 0, t: 0 },
@@ -207,6 +207,7 @@
             edgeColor = edgeColor === '#ff007f' ? '#4B0082' : '#ff007f';
             updateGraph();
         }
+        
 
         createPlot();
     </script>
