@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/img/favicon.png" rel="icon">
     <title>3D Plot Visualization</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
@@ -53,11 +54,59 @@
             border-radius: 15px;
             background: white;
         }
+        .glow-text {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: transparent;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+            background-size: 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveRight 3s linear infinite;
+            text-shadow:
+              0 0 10px #ff00ff,
+          }
+          
+          @keyframes moveRight {
+            0% {
+              background-position: 0% 50%;
+            }
+          
+            100% {
+              background-position: 100% 50%;
+            }
+          }
+          
+          .glow-text-decorate {
+            font-size: 1em;
+            font-weight: bold;
+            color: transparent;
+            background: linear-gradient(90deg, #ffe600, #00ffff, #ff00ff);
+            background-size: 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveRight 3s linear infinite;
+            text-shadow:
+              0 0 10px #00ffff,
+          }
+          
+          @keyframes moveRight {
+            0% {
+              background-position: 0% 50%;
+            }
+          
+            100% {
+              background-position: 100% 50%;
+            }
+          }
     </style>
 </head>
 
 <body>
-    <h1>3D Vector Visualization</h1>
+    <h1 class="glow-text">Welcome to 3D vector rendering through algorithms.</h1>
+    <p class="glow-text-decorate">Group 5 : Main image</p>
     <div class="controls">
         <button onclick="resetView()">Reset View</button>
         <button onclick="toggleGrid()">Toggle Grid</button>
@@ -129,16 +178,32 @@
         }
 
 
+        let gridState = true;  
+
         function resetView() {
-            Plotly.relayout('plot', layout);
+            let defaultCamera = {
+                eye: { x: 1.25, y: 1.25, z: 1.25 }  
+            };
+
+            Plotly.relayout('plot', {
+                scene: {
+                    camera: defaultCamera,
+                    xaxis: { showgrid: gridState },
+                    yaxis: { showgrid: gridState },
+                    zaxis: { showgrid: gridState }
+                }
+            });
         }
 
         function toggleGrid() {
-            let newGridState = !layout.scene.xaxis.showgrid;
-            layout.scene.xaxis.showgrid = newGridState;
-            layout.scene.yaxis.showgrid = newGridState;
-            layout.scene.zaxis.showgrid = newGridState;
-            Plotly.relayout('plot', layout);
+            gridState = !gridState; 
+            Plotly.relayout('plot', {
+                scene: {
+                    xaxis: { showgrid: gridState },
+                    yaxis: { showgrid: gridState },
+                    zaxis: { showgrid: gridState }
+                }
+            });
         }
 
         function changeColor() {

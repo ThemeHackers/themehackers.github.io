@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/img/favicon.png" rel="icon">
     <title>3D Plot Visualization</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
@@ -53,11 +54,59 @@
             border-radius: 15px;
             background: white;
         }
+        .glow-text {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: transparent;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+            background-size: 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveRight 3s linear infinite;
+            text-shadow:
+              0 0 10px #ff00ff,
+          }
+          
+          @keyframes moveRight {
+            0% {
+              background-position: 0% 50%;
+            }
+          
+            100% {
+              background-position: 100% 50%;
+            }
+          }
+          
+          .glow-text-decorate {
+            font-size: 1em;
+            font-weight: bold;
+            color: transparent;
+            background: linear-gradient(90deg, #ffe600, #00ffff, #ff00ff);
+            background-size: 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveRight 3s linear infinite;
+            text-shadow:
+              0 0 10px #00ffff,
+          }
+          
+          @keyframes moveRight {
+            0% {
+              background-position: 0% 50%;
+            }
+          
+            100% {
+              background-position: 100% 50%;
+            }
+          }
     </style>
 </head>
 
 <body>
-    <h1>3D Vector Visualization</h1>
+    <h1 class="glow-text">Welcome to 3D vector rendering through algorithms.</h1>
+    <p class="glow-text-decorate">Group 5 : Sub image</p>
     <div class="controls">
         <button onclick="resetView()">Reset View</button>
         <button onclick="toggleGrid()">Toggle Grid</button>
@@ -68,17 +117,14 @@
     <script>
         const points = {
             'A': [-8, -7, 5], 'B': [-8, 1, 9], 'C': [-8, 9, 5], 'D': [-8, 1, 1],
-            'E': [-5, 1, 5], 'F': [-11, 1, 5], 'G': [-6, -1, 1], 'H': [-6, 3, 1],
-            'I': [-10, 3, 1], 'J': [-10, -1, 1], 'K': [-10, -1, -6], 'L': [-6, -1, -6],
-            'M': [-6, 3, -6], 'N': [-10, 3, -6]
+            'E': [-5, 1, 5], 'F': [-11, 1, 5]
         };
-
+        
         const edges = [
             ['A', 'B'], ['B', 'C'], ['A', 'E'], ['B', 'F'], ['C', 'E'], ['C', 'F'],
-            ['D', 'E'], ['D', 'F'], ['G', 'H'], ['H', 'I'], ['I', 'J'], ['J', 'G'],
-            ['H', 'M'], ['I', 'N'], ['J', 'K'], ['K', 'L'], ['L', 'M'], ['M', 'N'], ['N', 'K'],
-            ['G', 'L'], ['A', 'F'], ['E', 'B'], ['A', 'D'], ['C', 'D']
+            ['D', 'E'], ['D', 'F'], ['A', 'D'], ['C', 'D'] , ['E', 'B'] , ['A', 'F']
         ];
+        
 
         let layout;
         let edgeColor = '#ff007f';
@@ -129,16 +175,32 @@
         }
 
 
+        let gridState = true;  
+
         function resetView() {
-            Plotly.relayout('plot', layout);
+            let defaultCamera = {
+                eye: { x: 1.25, y: 1.25, z: 1.25 }  
+            };
+
+            Plotly.relayout('plot', {
+                scene: {
+                    camera: defaultCamera,
+                    xaxis: { showgrid: gridState },
+                    yaxis: { showgrid: gridState },
+                    zaxis: { showgrid: gridState }
+                }
+            });
         }
 
         function toggleGrid() {
-            let newGridState = !layout.scene.xaxis.showgrid;
-            layout.scene.xaxis.showgrid = newGridState;
-            layout.scene.yaxis.showgrid = newGridState;
-            layout.scene.zaxis.showgrid = newGridState;
-            Plotly.relayout('plot', layout);
+            gridState = !gridState; 
+            Plotly.relayout('plot', {
+                scene: {
+                    xaxis: { showgrid: gridState },
+                    yaxis: { showgrid: gridState },
+                    zaxis: { showgrid: gridState }
+                }
+            });
         }
 
         function changeColor() {
