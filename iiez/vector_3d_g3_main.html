@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Plot Visualization - Surface Area and Volume</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #2e2d2d, #8e9eab);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        #plot {
+            width: 90vw;
+            height: 80vh;
+            border-radius: 15px;
+            background: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>3D Vector Visualization - Surface Area and Volume</h1>
+    <div id="plot"></div>
+
+    <script>
+        // Define points
+        const points = {
+            'A': [0, -13, 4], 'B': [-6, -13, 4], 'C': [-6, -1, 4], 'D': [0, -1, 4],
+            'E': [1, -2, 1], 'F': [-5, -2, 1], 'G': [-5, -14, 1], 'H': [1, -14, 1],
+            'I': [0, -13, 7], 'J': [-6, -13, 7], 'K': [-6, -1, 7], 'L': [0, -1, 7]
+        };
+
+        // Define edges
+        const edges = [
+            ['A', 'B'], ['B', 'C'], ['C', 'D'], ['D', 'A'],         // Base ABCD
+            ['E', 'F'], ['F', 'G'], ['G', 'H'], ['H', 'E'],         // Bottom square
+            ['C', 'F'], ['D', 'E'],                                 // Vertical connections
+            ['B', 'G'], ['A', 'H'],                                 // Diagonal connections
+            ['I', 'J'], ['J', 'K'], ['K', 'L'], ['L', 'I'],         // Top square IJKL
+            ['A', 'I'], ['B', 'J'], ['C', 'K'], ['D', 'L']          // Connect ABCD to IJKL
+        ];
+
+        // Function to calculate distance between two points
+        function distance(p1, p2) {
+            return Math.sqrt(
+                (p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2 + (p2[2] - p1[2]) ** 2
+            );
+        }
+
+        // Function to calculate area of a quadrilateral using cross product
+        function quadrilateralArea(p1, p2, p3, p4) {
+            const v1 = [p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2]];
+            const v2 = [p4[0] - p1[0], p4[1] - p1[1], p4[2] - p1[2]];
+            const cross = [
+                v1[1] * v2[2] - v1[2] * v2[1],
+                v1[2] * v2[0] - v1[0] * v2[2],
+                v1[0] * v2[1] - v1[1] * v2[0]
+            ];
+            return 0.5 * Math.sqrt(cross[0] ** 2 + cross[1] ** 2 + cross[2] ** 2);
+        }
+
+        // Function to calculate area of a trapezoid (lateral faces)
+        function trapezoidArea(base1, base2, height) {
+            return 0.5 * (base1 + base2) * height;
+        }
+
+        // Calculate distances
+        const AB = distance(points['A'], points['B']);
+        const BC = distance(points['B'], points['C']);
+        const CD = distance(points['C'], points['D']);
+        const DA = distance(points['D'], points['A']);
+        const IJ = distance(points['I'], points['J']);
+        const JK = distance(points['J'], points['K']);
+        const KL = distance(points['K'], points['L']);
+        const LI = distance(points['L'], points['I']);
+        const AI = distance(points['A'], points['I']); // Height of the prism
+
+        // Calculate areas
+        const areaABCD = quadrilateralArea(points['A'], points['B'], points['C'], points['D']);
+        const areaIJKL = quadrilateralArea(points['I'], points['J'], points['K'], points['L']);
+        const areaABJI = trapezoidArea(AB, IJ, AI); // Lateral face A-B-J-I
+        const areaBCKJ = trapezoidArea(BC, JK, AI); // Lateral face B-C-K-J
+        const areaCDLK = trapezoidArea(CD, KL, AI); // Lateral face C-D-L-K
+        const areaDAIL = trapezoidArea(DA, LI, AI); // Lateral face D-A-I-L
+
+        // Total surface area and volume
+        const totalSurfaceArea = areaABCD + areaIJKL + areaABJI + areaBCKJ + areaCDLK + areaDAIL;
+        const totalVolume = areaABCD * AI;
+
+        // Generate traces with custom hover data
+        function generateTraces() {
+            const traceEdges = edges.map(edge => {
+                const p1 = points[edge[0]];
+                const p2 = points[edge[1]];
+                const len = distance(p1, p2);
+                let hoverText = `Length: ${len.toFixed(2)} units<br>`;
+                hoverText += `Start: (${p1[0]}, ${p1[1]}, ${p1[2]})<br>`;
+                hoverText += `End: (${p2[0]}, ${p2[1]}, ${p2[2]})`;
+
+                if (edge[0] === 'A' && edge[1] === 'B') hoverText += `<br>Face A-B-J-I Area: ${areaABJI.toFixed(2)} sq units`;
+                if (edge[0] === 'B' && edge[1] === 'C') hoverText += `<br>Face B-C-K-J Area: ${areaBCKJ.toFixed(2)} sq units`;
+                if (edge[0] === 'C' && edge[1] === 'D') hoverText += `<br>Face C-D-L-K Area: ${areaCDLK.toFixed(2)} sq units`;
+                if (edge[0] === 'D' && edge[1] === 'A') hoverText += `<br>Face D-A-I-L Area: ${areaDAIL.toFixed(2)} sq units`;
+                if (edge[0] === 'I' && edge[1] === 'J') hoverText += `<br>Top Face IJKL Area: ${areaIJKL.toFixed(2)} sq units`;
+                if (edge[0] === 'A' && edge[1] === 'B') hoverText += `<br>Base ABCD Area: ${areaABCD.toFixed(2)} sq units`;
+
+                return {
+                    type: 'scatter3d',
+                    mode: 'lines',
+                    x: [p1[0], p2[0], null],
+                    y: [p1[1], p2[1], null],
+                    z: [p1[2], p2[2], null],
+                    line: { color: '#ff007f', width: 4 },
+                    hoverinfo: 'text',
+                    text: hoverText
+                };
+            });
+
+            const tracePoints = {
+                type: 'scatter3d',
+                mode: 'markers+text',
+                x: Object.values(points).map(p => p[0]),
+                y: Object.values(points).map(p => p[1]),
+                z: Object.values(points).map(p => p[2]),
+                marker: { size: 10, color: '#ffd700', symbol: 'circle' },
+                text: Object.keys(points),
+                textposition: 'top center',
+                hoverinfo: 'text',
+                hovertext: Object.entries(points).map(([key, val]) => 
+                    `${key}: (${val[0]}, ${val[1]}, ${val[2]})`
+                )
+            };
+
+            return [...traceEdges, tracePoints];
+        }
+
+        function createPlot() {
+            const layout = {
+                margin: { l: 150, r: 20, b: 20, t: 20 },
+                scene: {
+                    xaxis: { 
+                        title: { text: 'X Axis', font: { size: 18, color: '#000' } },
+                        showgrid: true,
+                        zeroline: true,
+                        range: [-8, 2],
+                        tickvals: Array.from({length: 11}, (_, i) => -8 + i),
+                        ticktext: Array.from({length: 11}, (_, i) => (-8 + i).toString()),
+                        tickfont: { size: 12, color: '#000' },
+                        gridcolor: 'rgba(0, 0, 0, 0.2)',
+                        zerolinecolor: '#000'
+                    },
+                    yaxis: { 
+                        title: { text: 'Y Axis', font: { size: 18, color: '#000' } },
+                        showgrid: true,
+                        zeroline: true,
+                        range: [-16, 0],
+                        tickvals: Array.from({length: 17}, (_, i) => -16 + i),
+                        ticktext: Array.from({length: 17}, (_, i) => (-16 + i).toString()),
+                        tickfont: { size: 12, color: '#000' },
+                        gridcolor: 'rgba(0, 0, 0, 0.2)',
+                        zerolinecolor: '#000'
+                    },
+                    zaxis: { 
+                        title: { text: 'Z Axis', font: { size: 18, color: '#000' } },
+                        showgrid: true,
+                        zeroline: true,
+                        range: [0, 10],
+                        tickvals: Array.from({length: 11}, (_, i) => i),
+                        ticktext: Array.from({length: 11}, (_, i) => i.toString()),
+                        tickfont: { size: 12, color: '#000' },
+                        gridcolor: 'rgba(0, 0, 0, 0.2)',
+                        zerolinecolor: '#000'
+                    },
+                    aspectmode: 'manual',
+                    aspectratio: { x: 1, y: 1, z: 1 },
+                    camera: { eye: { x: 1.5, y: 1.5, z: 1 } }
+                },
+                annotations: [
+                    {
+                        text: `Total Surface Area: ${totalSurfaceArea.toFixed(2)} sq units<br>Total Volume: ${totalVolume.toFixed(2)} cubic units`,
+                        xref: 'paper',
+                        yref: 'paper',
+                        x: -0.05,
+                        y: 0.5,
+                        showarrow: false,
+                        font: { size: 14, color: 'black' },
+                        align: 'left'
+                    }
+                ],
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(255,255,255,0.9)'
+            };
+
+            Plotly.newPlot('plot', generateTraces(), layout);
+        }
+
+        createPlot();
+    </script>
+</body>
+
+</html>
