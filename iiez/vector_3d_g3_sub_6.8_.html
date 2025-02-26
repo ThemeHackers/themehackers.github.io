@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/img/favicon.png" rel="icon">
+    <title>3D Plot Visualization</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #252424, #252424);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        #plot {
+            width: 90vw;
+            height: 80vh;
+            border-radius: 15px;
+            background: white;
+        }
+
+        .glow-text {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: transparent;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+            background-size: 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveRight 3s linear infinite;
+            text-shadow:
+                0 0 10px #ff00ff,
+        }
+
+        @keyframes moveRight {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .glow-text-decorate {
+            font-size: 1em;
+            font-weight: bold;
+            color: transparent;
+            background: linear-gradient(90deg, #ffe600, #00ffff, #ff00ff);
+            background-size: 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveRight 3s linear infinite;
+            text-shadow:
+                0 0 10px #00ffff,
+        }
+
+        @keyframes moveRight {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .controls {
+            margin: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<head>
+    <style>
+        body {
+          margin: 0;
+          font-family: Arial, sans-serif;
+          overflow: hidden;
+        }
+    
+        #loader {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+        }
+    
+    
+        #content {
+          display: none;
+        }
+      </style>
+      <body>
+        <!-- Loader -->
+        <div id="loader">
+          <img src="/img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
+        </div>
+        <script>
+          setTimeout(() => {
+            document.getElementById("loader").style.display = "none";
+            document.body.style.overflow = "auto";
+          }, 3000);
+        </script>
+      </body>
+</head>
+<body>
+    <h1 class="glow-text">Welcome to 3D vector rendering through algorithms.</h1>
+    <p class="glow-text-decorate">Group 3 : Sub image</p>
+    <div class="controls">
+        <button onclick="resetView()">Reset View</button>
+        <button onclick="toggleGrid()">Toggle Grid</button>
+        <button onclick="changeColor()">Change Edge Color</button>
+    </div>
+    <div id="plot"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const plotDiv = document.getElementById("plot");
+            const points = {
+                I: [-3, -9, 4], J: [-3, -5, 4]
+            };
+            const I = points.I, J = points.J;
+            const radius = Math.abs(I[1] - J[1]) / 2;
+            const center = [I[0], (I[1] + J[1]) / 2, I[2]];
+
+            const thetaRes = 1;
+            const phiRes = 1;
+            const hemisphereX = [], hemisphereY = [], hemisphereZ = [];
+
+            for (let theta = Math.PI / 180; theta <= Math.PI / 2; theta += Math.PI / 180 * thetaRes) {
+                for (let phi = Math.PI / 180; phi <= 2 * Math.PI; phi += Math.PI / 180 * phiRes) {
+                    let x = center[0] + radius * Math.cos(phi) * Math.sin(theta);
+                    let y = center[1] + radius * Math.sin(phi) * Math.sin(theta);
+                    let z = center[2] + radius * Math.cos(theta);
+                    hemisphereX.push(x);
+                    hemisphereY.push(y);
+                    hemisphereZ.push(z);
+                }
+            }
+
+            const hemisphereTrace = {
+                x: hemisphereX,
+                y: hemisphereY,
+                z: hemisphereZ,
+                type: 'mesh3d',
+                color: 'red',
+                opacity: 0.7,
+                name: 'Hemisphere'
+            };
+
+            const diameterTrace = {
+                x: [I[0], J[0]],
+                y: [I[1], J[1]],
+                z: [I[2], J[2]],
+                mode: 'lines+markers+text',
+                type: 'scatter3d',
+                line: { color: 'green', width: 5 },
+                marker: { size: 6, color: 'black' },
+                text: ['I', 'J'],
+                textposition: 'top center',
+                name: 'Diameter IJ'
+            };
+
+            const layout = {
+                margin: { l: 0, r: 0, b: 0, t: 0 },
+                scene: {
+                    xaxis: { title: 'X' },
+                    yaxis: { title: 'Y' },
+                    zaxis: { title: 'Z' }
+                }
+            };
+            Plotly.newPlot(plotDiv, [hemisphereTrace, diameterTrace], layout);
+        });
+        function updateGraph() {
+            Plotly.react('plot', generateTraces(), layout);
+        }
+
+
+        let gridState = true;
+
+        function resetView() {
+            let defaultCamera = {
+                eye: { x: 1.25, y: 1.25, z: 1.25 }
+            };
+
+            Plotly.relayout('plot', {
+                scene: {
+                    camera: defaultCamera,
+                    xaxis: { showgrid: gridState },
+                    yaxis: { showgrid: gridState },
+                    zaxis: { showgrid: gridState }
+                }
+            });
+        }
+
+        function toggleGrid() {
+            gridState = !gridState;
+            Plotly.relayout('plot', {
+                scene: {
+                    xaxis: { showgrid: gridState },
+                    yaxis: { showgrid: gridState },
+                    zaxis: { showgrid: gridState }
+                }
+            });
+        }
+
+        let isPurple = true; 
+
+        function changeColor() {
+            let newColor = isPurple ? '#4B0082' : '#800080'; 
+            isPurple = !isPurple;
+
+            Plotly.update('plot', {
+                'surfacecolor': [[newColor]]
+            }, {}, [0]); 
+        }
+
+
+    </script>
+</body>
+
+</html>
