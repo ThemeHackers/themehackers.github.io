@@ -107,7 +107,7 @@
 
 <body>
     <h1 class="glow-text">Welcome to 3D vector rendering through algorithms.</h1>
-    <p class="glow-text-decorate">Group 3 : Main image</p>
+    <p class="glow-text-decorate">Group 3 : Sub2 image</p>
     <div class="controls">
         <button onclick="resetView()">Reset View</button>
         <button onclick="toggleGrid()">Toggle Grid</button>
@@ -120,12 +120,8 @@
             const plotDiv = document.getElementById("plot");
             const points = {
                 A: [0, -13, 4], B: [-6, -13, 4], C: [-6, -1, 4], D: [0, -1, 4],
-                E: [1, -2, 1], F: [-5, -2, 1], G: [-5, -14, 1], H: [1, -14, 1],
-                I: [-3, -9, 4], J: [-3, -5, 4]
+                E: [1, -2, 1], F: [-5, -2, 1], G: [-5, -14, 1], H: [1, -14, 1]
             };
-            const I = points.I, J = points.J;
-            const radius = Math.abs(I[1] - J[1]) / 2;
-            const center = [I[0], (I[1] + J[1]) / 2, I[2]];
 
             const pointLabels = Object.keys(points);
             const pointTrace = {
@@ -150,43 +146,6 @@
                 name: 'Shape'
             };
 
-            const thetaRes = 50;
-            const phiRes = 50;
-            const hemisphereX = [], hemisphereY = [], hemisphereZ = [];
-            for (let theta = 0; theta <= Math.PI / 2; theta += Math.PI / thetaRes) {
-                for (let phi = 0; phi < 2 * Math.PI; phi += Math.PI / phiRes) {
-                    let x = center[0] + radius * Math.cos(phi) * Math.sin(theta);
-                    let y = center[1] + radius * Math.sin(phi) * Math.sin(theta);
-                    let z = center[2] + radius * Math.cos(theta);
-                    hemisphereX.push(x);
-                    hemisphereY.push(y);
-                    hemisphereZ.push(z);
-                }
-            }
-
-            const sphereTrace = {
-                x: hemisphereX,
-                y: hemisphereY,
-                z: hemisphereZ,
-                type: 'mesh3d',
-                color: 'red',
-                opacity: 0.7,
-                name: 'Hemisphere'
-            };
-
-            const diameterTrace = {
-                x: [I[0], J[0]],
-                y: [I[1], J[1]],
-                z: [I[2], J[2]],
-                mode: 'lines+markers+text',
-                type: 'scatter3d',
-                line: { color: 'green', width: 5 },
-                marker: { size: 6, color: 'black' },
-                text: ['I', 'J'],
-                textposition: 'top center',
-                name: 'Diameter IJ'
-            };
-
             const layout = {
                 margin: { l: 0, r: 0, b: 0, t: 0 },
                 scene: {
@@ -195,18 +154,18 @@
                     zaxis: { title: 'Z' }
                 }
             };
-            Plotly.newPlot(plotDiv, [shapeEdges, sphereTrace, diameterTrace, pointTrace], layout);
+            Plotly.newPlot(plotDiv, [shapeEdges, pointTrace], layout);
         });
         function updateGraph() {
             Plotly.react('plot', generateTraces(), layout);
         }
 
 
-        let gridState = true;
+        let gridState = true;  
 
         function resetView() {
             let defaultCamera = {
-                eye: { x: 1.25, y: 1.25, z: 1.25 }
+                eye: { x: 1.25, y: 1.25, z: 1.25 }  
             };
 
             Plotly.relayout('plot', {
@@ -220,7 +179,7 @@
         }
 
         function toggleGrid() {
-            gridState = !gridState;
+            gridState = !gridState; 
             Plotly.relayout('plot', {
                 scene: {
                     xaxis: { showgrid: gridState },
@@ -230,15 +189,9 @@
             });
         }
 
-        let isPurple = true;
-
         function changeColor() {
-            let newColor = isPurple ? '#4B0082' : '#800080';
-            isPurple = !isPurple;
-
-            Plotly.update('plot', {
-                'surfacecolor': [[newColor]]
-            }, {}, [0]);
+            edgeColor = edgeColor === '#ff007f' ? '#4B0082' : '#ff007f';
+            updateGraph();
         }
     </script>
 </body>

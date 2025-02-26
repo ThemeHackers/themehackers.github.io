@@ -11,7 +11,7 @@
         body {
             text-align: center;
             font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #252424, #252424);
+            background: #252424;
             color: white;
             display: flex;
             flex-direction: column;
@@ -21,14 +21,43 @@
             margin: 0;
         }
 
+        #plot {
+            width: 90vw;
+            height: 70vh;
+            border-radius: 15px;
+            background: white;
+        }
+
         h1 {
             font-size: 2em;
             font-weight: bold;
         }
 
+        .controls {
+            margin: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
         #plot {
             width: 90vw;
-            height: 80vh;
+            height: 70vh;
             border-radius: 15px;
             background: white;
         }
@@ -80,34 +109,12 @@
                 background-position: 100% 50%;
             }
         }
-
-        .controls {
-            margin: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            background: #007bff;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        button:hover {
-            background: #0056b3;
-        }
     </style>
 </head>
 
 <body>
     <h1 class="glow-text">Welcome to 3D vector rendering through algorithms.</h1>
-    <p class="glow-text-decorate">Group 3 : Sub image</p>
+    <p class="glow-text-decorate">Group 5 : Sub2 image</p>
     <div class="controls">
         <button onclick="resetView()">Reset View</button>
         <button onclick="toggleGrid()">Toggle Grid</button>
@@ -116,78 +123,66 @@
     <div id="plot"></div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const plotDiv = document.getElementById("plot");
-            const points = {
-                I: [-3, -9, 4], J: [-3, -5, 4]
-            };
-            const I = points.I, J = points.J;
-            const radius = Math.abs(I[1] - J[1]) / 2;
-            const center = [I[0], (I[1] + J[1]) / 2, I[2]];
+        const points = {
+            'G': [-6, -1, 1], 'J': [-10, -1, 1], 'I': [-10, 3, 1], 'H': [-6, 3, 1],
+            'L': [-6, -1, -6], 'K': [-10, -1, -6], 'N': [-10, 3, -6], 'M': [-6, 3, -6]
+        };
 
-            const thetaRes = 1;
-            const phiRes = 1;
-            const hemisphereX = [], hemisphereY = [], hemisphereZ = [];
+        const edges = [
+            ['G', 'J'], ['J', 'I'], ['I', 'H'], ['H', 'G'],
+            ['H', 'M'], ['I', 'N'], ['J', 'K'], ['K', 'L'],
+            ['L', 'M'], ['M', 'N'], ['N', 'K'], ['G', 'L']
+        ];
 
-            for (let theta = Math.PI / 180; theta <= Math.PI / 2; theta += Math.PI / 180 * thetaRes) {
-                for (let phi = Math.PI / 180; phi <= 2 * Math.PI; phi += Math.PI / 180 * phiRes) {
-                    let x = center[0] + radius * Math.cos(phi) * Math.sin(theta);
-                    let y = center[1] + radius * Math.sin(phi) * Math.sin(theta);
-                    let z = center[2] + radius * Math.cos(theta);
-                    hemisphereX.push(x);
-                    hemisphereY.push(y);
-                    hemisphereZ.push(z);
-                }
-            }
+        let layout;
+        let edgeColor = '#ff007f';
 
-            const hemisphereTrace = {
-                x: hemisphereX,
-                y: hemisphereY,
-                z: hemisphereZ,
-                type: 'mesh3d',
-                color: 'red',
-                opacity: 0.7,
-                name: 'Hemisphere'
-            };
-
-            const diameterTrace = {
-                x: [I[0], J[0]],
-                y: [I[1], J[1]],
-                z: [I[2], J[2]],
-                mode: 'lines+markers+text',
+        function generateTraces() {
+            const traceEdges = edges.map(edge => ({
                 type: 'scatter3d',
-                line: { color: 'green', width: 5 },
-                marker: { size: 6, color: 'black' },
-                text: ['I', 'J'],
-                textposition: 'top center',
-                name: 'Diameter IJ'
+                mode: 'lines',
+                x: [points[edge[0]][0], points[edge[1]][0], null],
+                y: [points[edge[0]][1], points[edge[1]][1], null],
+                z: [points[edge[0]][2], points[edge[1]][2], null],
+                line: { color: edgeColor, width: 3 }
+            }));
+
+            const tracePoints = {
+                type: 'scatter3d',
+                mode: 'markers+text',
+                x: Object.values(points).map(p => p[0]),
+                y: Object.values(points).map(p => p[1]),
+                z: Object.values(points).map(p => p[2]),
+                marker: { size: 8, color: '#ffd700' },
+                text: Object.keys(points),
+                textposition: 'top center'
             };
 
-            const layout = {
+            return [...traceEdges, tracePoints];
+        }
+
+        function createPlot() {
+            layout = {
                 margin: { l: 0, r: 0, b: 0, t: 0 },
                 scene: {
-                    xaxis: { title: 'X' },
-                    yaxis: { title: 'Y' },
-                    zaxis: { title: 'Z' }
+                    xaxis: { title: 'X', showgrid: true },
+                    yaxis: { title: 'Y', showgrid: true },
+                    zaxis: { title: 'Z', showgrid: true }
                 }
             };
-            Plotly.newPlot(plotDiv, [hemisphereTrace, diameterTrace], layout);
-        });
+            Plotly.newPlot('plot', generateTraces(), layout);
+        }
+
         function updateGraph() {
             Plotly.react('plot', generateTraces(), layout);
         }
 
-
         let gridState = true;
 
         function resetView() {
-            let defaultCamera = {
-                eye: { x: 1.25, y: 1.25, z: 1.25 }
-            };
-
             Plotly.relayout('plot', {
                 scene: {
-                    camera: defaultCamera,
+                    camera: { eye: { x: 1.25, y: 1.25, z: 1.25 } },
                     xaxis: { showgrid: gridState },
                     yaxis: { showgrid: gridState },
                     zaxis: { showgrid: gridState }
@@ -206,18 +201,12 @@
             });
         }
 
-        let isPurple = true; 
-
         function changeColor() {
-            let newColor = isPurple ? '#4B0082' : '#800080'; 
-            isPurple = !isPurple;
-
-            Plotly.update('plot', {
-                'surfacecolor': [[newColor]]
-            }, {}, [0]); 
+            edgeColor = edgeColor === '#ff007f' ? '#4B0082' : '#ff007f';
+            updateGraph();
         }
 
-
+        createPlot();
     </script>
 </body>
 
