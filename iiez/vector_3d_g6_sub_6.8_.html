@@ -36,19 +36,18 @@
                 x: [], y: [], z: [],
                 i: [], j: [], k: [],
                 color: '#FF8C00',  
-                opacity: 1.0,      // ลบความโปร่งใสเพื่อให้สีชัดเจน
-                flatshading: true, // ทำให้ผิวดูเรียบและสีสม่ำเสมอ
+                opacity: 1.0,  
+                flatshading: true, 
                 name: 'Ring'
             };
 
-            // เพิ่มความละเอียดเพื่อผิวที่เรียบขึ้น
-            const thetaRes = 2000;    // ความละเอียดตามแนววงกลมใหญ่
-            const radiusRes = 50;    // ความละเอียดตามแนววงกลมย่อย
-            const majorRadius = 6;   // รัศมีวงกลมใหญ่
-            const minorRadius = 2;   // รัศมีวงกลมย่อย
-            const center = [0, 0, 0]; // จุดศูนย์กลาง
 
-            // สร้างจุดข้อมูลสำหรับ torus
+            const thetaRes = 2000;    
+            const radiusRes = 50;
+            const majorRadius = 6;  
+            const minorRadius = 2;   
+            const center = [0, 0, 0]; 
+
             for (let t = 0; t < thetaRes; t++) {
                 const theta = (t / thetaRes) * 2 * Math.PI;
                 for (let r = 0; r < radiusRes; r++) {
@@ -62,7 +61,6 @@
                 }
             }
 
-            // สร้างพื้นผิว
             for (let t = 0; t < thetaRes - 1; t++) {
                 for (let r = 0; r < radiusRes - 1; r++) {
                     const a = t * radiusRes + r;
@@ -75,7 +73,6 @@
                 }
             }
 
-            // เชื่อมขอบสุดท้าย
             for (let r = 0; r < radiusRes - 1; r++) {
                 const a = (thetaRes - 1) * radiusRes + r;
                 const b = a + 1;
