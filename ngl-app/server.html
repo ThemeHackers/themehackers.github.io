@@ -6,48 +6,8 @@
     <link href="/img/favicon.png" rel="icon">
     <title>★彡[Firebase Data Table]彡★</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="./js/server.js" type="module"></script>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-
-        #content {
-            display: none;
-        }
-    </style>
-
-<body>
-    <!-- Loader -->
-    <div id="loader">
-        <img src="/img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
-    </div>
-
-    <script>
-        setTimeout(() => {
-            document.getElementById("loader").style.display = "none";
-            document.body.style.overflow = "auto";
-        }, 3000);
+    <script src="./js/server.js" type="module">
     </script>
-</body>
-</head>    
-<head>
     <style>
         body {
             background-color: #f8f9fa;
@@ -83,19 +43,16 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: moveRight 3s linear infinite;
-            text-shadow:
-              0 0 10px #ff00ff,
-          }
-          
-          @keyframes moveRight {
+        }
+
+        @keyframes moveRight {
             0% {
-              background-position: 0% 50%;
+                background-position: 0% 50%;
             }
-          
             100% {
-              background-position: 100% 50%;
+                background-position: 100% 50%;
             }
-          }
+        }
     </style>
 </head>
 <body class="container mt-5">
@@ -110,7 +67,9 @@
                 </tr>
             </thead>
             <tbody id="tableBody">
-
+                <tr>
+                    <td colspan="3">Loading data...</td>
+                </tr>
             </tbody>
         </table>
     </div>
