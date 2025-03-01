@@ -1,9 +1,10 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
 import {
   getFirestore,
   collection,
   getDocs,
-} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  Timestamp,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC292pC6w-yeqs4mO1rOWlErcH8xBiHgFw",
@@ -16,22 +17,28 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const tableBody = document.getElementById("tableBody");
+const messagesCollection = collection(db, "messages");
 
 async function fetchData() {
-  const querySnapshot = await getDocs(collection(db, "messages"));
-  const tableBody = document.getElementById("tableBody");
-
+  const querySnapshot = await getDocs(messagesCollection);
+  tableBody.innerHTML = ""; 
   querySnapshot.forEach((doc) => {
     const data = doc.data();
+    let timestamp = data.timestamp;
+    if (timestamp instanceof Timestamp) {
+      timestamp = timestamp.toDate().toLocaleString();
+    } else {
+      timestamp = new Date(timestamp).toLocaleString();
+    }
     const row = `
-      <tr>
-        <td>${doc.id}</td>
-        <td>${data.message}</td>
-        <td>${data.timestamp?.toDate().toLocaleString()}</td>
-      </tr>
-    `;
+                    <tr>
+                        <td>${doc.id}</td>
+                        <td>${data.message}</td>
+                        <td>${timestamp}</td>
+                    </tr>`;
     tableBody.innerHTML += row;
   });
 }
 
-fetchData().catch(console.error);
+fetchData();
