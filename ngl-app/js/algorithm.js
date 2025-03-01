@@ -12,53 +12,68 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+let secretKey;
 
-function encryptMessage(message) {
-    return btoa(unescape(encodeURIComponent(message)));
+async function generateKey() {
+    const keyMaterial = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("!@#$%^&*()_+ngl0"));
+    secretKey = await crypto.subtle.importKey(
+        "raw",
+        keyMaterial,
+        { name: "AES-GCM" },
+        false,
+        ["encrypt", "decrypt"]
+    );
 }
 
-function decryptMessage(encryptedMessage) {
-    return decodeURIComponent(escape(atob(encryptedMessage)));
+window.onload = async () => {
+    await generateKey();
+    await loadMessages();
+};
+
+async function encryptMessage(message) {
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const encrypted = await crypto.subtle.encrypt(
+        { name: "AES-GCM", iv: iv },
+        secretKey,
+        new TextEncoder().encode(message)
+    );
+    return `${btoa(String.fromCharCode(...iv))}.${btoa(String.fromCharCode(...new Uint8Array(encrypted)))}`;
 }
 
-document.getElementById("sendBtn").addEventListener("click", async () => {
-    const message = document.getElementById('message').value.trim();
-    if (message.length === 0) {
-        alert('Please enter a message!');
-        return;
-    }
-    if (message.length > 1000) {
-        alert('Message cannot exceed 1000 characters!');
-        return;
-    }
-    document.getElementById('messages').innerHTML += `<li>${message}</li>`;
-    document.getElementById('message').value = ''; 
-    const encryptedMessage = encryptMessage(message);
-    const decryptedMessage = decryptMessage(encryptedMessage);
-    try {
-        await addDoc(collection(db, "messages"), {
-            message: decryptedMessage,
-            timestamp: serverTimestamp()
-        });
-        document.getElementById("message").value = "";
-        loadMessages();
-    } catch (error) {
-    }
-});
-document.getElementById('message').addEventListener('input', () => {
-    document.getElementById('charCount').textContent = document.getElementById('message').value.length;
-});
+async function decryptMessage(encryptedMessage) {
+    const [ivBase64, encryptedBase64] = encryptedMessage.split(".");
+    const iv = new Uint8Array(atob(ivBase64).split("").map(c => c.charCodeAt(0)));
+    const encrypted = new Uint8Array(atob(encryptedBase64).split("").map(c => c.charCodeAt(0)));
+    const decrypted = await crypto.subtle.decrypt(
+        { name: "AES-GCM", iv: iv },
+        secretKey,
+        encrypted
+    );
+    return new TextDecoder().decode(decrypted);
+}
 
 async function loadMessages() {
     const messagesList = document.getElementById("messages");
     messagesList.innerHTML = "";
     const querySnapshot = await getDocs(collection(db, "messages"));
-    querySnapshot.forEach((doc) => {
-        const decryptedMessage = decryptMessage(doc.data().message);
+    querySnapshot.forEach(async (doc) => {
+        const decryptedMessage = await decryptMessage(doc.data().message);
         const li = document.createElement("li");
         li.textContent = decryptedMessage;
         messagesList.appendChild(li);
     });
 }
 
-window.onload = loadMessages;
+document.getElementById("sendBtn").addEventListener("click", async () => {
+    const message = document.getElementById("message").value.trim();
+    if (!message) return alert("Please enter a message!");
+    const encryptedMessage = await encryptMessage(message);
+    await addDoc(collection(db, "messages"), { message: encryptedMessage, timestamp: serverTimestamp() });
+    document.getElementById("message").value = "";
+    document.getElementById("charCount").textContent = "0";
+    await loadMessages();
+});
+
+document.getElementById("message").addEventListener("input", () => {
+    document.getElementById("charCount").textContent = document.getElementById("message").value.length;
+});
