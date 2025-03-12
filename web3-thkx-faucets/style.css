@@ -1,0 +1,326 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Body styling */
+body {
+    background: linear-gradient(135deg, #1e1e2f 0%, #2a2a4a 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Navbar styling */
+.navbar {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1rem 2rem;
+    animation: slideInDown 0.5s ease-in-out;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    color: #00d4ff !important;
+    transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+    color: #ff007a !important;
+}
+
+.text-secondary {
+    text-decoration: none;
+
+}
+
+.text-secondary:hover {
+    color: #00d4ff !important;
+}
+
+.btn-primary {
+    background: #00d4ff;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #ff007a;
+    transform: translateY(-3px);
+}
+
+/* Hero Section */
+.fade-in {
+    animation: fadeIn 1s ease-in-out;
+}
+
+h1 {
+    font-size: 3rem;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 2.5rem;
+    color: #ffffff;
+}
+
+.text-primary {
+    color: #00d4ff !important;
+}
+
+.text-muted {
+    color: #b0b0b0 !important;
+    font-size: 1.1rem;
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border-radius: 20px;
+}
+
+.btn-outline-secondary {
+    border-color: #00d4ff;
+    color: #00d4ff;
+    border-radius: 25px;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+    background: #00d4ff;
+    color: #1e1e2f;
+}
+
+/* Glowing Circle Animation */
+.glowing-circle {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.5) 0%, transparent 70%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.glowing-circle span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00d4ff;
+}
+
+/* Card Styling (used across sections) */
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
+    padding: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 212, 255, 0.2);
+}
+
+.card h5 {
+    color: #ffffff;
+    font-size: 1.5rem;
+}
+
+.card p {
+    font-size: 1rem;
+}
+
+/* Features Section */
+#features .card {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+/* How It Works Section */
+#how-it-works .card {
+    min-height: 220px;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+/* Faucet Box */
+#walletAddress {
+    font-size: 1.2rem;
+    word-break: break-all;
+}
+
+/* Spinner */
+.spinner {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #00d4ff;
+    border-top: 4px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 1rem auto;
+}
+
+/* FAQ Section */
+.accordion-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.accordion-button {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 1.5rem;
+    transition: background 0.3s ease;
+}
+
+.accordion-button:not(.collapsed) {
+    background: #00d4ff;
+    color: #1e1e2f;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+.accordion-body {
+    background: rgba(255, 255, 255, 0.03);
+    color: #b0b0b0;
+    padding: 1.5rem;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Footer */
+footer {
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.2);
+    font-size: 0.9rem;
+}
+
+footer a {
+    margin: 0 10px;
+}
+
+/* Animations */
+@keyframes slideInDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 2rem;
+    }
+    .navbar {
+        padding: 1rem;
+    }
+    .card {
+        padding: 1.5rem;
+    }
+    .glowing-circle {
+        width: 100px;
+        height: 100px;
+    }
+    .glowing-circle span {
+        font-size: 1.2rem;
+    }
+    #features .card,
+    #how-it-works .card {
+        min-height: auto;
+    }
+}
+/* Rainbow Loader */
+@keyframes rainbow {
+    0% { background-color: #ff0000; }
+    14% { background-color: #ff9900; }
+    28% { background-color: #33cc33; }
+    42% { background-color: #3399ff; }
+    57% { background-color: #9900cc; }
+    71% { background-color: #ff3399; }
+    85% { background-color: #ff6600; }
+    100% { background-color: #ff0000; }
+}
+
+#rainbowLoader {
+    width: 100%;
+    height: 8px;
+    background-color: #ff0000;
+    animation: rainbow 1.5s infinite linear;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
