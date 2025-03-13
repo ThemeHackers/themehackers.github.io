@@ -1,11 +1,13 @@
-const faucetAddress = "0x108d51488E88D4EBADB35Ee6fF1dAA111746b218";
+const faucetAddress = "0x1Fa74Cc546e0DAE4557F65e717a11694e462eCC3";
 const abi = ["function claimTokens() public"];
 
 let signer;
 let provider;
+let accounts = [];
+let selectedAccount;
 let lastClaimTime = localStorage.getItem("lastClaimTime") || 0;
-const claimCooldown = 60 * 60; 
-let claimAttempts = localStorage.getItem("claimAttempts") || 0;
+const claimCooldown = 600; 
+let claimAttempts = parseInt(localStorage.getItem("claimAttempts")) || 0;
 const maxAttempts = 5;
 let countdownInterval;
 
@@ -17,22 +19,70 @@ async function connectWallet() {
 
     try {
         provider = new ethers.providers.Web3Provider(window.ethereum);
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-        signer = provider.getSigner();
-        const walletAddress = await signer.getAddress();
-        const network = await provider.getNetwork();
-
-        if (network.chainId !== 17000) {
-            showToast("❌ Please switch to Holesky Testnet!", "error");
+        accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+        
+        if (accounts.length === 0) {
+            showToast("❌ No accounts found.", "error");
             return;
         }
-
-        localStorage.setItem("walletAddress", walletAddress);
-        document.getElementById("walletAddress").innerText = `Connected: ${walletAddress}`;
+        
+        selectedAccount = accounts[0];
+        signer = provider.getSigner(selectedAccount);
+        
+        document.getElementById("walletAddress").innerText = `Connected: ${selectedAccount}`;
+        localStorage.setItem("walletAddress", selectedAccount);
+        
+        // Only attempt to update account selection if the element exists
+        const accountSelect = document.getElementById("accountSelect");
+        if (accountSelect) {
+            updateAccountSelection();
+        }
+        
         updateButtonStatus();
     } catch (error) {
+        console.error("Connection error:", error);
         showToast(error.code === 4001 ? "❌ Connection rejected by user." : "❌ Connection failed.", "error");
     }
+}
+
+function updateAccountSelection() {
+    const accountSelect = document.getElementById("accountSelect");
+    if (!accountSelect) return;
+    
+    // Clear existing options
+    accountSelect.innerHTML = "";
+    
+    // Add new options
+    accounts.forEach(acc => {
+        const option = document.createElement("option");
+        option.value = acc;
+        option.textContent = acc;
+        accountSelect.appendChild(option);
+    });
+    
+    // Display the select element if we have accounts
+    accountSelect.style.display = accounts.length > 0 ? "block" : "none";
+    
+    // Set the current selected account
+    accountSelect.value = selectedAccount;
+    
+    // Remove old event listener and add a new one
+    const oldSelect = accountSelect;
+    const newSelect = oldSelect.cloneNode(true);
+    oldSelect.parentNode.replaceChild(newSelect, oldSelect);
+    newSelect.addEventListener("change", changeAccount);
+}
+
+function changeAccount(event) {
+    selectedAccount = event.target.value;
+    
+    if (provider) {
+        signer = provider.getSigner(selectedAccount);
+    }
+    
+    document.getElementById("walletAddress").innerText = `Connected: ${selectedAccount}`;
+    localStorage.setItem("walletAddress", selectedAccount);
+    updateButtonStatus();
 }
 
 async function claimTokens() {
@@ -40,6 +90,7 @@ async function claimTokens() {
         showToast("❌ Please connect your wallet first.", "error");
         return;
     }
+    
     if (!navigator.onLine) {
         showToast("❌ No internet connection.", "error");
         return;
@@ -47,10 +98,12 @@ async function claimTokens() {
 
     const today = new Date().toDateString();
     const lastAttemptDate = localStorage.getItem("lastAttemptDate");
+    
     if (lastAttemptDate !== today) {
         claimAttempts = 0;
         localStorage.setItem("lastAttemptDate", today);
     }
+    
     if (claimAttempts >= maxAttempts) {
         showToast("❌ Daily claim limit reached.", "error");
         return;
@@ -58,12 +111,18 @@ async function claimTokens() {
 
     const currentTime = Math.floor(Date.now() / 1000);
     const nextClaimTime = parseInt(lastClaimTime) + claimCooldown;
+    
     if (currentTime < nextClaimTime) {
+        showToast(`⏳ Please wait before claiming again.`, "error");
         return;
     }
 
     try {
-        document.getElementById("rainbowLoader").style.display = "block";
+        const rainbowLoader = document.getElementById("rainbowLoader");
+        if (rainbowLoader) {
+            rainbowLoader.style.display = "block";
+        }
+        
         const faucet = new ethers.Contract(faucetAddress, abi, signer);
         const gasEstimate = await faucet.estimateGas.claimTokens();
         const tx = await faucet.claimTokens({ gasLimit: gasEstimate.mul(120).div(100) });
@@ -71,37 +130,60 @@ async function claimTokens() {
 
         lastClaimTime = currentTime;
         claimAttempts++;
+        
         localStorage.setItem("lastClaimTime", lastClaimTime);
         localStorage.setItem("claimAttempts", claimAttempts);
         localStorage.setItem("lastAttemptDate", today);
 
         const etherscanUrl = `https://holesky.etherscan.io/tx/${tx.hash}`;
         showToast(`✅ Tokens claimed! <a href="${etherscanUrl}" target="_blank">View on Etherscan</a>`, "success");
+        
         updateButtonStatus();
     } catch (error) {
+        console.error("Claim error:", error);
+        
         if (error.code === "INSUFFICIENT_FUNDS") {
             showToast("❌ Insufficient gas funds.", "error");
         } else if (error.code === "NETWORK_ERROR") {
             showToast("❌ Network error. Please try again.", "error");
         } else {
-            showToast(`❌ Error: ${error.message}`, "error");
+            showToast(`❌ Error: ${error.message || "Unknown error"}`, "error");
         }
     } finally {
-        document.getElementById("rainbowLoader").style.display = "none";
+        const rainbowLoader = document.getElementById("rainbowLoader");
+        if (rainbowLoader) {
+            rainbowLoader.style.display = "none";
+        }
     }
 }
 
 function showToast(message, type) {
+    const toastContainer = document.getElementById("toastContainer");
+    if (!toastContainer) {
+        console.error("Toast container not found");
+        return;
+    }
+    
     const toast = document.createElement("div");
     toast.className = `toast ${type}`;
     toast.innerHTML = message;
-    document.getElementById("toastContainer").appendChild(toast);
-    setTimeout(() => toast.remove(), 5000);
+    toastContainer.appendChild(toast);
+    
+    setTimeout(() => {
+        if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+        }
+    }, 5000);
 }
 
 function updateButtonStatus() {
     const claimButton = document.getElementById("claimTokens");
     const requestButton = document.getElementById("requestTokens"); 
+
+    if (!claimButton && !requestButton) {
+        console.error("Buttons not found");
+        return;
+    }
 
     function updateCountdown() {
         const currentTime = Math.floor(Date.now() / 1000);
@@ -111,60 +193,126 @@ function updateButtonStatus() {
         if (timeLeft > 0) {
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
-            claimButton.disabled = true;
-            claimButton.innerText = `⏳ ${minutes}:${seconds.toString().padStart(2, '0')}`;
-            requestButton.disabled = true; 
-            const progress = (timeLeft / claimCooldown) * 100;
-            claimButton.style.background = `linear-gradient(to right, #4caf50 ${100 - progress}%, #ccc ${100 - progress}%)`;
+            
+            if (claimButton) {
+                claimButton.disabled = true;
+                claimButton.innerText = `⏳ ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                const progress = (timeLeft / claimCooldown) * 100;
+                claimButton.style.background = `linear-gradient(to right, #4caf50 ${100 - progress}%, #ccc ${100 - progress}%)`;
+            }
+            
+            if (requestButton) {
+                requestButton.disabled = true; 
+            }
         } else {
-            claimButton.disabled = false;
-            claimButton.innerText = "💸 Get Tokens Now →";
-            claimButton.style.background = "";
-            requestButton.disabled = false;
+            if (claimButton) {
+                claimButton.disabled = false;
+                claimButton.innerText = "💸 Get Tokens Now →";
+                claimButton.style.background = "";
+            }
+            
+            if (requestButton) {
+                requestButton.disabled = false;
+            }
+            
             clearInterval(countdownInterval);
         }
     }
 
-    if (countdownInterval) clearInterval(countdownInterval);
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+    }
+    
     updateCountdown();
     countdownInterval = setInterval(updateCountdown, 1000);
 }
 
-
 function restoreWalletConnection() {
     const savedWallet = localStorage.getItem("walletAddress");
     if (savedWallet) {
-        document.getElementById("walletAddress").innerText = `🔗 Reconnecting: ${savedWallet}`;
+        const walletAddress = document.getElementById("walletAddress");
+        if (walletAddress) {
+            walletAddress.innerText = `🔗 Reconnecting: ${savedWallet}`;
+        }
         connectWallet();
     }
 }
 
-window.ethereum?.on("accountsChanged", async (accounts) => {
-    if (accounts.length > 0) {
-        document.getElementById("walletAddress").innerText = `Connected: ${accounts[0]}`;
-        localStorage.setItem("walletAddress", accounts[0]);
-        updateButtonStatus();
-    } else {
-        document.getElementById("walletAddress").innerText = "Wallet disconnected";
-        localStorage.removeItem("walletAddress");
+// Set up event listeners when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const connectButton = document.getElementById("connectWallet");
+    const claimButton = document.getElementById("claimTokens");
+    const requestButton = document.getElementById("requestTokens");
+    
+    if (connectButton) {
+        connectButton.addEventListener("click", connectWallet);
     }
+    
+    if (claimButton) {
+        claimButton.addEventListener("click", claimTokens);
+    }
+    
+    if (requestButton) {
+        requestButton.addEventListener("click", claimTokens);
+    }
+    
+    restoreWalletConnection();
+    updateButtonStatus();
 });
 
-window.ethereum?.on("chainChanged", async (chainId) => {
-    if (chainId !== '0x42') {
-        showToast("❌ Wrong network. Switch to Holesky Testnet.", "error");
-    } else {
-        document.getElementById("walletAddress").innerText = "Connected to Holesky Testnet";
-    }
-});
+// Set up MetaMask event listeners
+if (window.ethereum) {
+    window.ethereum.on("accountsChanged", async (newAccounts) => {
+        accounts = newAccounts;
+        
+        if (accounts.length > 0) {
+            selectedAccount = accounts[0];
+            
+            if (provider) {
+                signer = provider.getSigner(selectedAccount);
+            }
+            
+            const walletAddress = document.getElementById("walletAddress");
+            if (walletAddress) {
+                walletAddress.innerText = `Connected: ${selectedAccount}`;
+            }
+            
+            localStorage.setItem("walletAddress", selectedAccount);
+            
+            const accountSelect = document.getElementById("accountSelect");
+            if (accountSelect) {
+                updateAccountSelection();
+            }
+            
+            updateButtonStatus();
+        } else {
+            const walletAddress = document.getElementById("walletAddress");
+            if (walletAddress) {
+                walletAddress.innerText = "Wallet disconnected";
+            }
+            
+            localStorage.removeItem("walletAddress");
+        }
+    });
 
+    window.ethereum.on("chainChanged", async (chainId) => {
+        const walletAddress = document.getElementById("walletAddress");
+        
+        if (chainId !== '0x42') {
+            showToast("❌ Wrong network. Switch to Holesky Testnet.", "error");
+        } else if (walletAddress && selectedAccount) {
+            walletAddress.innerText = `Connected: ${selectedAccount}`;
+        }
+    });
+}
+
+// Clean up when the page is unloaded
 window.addEventListener("unload", () => {
-    if (countdownInterval) clearInterval(countdownInterval);
-    window.ethereum?.removeAllListeners();
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+    }
+    
+    if (window.ethereum) {
+        window.ethereum.removeAllListeners();
+    }
 });
-
-document.getElementById("connectWallet").addEventListener("click", connectWallet);
-document.getElementById("claimTokens").addEventListener("click", claimTokens);
-document.getElementById("requestTokens").addEventListener("click", claimTokens);
-restoreWalletConnection();
-updateButtonStatus();
