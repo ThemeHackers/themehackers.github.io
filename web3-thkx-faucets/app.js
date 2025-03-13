@@ -1,4 +1,4 @@
-const faucetAddress = "0x1Fa74Cc546e0DAE4557F65e717a11694e462eCC3";
+const faucetAddress = "0xDcE2DeC47a9441b54dF643F206824a05E06f697D";
 const abi = ["function claimTokens() public"];
 
 let signer;
