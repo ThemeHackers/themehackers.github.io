@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style.css">
     <link href="./img/thkx.png" rel="icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
-
 </head>
 <body>
 
@@ -21,6 +20,7 @@
         <div>
             <a href="./documentation.html" class="text-secondary me-3" target="_blank">📖 Documentation</a>
             <button id="connectWallet" class="btn btn-primary" role="button">🔗 Connect Wallet</button>
+            <select id="accountSelect" class="form-select mt-2" style="display:none;"></select>
         </div>
     </nav>
 
@@ -30,15 +30,11 @@
         <h1 class="fw-bold mt-3">Get THKX Tokens <span class="text-primary">Easily 🚀</span></h1>
         <p class="text-muted">✨ Use our faucet to get THKX tokens for testing your applications on the blockchain. Simple, fast, and reliable.</p>
         
-        <button id="claimTokens" class="btn btn-primary mt-3" disabled role="button" disabled>💸 Get Tokens Now →</button>
-        <!-- Rainbow Download Loader -->
+        <button id="claimTokens" class="btn btn-primary mt-3" disabled role="button">💸 Get Tokens Now →</button>
         <div id="rainbowLoader" style="display:none;"></div>
 
         <a href="https://github.com/ThemeHackers/THKX" class="btn btn-outline-secondary mt-3" target="_blank">🔍 View on GitHub</a>
-        
-        <div class="glowing-circle mt-4">
-            <span>⚡ THKX ⚡</span>
-        </div>
+
     </div>
 
     <!-- Faucet Box -->
@@ -46,8 +42,9 @@
         <div class="card p-4 shadow-lg">
             <h5 class="fw-bold">💧 Token Faucet</h5>
             <p class="text-muted">🎯 Request tokens from the ERC20 faucet contract.</p>
+            <div id="toastContainer"></div>
             <p id="walletAddress" class="text-primary">🔗 Wallet Not Connected</p>
-            <button id="requestTokens" class="btn btn-primary mt-3" disabled role="button" disabled>💸 Request Tokens</button>
+            <button id="requestTokens" class="btn btn-primary mt-3" disabled role="button">💸 Request Tokens</button>
         </div>
     </div>
 
