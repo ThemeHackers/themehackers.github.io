@@ -6,7 +6,7 @@ let provider;
 let accounts = [];
 let selectedAccount;
 let lastClaimTime = localStorage.getItem("lastClaimTime") || 0;
-const claimCooldown = 600; 
+const claimCooldown =  43200; 
 let claimAttempts = parseInt(localStorage.getItem("claimAttempts")) || 0;
 const maxAttempts = 5;
 let countdownInterval;
