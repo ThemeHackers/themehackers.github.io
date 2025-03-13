@@ -1,4 +1,4 @@
-const faucetAddress = "0xDcE2DeC47a9441b54dF643F206824a05E06f697D";
+const faucetAddress = "0x1Fa74Cc546e0DAE4557F65e717a11694e462eCC3";
 const abi = ["function claimTokens() public"];
 
 let signer;
@@ -6,7 +6,7 @@ let provider;
 let accounts = [];
 let selectedAccount;
 let lastClaimTime = localStorage.getItem("lastClaimTime") || 0;
-const claimCooldown =  60 * 60; 
+const claimCooldown =  2 * 60 * 60;
 let claimAttempts = parseInt(localStorage.getItem("claimAttempts")) || 0;
 const maxAttempts = 5;
 let countdownInterval;

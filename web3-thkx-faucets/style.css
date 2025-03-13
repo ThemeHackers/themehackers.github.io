@@ -11,7 +11,7 @@ position: relative;
 body::before {
     content: '';
     position: absolute;
-    top: 200px;
+    top: 150px;
     right: 100px;
     width: 100px;
     height: 100px;
@@ -137,18 +137,20 @@ animation: pulse 2.5s infinite cubic-bezier(0.4, 0, 0.6, 1);
 }
 
 .card {
-background: rgba(255, 255, 255, 0.05);
-border: 1px solid rgba(255, 255, 255, 0.2);
-border-radius: 15px;
-backdrop-filter: blur(15px);
-padding: 2rem;
-transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  backdrop-filter: blur(15px);
+  padding: 2rem;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  color: white; 
 }
 
 .card:hover {
-transform: translateY(-5px);
-box-shadow: 0 10px 20px rgba(0, 212, 255, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(244, 244, 244, 0.2);
 }
+
 
 .spinner {
 display: none;
@@ -230,8 +232,8 @@ transform: translateY(0);
 
 @keyframes rainbow {
 0% { background-color: #ff0000; }
-14% { background-color: #ff9900; }
-28% { background-color: #33cc33; }
+14% { background-color: #00d4ff; }
+28% { background-color: #00d4ff; }
 42% { background-color: #3399ff; }
 57% { background-color: #9900cc; }
 71% { background-color: #ff3399; }
