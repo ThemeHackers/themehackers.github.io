@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("stakeButton")?.addEventListener("click", stakeTHKX);
     document.getElementById("unstakeButton")?.addEventListener("click", unstakeTHKX);
     document.getElementById("claimRewardsButton")?.addEventListener("click", claimRewards);
+    document.getElementById("compoundRewardsButton")?.addEventListener("click", compoundRewards);  // เพิ่มปุ่มสำหรับ compoundRewards
 
     if (localStorage.getItem("walletAddress")) {
         connectWallet();
@@ -99,14 +100,21 @@ async function unstakeTHKX() {
         const amount = document.getElementById("unstakeAmount").value;
         if (amount <= 0) throw new Error("Invalid amount");
 
+        const stakingContract = new ethers.Contract(stakingContractAddress, ["function getStakedBalance(address) external view returns (uint256)", "function unstake(uint256) external"], signer);
+        const stakedBalance = await stakingContract.getStakedBalance(await signer.getAddress());
         const unstakeAmount = ethers.utils.parseUnits(amount, 18);
-        const stakingContract = new ethers.Contract(stakingContractAddress, ["function unstake(uint256) external"], signer);
 
-        const txUnstake = await stakingContract.unstake(unstakeAmount);
+        if (unstakeAmount.gt(stakedBalance)) {
+            updateElementText("status", "❌ Insufficient staked balance.");
+            return;
+        }
+
+        const txUnstake = await stakingContract.unstake(unstakeAmount, {
+            gasLimit: 200000 
+        });
         await txUnstake.wait();
 
         updateElementText("status", `✅ Unstaked ${amount} THKX successfully!`);
-
         await getStakedBalance();
         await getPendingRewards();
     } catch (error) {
@@ -134,6 +142,25 @@ async function claimRewards() {
     }
 }
 
+async function compoundRewards() {
+    try {
+        if (!signer) throw new Error("Wallet not connected");
+
+        const stakingContract = new ethers.Contract(stakingContractAddress, ["function compoundRewards() external"], signer);
+        
+        const txCompound = await stakingContract.compoundRewards();
+        await txCompound.wait();
+
+        updateElementText("status", "✅ Rewards compounded successfully!");
+
+        await getStakedBalance();
+        await getPendingRewards();
+    } catch (error) {
+        updateElementText("status", `❌ Compound Rewards failed: ${error.message}`);
+        console.error("❌ Compound Rewards failed:", error);
+    }
+}
+
 function updateElementText(elementId, text) {
     const element = document.getElementById(elementId);
     if (element) {
@@ -142,6 +169,7 @@ function updateElementText(elementId, text) {
         console.warn(`⚠️ Element with ID '${elementId}' not found.`);
     }
 }
+
 const rewardsData = {
     labels: [],
     datasets: [{
