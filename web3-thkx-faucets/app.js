@@ -32,7 +32,7 @@ async function connectWallet() {
         document.getElementById("walletAddress").innerText = `Connected: ${selectedAccount}`;
         localStorage.setItem("walletAddress", selectedAccount);
         
-        // Only attempt to update account selection if the element exists
+       
         const accountSelect = document.getElementById("accountSelect");
         if (accountSelect) {
             updateAccountSelection();
@@ -49,10 +49,10 @@ function updateAccountSelection() {
     const accountSelect = document.getElementById("accountSelect");
     if (!accountSelect) return;
     
-    // Clear existing options
+
     accountSelect.innerHTML = "";
     
-    // Add new options
+
     accounts.forEach(acc => {
         const option = document.createElement("option");
         option.value = acc;
@@ -60,13 +60,12 @@ function updateAccountSelection() {
         accountSelect.appendChild(option);
     });
     
-    // Display the select element if we have accounts
+   
     accountSelect.style.display = accounts.length > 0 ? "block" : "none";
-    
-    // Set the current selected account
+
     accountSelect.value = selectedAccount;
     
-    // Remove old event listener and add a new one
+
     const oldSelect = accountSelect;
     const newSelect = oldSelect.cloneNode(true);
     oldSelect.parentNode.replaceChild(newSelect, oldSelect);
@@ -238,7 +237,7 @@ function restoreWalletConnection() {
     }
 }
 
-// Set up event listeners when the DOM is fully loaded
+
 document.addEventListener('DOMContentLoaded', () => {
     const connectButton = document.getElementById("connectWallet");
     const claimButton = document.getElementById("claimTokens");
@@ -260,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateButtonStatus();
 });
 
-// Set up MetaMask event listeners
+
 if (window.ethereum) {
     window.ethereum.on("accountsChanged", async (newAccounts) => {
         accounts = newAccounts;
@@ -306,7 +305,7 @@ if (window.ethereum) {
     });
 }
 
-// Clean up when the page is unloaded
+
 window.addEventListener("unload", () => {
     if (countdownInterval) {
         clearInterval(countdownInterval);
