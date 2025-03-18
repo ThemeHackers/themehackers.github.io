@@ -299,5 +299,16 @@ left: 10px;
     transform: translateY(-50%);
     pointer-events: none;
 }
-
+.glow-text-decorate {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: transparent;
+  background: linear-gradient(90deg, #ffe600, #00ffff, #ff00ff);
+  background-size: 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: moveRight 3s linear infinite;
+  text-shadow: 0 0 10px #00ffff;
+}
 
