@@ -1,5 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./img/thkx.png" rel="icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/animate/animate.css" rel="stylesheet">
+    <link href="css/animate/animate.min.css" rel="stylesheet">
+    <!-- =======================================================
+              Theme Name: BizPage
+              Theme URL: https://bootstrapmade.com/bizpage-bootstrap-business-template/
+              Author: BootstrapMade.com
+              License: https://bootstrapmade.com/license/
+            ======================================================= -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+
+        #content {
+            display: none;
+        }
+    </style>
+
+<body>
+    <!-- Loader -->
+    <div id="loader">
+        <img src="/img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById("loader").style.display = "none";
+            document.body.style.overflow = "auto";
+        }, 6000);
+    </script>
+</body>
+
+</head>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,25 +86,26 @@
     <link rel="stylesheet" href="./css/thkx-staking.css">
     <link href="./img/thkx.png" rel="icon">
 </head>
+
 <body>
-    
+
     <nav class="navbar">
         <div class="navbar-container">
             <div class="navbar-left">
-                <img src="/web3-thkx/img/thkx.png" alt="THKX Logo" class="logo"> 
+                <img src="/web3-thkx/img/thkx.png" alt="THKX Logo" class="logo">
                 <span class="brand-text">THKX Staking</span>
             </div>
-    
+
             <div class="nav-actions">
                 <a href="./thkx-staking-docs.html" class="btn btn-outline-secondary">📄 Documentation</a>
                 <button id="connectWallet" class="btn-primary">Connect Wallet</button>
                 <button id="disconnectWallet" class="btn-outline-secondary" style="display: none;">Disconnect</button>
                 <span id="walletAddress" class="text-muted">Not connected</span>
-            </div>            
+            </div>
         </div>
     </nav>
-    
-    
+
+
 
     <div class="container">
         <div class="card fade-in header-card">
@@ -39,18 +116,26 @@
 
         <div class="card">
             <h2><span class="icon">💰</span> User Info</h2>
-            <div class="info-item"><span class="text-muted">Staked Amount: </span><span id="stakedAmount" class="badge">0</span></div>
-            <div class="info-item"><span class="text-muted">Last Updated: </span><span id="lastUpdated" class="badge">-</span></div>
-            <div class="info-item"><span class="text-muted">Locked Until: </span><span id="lockUntil" class="badge">-</span></div>
-            <div class="info-item"><span class="text-muted">Pending Rewards: </span><span id="pendingRewards" class="badge">0</span></div>
-            <div class="info-item"><span class="text-muted">Unstake Fee: </span><span id="unstakeFee" class="badge">0</span></div>
-            <div class="info-item"><span class="text-muted">Time Until Unlock: </span><span id="timeUntilUnlock" class="badge">0</span></div>
+            <div class="info-item"><span class="text-muted">Staked Amount: </span><span id="stakedAmount"
+                    class="badge">0</span></div>
+            <div class="info-item"><span class="text-muted">Last Updated: </span><span id="lastUpdated"
+                    class="badge">-</span></div>
+            <div class="info-item"><span class="text-muted">Locked Until: </span><span id="lockUntil"
+                    class="badge">-</span></div>
+            <div class="info-item"><span class="text-muted">Pending Rewards: </span><span id="pendingRewards"
+                    class="badge">0</span></div>
+            <div class="info-item"><span class="text-muted">Unstake Fee: </span><span id="unstakeFee"
+                    class="badge">0</span></div>
+            <div class="info-item"><span class="text-muted">Time Until Unlock: </span><span id="timeUntilUnlock"
+                    class="badge">0</span></div>
         </div>
 
         <div class="card">
             <h2><span class="icon">📊</span> Contract Info</h2>
-            <div class="info-item"><span class="text-muted">Total Staked: </span><span id="totalStaked" class="badge">0</span></div>
-            <div class="info-item"><span class="text-muted">Reward Rate: </span><span id="rewardRate" class="badge">0</span></div>
+            <div class="info-item"><span class="text-muted">Total Staked: </span><span id="totalStaked"
+                    class="badge">0</span></div>
+            <div class="info-item"><span class="text-muted">Reward Rate: </span><span id="rewardRate"
+                    class="badge">0</span></div>
         </div>
 
         <div class="card">
@@ -89,8 +174,9 @@
         <div class="card">
             <h2>⏳ Halving Countdown Timer</h2>
             <p class="timer" id="halvingCountdown"></p>
-        </div>                         
+        </div>
     </div>
     <script src="./js/thkx-staking.js"></script>
 </body>
+
 </html>
