@@ -1,114 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Documentation for the THKX Faucet Smart Contract - Claim free THKX tokens and learn about contract controls"/>
+    <meta name="keywords" content="THKX, Faucet, Smart Contract, Web3, Cryptocurrency"/>
+    <meta name="author" content="Theme Hackers"/>
     <title>★彡[THKX Faucet Documentation]彡★</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="./img/thkx.png" type="image/png">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/thkx-doc.css"/>
-    <link href="./img/thkx.png" rel="icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
-    
-    <nav class="navbar">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-             
-                <img src="/web3-thkx/img/thkx.png" alt="Logo" class="logo"/>
-                THKX Faucet Docs
-            </a>
-        
-            <div class="nav-actions">
-                <a href="index.html" class="btn btn-outline-secondary">Back to Faucet</a>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar" role="navigation">
+            <div class="container">
+                <a class="navbar-brand" href="#" aria-label="THKX Faucet Documentation Home">
+                    <img src="/web3-thkx/img/thkx.png" alt="THKX Logo" class="logo" width="30" height="30"/>
+                    THKX Faucet Docs
+                </a>
+                <div class="nav-actions">
+                    <a href="index.html" class="btn btn-outline-secondary">Back to Faucet</a>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
-   
-    <div class="container">
-       
-        <div class="card header-card">
-            <h1 class="text-primary mb-3">🚰 THKX Faucet Smart Contract</h1>
+    <!-- Main Content -->
+    <main class="container" role="main">
+        <!-- Header Section -->
+        <section class="card header-card" aria-labelledby="main-heading">
+            <h1 id="main-heading" class="text-primary mb-3">🚰 THKX Faucet Smart Contract</h1>
             <p class="text-muted">Documentation for claiming free THKX tokens, contract controls, and token management.</p>
-        </div>
+        </section>
 
-
-        <div class="card">
-            <h2>🎯 Overview</h2>
+        <!-- Overview Section -->
+        <section class="card" aria-labelledby="overview-heading">
+            <h2 id="overview-heading">🎯 Overview</h2>
             <p>This contract allows users to receive THKX tokens and has a 1 hour waiting period to receive them again to prevent bots and malicious actors from attacking the contract system.</p>
-        </div>
+        </section>
 
-
-        <div class="card">
-            <h2>👥 User Functionality</h2>
+        <!-- User Functionality Section -->
+        <section class="card" aria-labelledby="user-functionality-heading">
+            <h2 id="user-functionality-heading">👥 User Functionality</h2>
             <ul>
-        
                 <li><code>claimTokens()</code>: Claim a fixed amount of THKX tokens instantly.</li>
-              
                 <li><code>faucetBalance()</code>: View the current balance of the faucet.</li>
-              
-                <li><b>Note:</b> Claim is only successful if faucet has enough balance.</li>
+                <li><strong>Note:</strong> Claim is only successful if faucet has enough balance.</li>
             </ul>
-        </div>
+        </section>
 
-       
-        <div class="card">
-            <h2>🛠️ Owner Controls</h2>
+        <!-- Owner Controls Section -->
+        <section class="card" aria-labelledby="owner-controls-heading">
+            <h2 id="owner-controls-heading">🛠️ Owner Controls</h2>
             <ul>
-                
                 <li><code>setFaucetSettings(uint256 _claimAmount)</code>: Update the amount of tokens per claim.</li>
-              
-                <li><code>withdrawTokens(uint256 amount)</code>: Withdraw any amount from the faucet to owner’s wallet.</li>
+                <li><code>withdrawTokens(uint256 amount)</code>: Withdraw any amount from the faucet to owner's wallet.</li>
             </ul>
-        </div>
+        </section>
 
-     
-        <div class="card">
-            <h2>📢 Events</h2>
+        <!-- Events Section -->
+        <section class="card" aria-labelledby="events-heading">
+            <h2 id="events-heading">📢 Events</h2>
             <ul>
-          
                 <li><code>TokensClaimed(address user, uint256 amount, uint256 timestamp)</code></li>
-                
                 <li><code>FaucetSettingsUpdated(uint256 newAmount)</code></li>
-             
                 <li><code>TokensWithdrawn(address owner, uint256 amount)</code></li>
             </ul>
-        </div>
+        </section>
 
-        
-        <div class="card">
-            <h2>📊 Key Parameters</h2>
-    
-            <table class="table table-bordered table-dark table-striped mt-3">
-                <thead>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Value</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Claim Amount</td>
-                        <td>100 THKX (default)</td>
-                        <td>Amount of tokens users receive per claim</td>
-                    </tr>
-                    <tr>
-                        <td>Token</td>
-                        <td>THKX</td>
-                        <td>ERC20 token distributed by the faucet</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <!-- Parameters Section -->
+        <section class="card" aria-labelledby="parameters-heading">
+            <h2 id="parameters-heading">📊 Key Parameters</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-dark table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">Parameter</th>
+                            <th scope="col">Value</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Claim Amount</td>
+                            <td>100 THKX (default)</td>
+                            <td>Amount of tokens users receive per claim</td>
+                        </tr>
+                        <tr>
+                            <td>Token</td>
+                            <td>THKX</td>
+                            <td>ERC20 token distributed by the faucet</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
+        <!-- Note Section -->
+        <section class="card">
+            <p class="text-muted"><span aria-label="Note">📌</span> <i>Note: Faucet will reject claims if the balance is too low. Owner should monitor and refill or withdraw tokens as needed.</i></p>
+        </section>
+    </main>
 
-        <div class="card">
-            <p class="text-muted">📌 <i>Note: Faucet will reject claims if the balance is too low. Owner should monitor and refill or withdraw tokens as needed.</i></p>
-        </div>
-    </div>
+    <!-- Footer -->
+    <footer class="container mt-5 mb-4 text-center text-muted">
+        <small>&copy; 2024 THKX Faucet. All rights reserved.</small>
+    </footer>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
