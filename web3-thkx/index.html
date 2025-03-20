@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +9,83 @@
     <link rel="stylesheet" href="./css/thkx-faucet.css">
     <link href="./img/thkx.png" rel="icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/animate/animate.css" rel="stylesheet">
+    <link href="css/animate/animate.min.css" rel="stylesheet">
+    <!-- =======================================================
+          Theme Name: BizPage
+          Theme URL: https://bootstrapmade.com/bizpage-bootstrap-business-template/
+          Author: BootstrapMade.com
+          License: https://bootstrapmade.com/license/
+        ======================================================= -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+
+        #content {
+            display: none;
+        }
+    </style>
+
+<body>
+    <!-- Loader -->
+    <div id="loader">
+        <img src="/img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById("loader").style.display = "none";
+            document.body.style.overflow = "auto";
+        }, 6000);
+    </script>
+</body>
+
 </head>
+
 <body>
 
     <!-- Navbar -->
     <nav class="navbar navbar-light bg-transparent px-4 fade-on-load">
         <a class="navbar-brand text-primary fw-bold" href="./index.html">
-            <img src="./img/thkx.png" alt="THKX Logo" style="width: 50px; height: 50px; margin-right: 8px; vertical-align: middle;">
+            <img src="./img/thkx.png" alt="THKX Logo"
+                style="width: 50px; height: 50px; margin-right: 8px; vertical-align: middle;">
             Web3 THKX Faucet
         </a>
         <div>
@@ -24,19 +95,21 @@
             <button id="connectWallet" class="btn btn-primary" role="button">🔗 Connect Wallet</button>
             <select id="accountSelect" class="form-select mt-2" style="display:none;"></select>
         </div>
-        
+
     </nav>
 
     <!-- Hero Section -->
     <div class="container text-center mt-5 fade-in">
         <span class="badge bg-light text-dark">💠 Testnet Tokens</span>
         <h1 class="fw-bold mt-3">Get THKX Tokens <span class="text-primary">Easily 🚀</span></h1>
-        <p class="text-muted">✨ Use our faucet to get THKX tokens for testing your applications on the blockchain. Simple, fast, and reliable.</p>
-        
+        <p class="text-muted">✨ Use our faucet to get THKX tokens for testing your applications on the blockchain.
+            Simple, fast, and reliable.</p>
+
         <button id="claimTokens" class="btn btn-primary mt-3" disabled role="button">💸 Get Tokens Now →</button>
         <div id="rainbowLoader" style="display:none;"></div>
 
-        <a href="https://github.com/ThemeHackers/THKX" class="btn btn-outline-secondary mt-3" target="_blank">🔍 View on GitHub</a>
+        <a href="https://github.com/ThemeHackers/THKX" class="btn btn-outline-secondary mt-3" target="_blank">🔍 View on
+            GitHub</a>
 
     </div>
 
@@ -57,7 +130,8 @@
     <footer class="text-center text-muted mt-5 fade-in">
         <p>© 2025 THKX Token Faucet. All rights reserved. 🛡️</p>
     </footer>
-    
+
     <script src="./js/thkx-faucet.js"></script>
 </body>
+
 </html>
