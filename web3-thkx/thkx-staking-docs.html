@@ -3,163 +3,172 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="THKX Staking Documentation - Comprehensive guide for staking rules, rewards, and token management">
+    <meta name="theme-color" content="#1e1e2f">
     <title>★彡[THKX Staking Documentation]彡★</title>
     <link rel="stylesheet" href="./css/thkx-doc.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="./img/thkx.png" rel="icon">
 </head>
 <body>
-
-    <nav class="navbar">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <img src="/web3-thkx/img/thkx.png" alt="Logo" class="logo"/>
-                THKX Staking Docs
-            </a>
-            <div class="nav-actions">
-                <a href="./thkx-staking.html">
-                    <button class="btn btn-outline-secondary">Back to App</button>
+    <header>
+        <nav class="navbar" aria-label="Main navigation">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <img src="/web3-thkx/img/thkx.png" alt="THKX Logo" class="logo" width="40" height="40"/>
+                    <span>THKX Staking Docs</span>
                 </a>
-            </div>            
-        </div>
-    </nav>
+                <div class="nav-actions">
+                    <a href="./thkx-staking.html" class="btn btn-outline-secondary">
+                        Back to App
+                    </a>
+                </div>            
+            </div>
+        </nav>
+    </header>
 
-    <div class="container">
-        <div class="card header-card">
-            <h1 class="text-primary mb-3">🪙 THKX Staking Smart Contract</h1>
+    <main class="container">
+        <section class="card header-card" aria-labelledby="main-heading">
+            <h1 id="main-heading" class="text-primary mb-3">🪙 THKX Staking Smart Contract</h1>
             <p class="text-muted">Comprehensive overview of staking rules, rewards, and token management within the THKX ecosystem.</p>
-        </div>
+        </section>
 
-        <div class="card">
-            <h2>🔐 Staking Mechanism</h2>
+        <section class="card" aria-labelledby="staking-mechanism">
+            <h2 id="staking-mechanism">🔐 Staking Mechanism</h2>
             <ul>
-                <li>Stake THKX Tokens for <b>1 - 365 days</b>.</li>
-                <li><b>+5% bonus every 30 days</b> of lock duration.</li>
+                <li>Stake THKX Tokens for <strong>1 - 365 days</strong>.</li>
+                <li><strong>+5% bonus every 30 days</strong> of lock duration.</li>
                 <li>Stake Value = <code>(Deposit + Rewards) × Bonus %</code></li>
             </ul>
-        </div>
+        </section>
 
-        <div class="card">
-            <h2>🧮 Bonus & Fee Calculations</h2>
+        <section class="card" aria-labelledby="bonus-calculations">
+            <h2 id="bonus-calculations">🧮 Bonus & Fee Calculations</h2>
             <ul>
-                <li><b>Bonus Multiplier:</b> +5% per 30 days locked</li>
-                <li><b>Formula:</b> <code>Bonus % = 100 + (Lock Days ÷ 30) × 5%</code></li>
-                <li>Example: 90 days → 100% + (3 × 5%) = <b>115%</b></li>
-                <hr>
-                <li><b>Unstake Fee Formula:</b> 10% - (2% × Months Staked)</li>
-                <li>Example: Stake 60 days → 2 months → 10% - 4% = <b>6% fee</b></li>
-                <li><b>No Fee</b> after 5 months or when lock period ends.</li>
+                <li><strong>Bonus Multiplier:</strong> +5% per 30 days locked</li>
+                <li><strong>Formula:</strong> <code>Bonus % = 100 + (Lock Days ÷ 30) × 5%</code></li>
+                <li>Example: 90 days → 100% + (3 × 5%) = <strong>115%</strong></li>
+                <hr aria-hidden="true">
+                <li><strong>Unstake Fee Formula:</strong> 10% - (2% × Months Staked)</li>
+                <li>Example: Stake 60 days → 2 months → 10% - 4% = <strong>6% fee</strong></li>
+                <li><strong>No Fee</strong> after 5 months or when lock period ends.</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="card">
-            <h2>🎁 Reward System</h2>
+        <section class="card" aria-labelledby="reward-system">
+            <h2 id="reward-system">🎁 Reward System</h2>
             <ul>
-                <li><b>Initial Reward Rate:</b> 10,000 per year.</li>
+                <li><strong>Initial Reward Rate:</strong> 10,000 per year.</li>
                 <li>Auto-compounding: Rewards can be added to stake anytime.</li>
                 <li>Formula:<br>
                     <code>(Staked × Reward Rate × Time) / (10,000 × 365 days)</code>
                 </li>
-                <li><b>Reward Timing:</b> Rewards are calculated from your last stake/compound.</li>
+                <li><strong>Reward Timing:</strong> Rewards are calculated from your last stake/compound.</li>
                 <li>Each action updates your <code>lastUpdated</code> timestamp.</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="card">
-            <h2>📉 Reward Halving</h2>
+        <section class="card" aria-labelledby="reward-halving">
+            <h2 id="reward-halving">📉 Reward Halving</h2>
             <ul>
-                <li>Reward rate halves every <b>180 days</b>.</li>
-                <li>Minimum reward rate is <b>1</b>.</li>
+                <li>Reward rate halves every <strong>180 days</strong>.</li>
+                <li>Minimum reward rate is <strong>1</strong>.</li>
                 <li>Halving checks occur when you stake, compound, or claim.</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="card">
-            <h2>💸 Early Unstake Fee</h2>
+        <section class="card" aria-labelledby="unstake-fee">
+            <h2 id="unstake-fee">💸 Early Unstake Fee</h2>
             <ul>
-                <li>Unstake before lock ends = <b>10% fee</b>.</li>
-                <li>Fee reduces by <b>2% every 30 days</b>.</li>
-                <li>No fee after <b>5 months</b> or lock expiry.</li>
+                <li>Unstake before lock ends = <strong>10% fee</strong>.</li>
+                <li>Fee reduces by <strong>2% every 30 days</strong>.</li>
+                <li>No fee after <strong>5 months</strong> or lock expiry.</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="card">
-            <h2>🚨 Emergency Withdrawals</h2>
+        <section class="card" aria-labelledby="emergency-withdrawals">
+            <h2 id="emergency-withdrawals">🚨 Emergency Withdrawals</h2>
             <ul>
-                <li><b>User:</b> Withdraws stake instantly (no rewards, no penalty).</li>
-                <li><b>Owner:</b> Emergency withdraw of all tokens if needed (system safeguard).</li>
+                <li><strong>User:</strong> Withdraws stake instantly (no rewards, no penalty).</li>
+                <li><strong>Owner:</strong> Emergency withdraw of all tokens if needed (system safeguard).</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="card">
-            <h2>🎉 Airdrop Distribution</h2>
+        <section class="card" aria-labelledby="airdrop-distribution">
+            <h2 id="airdrop-distribution">🎉 Airdrop Distribution</h2>
             <ul>
                 <li>Owner distributes airdrops to all active stakers.</li>
-                <li>Airdrops shared by <b>staking proportion</b>.</li>
+                <li>Airdrops shared by <strong>staking proportion</strong>.</li>
                 <li>Must have active stake to receive airdrop.</li>
                 <li>Airdrop does not affect rewards or lock period.</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="card">
-            <h2>🚫 Paused State</h2>
+        <section class="card" aria-labelledby="paused-state">
+            <h2 id="paused-state">🚫 Paused State</h2>
             <ul>
-                <li>When paused, staking, unstaking, and compounding are <b>disabled</b>.</li>
-                <li>Owner can <b>pause/resume</b> contract anytime for security or maintenance.</li>
+                <li>When paused, staking, unstaking, and compounding are <strong>disabled</strong>.</li>
+                <li>Owner can <strong>pause/resume</strong> contract anytime for security or maintenance.</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="card">
-            <h2>⚙️ Contract Controls</h2>
+        <section class="card" aria-labelledby="contract-controls">
+            <h2 id="contract-controls">⚙️ Contract Controls</h2>
             <ul>
-                <li>Owner can <b>update reward rate</b> manually (in special cases).</li>
-                <li>Contract can be <b>paused/resumed</b> to protect user funds.</li>
+                <li>Owner can <strong>update reward rate</strong> manually (in special cases).</li>
+                <li>Contract can be <strong>paused/resumed</strong> to protect user funds.</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="card">
-            <h2>📊 Key Parameters</h2>
-            <table class="table table-bordered table-dark table-striped mt-3">
-                <thead>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Value</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Reward Rate</td>
-                        <td>10,000</td>
-                        <td>Initial annual reward rate</td>
-                    </tr>
-                    <tr>
-                        <td>Halving Interval</td>
-                        <td>180 days</td>
-                        <td>Time between reward halvings</td>
-                    </tr>
-                    <tr>
-                        <td>Early Unstake Fee</td>
-                        <td>10%</td>
-                        <td>Initial fee, reduces over time</td>
-                    </tr>
-                    <tr>
-                        <td>Stake Duration</td>
-                        <td>1 - 365 days</td>
-                        <td>Valid staking lock period</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <section class="card" aria-labelledby="key-parameters">
+            <h2 id="key-parameters">📊 Key Parameters</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-dark table-striped mt-3">
+                    <caption class="visually-hidden">Key parameters and their values</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Parameter</th>
+                            <th scope="col">Value</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Reward Rate</th>
+                            <td>10,000</td>
+                            <td>Initial annual reward rate</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Halving Interval</th>
+                            <td>180 days</td>
+                            <td>Time between reward halvings</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Early Unstake Fee</th>
+                            <td>10%</td>
+                            <td>Initial fee, reduces over time</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Stake Duration</th>
+                            <td>1 - 365 days</td>
+                            <td>Valid staking lock period</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-        <div class="card">
-            <p class="text-muted">📌 <i>Note: Always check current reward rates and terms. Conditions may change based on contract logic and halving schedule.</i></p>
-            <p class="text-muted">📌 <i>In this contract, the safety analysis has been done and the contents are all written for the contract conditions. If there are any errors or there are still conditions that have not been explained, please inform me via my email below.<i></p>
-            <p class="text-muted">📌 <i>
-                <a>tigerzaza5678@gmail.com</a>
-            </i></p>                
-        </div>
-    </div>
+        <footer class="card">
+            <div role="note">
+                <p class="text-muted">📌 <em>Note: Always check current reward rates and terms. Conditions may change based on contract logic and halving schedule.</em></p>
+                <p class="text-muted">📌 <em>In this contract, the safety analysis has been done and the contents are all written for the contract conditions. If there are any errors or there are still conditions that have not been explained, please inform me via my email below.</em></p>
+                <p class="text-muted">📌 <em>
+                    <a href="mailto:tigerzaza5678@gmail.com">tigerzaza5678@gmail.com</a>
+                </em></p>
+            </div>
+        </footer>
+    </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
