@@ -84,32 +84,30 @@
     <!-- Navbar -->
     <nav class="navbar navbar-light bg-transparent px-4 fade-on-load">
         <a class="navbar-brand text-primary fw-bold" href="./index.html">
-            <img src="./img/thkx.png" alt="THKX Logo"
-                style="width: 50px; height: 50px; margin-right: 8px; vertical-align: middle;">
+            <img src="./img/thkx.png" alt="THKX Logo" style="width: 50px; height: 50px; margin-right: 8px; vertical-align: middle;">
             Web3 THKX Faucet
         </a>
         <div>
-            <a href="./thkx-faucet-docs.html" class="btn btn-outline-secondary">📖 Documentation</a>
-            <a href="./index.html" class="btn btn-outline-secondary">Web3 THKX</a>
-            <a href="./thkx-staking.html" class="btn btn-outline-secondary" target="_blank">Staking</a>
+            <a href="./thkx-faucet-docs.html" class="text-secondary me-3" target="_blank">📖 Documentation</a>
+            <a href="./thkx-staking.html" class="text-secondary me-3" target="_blank">Staking</a>
             <button id="connectWallet" class="btn btn-primary" role="button">🔗 Connect Wallet</button>
             <select id="accountSelect" class="form-select mt-2" style="display:none;"></select>
         </div>
-
+        
     </nav>
 
     <!-- Hero Section -->
     <div class="container text-center mt-5 fade-in">
         <span class="badge bg-light text-dark">💠 Testnet Tokens</span>
+        <span class="badge bg-light text-dark me-2">✅ Verified Contract</span>
+        <span class="badge bg-light text-dark me-2">🔒 Security Audits</span>
         <h1 class="fw-bold mt-3">Get THKX Tokens <span class="text-primary">Easily 🚀</span></h1>
-        <p class="text-muted">✨ Use our faucet to get THKX tokens for testing your applications on the blockchain.
-            Simple, fast, and reliable.</p>
-
+        <p class="text-muted">✨ Use our faucet to get THKX tokens for testing your applications on the blockchain. Simple, fast, and reliable.</p>
+        
         <button id="claimTokens" class="btn btn-primary mt-3" disabled role="button">💸 Get Tokens Now →</button>
         <div id="rainbowLoader" style="display:none;"></div>
 
-        <a href="https://github.com/ThemeHackers/THKX" class="btn btn-outline-secondary mt-3" target="_blank">🔍 View on
-            GitHub</a>
+        <a href="https://github.com/ThemeHackers/THKX" class="btn btn-outline-secondary mt-3" target="_blank">🔍 View on GitHub</a>
 
     </div>
 
@@ -130,8 +128,7 @@
     <footer class="text-center text-muted mt-5 fade-in">
         <p>© 2025 THKX Token Faucet. All rights reserved. 🛡️</p>
     </footer>
-
+    
     <script src="./js/thkx-faucet.js"></script>
 </body>
-
 </html>
