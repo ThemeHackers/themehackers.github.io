@@ -113,11 +113,18 @@ body {
     border-radius: 15px;
     backdrop-filter: blur(15px);
     padding: 2.5rem;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    animation: fadeInUp 0.8s ease-in-out;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow;
     width: 100%;
     max-width: 800px; 
     margin: 0 auto;   
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 20px 40px rgba(0, 212, 255, 0.15);
+    border-color: rgba(0, 212, 255, 0.4);
 }
 
 /* Inputs and Buttons */
@@ -133,12 +140,12 @@ body {
 input[type="number"] {
     padding: 0.75rem 1.5rem;
     border-radius: 25px;
-    border: 1px solid #00d4ff;
-    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    background: rgba(255, 255, 255, 0.07);
     color: #ffffff;
     width: 100%;
     max-width: 200px;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-primary, .btn-outline-secondary {
@@ -246,9 +253,15 @@ h2 {
 .badge {
     font-size: 0.9rem;
     padding: 0.5rem 1rem;
-    background: rgba(0, 212, 255, 0.2) !important;
+    background: rgba(0, 212, 255, 0.15) !important;
     color: #ffffff !important;
     border-radius: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.badge:hover {
+    background: rgba(0, 212, 255, 0.25) !important;
+    transform: translateY(-2px);
 }
 
 /* Inputs and Buttons */
@@ -260,38 +273,27 @@ h2 {
     align-items: center;
 }
 
-input[type="number"] {
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
-    border: 1px solid #00d4ff;
-    background: rgba(255, 255, 255, 0.15);
-    color: #ffffff;
-    width: 100%; 
-    max-width: 400px; 
-    transition: all 0.3s ease;
-}
-
-
 input[type="number"]:focus {
-    border-color: #ff007a;
-    box-shadow: 0 0 10px rgba(255, 0, 122, 0.5);
-    outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 .btn-primary {
-    background: #00d4ff;
+    background: linear-gradient(45deg, #00d4ff, #00a6ff);
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 25px;
-    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
-    transition: all 0.3s ease;
-    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow;
 }
 
 .btn-primary:hover {
-    background: #ff007a;
+    background: linear-gradient(45deg, #ff007a, #ff4d8c);
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 20px rgba(255, 0, 122, 0.5);
+    box-shadow: 0 8px 25px rgba(255, 0, 122, 0.4);
 }
 
 .btn-outline-secondary {
@@ -377,15 +379,4 @@ canvas {
     max-width: 100%;
     height: 300px;
   }
-.glow-text-decorate {
-  font-size: 2.5em;
-  font-weight: bold;
-  color: transparent;
-  background: linear-gradient(90deg, #ffe600, #00ffff, #ff00ff);
-  background-size: 300%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: moveRight 3s linear infinite;
-  text-shadow: 0 0 10px #00ffff;
-}  
+  
