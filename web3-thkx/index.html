@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,76 +8,7 @@
     <link rel="stylesheet" href="./css/thkx-faucet.css">
     <link href="./img/thkx.png" rel="icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
-    <!-- Favicons -->
-    <link href="img/favicon.png" rel="icon">
-    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
-        rel="stylesheet">
-
-    <!-- Bootstrap CSS File -->
-    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Libraries CSS Files -->
-    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-
-    <!-- Main Stylesheet File -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/animate/animate.css" rel="stylesheet">
-    <link href="css/animate/animate.min.css" rel="stylesheet">
-    <!-- =======================================================
-          Theme Name: BizPage
-          Theme URL: https://bootstrapmade.com/bizpage-bootstrap-business-template/
-          Author: BootstrapMade.com
-          License: https://bootstrapmade.com/license/
-        ======================================================= -->
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-
-        #content {
-            display: none;
-        }
-    </style>
-
-<body>
-    <!-- Loader -->
-    <div id="loader">
-        <img src="/img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
-    </div>
-
-    <script>
-        setTimeout(() => {
-            document.getElementById("loader").style.display = "none";
-            document.body.style.overflow = "auto";
-        }, 6000);
-    </script>
-</body>
-
 </head>
-
 <body>
 
     <!-- Navbar -->
@@ -100,7 +30,7 @@
     <div class="container text-center mt-5 fade-in">
         <span class="badge bg-light text-dark">💠 Testnet Tokens</span>
         <span class="badge bg-light text-dark me-2">✅ Verified Contract</span>
-        <span class="badge bg-light text-dark me-2">🔒 Security Audits</span>
+        <span class="badge bg-light text-dark me-2">🔒 Audits</span>
         <h1 class="fw-bold mt-3">Get THKX Tokens <span class="text-primary">Easily 🚀</span></h1>
         <p class="text-muted">✨ Use our faucet to get THKX tokens for testing your applications on the blockchain. Simple, fast, and reliable.</p>
         
@@ -109,6 +39,115 @@
 
         <a href="https://github.com/ThemeHackers/THKX" class="btn btn-outline-secondary mt-3" target="_blank">🔍 View on GitHub</a>
 
+    </div>
+
+    <!-- Network Info & Features Section -->
+    <div class="container mt-5">
+        <div class="row g-4">
+            <!-- Network Info -->
+            <div class="col-md-6">
+                <div class="card h-100 p-4 shadow-sm">
+                    <h5 class="fw-bold">🌐 Network Information</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <strong>Network:</strong> <span class="text-primary">Holesky Testnet</span>
+                        </li>
+                        <li class="mb-2">
+                            <strong>Token Address:</strong> 
+                            <code class="text-muted">0xDAc51d939dc6d6FbA786601a80E9Cd0fF5B288c4</code>
+                        </li>
+                        <li class="mb-2">
+                            <strong>Faucet Limit:</strong> 100 THKX per request
+                        </li>
+                        <li>
+                            <strong>Cooldown:</strong> 1 hours
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Features -->
+            <div class="col-md-6">
+                <div class="card h-100 p-4 shadow-sm">
+                    <h5 class="fw-bold">✨ Features</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <strong>Secure:</strong> Audited smart contracts
+                        </li>
+                        <li class="mb-2">
+                            <strong>Fast:</strong> Instant token delivery
+                        </li>
+                        <li class="mb-2">
+                            <strong>Community-Driven:</strong> Open source project
+                        </li>
+                        <li>
+                            <strong>Reliable:</strong> Automated distribution system
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How to Use Section -->
+    <div class="container mt-5">
+        <div class="card p-4 shadow-sm">
+            <h4 class="fw-bold text-center mb-4">🚀 How to Get Started</h4>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="h1 text-primary mb-3">1</div>
+                        <h5>Connect Wallet</h5>
+                        <p class="text-muted">Click "Connect Wallet" and select your MetaMask or other Web3 wallet</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="h1 text-primary mb-3">2</div>
+                        <h5>Switch to Holesky</h5>
+                        <p class="text-muted">Ensure your wallet is connected to the Holesky testnet</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="h1 text-primary mb-3">3</div>
+                        <h5>Request Tokens</h5>
+                        <p class="text-muted">Click "Request Tokens" to receive your THKX tokens instantly</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trust Indicators -->
+    <div class="container mt-5 mb-5">
+        <div class="card p-4 shadow-sm">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h4 class="fw-bold">🛡️ Security & Trust</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">✓ Smart contract audited by independent security firms</li>
+                        <li class="mb-2">✓ Open-source code with community reviews</li>
+                        <li class="mb-2">✓ Rate-limited to prevent abuse</li>
+                        <li>✓ No registration or personal data required</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="fw-bold">🤝 Report a vulnerability & Support</h4>
+                    <div class="d-flex gap-3 mt-3">
+                        <a href="https://www.instagram.com/_tthemzdl5678/" class="btn btn-outline-primary" target="_blank">
+                            Follow Instagram
+                        </a>
+                        <a href="https://github.com/ThemeHackers/THKX/issues" class="btn btn-outline-primary" target="_blank">
+                            Report Issues
+                        </a>
+                        <a href="https://www.facebook.com/phubadee.thanakhan" class="btn btn-outline-primary" target="_blank">
+                            Follow Facebook
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Faucet Box -->
