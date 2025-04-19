@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CC Practice Exam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-light: #60a5fa;
+            --secondary-color: #f3f4f6;
+            --text-color: #1f2937;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --background-color: #f9fafb;
+            --card-background: white;
+            --header-background: #2563eb;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --transition-speed: 0.3s;
+            --animation-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --primary-light: #60a5fa;
+            --secondary-color: #1f2937;
+            --text-color: #f3f4f6;
+            --border-color: #374151;
+            --background-color: #111827;
+            --card-background: #1f2937;
+            --header-background: #1e40af;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            transition: all var(--transition-speed) ease;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+            z-index: 1;
+        }
+
+        .exam-selection {
+            background-color: var(--card-background);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .exam-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .exam-option {
+            padding: 1.5rem;
+            background-color: var(--secondary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .exam-option:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .question-container {
+            background-color: var(--card-background);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            animation: fadeIn 0.5s ease;
+            position: relative;
+        }
+
+        .question {
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+
+        .choices {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .choice {
+            padding: 1.25rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all var(--transition-speed) var(--animation-bounce);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .choice:hover {
+            transform: translateX(8px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+        }
+
+        .choice.selected {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateX(8px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .choice.correct {
+            background-color: var(--success-color);
+            color: white;
+            animation: correctAnswer 0.5s var(--animation-bounce);
+        }
+
+        .choice.incorrect {
+            background-color: var(--danger-color);
+            color: white;
+            animation: incorrectAnswer 0.5s var(--animation-bounce);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all var(--transition-speed) var(--animation-bounce);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .anti-cheat-warning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--danger-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            display: none;
+            z-index: 1000;
+            animation: warningPulse 2s infinite;
+        }
+
+        @keyframes warningPulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .timer {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--card-background);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow-md);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 0.5rem;
+            background-color: var(--border-color);
+            border-radius: 0.25rem;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            border-radius: 0.25rem;
+            transition: width 0.3s ease;
+        }
+
+        .question-counter {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .question-dot {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .question-dot:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-md);
+        }
+
+        .question-dot.answered {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .question-dot.current {
+            background-color: var(--primary-light);
+            color: white;
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+            box-shadow: var(--shadow-md);
+        }
+
+        .question-dot.correct {
+            background-color: var(--success-color);
+            color: white;
+            border-color: var(--success-color);
+        }
+
+        .question-dot.incorrect {
+            background-color: var(--danger-color);
+            color: white;
+            border-color: var(--danger-color);
+        }
+
+        .results {
+            background-color: var(--card-background);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            display: none;
+        }
+
+        .score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+
+        .score-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .score-card {
+            background-color: var(--secondary-color);
+            padding: 1rem;
+            border-radius: 0.75rem;
+        }
+
+        .score-card h3 {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .score-card p {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .exam-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+            }
+
+            .score-details {
+                grid-template-columns: 1fr;
+            }
+
+            .question-dot {
+                width: 1.75rem;
+                height: 1.75rem;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="anti-cheat-warning" id="cheatWarning">
+        Warning: Switching tabs or windows is not allowed during the exam!
+    </div>
+    <div class="timer" id="timer">Time: 00:00</div>
+    
+    <div class="container">
+        <header>
+            <h1>CC Practice Exam</h1>
+            <p>Test your knowledge and prepare for certification</p>
+        </header>
+        
+        <div class="exam-selection" id="examSelection">
+            <h2>Select Exam Type</h2>
+            <div class="exam-options">
+                <div class="exam-option" data-exam="practice">
+                    <h3>Practice Mode</h3>
+                    <p>Learn at your own pace</p>
+                </div>
+                <div class="exam-option" data-exam="timed">
+                    <h3>Timed Exam</h3>
+                    <p>Simulate real exam conditions</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="question-container" id="questionContainer" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="question" id="question"></div>
+            <div class="choices" id="choices"></div>
+            <div class="question-counter" id="questionCounter"></div>
+            <div class="navigation">
+                <button id="prevBtn" disabled>Previous</button>
+                <button id="nextBtn">Next</button>
+                <button id="submitBtn" style="display: none;">Submit Exam</button>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <h2>Exam Results</h2>
+            <div class="score" id="finalScore">0%</div>
+            <div class="score-details">
+                <div class="score-card">
+                    <h3>Correct Answers</h3>
+                    <p id="correctCount">0</p>
+                </div>
+                <div class="score-card">
+                    <h3>Incorrect Answers</h3>
+                    <p id="incorrectCount">0</p>
+                </div>
+                <div class="score-card">
+                    <h3>Time Taken</h3>
+                    <p id="timeTaken">00:00</p>
+                </div>
+            </div>
+            <button id="restartBtn">Restart Exam</button>
+        </div>
+    </div>
+
+    <script>
+        // Exam data
+        let examData = null;
+        let currentExam = null;
+
+        // State management
+        let currentQuestion = 0;
+        let answers = [];
+        let startTime = null;
+        let timerInterval = null;
+        let tabSwitchCount = 0;
+        let examType = null;
+
+        // Load exam data
+        async function loadExam(examSet) {
+            try {
+                const response = await fetch(`cc-exam-db/${examSet}.json`);
+                examData = await response.json();
+                currentExam = examSet;
+                
+                // Initialize answers array
+                answers = new Array(examData.Questions.length).fill(null);
+                
+                // Update UI
+                document.getElementById('examSelection').style.display = 'none';
+                document.getElementById('questionContainer').style.display = 'block';
+                document.getElementById('results').style.display = 'none';
+                
+                // Reset state
+                currentQuestion = 0;
+                tabSwitchCount = 0;
+                
+                // Start timer if timed exam
+                if (examType === 'timed') {
+                    startTimer();
+                }
+                
+                // Display first question
+                displayQuestion(0);
+                
+                // Update domain distribution
+                updateDomainDistribution();
+            } catch (error) {
+                console.error('Error loading exam:', error);
+                alert('Failed to load exam. Please try again.');
+            }
+        }
+
+        function updateDomainDistribution() {
+            const distributionDiv = document.getElementById('domain-distribution');
+            if (distributionDiv) {
+                distributionDiv.innerHTML = '';
+                for (const [domain, percentage] of Object.entries(examData.DomainPercentages)) {
+                    const domainElement = document.createElement('div');
+                    domainElement.textContent = `${domain}: ${percentage}%`;
+                    distributionDiv.appendChild(domainElement);
+                }
+            }
+        }
+
+        // Anti-cheat measures
+        document.addEventListener('copy', (e) => {
+            e.preventDefault();
+            showCheatWarning();
+        });
+
+        document.addEventListener('paste', (e) => {
+            e.preventDefault();
+            showCheatWarning();
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                tabSwitchCount++;
+                showCheatWarning();
+            }
+        });
+
+        function showCheatWarning() {
+            const warning = document.getElementById('cheatWarning');
+            warning.style.display = 'block';
+            setTimeout(() => {
+                warning.style.display = 'none';
+            }, 3000);
+        }
+
+        // Timer functionality
+        function startTimer() {
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('timer').textContent = 
+                `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Question management
+        function displayQuestion(index) {
+            const question = examData.Questions[index];
+            const questionElement = document.getElementById('question');
+            const choicesElement = document.getElementById('choices');
+            
+            questionElement.innerHTML = `
+                <div class="question-header">
+                    <span class="question-number">Question ${index + 1} of ${examData.Questions.length}</span>
+                    <span class="domain-tag">${question.DomainOfKnowledge}</span>
+                </div>
+                <div class="question-text">${question.Question}</div>
+            `;
+            
+            choicesElement.innerHTML = '';
+            
+            question.Choices.forEach((choice, i) => {
+                const choiceElement = document.createElement('div');
+                choiceElement.className = 'choice';
+                if (answers[index] === i) {
+                    choiceElement.classList.add('selected');
+                }
+                choiceElement.textContent = choice;
+                choiceElement.onclick = () => selectAnswer(index, i);
+                choicesElement.appendChild(choiceElement);
+            });
+
+            // Update progress bar
+            const progress = ((index + 1) / examData.Questions.length) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').style.display = 
+                index === examData.Questions.length - 1 ? 'none' : 'block';
+            document.getElementById('submitBtn').style.display = 
+                index === examData.Questions.length - 1 ? 'block' : 'none';
+
+            // Update question counter
+            updateQuestionCounter(index);
+        }
+
+        function updateQuestionCounter(currentIndex) {
+            const counter = document.getElementById('questionCounter');
+            counter.innerHTML = '';
+            
+            const totalQuestions = examData.Questions.length;
+            const maxVisibleDots = 7; // Maximum number of dots to show
+            const halfVisible = Math.floor(maxVisibleDots / 2);
+            
+            // Create dots with ellipsis for large numbers
+            for (let i = 0; i < totalQuestions; i++) {
+                // Show dots if:
+                // 1. It's one of the first 3 dots
+                // 2. It's one of the last 3 dots
+                // 3. It's within 2 dots of the current question
+                // 4. It's the current question
+                if (i < 3 || 
+                    i >= totalQuestions - 3 || 
+                    (i >= currentIndex - 2 && i <= currentIndex + 2) || 
+                    i === currentIndex) {
+                    
+                    const dot = document.createElement('div');
+                    dot.className = 'question-dot';
+                    dot.textContent = i + 1;
+                    
+                    if (i === currentIndex) {
+                        dot.classList.add('current');
+                    } else if (answers[i] !== null) {
+                        dot.classList.add('answered');
+                        if (answers[i] === examData.Questions[i].Choices.indexOf(examData.Questions[i].AnswerKey)) {
+                            dot.classList.add('correct');
+                        } else {
+                            dot.classList.add('incorrect');
+                        }
+                    }
+                    
+                    dot.onclick = () => {
+                        currentQuestion = i;
+                        displayQuestion(i);
+                    };
+                    
+                    counter.appendChild(dot);
+                } else if (i === 3 || i === totalQuestions - 4) {
+                    // Add ellipsis
+                    const ellipsis = document.createElement('div');
+                    ellipsis.className = 'question-dot ellipsis';
+                    ellipsis.textContent = '...';
+                    ellipsis.style.cursor = 'default';
+                    counter.appendChild(ellipsis);
+                }
+            }
+        }
+
+        function selectAnswer(questionIndex, choiceIndex) {
+            answers[questionIndex] = choiceIndex;
+            displayQuestion(questionIndex);
+        }
+
+        // Exam initialization
+        document.querySelectorAll('.exam-option').forEach(option => {
+            option.addEventListener('click', () => {
+                examType = option.dataset.exam;
+                document.querySelectorAll('.exam-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                
+                // Load the appropriate exam
+                const examSet = option.dataset.exam === 'practice' ? 'CC1' : 'CC2';
+                loadExam(examSet);
+            });
+        });
+
+        // Navigation
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentQuestion < examData.Questions.length - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            }
+        });
+
+        // Exam submission
+        document.getElementById('submitBtn').addEventListener('click', () => {
+            clearInterval(timerInterval);
+            showResults();
+        });
+
+        function showResults() {
+            const correct = answers.filter((answer, index) => 
+                answer === examData.Questions[index].Choices.indexOf(examData.Questions[index].AnswerKey)).length;
+            const incorrect = examData.Questions.length - correct;
+            const score = (correct / examData.Questions.length * 100).toFixed(1);
+            
+            document.getElementById('questionContainer').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            
+            document.getElementById('finalScore').textContent = `${score}%`;
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('incorrectCount').textContent = incorrect;
+            document.getElementById('timeTaken').textContent = 
+                document.getElementById('timer').textContent.replace('Time: ', '');
+
+            // Show domain-wise performance
+            const domainScores = {};
+            examData.Questions.forEach((question, index) => {
+                if (answers[index] === question.Choices.indexOf(question.AnswerKey)) {
+                    if (!domainScores[question.DomainOfKnowledge]) {
+                        domainScores[question.DomainOfKnowledge] = 0;
+                    }
+                    domainScores[question.DomainOfKnowledge]++;
+                }
+            });
+
+            const domainPerformance = document.createElement('div');
+            domainPerformance.className = 'domain-performance';
+            domainPerformance.innerHTML = '<h3>Domain Performance</h3>';
+            
+            for (const [domain, score] of Object.entries(domainScores)) {
+                const totalInDomain = examData.Questions.filter(q => q.DomainOfKnowledge === domain).length;
+                const percentage = ((score / totalInDomain) * 100).toFixed(1);
+                domainPerformance.innerHTML += `
+                    <div class="score-card">
+                        <h3>${domain}</h3>
+                        <p>${percentage}% (${score}/${totalInDomain})</p>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('results').appendChild(domainPerformance);
+        }
+
+        // Restart exam
+        document.getElementById('restartBtn').addEventListener('click', () => {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('examSelection').style.display = 'block';
+            clearInterval(timerInterval);
+        });
+    </script>
+</body>
+</html> 
