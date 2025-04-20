@@ -179,6 +179,35 @@
             animation: incorrectAnswer 0.5s var(--animation-bounce);
         }
 
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #18d26e;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .explanation.correct {
+            border-left-color: #18d26e;
+            background-color: rgba(24, 210, 110, 0.1);
+        }
+
+        .explanation.incorrect {
+            border-left-color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+
+        .choice.selected.correct {
+            background-color: #18d26e;
+            color: white;
+        }
+
+        .choice.selected.incorrect {
+            background-color: #dc3545;
+            color: white;
+        }
+
         .navigation {
             display: flex;
             justify-content: space-between;
@@ -383,7 +412,7 @@
             <h1>CC Practice Exam</h1>
             <p>Test your knowledge and prepare for certification</p>
         </header>
-        
+
         <div class="exam-selection" id="examSelection">
             <h2>Select Exam Type</h2>
             <div class="exam-options">
@@ -397,13 +426,14 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="question-container" id="questionContainer" style="display: none;">
             <div class="progress-bar">
                 <div class="progress" id="progress"></div>
             </div>
             <div class="question" id="question"></div>
             <div class="choices" id="choices"></div>
+            <div class="explanation" id="explanation" style="display: none;"></div>
             <div class="question-counter" id="questionCounter"></div>
             <div class="navigation">
                 <button id="prevBtn" disabled>Previous</button>
@@ -538,6 +568,7 @@
             const question = examData.Questions[index];
             const questionElement = document.getElementById('question');
             const choicesElement = document.getElementById('choices');
+            const explanationElement = document.getElementById('explanation');
             
             questionElement.innerHTML = `
                 <div class="question-header">
@@ -548,12 +579,27 @@
             `;
             
             choicesElement.innerHTML = '';
+            explanationElement.style.display = 'none';
             
             question.Choices.forEach((choice, i) => {
                 const choiceElement = document.createElement('div');
                 choiceElement.className = 'choice';
                 if (answers[index] === i) {
                     choiceElement.classList.add('selected');
+                    // Add correct/incorrect classes if answer is selected
+                    if (i === question.Choices.indexOf(question.AnswerKey)) {
+                        choiceElement.classList.add('correct');
+                    } else {
+                        choiceElement.classList.add('incorrect');
+                    }
+                    // Show explanation
+                    explanationElement.innerHTML = `
+                        <h4>${i === question.Choices.indexOf(question.AnswerKey) ? 'Correct!' : 'Incorrect'}</h4>
+                        <p><strong>Correct Answer:</strong> ${question.AnswerKey}</p>
+                        <p><strong>Explanation:</strong> ${question.Explaination}</p>
+                    `;
+                    explanationElement.style.display = 'block';
+                    explanationElement.className = `explanation ${i === question.Choices.indexOf(question.AnswerKey) ? 'correct' : 'incorrect'}`;
                 }
                 choiceElement.textContent = choice;
                 choiceElement.onclick = () => selectAnswer(index, i);
