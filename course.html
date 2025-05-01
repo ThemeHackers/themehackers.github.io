@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>★彡[Dashsecurity Course]彡★</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
+    rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/animate/animate.css" rel="stylesheet">
+  <link href="css/animate/animate.min.css" rel="stylesheet">
+  <!-- =======================================================
+    Theme Name: BizPage
+    Theme URL: https://bootstrapmade.com/bizpage-bootstrap-business-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+
+    #content {
+      display: none;
+    }
+
+    .course-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .course-box {
+      cursor: pointer;
+      transition: transform 0.3s;
+      background: #1a1a1a;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .course-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    .course-icon {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .course-icon i {
+      font-size: 48px;
+      color: #18d26e;
+    }
+
+    .course-content {
+      text-align: center;
+    }
+
+    .course-content h4 {
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .course-content p {
+      color: #ccc;
+      margin-bottom: 15px;
+    }
+
+    .btn-details {
+      background: #18d26e;
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-details:hover {
+      background: #15b85f;
+    }
+
+    .modal-content {
+      background: #1a1a1a;
+      color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    .modal-header {
+      border-bottom: 1px solid #333;
+      padding: 20px;
+    }
+
+    .modal-title {
+      color: #18d26e;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .modal-body {
+      padding: 30px;
+    }
+
+    .course-details-section {
+      background: #2a2a2a;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .course-details-section h5 {
+      color: #18d26e;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    .course-meta {
+      background: #2a2a2a;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .course-meta p {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .course-meta i {
+      color: #18d26e;
+      margin-right: 10px;
+      font-size: 20px;
+    }
+
+    .price {
+      font-size: 24px;
+      color: #18d26e;
+      font-weight: bold;
+    }
+
+    .course-details-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .course-details-list li {
+      margin-bottom: 12px;
+      padding-left: 30px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .course-details-list li i {
+      position: absolute;
+      left: 0;
+      top: 3px;
+      color: #18d26e;
+    }
+
+    .course-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .course-tag {
+      background: #333;
+      color: #fff;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .course-tag:hover {
+      background: #18d26e;
+      transform: translateY(-2px);
+    }
+
+    .modal-footer {
+      border-top: 1px solid #333;
+      padding: 20px;
+    }
+
+    .btn-enroll {
+      background: #18d26e;
+      color: #fff;
+      border: none;
+      padding: 10px 30px;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .btn-enroll:hover {
+      background: #15b85f;
+      transform: translateY(-2px);
+    }
+
+    .course-icon-large {
+      font-size: 64px;
+      color: #18d26e;
+      margin-bottom: 20px;
+    }
+
+    .course-description {
+      color: #ccc;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+  </style>
+  <body>
+    <!-- Loader -->
+    <div id="loader">
+      <img src="./img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
+    </div>
+  
+    <script>
+      setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+        document.body.style.overflow = "auto";
+      }, 4000);
+    </script>
+  </body>
+
+</head>
+<!--==========================
+    Header
+  ============================-->
+<header id="header">
+  <div class="container-fluid">
+
+    <div id="logo" class="pull-left">
+      <h1><a href="#intro" class="scrollto">TH Dashsecurity</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+
+    </div>
+
+    <nav id="nav-menu-container">
+      <ul class="nav-menu">
+        <li class="menu-active"><a href="/index.html">Back</a></li>
+        
+      </ul>
+    </nav><!-- #nav-menu-container -->
+  </div>
+</header><!-- #header -->
+
+<!--==========================
+    Intro Section
+  ============================-->
+<section id="intro">
+  <div class="intro-container">
+    <div id="introCarousel" class="carousel  slide carousel-fade" data-ride="carousel">
+
+      <ol class="carousel-indicators"></ol>
+
+      <div class="carousel-inner" role="listbox">
+
+        <div class="carousel-item active">
+          <div class="carousel-background"><img src="img/intro-carousel/1.png" alt=""></div>
+          <div class="carousel-container">
+            <div class="carousel-content">
+              <h2 class="glow-text-learning">Security course learning</h2>
+              <a href="#about" class="btn-get-started scrollto">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="carousel-background"><img src="img/intro-carousel/2.jpg" alt=""></div>
+          <div class="carousel-container">
+            <div class="carousel-content">
+              <h2 class="glow-text-learning">Security course learning</h2>
+              <a href="#about" class="btn-get-started scrollto">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="carousel-background"><img src="img/intro-carousel/3.jpg" alt=""></div>
+          <div class="carousel-container">
+            <div class="carousel-content">
+              <h2 class="glow-text-learning">Security course learning</h2>
+              <a href="#about" class="btn-get-started scrollto">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <a class="carousel-control-prev" href="#introCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon ion-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+
+      <a class="carousel-control-next" href="#introCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon ion-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+
+    </div>
+  </div>
+</section><!-- #intro -->
+
+<main id="main">
+
+  <!--==========================
+      About Us Section
+    ============================-->
+  <section id="about"><br><br>
+    <section id="cpe"><br><br>
+      <div class="container">
+        <header class="section-header">
+          <h3 class="glow-text">What is a course system?</h3>
+          <p>The course system is a course that the website developer teaches according to the curriculum by using knowledge and experience to teach. Each course will be both free and paid, etc. The price is set for education only.</p>
+        </header>
+      </div>
+    </section>
+    <section id="courses" class="section-bg">
+      <div class="container">
+        <header class="section-header">
+          <h3 class="glow-text">Our Courses</h3>
+          <p>Explore our comprehensive security courses designed for all skill levels</p>
+        </header>
+
+        <div class="course-container">
+        <div class="row">
+          <!-- Course 1 -->
+          <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
+              <div class="course-box" data-course-id="intro-cybersecurity">
+              <div class="course-icon">
+                <i class="ion-ios-lock"></i>
+              </div>
+              <div class="course-content">
+                  <h4>Introduction to Cybersecurity</h4>
+                  <p>Learn the fundamentals of cybersecurity and protect digital assets.</p>
+                  <button class="btn-details" onclick="showCourseDetails('intro-cybersecurity')">View Details</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Course 2 -->
+          <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
+              <div class="course-box" data-course-id="network-security">
+              <div class="course-icon">
+                <i class="ion-ios-shield"></i>
+              </div>
+              <div class="course-content">
+                  <h4>Network Security</h4>
+                  <p>Master network security concepts and protect infrastructure.</p>
+                  <button class="btn-details" onclick="showCourseDetails('network-security')">View Details</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Course 3 -->
+          <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
+              <div class="course-box" data-course-id="ethical-hacking">
+              <div class="course-icon">
+                <i class="ion-ios-bug"></i>
+              </div>
+              <div class="course-content">
+                  <h4>Ethical Hacking</h4>
+                  <p>Learn penetration testing and ethical hacking techniques.</p>
+                  <button class="btn-details" onclick="showCourseDetails('ethical-hacking')">View Details</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Course 4 -->
+          <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
+              <div class="course-box" data-course-id="cloud-security">
+              <div class="course-icon">
+                <i class="ion-ios-cloud"></i>
+              </div>
+              <div class="course-content">
+                  <h4>Cloud Security</h4>
+                  <p>Secure cloud infrastructure and applications.</p>
+                  <button class="btn-details" onclick="showCourseDetails('cloud-security')">View Details</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Course 5 -->
+          <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
+              <div class="course-box" data-course-id="secure-coding">
+              <div class="course-icon">
+                <i class="ion-ios-code"></i>
+              </div>
+              <div class="course-content">
+                  <h4>Secure Coding</h4>
+                  <p>Write secure code and prevent vulnerabilities.</p>
+                  <button class="btn-details" onclick="showCourseDetails('secure-coding')">View Details</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Course 6 -->
+          <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
+              <div class="course-box" data-course-id="security-analytics">
+              <div class="course-icon">
+                <i class="ion-ios-analytics"></i>
+              </div>
+              <div class="course-content">
+                  <h4>Security Analytics</h4>
+                  <p>Master security monitoring and threat detection.</p>
+                  <button class="btn-details" onclick="showCourseDetails('security-analytics')">View Details</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Course 7 -->
+            <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
+              <div class="course-box" data-course-id="incident-response">
+                <div class="course-icon">
+                  <i class="ion-ios-alert"></i>
+                </div>
+                <div class="course-content">
+                  <h4>Incident Response</h4>
+                  <p>Learn to handle security incidents effectively.</p>
+                  <button class="btn-details" onclick="showCourseDetails('incident-response')">View Details</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Course 8 -->
+            <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
+              <div class="course-box" data-course-id="cryptography">
+                <div class="course-icon">
+                  <i class="ion-ios-key"></i>
+                </div>
+                <div class="course-content">
+                  <h4>Cryptography</h4>
+                  <p>Understand encryption and cryptographic systems.</p>
+                  <button class="btn-details" onclick="showCourseDetails('cryptography')">View Details</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Course 9 -->
+            <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
+              <div class="course-box" data-course-id="mobile-security">
+                <div class="course-icon">
+                  <i class="ion-ios-phone-portrait"></i>
+                </div>
+                <div class="course-content">
+                  <h4>Mobile Security</h4>
+                  <p>Secure mobile applications and devices.</p>
+                  <button class="btn-details" onclick="showCourseDetails('mobile-security')">View Details</button>
+                </div>
+              </div>
+                  </div>
+
+            <!-- Course 10 -->
+            <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
+              <div class="course-box" data-course-id="iot-security">
+                <div class="course-icon">
+                  <i class="ion-ios-wifi"></i>
+                  </div>
+                <div class="course-content">
+                  <h4>IoT Security</h4>
+                  <p>Secure Internet of Things devices and networks.</p>
+                  <button class="btn-details" onclick="showCourseDetails('iot-security')">View Details</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</main>
+<!--==========================
+    Footer
+  ============================-->
+<footer id="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-lg-3 col-md-6 footer-info">
+          <h3>Dash Security Society</h3>
+          <p>Enhance the security of your computer through our website.</p>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4 class="glow-text-decorate">Useful Links</h4>
+          <ul>
+            <li><i class="ion-ios-arrow-right"></i> <a href="#about">Home</a></li>
+            <!-- <li><i class="ion-ios-arrow-right"></i> <a href="#">Official Page</a></li> -->
+            <li><i class="ion-ios-arrow-right"></i> <a href="#events">Events</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a href="/404.html">GET STARTED NOW</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a
+                href="https://www.credly.com/badges/c4d85e42-f02c-492a-b9fd-c71a214335d3/embedded">ISC2</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a
+                href="https://calendar.google.com/calendar/embed?src=3bc824a6812d5439c3982e5d92745a7f93e29dbdc1679dc54ce18d5eff0d32e4%40group.calendar.google.com&ctz=Asia%2FBangkok">Google
+                Calendar</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a href="https://github.com/ThemeHackers/"
+                ?theme=BizPage">GitHub</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a
+                href="https://form.jotform.com/tigerzaza5678/dashsecurity-feedback" target="_blank">Feedback</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-contact">
+          <h4 class="glow-text-decorate">Contact</h4>
+          <p>
+            Bang Mae Nang, Bang Yai District , <br>
+            Nonthaburi 11140<br>
+            Thailand <br>
+            <strong>Email:</strong> <a href:"mailto:tigerzaza5678@gmail.com">tigerzaza5678@gmail.com</a><br>
+          </p>
+
+          <div class="social-links">
+            <a href="https://www.facebook.com/phubadee.thanakhan/" target="_blank" class="facebook"><i
+                class="fa fa-facebook"></i></a>
+            <a href="https://www.instagram.com/_tthemzdl5678/" target="_blank" class="instagram"><i
+                class="fa fa-instagram"></i></a>
+            <a href="https://www.github.com/ThemeHackers/" target="_blank" class="linkedin"><i
+                class="fa fa-github"></i></a>
+          </div>
+
+        </div>
+        <div class="col-lg-3 col-md-6 footer-contact">
+          <h4 class="glow-text-decorate">Partner</h4>
+          <p>
+            This is my partner <br>
+            <a href="https://www.kpltgroup.com/home" target="_blank"
+              style="color: #ffffff; font-weight: bold; text-decoration: none;">KPLTGROUP</a><br>
+            <strong>Email:</strong> <a href:"mailto:cstg@kpltgroup.com">cstg@kpltgroup.com</a><br>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>Dashsecurity</strong> and <strong>BootstrapMade</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!--
+          All the links in the footer should remain intact.
+          You can delete the links only if you purchased the pro version.
+          Licensing information: https://bootstrapmade.com/license/
+          Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=BizPage
+        -->
+        Theme by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+
+
+      </div>
+    </div>
+</footer><!-- #footer -->
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+<div id="preloader"></div>
+
+<!-- JavaScript Libraries -->
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/jquery/jquery-migrate.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/superfish/hoverIntent.js"></script>
+<script src="lib/superfish/superfish.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/isotope/isotope.pkgd.min.js"></script>
+<script src="lib/lightbox/js/lightbox.min.js"></script>
+<script src="lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+<!-- Contact Form JavaScript File -->
+<script src="contactform/contactform.js"></script>
+
+<!-- Template Main Javascript File -->
+<script src="js/main.js"></script>
+
+<!-- Course Modal Template -->
+<div class="modal fade" id="courseModal" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="courseModalLabel">Course Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="course-icon text-center mb-4">
+              <i id="modalCourseIcon" class="course-icon-large"></i>
+            </div>
+            <div class="course-meta">
+              <p><i class="ion-ios-clock"></i> <span id="modalDuration">4 weeks</span></p>
+              <p><i class="ion-ios-person"></i> <span id="modalLevel">Beginner</span></p>
+              <p class="price"><i class="ion-ios-pricetag"></i> <span id="modalPrice">Free</span></p>
+            </div>
+            <div class="course-tags" id="modalTags">
+              <!-- Tags will be added dynamically -->
+            </div>
+          </div>
+          <div class="col-md-8">
+            <h4 id="modalTitle" class="mb-3">Course Title</h4>
+            <p id="modalDescription" class="course-description">Course description goes here.</p>
+            
+            <div class="course-details-section">
+              <h5><i class="ion-ios-book"></i> What You'll Learn</h5>
+              <ul id="modalLearningPoints" class="course-details-list">
+                <!-- Learning points will be added dynamically -->
+              </ul>
+            </div>
+
+            <div class="course-details-section">
+              <h5><i class="ion-ios-information-circle"></i> Prerequisites</h5>
+              <ul id="modalPrerequisites" class="course-details-list">
+                <!-- Prerequisites will be added dynamically -->
+              </ul>
+            </div>
+
+            <div class="course-details-section">
+              <h5><i class="ion-ios-calendar"></i> Course Schedule</h5>
+              <ul id="modalSchedule" class="course-details-list">
+                <!-- Schedule will be added dynamically -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="https://instagram.com/_tthemzdl5678" id="modalEnrollLink" class="btn btn-enroll">Enroll Now</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Course data
+const courses = {
+  'intro-cybersecurity': {
+    title: 'Introduction to Cybersecurity',
+    description: 'Learn the fundamentals of cybersecurity, basic concepts, and best practices for protecting digital assets.',
+    duration: '4 weeks',
+    level: 'Beginner',
+    price: 'Free',
+    icon: 'ion-ios-lock',
+    learningPoints: [
+      'Understanding basic security concepts',
+      'Learning about common threats and vulnerabilities',
+      'Implementing basic security measures',
+      'Understanding security policies and procedures',
+      'Introduction to risk management',
+      'Basic network security concepts',
+      'Security awareness training',
+      'Introduction to security tools'
+    ],
+    prerequisites: [
+      'Basic computer knowledge',
+      'No prior security experience required'
+    ],
+    tags: ['Beginner', 'Fundamentals', 'Security Basics']
+  },
+  'network-security': {
+    title: 'Network Security',
+    description: 'Master network security concepts, protocols, and tools to protect network infrastructure.',
+    duration: '6 weeks',
+    level: 'Intermediate',
+    price: '$99',
+    icon: 'ion-ios-shield',
+    learningPoints: [
+      'Network security fundamentals',
+      'Firewall configuration and management',
+      'Intrusion detection and prevention',
+      'VPN and secure remote access',
+      'Network monitoring and analysis',
+      'Wireless security',
+      'Network segmentation',
+      'Security protocols and standards'
+    ],
+    prerequisites: [
+      'Basic networking knowledge',
+      'Understanding of TCP/IP protocols'
+    ],
+    tags: ['Networking', 'Intermediate', 'Infrastructure']
+  },
+  'ethical-hacking': {
+    title: 'Ethical Hacking',
+    description: 'Learn penetration testing techniques and ethical hacking methodologies.',
+    duration: '8 weeks',
+    level: 'Advanced',
+    price: '$199',
+    icon: 'ion-ios-bug',
+    learningPoints: [
+      'Penetration testing methodologies',
+      'Vulnerability assessment',
+      'Exploitation techniques',
+      'Reporting and documentation',
+      'Web application security',
+      'Network penetration testing',
+      'Social engineering',
+      'Advanced exploitation'
+    ],
+    prerequisites: [
+      'Strong networking knowledge',
+      'Basic programming skills',
+      'Understanding of operating systems'
+    ],
+    tags: ['Advanced', 'Penetration Testing', 'Security Testing']
+  },
+  'cloud-security': {
+    title: 'Cloud Security',
+    description: 'Secure cloud infrastructure and applications with best practices and tools.',
+    duration: '5 weeks',
+    level: 'Intermediate',
+    price: '$149',
+    icon: 'ion-ios-cloud',
+    learningPoints: [
+      'Cloud security fundamentals',
+      'Cloud architecture security',
+      'Identity and access management',
+      'Data protection in the cloud',
+      'Cloud compliance and governance',
+      'Cloud security tools and services',
+      'Container security',
+      'Serverless security'
+    ],
+    prerequisites: [
+      'Basic cloud computing knowledge',
+      'Understanding of security concepts'
+    ],
+    tags: ['Cloud', 'Intermediate', 'Infrastructure']
+  },
+  'secure-coding': {
+    title: 'Secure Coding',
+    description: 'Learn to write secure code and prevent common vulnerabilities in applications.',
+    duration: '6 weeks',
+    level: 'Intermediate',
+    price: '$129',
+    icon: 'ion-ios-code',
+    learningPoints: [
+      'Secure coding principles',
+      'Common vulnerabilities and prevention',
+      'Input validation and sanitization',
+      'Authentication and authorization',
+      'Secure session management',
+      'Error handling and logging',
+      'Secure file handling',
+      'Code review techniques'
+    ],
+    prerequisites: [
+      'Basic programming knowledge',
+      'Understanding of web development'
+    ],
+    tags: ['Development', 'Intermediate', 'Programming']
+  },
+  'security-analytics': {
+    title: 'Security Analytics',
+    description: 'Master security monitoring, threat detection, and incident response techniques.',
+    duration: '7 weeks',
+    level: 'Advanced',
+    price: '$179',
+    icon: 'ion-ios-analytics',
+    learningPoints: [
+      'Security monitoring fundamentals',
+      'Threat detection techniques',
+      'Log analysis and correlation',
+      'SIEM implementation',
+      'Threat intelligence',
+      'Behavioral analytics',
+      'Incident investigation',
+      'Security metrics and reporting'
+    ],
+    prerequisites: [
+      'Basic security knowledge',
+      'Understanding of networking'
+    ],
+    tags: ['Analytics', 'Advanced', 'Monitoring']
+  },
+  'incident-response': {
+    title: 'Incident Response',
+    description: 'Learn to handle security incidents effectively and minimize their impact.',
+    duration: '5 weeks',
+    level: 'Intermediate',
+    price: '$159',
+    icon: 'ion-ios-alert',
+    learningPoints: [
+      'Incident response planning',
+      'Incident detection and analysis',
+      'Containment strategies',
+      'Eradication and recovery',
+      'Post-incident activities',
+      'Forensic investigation',
+      'Incident documentation',
+      'Team coordination'
+    ],
+    prerequisites: [
+      'Basic security knowledge',
+      'Understanding of networking'
+    ],
+    tags: ['Incident Response', 'Intermediate', 'Operations']
+  },
+  'cryptography': {
+    title: 'Cryptography',
+    description: 'Understand encryption and cryptographic systems for secure communications.',
+    duration: '6 weeks',
+    level: 'Advanced',
+    price: '$169',
+    icon: 'ion-ios-key',
+    learningPoints: [
+      'Cryptographic fundamentals',
+      'Symmetric and asymmetric encryption',
+      'Hash functions and digital signatures',
+      'Public key infrastructure',
+      'Cryptographic protocols',
+      'Quantum cryptography',
+      'Cryptographic attacks',
+      'Implementation best practices'
+    ],
+    prerequisites: [
+      'Strong mathematical background',
+      'Understanding of security concepts'
+    ],
+    tags: ['Advanced', 'Mathematics', 'Encryption']
+  },
+  'mobile-security': {
+    title: 'Mobile Security',
+    description: 'Secure mobile applications and devices against modern threats.',
+    duration: '5 weeks',
+    level: 'Intermediate',
+    price: '$139',
+    icon: 'ion-ios-phone-portrait',
+    learningPoints: [
+      'Mobile security fundamentals',
+      'Android security',
+      'iOS security',
+      'Mobile app security',
+      'Mobile device management',
+      'Mobile threat defense',
+      'Secure mobile development',
+      'Mobile forensics'
+    ],
+    prerequisites: [
+      'Basic mobile development knowledge',
+      'Understanding of security concepts'
+    ],
+    tags: ['Mobile', 'Intermediate', 'Development']
+  },
+  'iot-security': {
+    title: 'IoT Security',
+    description: 'Secure Internet of Things devices and networks against emerging threats.',
+    duration: '6 weeks',
+    level: 'Advanced',
+    price: '$189',
+    icon: 'ion-ios-wifi',
+    learningPoints: [
+      'IoT security fundamentals',
+      'Device security',
+      'Network security for IoT',
+      'Cloud security for IoT',
+      'IoT protocols and security',
+      'IoT threat modeling',
+      'Secure IoT development',
+      'IoT security testing'
+    ],
+    prerequisites: [
+      'Understanding of networking',
+      'Basic security knowledge'
+    ],
+    tags: ['IoT', 'Advanced', 'Devices']
+  }
+};
+
+// Function to show course details in modal
+function showCourseDetails(courseId) {
+  const course = courses[courseId];
+  if (!course) return;
+
+  // Update modal content
+  document.getElementById('modalTitle').textContent = course.title;
+  document.getElementById('modalDescription').textContent = course.description;
+  document.getElementById('modalDuration').textContent = course.duration;
+  document.getElementById('modalLevel').textContent = course.level;
+  document.getElementById('modalPrice').textContent = course.price;
+  document.getElementById('modalCourseIcon').className = `course-icon-large ${course.icon}`;
+
+  // Update learning points
+  const learningPointsList = document.getElementById('modalLearningPoints');
+  learningPointsList.innerHTML = course.learningPoints
+    .map(point => `<li><i class="ion-ios-checkmark-circle"></i> ${point}</li>`)
+    .join('');
+
+  // Update prerequisites
+  const prerequisitesList = document.getElementById('modalPrerequisites');
+  prerequisitesList.innerHTML = course.prerequisites
+    .map(req => `<li><i class="ion-ios-information-circle"></i> ${req}</li>`)
+    .join('');
+
+  // Update schedule
+  const scheduleList = document.getElementById('modalSchedule');
+  scheduleList.innerHTML = `
+    <li><i class="ion-ios-calendar"></i> Start Date: ${course.startDate || 'Flexible'}</li>
+    <li><i class="ion-ios-time"></i> Time Commitment: ${course.timeCommitment || '4-6 hours/week'}</li>
+    <li><i class="ion-ios-paper"></i> Format: ${course.format || 'Online'}</li>
+    <li><i class="ion-ios-people"></i> Class Size: ${course.classSize || 'Unlimited'}</li>
+  `;
+
+  // Update tags
+  const tagsContainer = document.getElementById('modalTags');
+  tagsContainer.innerHTML = course.tags
+    .map(tag => `<span class="course-tag">${tag}</span>`)
+    .join('');
+  // Show modal
+  $('#courseModal').modal('show');
+}
+</script>
+
+</body>
+<script type="text/javascript">
+
+
+
+  var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);//gets width
+  var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);//gets height
+  if (w < 1000) {
+    console.log("Width of viewport is " + w + " < 1000");
+    console.log("Removing calendar");
+    var elem = document.getElementById('google-calendar-iframe');
+
+    let there_be_a_good_reason_for_this;
+
+    document.getElementById('google-calendar-iframe').parentNode.parentNode.childNodes[1].childNodes[3].innerHTML = "The Dashsecurity Society Calendar available <a href=\"https://calendar.google.com/calendar/embed?src=kucybersec%40gmail.com&ctz=Europe%2FLondon\">here</a> has all planned events. <a href=\"https://calendar.google.com/calendar/embed?src=kucybersec%40gmail.com&ctz=Europe%2FLondon\">Subscribe to it</a> and be up to date with all our new events!";
+
+    elem.parentNode.removeChild(elem);
+  }
+  else {
+
+  }
+</script>
+
+</html> 
