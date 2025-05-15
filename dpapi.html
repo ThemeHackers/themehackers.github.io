@@ -88,8 +88,8 @@
 
     <nav id="nav-menu-container">
       <ul class="nav-menu">
-        <li class="menu-active"><a href="/dpapi.html">How Hackers Steal Passwords</a></li>
-        <li class="menu-active"><a href="/learning.html">Back</a></li>
+        <li class="menu-active"><a href="/information_security.html">Back</a></li>
+
       </ul>
     </nav><!-- #nav-menu-container -->
   </div>
@@ -110,7 +110,7 @@
           <div class="carousel-background"><img src="img/intro-carousel/1.png" alt=""></div>
           <div class="carousel-container">
             <div class="carousel-content">
-              <h2 class="glow-text-learning">Information Security</h2>
+              <h2 class="glow-text-learning">DPAPI Security</h2>
               <a href="#learn" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
@@ -120,7 +120,7 @@
           <div class="carousel-background"><img src="img/intro-carousel/2.jpg" alt=""></div>
           <div class="carousel-container">
             <div class="carousel-content">
-              <h2 class="glow-text-learning">Information Security</h2>
+              <h2 class="glow-text-learning">DPAPI Security</h2>
               <a href="#learn" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
@@ -130,7 +130,7 @@
           <div class="carousel-background"><img src="img/intro-carousel/3.jpg" alt=""></div>
           <div class="carousel-container">
             <div class="carousel-content">
-              <h2 class="glow-text-learning">Information Security</h2>
+              <h2 class="glow-text-learning">DPAPI Security</h2>
               <a href="#learn" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
@@ -154,16 +154,123 @@
 <main id="main">
 
   <!--==========================
-      Cooming Soon ... Us Section
-    ============================-->
-  <section id="learn"><br><br>
+      Coming Soon ... Us Section
+  ============================-->
+  <section id="learn" style="text-align: center; padding: 50px 0;">
     <div class="container">
-      <header class="section-header">
-        <h3 class="glow-text">What is Information Security?</h3>
-        <p>Information security, often shortened to InfoSec, is the practice of protecting information from unauthorized access, use, disclosure, disruption, modification, or destruction.</p>
-      </header>
+        <header class="section-header">
+            <h3 class="glow-text">What is DPAPI Security?</h3>
+            <p>
+            The Data Protection Application Programming Interface (DPAPI) is a built-in Windows API introduced in Windows 2000, designed to provide developers with a straightforward method for encrypting and decrypting sensitive data without the need to manage cryptographic keys directly.
+            </p>
+            <h3 class="glow-text">🔐 How DPAPI Works</h3>
+            DPAPI leverages the Windows security model to derive encryption keys from user credentials or machine-specific secrets. This integration allows applications to securely encrypt data such that only the intended user or system can decrypt it. For instance, in .NET applications, the System.Security.Cryptography.ProtectedData class utilizes DPAPI to encrypt data, specifying whether the encryption scope is for the current user or the local machine .</h3>   
+            <h3 class="glow-text">🛡️ Security Considerations</h3>
+            <p>While DPAPI provides robust encryption mechanisms, its security is inherently tied to the strength of user credentials and the overall security of the Windows operating system. If an attacker gains access to a user's credentials or compromises the system, they could potentially decrypt data protected by DPAPI. Therefore, it's crucial to maintain strong password policies and system security measures to ensure the effectiveness of DPAPI's protections.
+            </p>
+        </header>
+        <button id="openModal" class="popup-button">🎧 Listen to Podcast</button>
     </div>
+  </section>
+
+  <!-- Modal Popup -->
+  <div id="podcastModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>🎙 How Hackers Steal Passwords</h3>
+      <audio controls style="width: 100%;">
+        <source src="/podcast/How Hackers Steal Passwords.wav" type="audio/wav">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  </div>
+
 </main>
+
+<!-- CSS -->
+<style>
+  .popup-button {
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 255, 200, 0.4);
+    transition: 0.3s ease;
+  }
+
+  .popup-button:hover {
+    background-color: #16a085;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+</style>
+
+<!-- JavaScript -->
+<script>
+  const modal = document.getElementById("podcastModal");
+  const btn = document.getElementById("openModal");
+  const span = document.querySelector(".close");
+
+  btn.onclick = function () {
+    modal.style.display = "block";
+  }
+
+  span.onclick = function () {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
 
 <!--==========================
     Footer
