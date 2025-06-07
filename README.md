@@ -1,5 +1,9 @@
 # Dashsecurity Society
+
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/bde905a4-f71d-41d4-a554-76f893662a2f/deploy-status)](https://app.netlify.com/projects/dashsecurity/deploys)
+
+
 Welcome to [Dashsecurity Society](https://dashsecurity.netlify.app/), a website dedicated to cybersecurity education and awareness in Thailand. Our mission is to provide accessible, accurate, and high-quality information about cybersecurity threats and best practices for learners of all levels.
 
 ## Features
