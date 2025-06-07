@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>OWASP Top 10 LLM Security Risks</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- =======================================================
+    Theme Name: BizPage
+    Theme URL: https://bootstrapmade.com/bizpage-bootstrap-business-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+
+        #content {
+            display: none;
+        }
+    </style>
+
+<body>
+    <!-- Loader -->
+    <div id="loader">
+        <img src="./img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById("loader").style.display = "none";
+            document.body.style.overflow = "auto";
+        }, 3000);
+    </script>
+</body>
+
+</head>
+<!--==========================
+    Header
+  ============================-->
+<header id="header">
+    <div class="container-fluid">
+
+        <div id="logo" class="pull-left">
+            <h1><a href="#intro" class="scrollto">TH Dashsecurity</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+
+        </div>
+
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+            </ul>
+        </nav><!-- #nav-menu-container -->
+    </div>
+</header><!-- #header -->
+
+<!--==========================
+    Intro Section
+  ============================-->
+<section id="intro">
+    <div class="intro-container">
+        <div id="introCarousel" class="carousel  slide carousel-fade" data-ride="carousel">
+
+            <ol class="carousel-indicators"></ol>
+
+            <div class="carousel-inner" role="listbox">
+
+                <div class="carousel-item active">
+                    <div class="carousel-background"><img src="img/intro-carousel/1.png" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text-learning">OWASP Top 10 LLM Security Risks</h2>
+                            <a href="#owasp-top-10-llm" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="carousel-background"><img src="img/intro-carousel/2.jpg" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text-learning">OWASP Top 10 LLM Security Risks</h2>
+                            <a href="#owasp-top-10-llm" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="carousel-background"><img src="img/intro-carousel/3.jpg" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text-learning">OWASP Top 10 LLM Security Risks</h2>
+                            <a href="#owasp-top-10-llm" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <a class="carousel-control-prev" href="#introCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon ion-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+
+            <a class="carousel-control-next" href="#introCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon ion-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+
+        </div>
+    </div>
+</section><!-- #intro -->
+
+<main id="main">
+
+    <section id="owasp-top-10-llm"><br><br>
+        <div class="container">
+
+            <header class="section-header wow fadeInUp">
+                <h3 id="cves_dashboard" class="glow-text text-center mb-3">OWASP Top 10 LLM Security Risks</h3>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p class="text-center mb-4">The OWASP Top 10 LLM Security Risks is a comprehensive awareness document for developers and security teams working with Large Language Models. This guide focuses on the most critical vulnerabilities and security risks associated with LLM applications.</p>
+                            
+                            <!-- Impact Statistics Section -->
+                            <div class="row mt-4">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-danger">
+                                        <h5 class="text-center mb-3">2024 Impact Statistics</h5>
+                                        <div class="row text-center">
+                                            <div class="col-md-3">
+                                                <h4>85%</h4>
+                                                <p>Organizations Affected</p>
+                                                <small>Reported LLM security incidents</small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4>42%</h4>
+                                                <p>Data Leakage</p>
+                                                <small>From prompt injection attacks</small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4>63%</h4>
+                                                <p>Model Misuse</p>
+                                                <small>Unauthorized access incidents</small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4>78%</h4>
+                                                <p>Security Gaps</p>
+                                                <small>In LLM implementations</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Detailed Vulnerabilities Section -->
+                            <div class="row mt-4">
+                                <div class="col-lg-12">
+                                    <div class="accordion" id="vulnerabilityAccordion">
+                                        <div class="card">
+                                            <div class="card-header" id="headingLLM01">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLLM01">
+                                                        LLM01: Prompt Injection
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseLLM01" class="collapse show" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Prompt injection occurs when an attacker manipulates the LLM's input to make it ignore its original instructions and perform unintended actions. This can lead to:</p>
+                                                    <ul>
+                                                        <li>Data leakage</li>
+                                                        <li>Unauthorized access</li>
+                                                        <li>Malicious code execution</li>
+                                                        <li>System compromise</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="card">
+                                            <div class="card-header" id="headingLLM02">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLLM02">
+                                                        LLM02: Insecure Output Handling
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseLLM02" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Failure to properly validate and sanitize LLM outputs can lead to various security issues:</p>
+                                                    <ul>
+                                                        <li>Cross-site scripting (XSS)</li>
+                                                        <li>Remote code execution</li>
+                                                        <li>Data injection attacks</li>
+                                                        <li>System compromise</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingLLM03">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLLM03">
+                                                        LLM03: Training Data Poisoning
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseLLM03" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Training data poisoning involves manipulating the data used to train LLMs, which can result in:</p>
+                                                    <ul>
+                                                        <li>Biased outputs</li>
+                                                        <li>Malicious behavior</li>
+                                                        <li>Data leakage</li>
+                                                        <li>Model manipulation</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingLLM04">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLLM04">
+                                                        LLM04: Model Denial of Service
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseLLM04" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Denial of Service attacks on LLMs can be achieved through:</p>
+                                                    <ul>
+                                                        <li>Resource exhaustion</li>
+                                                        <li>Input flooding</li>
+                                                        <li>Complex prompt manipulation</li>
+                                                        <li>System overload</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingLLM05">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLLM05">
+                                                        LLM05: Supply Chain Vulnerabilities
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseLLM05" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Supply chain vulnerabilities in LLM ecosystems include:</p>
+                                                    <ul>
+                                                        <li>Compromised model weights</li>
+                                                        <li>Malicious dependencies</li>
+                                                        <li>Untrusted data sources</li>
+                                                        <li>Insecure model distribution</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingLLM06">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLLM06">
+                                                        LLM06: Sensitive Information Disclosure
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseLLM06" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>LLMs may inadvertently disclose sensitive information through:</p>
+                                                    <ul>
+                                                        <li>Training data leakage</li>
+                                                        <li>Prompt manipulation</li>
+                                                        <li>Model outputs</li>
+                                                        <li>System responses</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingLLM07">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLLM07">
+                                                        LLM07: Insecure Plugin Design
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseLLM07" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Insecure plugin design can lead to:</p>
+                                                    <ul>
+                                                        <li>Unauthorized access</li>
+                                                        <li>Data leakage</li>
+                                                        <li>System compromise</li>
+                                                        <li>Plugin abuse</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingLLM08">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLLM08">
+                                                        LLM08: Excessive Agency
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseLLM08" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Excessive agency in LLMs can result in:</p>
+                                                    <ul>
+                                                        <li>Unauthorized actions</li>
+                                                        <li>System manipulation</li>
+                                                        <li>Resource abuse</li>
+                                                        <li>Security breaches</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingLLM09">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLLM09">
+                                                        LLM09: Overreliance
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseLLM09" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Overreliance on LLM outputs can lead to:</p>
+                                                    <ul>
+                                                        <li>Incorrect decisions</li>
+                                                        <li>Security vulnerabilities</li>
+                                                        <li>System failures</li>
+                                                        <li>Data integrity issues</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingLLM10">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseLLM10">
+                                                        LLM10: Model Theft
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseLLM10" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Model theft can occur through:</p>
+                                                    <ul>
+                                                        <li>Unauthorized access</li>
+                                                        <li>Model extraction</li>
+                                                        <li>Weight stealing</li>
+                                                        <li>Architecture copying</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Summary Table -->
+                            <div class="row mt-4">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Rank</th>
+                                                    <th>Vulnerability</th>
+                                                    <th>Description</th>
+                                                    <th>Impact</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Prompt Injection</td>
+                                                    <td>Manipulation of LLM inputs to bypass security controls and perform unintended actions</td>
+                                                    <td>Critical</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Insecure Output Handling</td>
+                                                    <td>Failure to properly validate and sanitize LLM outputs leading to various attacks</td>
+                                                    <td>Critical</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Training Data Poisoning</td>
+                                                    <td>Manipulation of training data to introduce biases or malicious behavior</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Model Denial of Service</td>
+                                                    <td>Attacks that exhaust resources or overload the LLM system</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>5</td>
+                                                    <td>Supply Chain Vulnerabilities</td>
+                                                    <td>Security risks in the LLM development and deployment pipeline</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>6</td>
+                                                    <td>Sensitive Information Disclosure</td>
+                                                    <td>Inadvertent leakage of sensitive data through LLM interactions</td>
+                                                    <td>Critical</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>7</td>
+                                                    <td>Insecure Plugin Design</td>
+                                                    <td>Vulnerabilities in LLM plugin architecture and implementation</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>8</td>
+                                                    <td>Excessive Agency</td>
+                                                    <td>LLMs performing actions beyond their intended scope</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>9</td>
+                                                    <td>Overreliance</td>
+                                                    <td>Uncritical trust in LLM outputs leading to security issues</td>
+                                                    <td>Medium</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>10</td>
+                                                    <td>Model Theft</td>
+                                                    <td>Unauthorized access and copying of LLM models and weights</td>
+                                                    <td>High</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <p class="text-center">Based on the OWASP Top 10 LLM Security Risks, organizations must implement robust security measures and regular audits to protect their LLM applications. Proper security controls, monitoring, and incident response procedures are essential for mitigating these risks.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </section>
+</main>
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+<div id="preloader"></div>
+
+<!-- JavaScript Libraries -->
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/jquery/jquery-migrate.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/superfish/hoverIntent.js"></script>
+<script src="lib/superfish/superfish.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/isotope/isotope.pkgd.min.js"></script>
+<script src="lib/lightbox/js/lightbox.min.js"></script>
+<script src="lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+
+<!-- Contact Form JavaScript File -->
+<script src="contactform/contactform.js"></script>
+
+<!-- Template Main Javascript File -->
+<script src="js/main.js"></script>
+
+
+
+</body>
+
+</html>

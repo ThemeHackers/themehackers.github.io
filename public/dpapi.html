@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>★彡[Dashsecurity Learning]彡★</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
+    rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/animate/animate.css" rel="stylesheet">
+  <link href="css/animate/animate.min.css" rel="stylesheet">
+  <!-- =======================================================
+    Theme Name: BizPage
+    Theme URL: https://bootstrapmade.com/bizpage-bootstrap-business-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+
+    #content {
+      display: none;
+    }
+  </style>
+  <body>
+    <!-- Loader -->
+    <div id="loader">
+      <img src="./img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
+    </div>
+  
+    <script>
+      setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+        document.body.style.overflow = "auto";
+      }, 3000);
+    </script>
+  </body>
+
+</head>
+<!--==========================
+    Header
+  ============================-->
+<header id="header">
+  <div class="container-fluid">
+
+    <div id="logo" class="pull-left">
+      <h1><a href="#intro" class="scrollto">TH Dashsecurity</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+
+    </div>
+
+    <nav id="nav-menu-container">
+      <ul class="nav-menu">
+        <li class="menu-active"><a href="/information_security.html">Back</a></li>
+
+      </ul>
+    </nav><!-- #nav-menu-container -->
+  </div>
+</header><!-- #header -->
+
+<!--==========================
+    Intro Section
+  ============================-->
+<section id="intro">
+  <div class="intro-container">
+    <div id="introCarousel" class="carousel  slide carousel-fade" data-ride="carousel">
+
+      <ol class="carousel-indicators"></ol>
+
+      <div class="carousel-inner" role="listbox">
+
+        <div class="carousel-item active">
+          <div class="carousel-background"><img src="img/intro-carousel/1.png" alt=""></div>
+          <div class="carousel-container">
+            <div class="carousel-content">
+              <h2 class="glow-text-learning">DPAPI Security</h2>
+              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="carousel-background"><img src="img/intro-carousel/2.jpg" alt=""></div>
+          <div class="carousel-container">
+            <div class="carousel-content">
+              <h2 class="glow-text-learning">DPAPI Security</h2>
+              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="carousel-background"><img src="img/intro-carousel/3.jpg" alt=""></div>
+          <div class="carousel-container">
+            <div class="carousel-content">
+              <h2 class="glow-text-learning">DPAPI Security</h2>
+              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <a class="carousel-control-prev" href="#introCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon ion-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+
+      <a class="carousel-control-next" href="#introCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon ion-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+
+    </div>
+  </div>
+</section><!-- #intro -->
+<main id="main">
+
+  <!--==========================
+      Coming Soon ... Us Section
+  ============================-->
+  <section id="learn" style="text-align: center; padding: 50px 0;">
+    <div class="container">
+        <header class="section-header">
+            <h3 class="glow-text">What is DPAPI Security?</h3>
+            <p>
+            The Data Protection Application Programming Interface (DPAPI) is a built-in Windows API introduced in Windows 2000, designed to provide developers with a straightforward method for encrypting and decrypting sensitive data without the need to manage cryptographic keys directly.
+            </p>
+            <h3 class="glow-text">🔐 How DPAPI Works</h3>
+            DPAPI leverages the Windows security model to derive encryption keys from user credentials or machine-specific secrets. This integration allows applications to securely encrypt data such that only the intended user or system can decrypt it. For instance, in .NET applications, the System.Security.Cryptography.ProtectedData class utilizes DPAPI to encrypt data, specifying whether the encryption scope is for the current user or the local machine .</h3>   
+            <h3 class="glow-text">🛡️ Security Considerations</h3>
+            <p>While DPAPI provides robust encryption mechanisms, its security is inherently tied to the strength of user credentials and the overall security of the Windows operating system. If an attacker gains access to a user's credentials or compromises the system, they could potentially decrypt data protected by DPAPI. Therefore, it's crucial to maintain strong password policies and system security measures to ensure the effectiveness of DPAPI's protections.
+            </p>
+        </header>
+        <button id="openModal" class="popup-button">🎧 Listen to Podcast</button>
+    </div>
+  </section>
+
+  <!-- Modal Popup -->
+  <div id="podcastModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>🎙 How Hackers Steal Passwords</h3>
+      <audio controls style="width: 100%;">
+        <source src="/podcast/How Hackers Steal Passwords.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  </div>
+
+</main>
+
+<!-- CSS -->
+<style>
+  .popup-button {
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 255, 200, 0.4);
+    transition: 0.3s ease;
+  }
+
+  .popup-button:hover {
+    background-color: #16a085;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+</style>
+
+<!-- JavaScript -->
+<script>
+  const modal = document.getElementById("podcastModal");
+  const btn = document.getElementById("openModal");
+  const span = document.querySelector(".close");
+
+  btn.onclick = function () {
+    modal.style.display = "block";
+  }
+
+  span.onclick = function () {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
+
+<!--==========================
+    Footer
+  ============================-->
+<footer id="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-lg-3 col-md-6 footer-info">
+          <h3>Dash Security Society</h3>
+          <p>Enhance the security of your computer through our website.</p>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4 class="glow-text-decorate">Useful Links</h4>
+          <ul>
+            <li><i class="ion-ios-arrow-right"></i> <a href="#osi">Home</a></li>
+            <!-- <li><i class="ion-ios-arrow-right"></i> <a href="#">Official Page</a></li> -->
+            <li><i class="ion-ios-arrow-right"></i> <a href="#events">Events</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a href="/404.html">GET STARTED NOW</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a
+                href="https://www.credly.com/badges/c4d85e42-f02c-492a-b9fd-c71a214335d3/embedded">ISC2</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a
+                href="https://calendar.google.com/calendar/embed?src=3bc824a6812d5439c3982e5d92745a7f93e29dbdc1679dc54ce18d5eff0d32e4%40group.calendar.google.com&ctz=Asia%2FBangkok">Google
+                Calendar</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a href="https://github.com/ThemeHackers/"
+                ?theme=BizPage">GitHub</a></li>
+            <li><i class="ion-ios-arrow-right"></i> <a
+                href="https://form.jotform.com/tigerzaza5678/dashsecurity-feedback" target="_blank">Feedback</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-contact">
+          <h4 class="glow-text-decorate">Contact</h4>
+          <p>
+            Bang Mae Nang, Bang Yai District , <br>
+            Nonthaburi 11140<br>
+            Thailand <br>
+            <strong>Email:</strong> <a href:"mailto:tigerzaza5678@gmail.com">tigerzaza5678@gmail.com</a><br>
+          </p>
+
+          <div class="social-links">
+            <a href="https://www.facebook.com/phubadee.thanakhan/" target="_blank" class="facebook"><i
+                class="fa fa-facebook"></i></a>
+            <a href="https://www.instagram.com/_tthemzdl5678/" target="_blank" class="instagram"><i
+                class="fa fa-instagram"></i></a>
+            <a href="https://www.github.com/ThemeHackers/" target="_blank" class="linkedin"><i
+                class="fa fa-github"></i></a>
+          </div>
+
+        </div>
+        <div class="col-lg-3 col-md-6 footer-contact">
+          <h4 class="glow-text-decorate">Partner</h4>
+          <p>
+            This is my partner <br>
+            <a href="https://www.kpltgroup.com/home" target="_blank"
+              style="color: #ffffff; font-weight: bold; text-decoration: none;">KPLTGROUP</a><br>
+            <strong>Email:</strong> <a href:"mailto:cstg@kpltgroup.com">cstg@kpltgroup.com</a><br>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>Dashsecurity</strong> and <strong>BootstrapMade</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!--
+          All the links in the footer should remain intact.
+          You can delete the links only if you purchased the pro version.
+          Licensing information: https://bootstrapmade.com/license/
+          Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=BizPage
+        -->
+        Theme by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+
+
+      </div>
+    </div>
+</footer><!-- #footer -->
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+<div id="preloader"></div>
+
+<!-- JavaScript Libraries -->
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/jquery/jquery-migrate.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/superfish/hoverIntent.js"></script>
+<script src="lib/superfish/superfish.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/isotope/isotope.pkgd.min.js"></script>
+<script src="lib/lightbox/js/lightbox.min.js"></script>
+<script src="lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+<!-- Contact Form JavaScript File -->
+<script src="contactform/contactform.js"></script>
+
+<!-- Template Main Javascript File -->
+<script src="js/main.js"></script>
+
+
+
+</body>
+<script type="text/javascript">
+
+
+
+  var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);//gets width
+  var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);//gets height
+  if (w < 1000) {
+    console.log("Width of viewport is " + w + " < 1000");
+    console.log("Removing calendar");
+    var elem = document.getElementById('google-calendar-iframe');
+
+    let there_be_a_good_reason_for_this;
+
+    document.getElementById('google-calendar-iframe').parentNode.parentNode.childNodes[1].childNodes[3].innerHTML = "The Dashsecurity Society Calendar available <a href=\"https://calendar.google.com/calendar/embed?src=kucybersec%40gmail.com&ctz=Europe%2FLondon\">here</a> has all planned events. <a href=\"https://calendar.google.com/calendar/embed?src=kucybersec%40gmail.com&ctz=Europe%2FLondon\">Subscribe to it</a> and be up to date with all our new events!";
+
+    elem.parentNode.removeChild(elem);
+  }
+  else {
+
+  }
+</script>
+
+</html> 

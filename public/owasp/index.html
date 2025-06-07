@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="utf-8">
+    <title>OWASP Security Projects</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- Favicons -->
+    <link href="../img/favicon.png" rel="icon">
+    <link href="../img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="../lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="../css/style.css" rel="stylesheet">
+
+    <style>
+        .project-card {
+            transition: transform 0.3s ease;
+            margin-bottom: 30px;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(24, 209, 110, 0.3);
+        }
+        .project-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #18d26e;
+        }
+        .source-link {
+            font-size: 0.9em;
+            color: #666;
+        }
+        .source-link a {
+            color: #18d26e;
+            text-decoration: none;
+        }
+        .source-link a:hover {
+            color: #fff;
+        }
+        .card-body {
+            padding: 30px;
+            color: #fff;
+        }
+        .card-body h4 {
+            color: #18d26e;
+            margin-bottom: 15px;
+        }
+        .card-body p {
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background: #18d26e;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: #fff;
+            color: #18d26e;
+            transform: scale(1.05);
+        }
+        .section-header h3 {
+            color: #fff;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        .section-header p {
+            color: #ccc;
+            font-size: 16px;
+        }
+        #owasp-projects {
+            background: #000;
+            padding: 80px 0;
+        }
+        .glow-text {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: transparent;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+            background-size: 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: moveRight 3s linear infinite;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+        @keyframes moveRight {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+    </style>
+</head>
+
+<body>
+    <!--==========================
+    Header
+  ============================-->
+    <header id="header">
+        <div class="container-fluid">
+            <div id="logo" class="pull-left">
+                <h1><a href="../index.html" class="scrollto">TH Dashsecurity</a></h1>
+            </div>
+
+            <nav id="nav-menu-container">
+                <ul class="nav-menu">
+                 
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main">
+        <section id="owasp-projects" class="section-bg">
+            <div class="container">
+                <header class="section-header">
+                    <h3 style="color: #fff;">OWASP Security Projects</h3>
+                    <p>Explore our collection of OWASP security projects and learn about the latest security risks and best practices.</p>
+                </header>
+
+                <div class="row">
+                    <!-- API Security Project -->
+                    <div class="col-md-4">
+                        <div class="card project-card">
+                            <div class="card-body text-center">
+                                <i class="ion-ios-cloud project-icon"></i>
+                                <h4>OWASP API Security Project</h4>
+                                <p>Learn about the OWASP API Security Top 10 2023, focusing on the most critical API security risks and vulnerabilities.</p>
+                                <a href="../owasp_api_security_project.html" class="btn btn-primary">View Project</a>
+                                <p class="source-link mt-2">
+                                    <small>Source: <a href="https://owasp.org/www-project-api-security/" target="_blank">OWASP API Security Project</a></small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Web Application Security Risks -->
+                    <div class="col-md-4">
+                        <div class="card project-card">
+                            <div class="card-body text-center">
+                                <i class="ion-ios-globe project-icon"></i>
+                                <h4>OWASP Web Application Security Risks</h4>
+                                <p>Explore the OWASP Top 10 Web Application Security Risks and learn how to protect your web applications.</p>
+                                <a href="../owasp_top_10_web_application_security_risks.html" class="btn btn-primary">View Project</a>
+                                <p class="source-link mt-2">
+                                    <small>Source: <a href="https://owasp.org/www-project-top-ten/" target="_blank">OWASP Top 10</a></small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Smart Contract Security -->
+                    <div class="col-md-4">
+                        <div class="card project-card">
+                            <div class="card-body text-center">
+                                <i class="ion-ios-barcode project-icon"></i>
+                                <h4>OWASP Smart Contract Security</h4>
+                                <p>Discover the OWASP Smart Contract Top 10 2025 and learn about blockchain security vulnerabilities.</p>
+                                <a href="../owasp_smart_contract_top_10_evolution_2025.html" class="btn btn-primary">View Project</a>
+                                <p class="source-link mt-2">
+                                    <small>Source: <a href="https://owasp.org/www-project-smart-contract-top-10/" target="_blank">OWASP Smart Contract Top 10</a></small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card project-card">
+                            <div class="card-body text-center">
+                                <i class="ion-ios-barcode project-icon"></i>
+                                <h4>OWASP Top 10 LLM Security Risks</h4>
+                                <p>Explore the OWASP Top 10 LLM Security Risks and learn about the most critical vulnerabilities in Large Language Model applications.</p>
+                                <a href="../owasp_top_10_llm_security_risks.html" class="btn btn-primary">View Project</a>
+                                <p class="source-link mt-2">
+                                    <small>Source: <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank">OWASP Top 10 LLM</a></small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Security Project -->
+                    <div class="col-md-4">
+                        <div class="card project-card">
+                            <div class="card-body text-center">
+                                <i class="ion-iphone project-icon"></i>
+                                <h4>OWASP Mobile Security</h4>
+                                <p>Learn about the OWASP Mobile Security Project and discover the most critical security risks in mobile applications.</p>
+                                <a href="../owasp_mobile_security.html" class="btn btn-primary">View Project</a>
+                                <p class="source-link mt-2">
+                                    <small>Source: <a href="https://owasp.org/www-project-mobile-security/" target="_blank">OWASP Mobile Security</a></small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+    <div id="preloader"></div>
+
+    <!-- JavaScript Libraries -->
+    <script src="../lib/jquery/jquery.min.js"></script>
+    <script src="../lib/jquery/jquery-migrate.min.js"></script>
+    <script src="../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/easing/easing.min.js"></script>
+    <script src="../lib/superfish/hoverIntent.js"></script>
+    <script src="../lib/superfish/superfish.min.js"></script>
+    <script src="../lib/wow/wow.min.js"></script>
+    <script src="../lib/waypoints/waypoints.min.js"></script>
+    <script src="../lib/counterup/counterup.min.js"></script>
+    <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../lib/isotope/isotope.pkgd.min.js"></script>
+    <script src="../lib/lightbox/js/lightbox.min.js"></script>
+    <script src="../lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+
+    <!-- Template Main Javascript File -->
+    <script src="../js/main.js"></script>
+</body>
+</html> 

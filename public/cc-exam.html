@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>★彡[CC Practice Exam]彡★</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <!-- Favicons -->
+        <link href="img/favicon.png" rel="icon">
+        <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+    
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
+            rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <!-- Bootstrap CSS File -->
+        <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
+        <!-- Libraries CSS Files -->
+        <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="lib/animate/animate.min.css" rel="stylesheet">
+        <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    
+        <!-- Main Stylesheet File -->
+        <link href="css/style.css" rel="stylesheet">
+        <!-- =======================================================
+        Theme Name: BizPage
+        Theme URL: https://bootstrapmade.com/bizpage-bootstrap-business-template/
+        Author: BootstrapMade.com
+        License: https://bootstrapmade.com/license/
+      ======================================================= -->
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+                overflow: hidden;
+            }
+    
+            #loader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #ffffff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+            }
+    
+    
+            #content {
+                display: none;
+            }
+        </style>
+    
+    <body>
+        <!-- Loader -->
+        <div id="loader">
+            <img src="./img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
+        </div>
+    
+        <script>
+            setTimeout(() => {
+                document.getElementById("loader").style.display = "none";
+                document.body.style.overflow = "auto";
+            }, 1500);
+        </script>
+    </body>
+<head>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-light: #60a5fa;
+            --secondary-color: #f3f4f6;
+            --text-color: #1f2937;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --background-color: #f9fafb;
+            --card-background: white;
+            --header-background: #2563eb;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --transition-speed: 0.3s;
+            --animation-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --primary-light: #60a5fa;
+            --secondary-color: #1f2937;
+            --text-color: #f3f4f6;
+            --border-color: #374151;
+            --background-color: #111827;
+            --card-background: #1f2937;
+            --header-background: #1e40af;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            transition: all var(--transition-speed) ease;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+            z-index: 1;
+        }
+
+        .exam-selection {
+            background-color: var(--card-background);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .exam-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .exam-option {
+            padding: 1.5rem;
+            background-color: var(--secondary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .exam-option:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .question-container {
+            background-color: var(--card-background);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            animation: fadeIn 0.5s ease;
+            position: relative;
+        }
+
+        .question {
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+
+        .choices {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .choice {
+            padding: 1.25rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all var(--transition-speed) var(--animation-bounce);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .choice:hover {
+            transform: translateX(8px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+        }
+
+        .choice.selected {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateX(8px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .choice.correct {
+            background-color: var(--success-color);
+            color: white;
+            animation: correctAnswer 0.5s var(--animation-bounce);
+        }
+
+        .choice.incorrect {
+            background-color: var(--danger-color);
+            color: white;
+            animation: incorrectAnswer 0.5s var(--animation-bounce);
+        }
+
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #18d26e;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .explanation.correct {
+            border-left-color: #18d26e;
+            background-color: rgba(24, 210, 110, 0.1);
+        }
+
+        .explanation.incorrect {
+            border-left-color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+
+        .choice.selected.correct {
+            background-color: #18d26e;
+            color: white;
+        }
+
+        .choice.selected.incorrect {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all var(--transition-speed) var(--animation-bounce);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .anti-cheat-warning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--danger-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            display: none;
+            z-index: 1000;
+            animation: warningPulse 2s infinite;
+        }
+
+        @keyframes warningPulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .timer {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--card-background);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow-md);
+            font-weight: 600;
+            z-index: 1000;
+            border: 2px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .timer {
+                position: fixed;
+                top: auto;
+                bottom: 1rem;
+                right: 1rem;
+                background-color: rgba(255, 255, 255, 0.95);
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                font-size: 0.9rem;
+                backdrop-filter: blur(5px);
+                border: 1px solid var(--border-color);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timer {
+                right: 50%;
+                transform: translateX(50%);
+                font-size: 0.85rem;
+                white-space: nowrap;
+            }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 0.5rem;
+            background-color: var(--border-color);
+            border-radius: 0.25rem;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            border-radius: 0.25rem;
+            transition: width 0.3s ease;
+        }
+
+        .question-counter {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .question-dot {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .question-dot:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-md);
+        }
+
+        .question-dot.answered {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .question-dot.current {
+            background-color: var(--primary-light);
+            color: white;
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+            box-shadow: var(--shadow-md);
+        }
+
+        .question-dot.correct {
+            background-color: var(--success-color);
+            color: white;
+            border-color: var(--success-color);
+        }
+
+        .question-dot.incorrect {
+            background-color: var(--danger-color);
+            color: white;
+            border-color: var(--danger-color);
+        }
+
+        .results {
+            background-color: var(--card-background);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .score {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 1rem 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        .score::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            border-radius: 2px;
+        }
+
+        .score-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .score-card {
+            background-color: var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .score-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .score-card h3 {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .score-card p {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .domain-performance {
+            margin-top: 2rem;
+            padding: 2rem;
+            background-color: var(--secondary-color);
+            border-radius: 0.75rem;
+        }
+
+        .domain-performance h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .domain-chart {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .domain-item {
+            background-color: var(--card-background);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: left;
+        }
+
+        .domain-item h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .domain-progress {
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+
+        .domain-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .domain-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .time-analysis {
+            margin-top: 2rem;
+            padding: 2rem;
+            background-color: var(--secondary-color);
+            border-radius: 0.75rem;
+        }
+
+        .time-analysis h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .time-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .time-stat {
+            background-color: var(--card-background);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+        }
+
+        .time-stat h4 {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .time-stat p {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .recommendations {
+            margin-top: 2rem;
+            padding: 2rem;
+            background-color: var(--secondary-color);
+            border-radius: 0.75rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .recommendations h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .recommendations h3:before {
+            content: "💡";
+            font-size: 1.5rem;
+        }
+
+        .recommendation-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .recommendation-item {
+            background-color: var(--card-background);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .recommendation-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .recommendation-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .recommendation-content {
+            flex: 1;
+        }
+
+        .recommendation-content h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .recommendation-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .recommendation-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .recommendation-stats span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .recommendation-resources {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .recommendation-resources h5 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .resource-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .resource-item {
+            background-color: var(--primary-light);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .resource-item:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .score {
+                font-size: 3rem;
+            }
+
+            .score-details {
+                grid-template-columns: 1fr;
+            }
+
+            .domain-chart {
+                grid-template-columns: 1fr;
+            }
+
+            .time-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .help-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            justify-content: flex-end;
+        }
+
+        .help-button {
+            padding: 0.5rem 1rem;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .help-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: var(--card-background);
+            margin: 5% auto;
+            padding: 2rem;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .help-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .help-section {
+            background-color: var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+        }
+
+        .help-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .help-section ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+
+        .help-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-list {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            background-color: var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+        }
+
+        .faq-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .faq-item p {
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 90%;
+                margin: 10% auto;
+            }
+
+            .help-sections {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            background-color: var(--card-background);
+            color: var(--text-color);
+            box-shadow: var(--shadow-lg);
+            transform: translateX(120%);
+            transition: transform 1.5s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.info {
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .notification.warning {
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .notification.error {
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .notification.success {
+            border-left: 4px solid var(--success-color);
+        }
+
+        .exam-note {
+            background-color: var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .exam-note h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .exam-note ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .exam-note li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .exam-note li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="anti-cheat-warning" id="cheatWarning">
+        Warning: Switching tabs or windows is not allowed during the exam!
+    </div>
+    <div class="timer" id="timer">Time: 00:00</div>
+    
+    <div class="container">
+        <header>
+            <h1>CC Practice Exam</h1>
+            <p>Test your knowledge and prepare for certification</p>
+        </header>
+
+        <!-- Add Help and FAQ buttons -->
+        <div class="help-buttons">
+            <button id="backBtn" class="help-button">Back to Exam Selection</button>
+            <button id="helpBtn" class="help-button">Help</button>
+            <button id="faqBtn" class="help-button">FAQ</button>
+        </div>
+
+        <!-- Add Help Modal -->
+        <div id="helpModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Help Center</h2>
+                <div class="help-sections">
+                    <div class="help-section">
+                        <h3>Getting Started</h3>
+                        <p>Learn how to use the practice exam system effectively.</p>
+                        <ul>
+                            <li>Choose between Practice Mode and Timed Exam</li>
+                            <li>Navigate through questions using Previous/Next buttons</li>
+                            <li>Submit your exam when you're done</li>
+                            <li>Review your answers and explanations</li>
+                        </ul>
+                    </div>
+                    <div class="help-section">
+                        <h3>Exam Rules</h3>
+                        <p>Important rules to follow during the exam:</p>
+                        <ul>
+                            <li>No switching tabs or windows</li>
+                            <li>No copy/paste functionality</li>
+                            <li>Stay active during the exam</li>
+                            <li>Complete the exam within the time limit (for timed mode)</li>
+                        </ul>
+                    </div>
+                    <div class="help-section">
+                        <h3>Scoring System</h3>
+                        <p>Understand how your score is calculated:</p>
+                        <ul>
+                            <li>Questions have different difficulty weights</li>
+                            <li>Time spent on each question is tracked</li>
+                            <li>Detailed performance analysis provided</li>
+                            <li>Domain-wise performance breakdown</li>
+                        </ul>
+                    </div>
+                    <div class="help-section">
+                        <h3>Performance Analysis</h3>
+                        <p>Learn about the analysis features:</p>
+                        <ul>
+                            <li>Identify weak areas in each domain</li>
+                            <li>Get personalized recommendations</li>
+                            <li>Compare your performance with others</li>
+                            <li>Track your progress over time</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add FAQ Modal -->
+        <div id="faqModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <h3>What is the difference between Practice Mode and Timed Exam?</h3>
+                        <p>Practice Mode allows you to learn at your own pace with no time limit, while Timed Exam simulates real exam conditions with a time limit. In Practice Mode, you can review explanations immediately, while in Timed Exam, you'll see explanations only after completing the exam.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>How is my score calculated?</h3>
+                        <p>Your score is calculated using a weighted system based on question difficulty. Each question has a different weight, and your final score reflects your performance across all questions. The system also tracks the time you spend on each question to provide a comprehensive performance analysis.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Can I review my answers after submitting?</h3>
+                        <p>Yes, after submitting the exam, you can review all your answers along with detailed explanations and performance analysis. You'll see which questions you got right or wrong, the correct answers, and explanations for each question.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>How can I improve my performance?</h3>
+                        <p>The system provides detailed analysis of your weak areas and recommends specific resources and practice questions to help you improve. Focus on the domains where you scored lower, and use the recommended resources to strengthen your knowledge in those areas.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>What happens if I switch tabs during the exam?</h3>
+                        <p>The system will detect tab switching and display a warning. Multiple tab switches may affect your exam results. It's recommended to stay focused on the exam window throughout the test.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>How is my performance compared to others?</h3>
+                        <p>The system compares your score with other users who have taken the same exam. You'll see your percentile rank and how your performance compares to the average. This helps you understand where you stand in relation to other test-takers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Back Confirmation Modal -->
+        <div id="backModal" class="modal">
+            <div class="modal-content" style="max-width: 400px; text-align: center;">
+                <h3>Back to Exam Selection</h3>
+                <p>Are you sure you want to go back to exam selection? Your current progress will be saved.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
+                    <button id="confirmBackBtn" class="help-button" style="background-color: var(--primary-color); color: white;">Yes, Go Back</button>
+                    <button id="cancelBackBtn" class="help-button" style="background-color: var(--secondary-color);">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="exam-selection" id="examSelection">
+            <h2>Select Exam Type</h2>
+            <div class="exam-note">
+                <h3>Important Note:</h3>
+                <ul>
+                    <li>You can pause your exam at any time by clicking "Back to Exam Selection"</li>
+                    <li>Your progress will be automatically saved</li>
+                    <li>To resume your exam, simply refresh the page</li>
+                    <li>Your saved answers will be restored automatically</li>
+                    <li>Session will expire after 30 minutes of inactivity</li>
+                </ul>
+            </div>
+            <div class="exam-options">
+                <div class="exam-option" data-exam="practice">
+                    <h3>Practice Mode</h3>
+                    <p>Learn at your own pace</p>
+                </div>
+                <div class="exam-option" data-exam="timed">
+                    <h3>Timed Exam</h3>
+                    <p>Simulate real exam conditions</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container" id="questionContainer" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="question" id="question"></div>
+            <div class="choices" id="choices"></div>
+            <div class="explanation" id="explanation" style="display: none;"></div>
+            <div class="question-counter" id="questionCounter"></div>
+            <div class="navigation">
+                <button id="prevBtn" disabled>Previous</button>
+                <button id="nextBtn">Next</button>
+                <button id="submitBtn" style="display: none;">Submit Exam</button>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <h2>Exam Results</h2>
+            <div class="score" id="finalScore">0%</div>
+            <div class="score-details">
+                <div class="score-card">
+                    <h3>Correct Answers</h3>
+                    <p id="correctCount">0</p>
+                </div>
+                <div class="score-card">
+                    <h3>Incorrect Answers</h3>
+                    <p id="incorrectCount">0</p>
+                </div>
+                <div class="score-card">
+                    <h3>Time Taken</h3>
+                    <p id="timeTaken">00:00</p>
+                </div>
+            </div>
+            <button id="restartBtn">Restart Exam</button>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let examData = null;
+        let currentExam = null;
+        let currentQuestion = 0;
+        let answers = [];
+        let startTime = null;
+        let timerInterval = null;
+        let tabSwitchCount = 0;
+        let examType = null;
+        let questionTimes = [];
+        let questionStartTime = null;
+        let lastActivityTime = Date.now();
+        const INACTIVITY_THRESHOLD = 30000;
+        const SESSION_TIMEOUT = 30 * 60 * 1000; 
+        let inactivityTimer = null;
+        let sessionTimer = null;
+
+        
+        function initializeSession() {
+            
+            const savedSession = localStorage.getItem('examSession');
+            if (savedSession) {
+                const session = JSON.parse(savedSession);
+                const timeSinceLastActivity = Date.now() - session.lastActivity;
+                
+                if (timeSinceLastActivity < SESSION_TIMEOUT) {
+                   
+                    examData = session.examData;
+                    currentExam = session.currentExam;
+                    currentQuestion = session.currentQuestion;
+                    answers = session.answers;
+                    questionTimes = session.questionTimes;
+                    examType = session.examType;
+                    
+                   
+                    document.getElementById('examSelection').style.display = 'none';
+                    document.getElementById('questionContainer').style.display = 'block';
+                    document.getElementById('results').style.display = 'none';
+                    
+                 
+                    if (examType === 'timed') {
+                        startTimer();
+                    }
+                    
+                  
+                    displayQuestion(currentQuestion);
+                    
+                   
+                    showNotification('Your previous session has been restored', 'info');
+                } else {
+                   
+                    localStorage.removeItem('examSession');
+                    showNotification('Your previous session has expired', 'warning');
+                }
+            }
+        }
+
+        function saveSession() {
+            const session = {
+                examData,
+                currentExam,
+                currentQuestion,
+                answers,
+                questionTimes,
+                examType,
+                lastActivity: Date.now()
+            };
+            localStorage.setItem('examSession', JSON.stringify(session));
+        }
+
+        function clearSession() {
+            localStorage.removeItem('examSession');
+            localStorage.removeItem('userScores');
+            localStorage.removeItem('cheatLogs');
+        }
+
+        function startSessionTimer() {
+            if (sessionTimer) {
+                clearTimeout(sessionTimer);
+            }
+            sessionTimer = setTimeout(() => {
+                clearSession();
+                showNotification('Your session has expired. All progress has been reset.', 'warning');
+                location.reload();
+            }, SESSION_TIMEOUT);
+        }
+
+   
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Update activity tracking
+        function resetInactivityTimer() {
+            lastActivityTime = Date.now();
+            if (inactivityTimer) {
+                clearTimeout(inactivityTimer);
+            }
+            inactivityTimer = setTimeout(checkInactivity, INACTIVITY_THRESHOLD);
+            
+            // Save session on activity
+            if (examData) {
+                saveSession();
+                startSessionTimer();
+            }
+        }
+
+        // Update loadExam function
+        async function loadExam(examSet) {
+            try {
+                const response = await fetch(`cc-exam-db/${examSet}.json`);
+                examData = await response.json();
+                currentExam = examSet;
+                
+                answers = new Array(examData.Questions.length).fill(null);
+                questionTimes = new Array(examData.Questions.length).fill(0);
+                
+                document.getElementById('examSelection').style.display = 'none';
+                document.getElementById('questionContainer').style.display = 'block';
+                document.getElementById('results').style.display = 'none';
+                
+                currentQuestion = 0;
+                tabSwitchCount = 0;
+                questionStartTime = Date.now();
+                
+                if (examType === 'timed') {
+                    startTimer();
+                }
+                
+                displayQuestion(0);
+                updateDomainDistribution();
+                
+                // Save initial session
+                saveSession();
+                startSessionTimer();
+            } catch (error) {
+                console.error('Error loading exam:', error);
+                showNotification('Failed to load exam. Please try again.', 'error');
+            }
+        }
+
+        // Update showResults function
+        function showResults() {
+            clearInterval(timerInterval);
+            clearTimeout(sessionTimer);
+            clearSession();
+            
+            const correct = answers.filter((answer, index) => 
+                answer === examData.Questions[index].Choices.indexOf(examData.Questions[index].AnswerKey)).length;
+            const incorrect = examData.Questions.length - correct;
+            const score = calculateWeightedScore().toFixed(1);
+            
+            document.getElementById('questionContainer').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            
+            document.getElementById('finalScore').textContent = `${score}%`;
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('incorrectCount').textContent = incorrect;
+            document.getElementById('timeTaken').textContent = 
+                document.getElementById('timer').textContent.replace('Time: ', '');
+
+            const domainScores = {};
+            examData.Questions.forEach((question, index) => {
+                if (!domainScores[question.DomainOfKnowledge]) {
+                    domainScores[question.DomainOfKnowledge] = {
+                        correct: 0,
+                        total: 0,
+                        timeSpent: 0
+                    };
+                }
+                domainScores[question.DomainOfKnowledge].total++;
+                if (answers[index] === question.Choices.indexOf(question.AnswerKey)) {
+                    domainScores[question.DomainOfKnowledge].correct++;
+                }
+                domainScores[question.DomainOfKnowledge].timeSpent += questionTimes[index];
+            });
+
+            const domainPerformance = document.createElement('div');
+            domainPerformance.className = 'domain-performance';
+            domainPerformance.innerHTML = `
+                <h3>Domain Performance</h3>
+                <div class="domain-chart">
+                    ${Object.entries(domainScores).map(([domain, stats]) => {
+                        const percentage = (stats.correct / stats.total) * 100;
+                        const avgTime = Math.floor(stats.timeSpent / stats.total);
+                        return `
+                            <div class="domain-item">
+                                <h4>
+                                    <span>${domain}</span>
+                                    <span>${percentage.toFixed(1)}%</span>
+                                </h4>
+                                <div class="domain-progress">
+                                    <div class="domain-progress-bar" style="width: ${percentage}%"></div>
+                                </div>
+                                <div class="domain-stats">
+                                    <span>${stats.correct}/${stats.total} correct</span>
+                                    <span>Avg time: ${formatTime(avgTime)}</span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            document.getElementById('results').appendChild(domainPerformance);
+
+            const timeAnalysis = document.createElement('div');
+            timeAnalysis.className = 'time-analysis';
+            timeAnalysis.innerHTML = `
+                <h3>Time Analysis</h3>
+                <div class="time-stats">
+                    <div class="time-stat">
+                        <h4>Total Time</h4>
+                        <p>${document.getElementById('timer').textContent.replace('Time: ', '')}</p>
+                    </div>
+                    <div class="time-stat">
+                        <h4>Average Time per Question</h4>
+                        <p>${formatTime(Math.floor(questionTimes.reduce((a, b) => a + b, 0) / examData.Questions.length))}</p>
+                    </div>
+                    <div class="time-stat">
+                        <h4>Longest Time</h4>
+                        <p>${formatTime(Math.max(...questionTimes))}</p>
+                    </div>
+                </div>
+            `;
+            document.getElementById('results').appendChild(timeAnalysis);
+
+            const recommendations = document.createElement('div');
+            recommendations.className = 'recommendations';
+            recommendations.innerHTML = `
+                <h3>Performance Recommendations</h3>
+                <div class="recommendation-list">
+                    ${Object.entries(domainScores)
+                        .map(([domain, stats], index) => {
+                            const percentage = (stats.correct / stats.total) * 100;
+                            const avgTime = Math.floor(stats.timeSpent / stats.total);
+                            const performanceLevel = percentage >= 80 ? 'Excellent' :
+                                                   percentage >= 60 ? 'Good' :
+                                                   percentage >= 40 ? 'Needs Improvement' : 'Requires Focus';
+                            
+                            return `
+                                <div class="recommendation-item">
+                                    <div class="recommendation-icon">${index + 1}</div>
+                                    <div class="recommendation-content">
+                                        <h4>
+                                            <span>${domain}</span>
+                                            <span class="performance-tag ${performanceLevel.toLowerCase().replace(' ', '-')}">
+                                                ${performanceLevel}
+                                            </span>
+                                        </h4>
+                                        <p>Your performance in this domain is ${percentage.toFixed(1)}% with an average time of ${formatTime(avgTime)} per question.</p>
+                                        <div class="recommendation-stats">
+                                            <span>📊 Score: ${percentage.toFixed(1)}%</span>
+                                            <span>⏱️ Avg Time: ${formatTime(avgTime)}</span>
+                                            <span>✅ Correct: ${stats.correct}/${stats.total}</span>
+                                        </div>
+                                        ${percentage < 70 ? `
+                                            <div class="recommendation-resources">
+                                                <h5>Recommended Resources:</h5>
+                                                <div class="resource-list">
+                                                    <a href="https://isc2.obrizum.io/org/cc" class="resource-item" target="_blank">Official Study Guide</a>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                </div>
+            `;
+            document.getElementById('results').appendChild(recommendations);
+
+            // Add performance tag styles
+            const style = document.createElement('style');
+            style.textContent = `
+                .performance-tag {
+                    font-size: 0.8rem;
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 1rem;
+                    margin-left: 0.5rem;
+                }
+                
+                .performance-tag.excellent {
+                    background-color: var(--success-color);
+                    color: white;
+                }
+                
+                .performance-tag.good {
+                    background-color: var(--primary-color);
+                    color: white;
+                }
+                
+                .performance-tag.needs-improvement {
+                    background-color: var(--warning-color);
+                    color: white;
+                }
+                
+                .performance-tag.requires-focus {
+                    background-color: var(--danger-color);
+                    color: white;
+                }
+            `;
+            document.head.appendChild(style);
+
+            const userScores = JSON.parse(localStorage.getItem('userScores') || '[]');
+            userScores.push(calculateWeightedScore());
+            localStorage.setItem('userScores', JSON.stringify(userScores));
+        }
+
+        // Initialize session on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeSession();
+            
+            // Track user activity
+            document.addEventListener('mousemove', resetInactivityTimer);
+            document.addEventListener('keydown', resetInactivityTimer);
+            document.addEventListener('click', resetInactivityTimer);
+        });
+
+        // Clear session on page unload
+        window.addEventListener('beforeunload', () => {
+            if (examData && !document.getElementById('results').style.display === 'block') {
+                saveSession();
+            }
+        });
+
+        document.addEventListener('copy', (e) => {
+            e.preventDefault();
+            showCheatWarning();
+            logCheatAttempt('copy');
+        });
+
+        document.addEventListener('paste', (e) => {
+            e.preventDefault();
+            showCheatWarning();
+            logCheatAttempt('paste');
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                tabSwitchCount++;
+                showCheatWarning();
+                logCheatAttempt('tab_switch');
+            }
+        });
+
+        document.addEventListener('mousemove', resetInactivityTimer);
+        document.addEventListener('keydown', resetInactivityTimer);
+        document.addEventListener('click', resetInactivityTimer);
+
+        function checkInactivity() {
+            if (Date.now() - lastActivityTime > INACTIVITY_THRESHOLD) {
+                showCheatWarning();
+                logCheatAttempt('inactivity');
+            }
+        }
+
+        function logCheatAttempt(type) {
+            const cheatLog = {
+                type: type,
+                timestamp: new Date().toISOString(),
+                question: currentQuestion,
+                examType: examType,
+                timeSpent: questionTimes[currentQuestion]
+            };
+            
+            const cheatLogs = JSON.parse(localStorage.getItem('cheatLogs') || '[]');
+            cheatLogs.push(cheatLog);
+            localStorage.setItem('cheatLogs', JSON.stringify(cheatLogs));
+        }
+
+        function showCheatWarning() {
+            const warning = document.getElementById('cheatWarning');
+            warning.style.display = 'block';
+            warning.textContent = getWarningMessage();
+            setTimeout(() => {
+                warning.style.display = 'none';
+            }, 3000);
+        }
+
+        function getWarningMessage() {
+            const messages = [
+                "Warning: Switching tabs or windows is not allowed during the exam!",
+                "Warning: Copy/paste is not allowed during the exam!",
+                "Warning: Please stay active during the exam!",
+                "Warning: Any suspicious activity will be logged!"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+
+        function updateDomainDistribution() {
+            const distributionDiv = document.getElementById('domain-distribution');
+            if (distributionDiv) {
+                distributionDiv.innerHTML = '';
+                for (const [domain, percentage] of Object.entries(examData.DomainPercentages)) {
+                    const domainElement = document.createElement('div');
+                    domainElement.textContent = `${domain}: ${percentage}%`;
+                    distributionDiv.appendChild(domainElement);
+                }
+            }
+        }
+
+        function startTimer() {
+            startTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('timer').textContent = 
+                `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function calculateWeightedScore() {
+            let totalScore = 0;
+            let totalWeight = 0;
+            
+            examData.Questions.forEach((question, index) => {
+                const weight = question.Difficulty || 1;
+                const isCorrect = answers[index] === question.Choices.indexOf(question.AnswerKey);
+                totalScore += isCorrect ? weight : 0;
+                totalWeight += weight;
+            });
+            
+            return (totalScore / totalWeight) * 100;
+        }
+
+        function updateQuestionTime() {
+            if (questionStartTime && currentQuestion < questionTimes.length) {
+                const timeSpent = Math.floor((Date.now() - questionStartTime) / 1000);
+                questionTimes[currentQuestion] += timeSpent;
+            }
+            questionStartTime = Date.now();
+        }
+
+        function displayQuestion(index) {
+            updateQuestionTime(); 
+            
+            const question = examData.Questions[index];
+            const questionElement = document.getElementById('question');
+            const choicesElement = document.getElementById('choices');
+            const explanationElement = document.getElementById('explanation');
+            
+            questionElement.innerHTML = `
+                <div class="question-header">
+                    <span class="question-number">Question ${index + 1} of ${examData.Questions.length}</span>
+                    <span class="domain-tag">${question.DomainOfKnowledge}</span>
+                </div>
+                <div class="question-text">${question.Question}</div>
+            `;
+            
+            choicesElement.innerHTML = '';
+            explanationElement.style.display = 'none';
+            
+            question.Choices.forEach((choice, i) => {
+                const choiceElement = document.createElement('div');
+                choiceElement.className = 'choice';
+                if (answers[index] === i) {
+                    choiceElement.classList.add('selected');
+                 
+                    if (i === question.Choices.indexOf(question.AnswerKey)) {
+                        choiceElement.classList.add('correct');
+                    } else {
+                        choiceElement.classList.add('incorrect');
+                    }
+     
+                    explanationElement.innerHTML = `
+                        <h4>${i === question.Choices.indexOf(question.AnswerKey) ? 'Correct!' : 'Incorrect'}</h4>
+                        <p><strong>Correct Answer:</strong> ${question.AnswerKey}</p>
+                        <p><strong>Explanation:</strong> ${question.Explaination}</p>
+                    `;
+                    explanationElement.style.display = 'block';
+                    explanationElement.className = `explanation ${i === question.Choices.indexOf(question.AnswerKey) ? 'correct' : 'incorrect'}`;
+                }
+                choiceElement.textContent = choice;
+                choiceElement.onclick = () => selectAnswer(index, i);
+                choicesElement.appendChild(choiceElement);
+            });
+
+            const progress = ((index + 1) / examData.Questions.length) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+
+  
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').style.display = 
+                index === examData.Questions.length - 1 ? 'none' : 'block';
+            document.getElementById('submitBtn').style.display = 
+                index === examData.Questions.length - 1 ? 'block' : 'none';
+
+
+            updateQuestionCounter(index);
+
+
+            const timeDisplay = document.createElement('div');
+            timeDisplay.className = 'question-time';
+            timeDisplay.textContent = `Time spent: ${formatTime(questionTimes[index])}`;
+            questionElement.appendChild(timeDisplay);
+        }
+
+        function updateQuestionCounter(currentIndex) {
+            const counter = document.getElementById('questionCounter');
+            counter.innerHTML = '';
+            
+            const totalQuestions = examData.Questions.length;
+            const maxVisibleDots = 7; 
+            const halfVisible = Math.floor(maxVisibleDots / 2);
+            
+            for (let i = 0; i < totalQuestions; i++) {
+
+                if (i < 3 || 
+                    i >= totalQuestions - 3 || 
+                    (i >= currentIndex - 2 && i <= currentIndex + 2) || 
+                    i === currentIndex) {
+                    
+                    const dot = document.createElement('div');
+                    dot.className = 'question-dot';
+                    dot.textContent = i + 1;
+                    
+                    if (i === currentIndex) {
+                        dot.classList.add('current');
+                    } else if (answers[i] !== null) {
+                        dot.classList.add('answered');
+                        if (answers[i] === examData.Questions[i].Choices.indexOf(examData.Questions[i].AnswerKey)) {
+                            dot.classList.add('correct');
+                        } else {
+                            dot.classList.add('incorrect');
+                        }
+                    }
+                    
+                    dot.onclick = () => {
+                        currentQuestion = i;
+                        displayQuestion(i);
+                    };
+                    
+                    counter.appendChild(dot);
+                } else if (i === 3 || i === totalQuestions - 4) {
+                   
+                    const ellipsis = document.createElement('div');
+                    ellipsis.className = 'question-dot ellipsis';
+                    ellipsis.textContent = '...';
+                    ellipsis.style.cursor = 'default';
+                    counter.appendChild(ellipsis);
+                }
+            }
+        }
+
+        function selectAnswer(questionIndex, choiceIndex) {
+            answers[questionIndex] = choiceIndex;
+            displayQuestion(questionIndex);
+        }
+
+   
+        document.querySelectorAll('.exam-option').forEach(option => {
+            option.addEventListener('click', () => {
+                examType = option.dataset.exam;
+                document.querySelectorAll('.exam-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                
+
+                const examSet = option.dataset.exam === 'practice' ? 'CC1' : 'CC2';
+                loadExam(examSet);
+            });
+        });
+
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentQuestion < examData.Questions.length - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            }
+        });
+
+       
+        document.getElementById('submitBtn').addEventListener('click', () => {
+            clearInterval(timerInterval);
+            showResults();
+        });
+
+    
+        function analyzePerformance() {
+            const analysis = {
+                weakAreas: [],
+                recommendations: [],
+                comparison: null
+            };
+
+          
+            const domainScores = {};
+            examData.Questions.forEach((question, index) => {
+                const domain = question.DomainOfKnowledge;
+                if (!domainScores[domain]) {
+                    domainScores[domain] = { correct: 0, total: 0 };
+                }
+                domainScores[domain].total++;
+                if (answers[index] === question.Choices.indexOf(question.AnswerKey)) {
+                    domainScores[domain].correct++;
+                }
+            });
+
+        
+            for (const [domain, score] of Object.entries(domainScores)) {
+                const percentage = (score.correct / score.total) * 100;
+                if (percentage < 70) {
+                    analysis.weakAreas.push({
+                        domain,
+                        percentage,
+                        questions: examData.Questions.filter(q => q.DomainOfKnowledge === domain)
+                    });
+                }
+            }
+
+          
+            analysis.weakAreas.forEach(area => {
+                const recommendation = {
+                    domain: area.domain,
+                    action: `Focus on ${area.domain} concepts`,
+                    resources: getResourcesForDomain(area.domain),
+                    practiceQuestions: area.questions.slice(0, 3)
+                };
+                analysis.recommendations.push(recommendation);
+            });
+
+          
+            const userScores = JSON.parse(localStorage.getItem('userScores') || '[]');
+            if (userScores.length > 0) {
+                const currentScore = calculateWeightedScore();
+                const averageScore = userScores.reduce((sum, score) => sum + score, 0) / userScores.length;
+                analysis.comparison = {
+                    currentScore,
+                    averageScore,
+                    percentile: calculatePercentile(currentScore, userScores)
+                };
+            }
+
+            return analysis;
+        }
+
+        function getResourcesForDomain(domain) {
+          
+            const resources = {
+                "Security": [
+                    "Security Fundamentals Course",
+                    "Security Best Practices Guide",
+                    "Security Case Studies"
+                ],
+                "Networking": [
+                    "Networking Basics Tutorial",
+                    "Advanced Networking Concepts",
+                    "Network Troubleshooting Guide"
+                ],
+            };
+            return resources[domain] || [];
+        }
+
+        function calculatePercentile(score, scores) {
+            const sortedScores = [...scores].sort((a, b) => a - b);
+            const position = sortedScores.findIndex(s => s >= score);
+            return ((position / sortedScores.length) * 100).toFixed(1);
+        }
+
+
+        function showResults() {
+            const correct = answers.filter((answer, index) => 
+                answer === examData.Questions[index].Choices.indexOf(examData.Questions[index].AnswerKey)).length;
+            const incorrect = examData.Questions.length - correct;
+            const score = calculateWeightedScore().toFixed(1);
+            
+            document.getElementById('questionContainer').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            
+            document.getElementById('finalScore').textContent = `${score}%`;
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('incorrectCount').textContent = incorrect;
+            document.getElementById('timeTaken').textContent = 
+                document.getElementById('timer').textContent.replace('Time: ', '');
+
+         
+            const domainScores = {};
+            examData.Questions.forEach((question, index) => {
+                if (!domainScores[question.DomainOfKnowledge]) {
+                    domainScores[question.DomainOfKnowledge] = {
+                        correct: 0,
+                        total: 0,
+                        timeSpent: 0
+                    };
+                }
+                domainScores[question.DomainOfKnowledge].total++;
+                if (answers[index] === question.Choices.indexOf(question.AnswerKey)) {
+                    domainScores[question.DomainOfKnowledge].correct++;
+                }
+                domainScores[question.DomainOfKnowledge].timeSpent += questionTimes[index];
+            });
+
+           
+            const domainPerformance = document.createElement('div');
+            domainPerformance.className = 'domain-performance';
+            domainPerformance.innerHTML = `
+                <h3>Domain Performance</h3>
+                <div class="domain-chart">
+                    ${Object.entries(domainScores).map(([domain, stats]) => {
+                        const percentage = (stats.correct / stats.total) * 100;
+                        const avgTime = Math.floor(stats.timeSpent / stats.total);
+                        return `
+                            <div class="domain-item">
+                                <h4>
+                                    <span>${domain}</span>
+                                    <span>${percentage.toFixed(1)}%</span>
+                                </h4>
+                                <div class="domain-progress">
+                                    <div class="domain-progress-bar" style="width: ${percentage}%"></div>
+                                </div>
+                                <div class="domain-stats">
+                                    <span>${stats.correct}/${stats.total} correct</span>
+                                    <span>Avg time: ${formatTime(avgTime)}</span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            document.getElementById('results').appendChild(domainPerformance);
+
+          
+            const timeAnalysis = document.createElement('div');
+            timeAnalysis.className = 'time-analysis';
+            timeAnalysis.innerHTML = `
+                <h3>Time Analysis</h3>
+                <div class="time-stats">
+                    <div class="time-stat">
+                        <h4>Total Time</h4>
+                        <p>${document.getElementById('timer').textContent.replace('Time: ', '')}</p>
+                    </div>
+                    <div class="time-stat">
+                        <h4>Average Time per Question</h4>
+                        <p>${formatTime(Math.floor(questionTimes.reduce((a, b) => a + b, 0) / examData.Questions.length))}</p>
+                    </div>
+                    <div class="time-stat">
+                        <h4>Longest Time</h4>
+                        <p>${formatTime(Math.max(...questionTimes))}</p>
+                    </div>
+                </div>
+            `;
+            document.getElementById('results').appendChild(timeAnalysis);
+
+           
+            const recommendations = document.createElement('div');
+            recommendations.className = 'recommendations';
+            recommendations.innerHTML = `
+                <h3>Performance Recommendations</h3>
+                <div class="recommendation-list">
+                    ${Object.entries(domainScores)
+                        .map(([domain, stats], index) => {
+                            const percentage = (stats.correct / stats.total) * 100;
+                            const avgTime = Math.floor(stats.timeSpent / stats.total);
+                            const performanceLevel = percentage >= 80 ? 'Excellent' :
+                                                   percentage >= 60 ? 'Good' :
+                                                   percentage >= 40 ? 'Needs Improvement' : 'Requires Focus';
+                            
+                            return `
+                                <div class="recommendation-item">
+                                    <div class="recommendation-icon">${index + 1}</div>
+                                    <div class="recommendation-content">
+                                        <h4>
+                                            <span>${domain}</span>
+                                            <span class="performance-tag ${performanceLevel.toLowerCase().replace(' ', '-')}">
+                                                ${performanceLevel}
+                                            </span>
+                                        </h4>
+                                        <p>Your performance in this domain is ${percentage.toFixed(1)}% with an average time of ${formatTime(avgTime)} per question.</p>
+                                        <div class="recommendation-stats">
+                                            <span>📊 Score: ${percentage.toFixed(1)}%</span>
+                                            <span>⏱️ Avg Time: ${formatTime(avgTime)}</span>
+                                            <span>✅ Correct: ${stats.correct}/${stats.total}</span>
+                                        </div>
+                                        ${percentage < 70 ? `
+                                            <div class="recommendation-resources">
+                                                <h5>Recommended Resources:</h5>
+                                                <div class="resource-list">
+                                                    <a href="https://isc2.obrizum.io/org/cc" class="resource-item" target="_blank">Official Study Guide</a>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                </div>
+            `;
+            document.getElementById('results').appendChild(recommendations);
+
+            // Add performance tag styles
+            const style = document.createElement('style');
+            style.textContent = `
+                .performance-tag {
+                    font-size: 0.8rem;
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 1rem;
+                    margin-left: 0.5rem;
+                }
+                
+                .performance-tag.excellent {
+                    background-color: var(--success-color);
+                    color: white;
+                }
+                
+                .performance-tag.good {
+                    background-color: var(--primary-color);
+                    color: white;
+                }
+                
+                .performance-tag.needs-improvement {
+                    background-color: var(--warning-color);
+                    color: white;
+                }
+                
+                .performance-tag.requires-focus {
+                    background-color: var(--danger-color);
+                    color: white;
+                }
+            `;
+            document.head.appendChild(style);
+
+            const userScores = JSON.parse(localStorage.getItem('userScores') || '[]');
+            userScores.push(calculateWeightedScore());
+            localStorage.setItem('userScores', JSON.stringify(userScores));
+        }
+
+      
+        document.getElementById('restartBtn').addEventListener('click', () => {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('examSelection').style.display = 'block';
+            clearInterval(timerInterval);
+        });
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+ 
+        const helpBtn = document.getElementById('helpBtn');
+        const faqBtn = document.getElementById('faqBtn');
+        const helpModal = document.getElementById('helpModal');
+        const faqModal = document.getElementById('faqModal');
+        const closeButtons = document.querySelectorAll('.close');
+
+        helpBtn.addEventListener('click', () => {
+            helpModal.style.display = 'block';
+            faqModal.style.display = 'none';
+        });
+
+        faqBtn.addEventListener('click', () => {
+            faqModal.style.display = 'block';
+            helpModal.style.display = 'none';
+        });
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                helpModal.style.display = 'none';
+                faqModal.style.display = 'none';
+            });
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === helpModal) helpModal.style.display = 'none';
+            if (event.target === faqModal) faqModal.style.display = 'none';
+        });
+
+        // Update back button functionality
+        const backModal = document.getElementById('backModal');
+        const confirmBackBtn = document.getElementById('confirmBackBtn');
+        const cancelBackBtn = document.getElementById('cancelBackBtn');
+
+        document.getElementById('backBtn').addEventListener('click', () => {
+            backModal.style.display = 'block';
+        });
+
+        confirmBackBtn.addEventListener('click', () => {
+            document.getElementById('questionContainer').style.display = 'none';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('examSelection').style.display = 'block';
+            saveSession();
+            backModal.style.display = 'none';
+        });
+
+        cancelBackBtn.addEventListener('click', () => {
+            backModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === backModal) {
+                backModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html> 

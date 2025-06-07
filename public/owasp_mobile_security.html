@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>OWASP Mobile Security Project</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- =======================================================
+    Theme Name: BizPage
+    Theme URL: https://bootstrapmade.com/bizpage-bootstrap-business-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+
+        #content {
+            display: none;
+        }
+    </style>
+
+<body>
+    <!-- Loader -->
+    <div id="loader">
+        <img src="./img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById("loader").style.display = "none";
+            document.body.style.overflow = "auto";
+        }, 3000);
+    </script>
+</body>
+
+</head>
+<!--==========================
+    Header
+  ============================-->
+<header id="header">
+    <div class="container-fluid">
+
+        <div id="logo" class="pull-left">
+            <h1><a href="#intro" class="scrollto">TH Dashsecurity</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+
+        </div>
+
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+            </ul>
+        </nav><!-- #nav-menu-container -->
+    </div>
+</header><!-- #header -->
+
+<!--==========================
+    Intro Section
+  ============================-->
+<section id="intro">
+    <div class="intro-container">
+        <div id="introCarousel" class="carousel  slide carousel-fade" data-ride="carousel">
+
+            <ol class="carousel-indicators"></ol>
+
+            <div class="carousel-inner" role="listbox">
+
+                <div class="carousel-item active">
+                    <div class="carousel-background"><img src="img/intro-carousel/1.png" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text-learning">OWASP Mobile Security Project</h2>
+                            <a href="#owasp-mobile-security" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="carousel-background"><img src="img/intro-carousel/2.jpg" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text-learning">OWASP Mobile Security Project</h2>
+                            <a href="#owasp-mobile-security" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="carousel-background"><img src="img/intro-carousel/3.jpg" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text-learning">OWASP Mobile Security Project</h2>
+                            <a href="#owasp-mobile-security" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <a class="carousel-control-prev" href="#introCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon ion-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+
+            <a class="carousel-control-next" href="#introCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon ion-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+
+        </div>
+    </div>
+</section><!-- #intro -->
+
+<main id="main">
+
+    <section id="owasp-mobile-security"><br><br>
+        <div class="container">
+
+            <header class="section-header wow fadeInUp">
+                <h3 id="cves_dashboard" class="glow-text text-center mb-3">OWASP Mobile Security Project</h3>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p class="text-center mb-4">The OWASP Mobile Security Project is a comprehensive resource for mobile application security. It provides developers and security teams with the knowledge and tools needed to build secure mobile applications.</p>
+                            
+                            <!-- Impact Statistics Section -->
+                            <div class="row mt-4">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-danger">
+                                        <h5 class="text-center mb-3">2024 Mobile Security Statistics</h5>
+                                        <div class="row text-center">
+                                            <div class="col-md-3">
+                                                <h4>83%</h4>
+                                                <p>Apps with Security Issues</p>
+                                                <small>Based on security testing</small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4>76%</h4>
+                                                <p>Data Storage Risks</p>
+                                                <small>Insecure data handling</small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4>91%</h4>
+                                                <p>Network Vulnerabilities</p>
+                                                <small>Insecure communications</small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4>68%</h4>
+                                                <p>Authentication Issues</p>
+                                                <small>Weak authentication</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Detailed Vulnerabilities Section -->
+                            <div class="row mt-4">
+                                <div class="col-lg-12">
+                                    <div class="accordion" id="vulnerabilityAccordion">
+                                        <div class="card">
+                                            <div class="card-header" id="headingM01">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseM01">
+                                                        M1: Improper Platform Usage
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseM01" class="collapse show" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Improper platform usage occurs when mobile apps fail to use platform security features correctly:</p>
+                                                    <ul>
+                                                        <li>Incorrect implementation of platform security controls</li>
+                                                        <li>Misuse of platform APIs</li>
+                                                        <li>Failure to use platform security features</li>
+                                                        <li>Insecure platform configuration</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="card">
+                                            <div class="card-header" id="headingM02">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseM02">
+                                                        M2: Insecure Data Storage
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseM02" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Insecure data storage vulnerabilities include:</p>
+                                                    <ul>
+                                                        <li>Unencrypted sensitive data</li>
+                                                        <li>Weak encryption implementation</li>
+                                                        <li>Insecure file permissions</li>
+                                                        <li>Insecure database storage</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingM03">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseM03">
+                                                        M3: Insecure Communication
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseM03" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Insecure communication vulnerabilities include:</p>
+                                                    <ul>
+                                                        <li>Insufficient TLS/SSL implementation</li>
+                                                        <li>Weak cipher suites</li>
+                                                        <li>Certificate validation issues</li>
+                                                        <li>Insecure data transmission</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingM04">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseM04">
+                                                        M4: Insecure Authentication
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseM04" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Insecure authentication issues include:</p>
+                                                    <ul>
+                                                        <li>Weak password policies</li>
+                                                        <li>Insecure biometric implementation</li>
+                                                        <li>Session management flaws</li>
+                                                        <li>Authentication bypass vulnerabilities</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingM05">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseM05">
+                                                        M5: Insufficient Cryptography
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseM05" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Insufficient cryptography issues include:</p>
+                                                    <ul>
+                                                        <li>Weak encryption algorithms</li>
+                                                        <li>Insecure key management</li>
+                                                        <li>Poor random number generation</li>
+                                                        <li>Insecure cryptographic implementation</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingM06">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseM06">
+                                                        M6: Insecure Authorization
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseM06" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Insecure authorization issues include:</p>
+                                                    <ul>
+                                                        <li>Missing access controls</li>
+                                                        <li>Insufficient permission checks</li>
+                                                        <li>Privilege escalation vulnerabilities</li>
+                                                        <li>Insecure role management</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingM07">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseM07">
+                                                        M7: Client Code Quality
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseM07" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Client code quality issues include:</p>
+                                                    <ul>
+                                                        <li>Buffer overflows</li>
+                                                        <li>Memory leaks</li>
+                                                        <li>Insecure coding practices</li>
+                                                        <li>Poor error handling</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingM08">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseM08">
+                                                        M8: Code Tampering
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseM08" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Code tampering vulnerabilities include:</p>
+                                                    <ul>
+                                                        <li>Binary patching</li>
+                                                        <li>Code injection</li>
+                                                        <li>Dynamic code loading</li>
+                                                        <li>Insufficient integrity checks</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingM09">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseM09">
+                                                        M9: Reverse Engineering
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseM09" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Reverse engineering vulnerabilities include:</p>
+                                                    <ul>
+                                                        <li>Insufficient obfuscation</li>
+                                                        <li>Weak anti-tampering controls</li>
+                                                        <li>Exposed sensitive information</li>
+                                                        <li>Insecure debugging features</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingM10">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseM10">
+                                                        M10: Extraneous Functionality
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseM10" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Extraneous functionality issues include:</p>
+                                                    <ul>
+                                                        <li>Hidden backdoors</li>
+                                                        <li>Debug code in production</li>
+                                                        <li>Unused features</li>
+                                                        <li>Insecure configuration options</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Summary Table -->
+                            <div class="row mt-4">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Rank</th>
+                                                    <th>Vulnerability</th>
+                                                    <th>Description</th>
+                                                    <th>Impact</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Improper Platform Usage</td>
+                                                    <td>Misuse of platform security features and APIs</td>
+                                                    <td>Critical</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Insecure Data Storage</td>
+                                                    <td>Insecure storage of sensitive data on mobile devices</td>
+                                                    <td>Critical</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Insecure Communication</td>
+                                                    <td>Insecure data transmission between client and server</td>
+                                                    <td>Critical</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Insecure Authentication</td>
+                                                    <td>Weak authentication mechanisms and session management</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>5</td>
+                                                    <td>Insufficient Cryptography</td>
+                                                    <td>Weak encryption implementation and key management</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>6</td>
+                                                    <td>Insecure Authorization</td>
+                                                    <td>Insufficient access controls and permission checks</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>7</td>
+                                                    <td>Client Code Quality</td>
+                                                    <td>Poor code quality leading to security vulnerabilities</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>8</td>
+                                                    <td>Code Tampering</td>
+                                                    <td>Vulnerabilities allowing code modification</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>9</td>
+                                                    <td>Reverse Engineering</td>
+                                                    <td>Vulnerabilities enabling code analysis and extraction</td>
+                                                    <td>Medium</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>10</td>
+                                                    <td>Extraneous Functionality</td>
+                                                    <td>Hidden features and backdoors in production code</td>
+                                                    <td>Medium</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <p class="text-center">Based on the OWASP Mobile Security Project, organizations must implement robust security measures and regular security testing to protect their mobile applications. Proper security controls, secure coding practices, and regular updates are essential for mitigating these risks.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </section>
+</main>
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+<div id="preloader"></div>
+
+<!-- JavaScript Libraries -->
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/jquery/jquery-migrate.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/superfish/hoverIntent.js"></script>
+<script src="lib/superfish/superfish.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/isotope/isotope.pkgd.min.js"></script>
+<script src="lib/lightbox/js/lightbox.min.js"></script>
+<script src="lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+
+<!-- Contact Form JavaScript File -->
+<script src="contactform/contactform.js"></script>
+
+<!-- Template Main Javascript File -->
+<script src="js/main.js"></script>
+
+</body>
+</html>

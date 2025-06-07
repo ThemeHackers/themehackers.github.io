@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>★彡[OWASP Smart Contract Top 10 Evolution]彡★</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- =======================================================
+    Theme Name: BizPage
+    Theme URL: https://bootstrapmade.com/bizpage-bootstrap-business-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+
+        #content {
+            display: none;
+        }
+    </style>
+
+<body>
+    <!-- Loader -->
+    <div id="loader">
+        <img src="./img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById("loader").style.display = "none";
+            document.body.style.overflow = "auto";
+        }, 3000);
+    </script>
+</body>
+
+</head>
+<!--==========================
+    Header
+  ============================-->
+<header id="header">
+    <div class="container-fluid">
+
+        <div id="logo" class="pull-left">
+            <h1><a href="#intro" class="scrollto">TH Dashsecurity</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+
+        </div>
+
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                <li class="menu-active"><a href="/thkx-scam-labs/">How can hackers steal your cryptocurrency?</a></li>
+                <li class="menu-active"><a href="/web3-thkx/">Access to the blockchain system</a></li>
+                <li class="menu-active"><a href="/learning.html">Back</a></li>
+            </ul>
+        </nav><!-- #nav-menu-container -->
+    </div>
+</header><!-- #header -->
+
+<!--==========================
+    Intro Section
+  ============================-->
+<section id="intro">
+    <div class="intro-container">
+        <div id="introCarousel" class="carousel  slide carousel-fade" data-ride="carousel">
+
+            <ol class="carousel-indicators"></ol>
+
+            <div class="carousel-inner" role="listbox">
+
+                <div class="carousel-item active">
+                    <div class="carousel-background"><img src="img/intro-carousel/1.png" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text-learning">OWASP Top 10 2025 – Most Critical Weaknesses Exploited/Discovered</h2>
+                            <a href="#owasp-top-10-2025" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="carousel-background"><img src="img/intro-carousel/2.jpg" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text-learning">OWASP Top 10 2025 – Most Critical Weaknesses Exploited/Discovered</h2>
+                            <a href="#owasp-top-10-2025" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="carousel-background"><img src="img/intro-carousel/3.jpg" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text-learning">OWASP Top 10 2025 – Most Critical Weaknesses Exploited/Discovered</h2>
+                            <a href="#owasp-top-10-2025" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <a class="carousel-control-prev" href="#introCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon ion-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+
+            <a class="carousel-control-next" href="#introCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon ion-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+
+        </div>
+    </div>
+</section><!-- #intro -->
+
+<main id="main">
+
+    <section id="owasp-top-10-2025"><br><br>
+        <div class="container">
+
+            <header class="section-header wow fadeInUp">
+                <h3 id="cves_dashboard" class="glow-text text-center mb-3">OWASP Smart Contract Top 10 2025</h3>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p class="text-center mb-4">The OWASP Smart Contract Top 10 2025 is a comprehensive awareness document for Web3 developers and security teams, focusing on the most critical vulnerabilities in smart contracts and blockchain applications. In 2024 alone, over $1.42 billion was lost across 149 documented incidents due to these vulnerabilities.</p>
+                            
+                            <!-- Evolution Image Section -->
+                            <div class="row mt-4 mb-5">
+                                <div class="col-lg-12 text-center">
+                                    <h4 class="mb-4">Evolution from 2023 to 2025</h4>
+                                    <img src="img/OWASP 2023-2025.jpg" alt="OWASP Smart Contract Top 10 Evolution" class="img-fluid mb-4" style="max-width: 900px;">
+                                    <div class="mt-3">
+                                        <span class="badge badge-success mr-2">NEW</span> Price Oracle Manipulation, Lack of Input Validation, Flash Loan Attacks
+                                        <br>
+                                        <span class="badge badge-danger mr-2">REMOVED</span> Timestamp Dependence, Front-running Attacks, Gas Limit Vulnerabilities
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Real-World Impact Section -->
+                            <div class="row mt-4">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-danger">
+                                        <h5 class="text-center mb-3">2024 Impact Statistics</h5>
+                                        <div class="row text-center">
+                                            <div class="col-md-3">
+                                                <h4 class="counter-value" data-count="1.42">0</h4>
+                                                <p>Total Losses</p>
+                                                <small>$1.42B across all vulnerabilities</small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="counter-value" data-count="149">0</h4>
+                                                <p>Documented Incidents</p>
+                                                <small>Verified security breaches</small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="counter-value" data-count="953.2">0</h4>
+                                                <p>Access Control Losses</p>
+                                                <small>$953.2M from AC vulnerabilities</small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h4 class="counter-value" data-count="63">0</h4>
+                                                <p>Logic Error Losses</p>
+                                                <small>$63M from logic flaws</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Add Counter Animation Script -->
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    const counters = document.querySelectorAll('.counter-value');
+                                    const speed = 200; // Animation speed in milliseconds
+                                    
+                                    counters.forEach(counter => {
+                                        const animate = () => {
+                                            const value = +counter.getAttribute('data-count');
+                                            const data = +counter.innerText;
+                                            
+                                            const time = value / speed;
+                                            if (data < value) {
+                                                counter.innerText = (data + time).toFixed(2);
+                                                setTimeout(animate, 1);
+                                            } else {
+                                                counter.innerText = value.toFixed(2);
+                                                // Add currency symbol and unit after animation
+                                                if (counter.nextElementSibling.textContent.includes('Losses')) {
+                                                    counter.innerHTML = '$' + value.toFixed(2) + (value > 100 ? 'B' : 'M');
+                                                }
+                                            }
+                                        }
+                                        animate();
+                                    });
+                                });
+                            </script>
+
+                            <style>
+                                .counter-value {
+                                    font-size: 2rem;
+                                    font-weight: bold;
+                                    color: #dc3545;
+                                    margin-bottom: 0.5rem;
+                                }
+                                .alert-danger small {
+                                    color: #856404;
+                                    font-size: 0.85rem;
+                                }
+                                .alert-danger p {
+                                    font-weight: 600;
+                                    margin-bottom: 0.25rem;
+                                }
+                            </style>
+
+                            <!-- Detailed Vulnerabilities Section -->
+                            <div class="row mt-4">
+                                <div class="col-lg-12">
+                                    <div class="accordion" id="vulnerabilityAccordion">
+                                        <div class="card">
+                                            <div class="card-header" id="headingSC01">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseSC01">
+                                                        SC01: Access Control Vulnerabilities
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseSC01" class="collapse show" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Access control flaws remain the leading cause of financial losses in smart contracts, accounting for $953.2 million in damages in 2024 alone. These vulnerabilities occur when permission checks are improperly implemented, allowing unauthorized users to access or modify critical functions or data.</p>
+                                                    <p><strong>Example:</strong> The 88mph Function Initialization Bug allowed attackers to reinitialize contracts and gain administrative privileges.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="card">
+                                            <div class="card-header" id="headingSC02">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSC02">
+                                                        SC02: Price Oracle Manipulation <span class="badge badge-success">New</span>
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseSC02" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Manipulating price oracles—external data feeds used by smart contracts—can destabilize protocols, leading to financial losses or systemic failures. Attackers often exploit poorly designed oracle mechanisms to inflate or deflate asset prices temporarily.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingSC03">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSC03">
+                                                        SC03: Logic Errors
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseSC03" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Business logic vulnerabilities arise when contracts fail to execute their intended functions correctly. These errors have led to significant losses ($63M in 2024) through various attack vectors:</p>
+                                                    <ul>
+                                                        <li>Improper token minting mechanisms</li>
+                                                        <li>Flawed lending protocol implementations</li>
+                                                        <li>Incorrect reward distribution calculations</li>
+                                                        <li>Faulty state transition logic</li>
+                                                    </ul>
+                                                    <p>These vulnerabilities often result from complex business rules being incorrectly translated into smart contract code, leading to exploitable inconsistencies in contract behavior.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingSC04">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSC04">
+                                                        SC04: Lack of Input Validation <span class="badge badge-success">New</span>
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseSC04" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Failure to validate user inputs can allow attackers to inject malicious data into smart contracts. Common validation issues include:</p>
+                                                    <ul>
+                                                        <li>Missing bounds checking on numerical inputs</li>
+                                                        <li>Insufficient validation of external contract addresses</li>
+                                                        <li>Improper handling of array lengths and indices</li>
+                                                        <li>Unchecked return values from external calls</li>
+                                                    </ul>
+                                                    <p>Proper input validation is crucial for maintaining contract integrity and preventing manipulation of contract state.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingSC05">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSC05">
+                                                        SC05: Reentrancy Attacks
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseSC05" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Reentrancy attacks exploit a contract's ability to call external functions before completing its own state updates. Notable impacts include:</p>
+                                                    <ul>
+                                                        <li>The DAO hack of 2016 ($70M in losses)</li>
+                                                        <li>Multiple DeFi protocol exploits</li>
+                                                        <li>Cross-function reentrancy vulnerabilities</li>
+                                                    </ul>
+                                                    <p>Prevention strategies include:</p>
+                                                    <ul>
+                                                        <li>Implementing the checks-effects-interactions pattern</li>
+                                                        <li>Using reentrancy guards</li>
+                                                        <li>Ensuring all state updates occur before external calls</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingSC06">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSC06">
+                                                        SC06: Unchecked External Calls
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseSC06" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>When smart contracts fail to verify the success of external calls, they risk proceeding with incorrect assumptions about transaction outcomes. Critical issues include:</p>
+                                                    <ul>
+                                                        <li>Failure to check return values from low-level calls</li>
+                                                        <li>Improper handling of failed token transfers</li>
+                                                        <li>Unsafe assumptions about external contract behavior</li>
+                                                        <li>Callback function manipulation</li>
+                                                    </ul>
+                                                    <p>Best practices include implementing proper error handling and using safe transfer patterns for all external interactions.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingSC07">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSC07">
+                                                        SC07: Flash Loan Attacks <span class="badge badge-success">New</span>
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseSC07" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Flash loans are a unique DeFi feature that allows users to borrow funds without collateral, provided the loan is repaid within the same transaction block. While innovative, this mechanism can be exploited in several ways:</p>
+                                                    <ul>
+                                                        <li>Market manipulation through large-scale temporary borrowing</li>
+                                                        <li>Draining liquidity pools through price manipulation</li>
+                                                        <li>Exploiting arbitrage opportunities across multiple DeFi protocols</li>
+                                                    </ul>
+                                                    <p>These attacks have become increasingly sophisticated, often combining multiple vulnerabilities for maximum impact.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingSC08">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSC08">
+                                                        SC08: Integer Overflow and Underflow
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseSC08" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Arithmetic errors occur when calculations exceed data type limits, potentially allowing attackers to manipulate balances or bypass restrictions. Common scenarios include:</p>
+                                                    <ul>
+                                                        <li>Token balance manipulation through overflow in transfer functions</li>
+                                                        <li>Bypassing maximum supply limits through arithmetic wraparound</li>
+                                                        <li>Exploiting underflow in subtraction operations to create large balances</li>
+                                                    </ul>
+                                                    <p>While modern Solidity versions include SafeMath by default, many legacy contracts remain vulnerable.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingSC09">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSC09">
+                                                        SC09: Insecure Randomness
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseSC09" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>Blockchain's deterministic nature makes generating secure randomness challenging. This vulnerability affects:</p>
+                                                    <ul>
+                                                        <li>Gambling and lottery smart contracts</li>
+                                                        <li>Random token distribution mechanisms</li>
+                                                        <li>NFT minting sequences</li>
+                                                    </ul>
+                                                    <p>Predictable randomness can be exploited by attackers who can calculate outcomes in advance, compromising the fairness of these systems. Solutions often require external sources of entropy or verifiable random functions (VRFs).</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="headingSC10">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSC10">
+                                                        SC10: Denial of Service (DoS) Attacks
+                                                    </button>
+                                                </h2>
+                                            </div>
+                                            <div id="collapseSC10" class="collapse" data-parent="#vulnerabilityAccordion">
+                                                <div class="card-body">
+                                                    <p>DoS attacks in smart contracts target resource-intensive functions, making them unusable by:</p>
+                                                    <ul>
+                                                        <li>Exhausting gas limits through complex loops or calculations</li>
+                                                        <li>Blocking critical contract functions through state manipulation</li>
+                                                        <li>Creating resource bottlenecks in external calls</li>
+                                                    </ul>
+                                                    <p>These attacks can render contracts temporarily or permanently unusable, potentially trapping funds or disrupting essential services. Proper gas optimization and fail-safe mechanisms are essential for prevention.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Summary Table -->
+                            <div class="row mt-4">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Rank</th>
+                                                    <th>Vulnerability</th>
+                                                    <th>Description</th>
+                                                    <th>Impact</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Access Control Vulnerabilities</td>
+                                                    <td>Weaknesses in access control mechanisms that allow unauthorized access to resources or functionality. Led to $953.2M in losses (2024).</td>
+                                                    <td>Critical</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Price Oracle Manipulation <span class="badge badge-success">New</span></td>
+                                                    <td>Exploitation of price feed mechanisms to manipulate asset valuations and trigger malicious trades</td>
+                                                    <td>Critical</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Logic Errors</td>
+                                                    <td>Business logic flaws leading to improper token minting, flawed lending protocols, or incorrect reward distributions. ($63M in losses)</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Lack of Input Validation <span class="badge badge-success">New</span></td>
+                                                    <td>Insufficient validation of user input leading to various injection attacks and data corruption</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>5</td>
+                                                    <td>Reentrancy Attacks</td>
+                                                    <td>Vulnerabilities allowing attackers to repeatedly call functions before previous executions complete. Notable: DAO hack ($70M)</td>
+                                                    <td>Critical</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>6</td>
+                                                    <td>Unchecked External Calls</td>
+                                                    <td>Insecure handling of external contract calls and API interactions leading to inconsistent states</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>7</td>
+                                                    <td>Flash Loan Attacks <span class="badge badge-success">New</span></td>
+                                                    <td>Exploitation of flash loan mechanisms to manipulate markets or drain liquidity pools</td>
+                                                    <td>Critical</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>8</td>
+                                                    <td>Integer Overflow and Underflow</td>
+                                                    <td>Arithmetic operation errors leading to balance manipulation or restriction bypasses</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>9</td>
+                                                    <td>Insecure Randomness</td>
+                                                    <td>Predictable randomness compromising lotteries, token distributions, and other random-dependent functions</td>
+                                                    <td>High</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>10</td>
+                                                    <td>Denial of Service (DoS) Attacks</td>
+                                                    <td>Resource exhaustion attacks targeting gas limits or computational resources</td>
+                                                    <td>High</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <p class="text-center">Based on incidents documented in SolidityScan's Web3HackHub and Immunefi's Crypto Losses Report, these vulnerabilities continue to pose significant risks to blockchain applications. Organizations must prioritize security measures and regular audits to protect against these emerging threats.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </section>
+</main>
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+<div id="preloader"></div>
+
+<!-- JavaScript Libraries -->
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/jquery/jquery-migrate.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/superfish/hoverIntent.js"></script>
+<script src="lib/superfish/superfish.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/isotope/isotope.pkgd.min.js"></script>
+<script src="lib/lightbox/js/lightbox.min.js"></script>
+<script src="lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+
+<!-- Contact Form JavaScript File -->
+<script src="contactform/contactform.js"></script>
+
+<!-- Template Main Javascript File -->
+<script src="js/main.js"></script>
+
+
+
+</body>
+
+</html>

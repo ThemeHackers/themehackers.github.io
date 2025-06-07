@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>★彡[Microsoft CVEs]彡★</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- =======================================================
+    Theme Name: BizPage
+    Theme URL: https://bootstrapmade.com/bizpage-bootstrap-business-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+
+        #content {
+            display: none;
+        }
+    </style>
+
+<body>
+    <!-- Loader -->
+    <div id="loader">
+        <img src="./img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById("loader").style.display = "none";
+            document.body.style.overflow = "auto";
+        }, 3000);
+    </script>
+</body>
+
+</head>
+<!--==========================
+    Header
+  ============================-->
+<header id="header">
+    <div class="container-fluid">
+
+        <div id="logo" class="pull-left">
+            <h1><a href="#intro" class="scrollto">TH Dashsecurity</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+
+        </div>
+
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                <li class="menu-active"><a href="/index.html">Home</a></li>
+                <li class="menu-active"><a href="#cve-table">Microsoft CVEs</a>
+                <li class="menu-active"><a href="/learning.html">Back</a></li>
+
+            </ul>
+        </nav><!-- #nav-menu-container -->
+    </div>
+</header><!-- #header -->
+
+<!--==========================
+    Intro Section
+  ============================-->
+<section id="intro">
+    <div class="intro-container">
+        <div id="introCarousel" class="carousel  slide carousel-fade" data-ride="carousel">
+
+            <ol class="carousel-indicators"></ol>
+
+            <div class="carousel-inner" role="listbox">
+
+                <div class="carousel-item active">
+                    <div class="carousel-background"><img src="img/intro-carousel/1.png" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text">Microsoft CVEs Reports Dashboard</h2>
+                            <a href="#microsoft_cve" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="carousel-background"><img src="img/intro-carousel/2.jpg" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text">Microsoft CVEs Reports Dashboard</h2>
+                            <a href="#microsoft_cve" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="carousel-background"><img src="img/intro-carousel/3.jpg" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2 class="glow-text">Microsoft CVEs Reports Dashboard</h2>
+                            <a href="#microsoft_cve" class="btn-get-started scrollto">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <a class="carousel-control-prev" href="#introCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon ion-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+
+            <a class="carousel-control-next" href="#introCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon ion-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+
+        </div>
+    </div>
+</section><!-- #intro -->
+
+<main id="main">
+
+    <section id="events"><br><br>
+        <div class="container">
+
+            <header class="section-header wow fadeInUp">
+                <h3 id="microsoft_cve" class="glow-text text-center mb-3">Mscve - Vulnerabilities List</h3>
+                <p class="text-center">I use the database from <a href="https://vulners.com/search/types/mscve" target="_blank">vulners.com</a></p>
+                <p class="text-center">Total CVE Records: <span id="totalRecords">0</span></p>
+            </header>
+            <p id="totalCVE" class="text-center fw-bold text-primary"></p>
+
+            <div class="row g-2 mb-3">
+                <div class="col-md-6 search-container">
+                    <input type="text" id="searchInput" class="search-box" placeholder="🔍 Search CVE..."
+                        oninput="filterData()">
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody id="cve-table"></tbody>
+            </table>
+        </div>
+
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item"><button class="page-link" onclick="prevPage()">◀ Prev</button></li>
+                <li class="page-item"><span class="page-link" id="page-number">1</span></li>
+                <li class="page-item"><button class="page-link" onclick="nextPage()">Next ▶</button></li>
+            </ul>
+        </nav>
+        <script>
+            let cveData = [], filteredData = [], currentPage = 1, itemsPerPage = 18;
+            async function loadData() {
+                try {
+                    console.log("Fetching data...");
+                    const response = await fetch("./db/mscve.json"); 
+            
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+            
+                    const rawData = await response.json();
+                    console.log("Data loaded:", rawData);
+            
+                    cveData = rawData.map(item => item._source || {});
+                    filteredData = [...cveData];
+            
+                    document.getElementById("totalRecords").innerText = cveData.length;
+                    renderTable();
+                } catch (error) {
+                    console.error("Error loading JSON:", error);
+                    alert("Failed to load CVE data. Check console for details.");
+                }
+            }
+            
+    
+            function renderTable() {
+                const tableBody = document.getElementById("cve-table");
+                tableBody.innerHTML = "";
+                let start = (currentPage - 1) * itemsPerPage, end = start + itemsPerPage;
+                filteredData.slice(start, end).forEach(item => {
+                    let shortDescription = item.description && item.description.length > 150 ? 
+                        item.description.substring(0, 150) + ' <a href="#" onclick="toggleDescription(event, this)">More</a><span style="display:none;"> ' + item.description.substring(100) + '</span>' 
+                        : item.description || "N/A";
+                    let row = `<tr>
+                        <td>${item.id || "N/A"}</td>
+                        <td>${item.title || "N/A"}</td>
+                        <td>${shortDescription}</td>
+                        <td>${item.href ? `<a href="${item.href}" target="_blank">🔗 View</a>` : "No Link"}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+                document.getElementById("page-number").innerText = currentPage;
+            }
+            function prevPage() { if (currentPage > 1) { currentPage--; renderTable(); } }
+            function nextPage() { if (currentPage * itemsPerPage < filteredData.length) { currentPage++; renderTable(); } }
+            function filterData() {
+                let searchTerm = document.getElementById("searchInput").value.toLowerCase();
+                filteredData = cveData.filter(item =>
+                    (item.id && item.id.toLowerCase().includes(searchTerm)) || 
+                    (item.title && item.title.toLowerCase().includes(searchTerm))
+                );
+                currentPage = 1;
+                renderTable();
+            }
+            function toggleDescription(event, element) {
+                event.preventDefault();
+                let fullText = element.nextElementSibling;
+                if (fullText.style.display === "none") {
+                    fullText.style.display = "inline";
+                    element.textContent = " Less";
+                } else {
+                    fullText.style.display = "none";
+                    element.textContent = " More";
+                }
+            }
+            window.onload = loadData;
+        </script>
+    </section>
+</main>
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+<div id="preloader"></div>
+
+<!-- JavaScript Libraries -->
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/jquery/jquery-migrate.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/superfish/hoverIntent.js"></script>
+<script src="lib/superfish/superfish.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/isotope/isotope.pkgd.min.js"></script>
+<script src="lib/lightbox/js/lightbox.min.js"></script>
+<script src="lib/touchSwipe/jquery.touchSwipe.min.js"></script>
+
+<!-- Contact Form JavaScript File -->
+<script src="contactform/contactform.js"></script>
+
+<!-- Template Main Javascript File -->
+<script src="js/main.js"></script>
+
+
+
+</body>
+
+</html>
