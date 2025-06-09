@@ -38,6 +38,41 @@
             margin-bottom: 2rem;
             border-radius: 0 0 var(--radius) var(--radius);
             box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 10;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .status-dot.online {
+            background-color: #22c55e;
+            box-shadow: 0 0 10px #22c55e;
+        }
+
+        .status-dot.offline {
+            background-color: #ef4444;
+            box-shadow: 0 0 10px #ef4444;
         }
 
         .cve-card {
@@ -147,12 +182,33 @@
                 flex-direction: column;
                 gap: 0.5rem;
             }
+
+            .status-indicator {
+                top: 0.5rem;
+                right: 1rem;
+                padding: 0.35rem;
+                background: transparent;
+                border: none;
+            }
+
+            .status-indicator span:not(.status-dot) {
+                display: none;
+            }
+
+            .status-dot {
+                width: 10px;
+                height: 10px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="page-header">
-        <div class="container">
+        <div class="container position-relative">
+            <div class="status-indicator">
+                <span class="status-dot online"></span>
+                <span>System Online</span>
+            </div>
             <h1 class="text-center mb-3">
                 <i class="fas fa-shield-alt me-2"></i>Vulnerability Detection Services
             </h1>
@@ -221,6 +277,34 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+  
+        async function checkServerStatus() {
+            const statusDot = document.querySelector('.status-dot');
+            const statusText = document.querySelector('.status-indicator span:last-child');
+            
+            try {
+              
+                const response = await fetch('https://dashsecurity.netlify.app/', {
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    cache: 'no-cache'
+                });
+                
+       
+                statusDot.classList.remove('offline');
+                statusDot.classList.add('online');
+                statusText.textContent = 'System Online';
+            } catch (error) {
+             
+                statusDot.classList.remove('online');
+                statusDot.classList.add('offline');
+                statusText.textContent = 'System Offline';
+            }
+        }
+
+       
+        checkServerStatus();
+        setInterval(checkServerStatus, 10000);
 
         document.getElementById('searchInput').addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();
