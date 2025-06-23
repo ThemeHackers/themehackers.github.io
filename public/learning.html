@@ -8,7 +8,7 @@
   <!-- Favicons -->
   <link href="img/favicon.png" rel="icon">
   <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
-  
+
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
     rel="stylesheet">
@@ -58,19 +58,20 @@
       display: none;
     }
   </style>
-  <body>
-    <!-- Loader -->
-    <div id="loader">
-      <img src="./img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
-    </div>
-  
-    <script>
-      setTimeout(() => {
-        document.getElementById("loader").style.display = "none";
-        document.body.style.overflow = "auto";
-      }, 4000);
-    </script>
-  </body>
+
+<body>
+  <!-- Loader -->
+  <div id="loader">
+    <img src="./img/processor.gif" alt="Loading..." style="width: 300px; height: 300px;">
+  </div>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById("loader").style.display = "none";
+      document.body.style.overflow = "auto";
+    }, 4000);
+  </script>
+</body>
 
 </head>
 <!--==========================
@@ -90,12 +91,12 @@
       <ul class="nav-menu">
         <li class="menu-active"><a href="/owasp/index.html" target="_blank">OWASP</a></li>
         <li class="menu-active"><a href="/pentesting_tools.html" target="_blank">Pentesting Tools</a></li>
-        <li class="menu-active"><a href="/cves_dashboard.html" target="_blank" >Search CVEs Lists</a></li>
+        <li class="menu-active"><a href="/cves_dashboard.html" target="_blank">Search CVEs Lists</a></li>
         <li class="menu-active"><a href="/mscve.html" target="_blank">Microsoft CVEs</a></li>
         <li class="menu-active"><a href="/apple_security.html" target="_blank">Apple Security</a></li>
         <li class="menu-active"><a href="/cc-exam.html" target="_blank">CC</a></li>
         <li class="menu-active"><a href="/index.html">Back</a></li>
-        
+
       </ul>
     </nav><!-- #nav-menu-container -->
   </div>
@@ -167,7 +168,10 @@
     <div class="container">
       <header class="section-header">
         <h3 class="glow-text">What is Cybersecurity?</h3>
-        <p>Cybersecurity refers to the practice of protecting computers, networks, systems, and data from digital threats, such as cyberattacks, hacking, data breaches, malware, and other forms of unauthorized access or damage. It involves a combination of technologies, processes, and best practices to ensure the confidentiality, integrity, and availability of information.</p>
+        <p>Cybersecurity refers to the practice of protecting computers, networks, systems, and data from digital
+          threats, such as cyberattacks, hacking, data breaches, malware, and other forms of unauthorized access or
+          damage. It involves a combination of technologies, processes, and best practices to ensure the
+          confidentiality, integrity, and availability of information.</p>
       </header>
 
       <div class="row about-cols">
@@ -177,11 +181,12 @@
             <div class="">
               <img src="img" alt="" class="img-fluid">
             </div>
-            <a  href="/network_security.html">
+            <a href="/network_security.html">
               <h2 class="title glow-text-learning">Network Security</h2>
             </a>
             <p>
-              Network security involves protecting the integrity of networks and data during transmission. It focuses on defending against unauthorized access, misuse, or attacks on computer systems and networks.
+              Network security involves protecting the integrity of networks and data during transmission. It focuses on
+              defending against unauthorized access, misuse, or attacks on computer systems and networks.
             </p><br>
           </div>
         </div>
@@ -195,7 +200,8 @@
               <h2 class="title glow-text-learning">Information Security</h2>
             </a>
             <p>
-              Information security is the practice of safeguarding the confidentiality, integrity, and availability of information, whether it's stored digitally or physically.
+              Information security is the practice of safeguarding the confidentiality, integrity, and availability of
+              information, whether it's stored digitally or physically.
             </p><br>
           </div>
         </div>
@@ -209,7 +215,8 @@
               <h2 class="title glow-text-learning">Application Security</h2>
             </a>
             <p>
-              Application security focuses on protecting software applications from vulnerabilities and exploits that could be used by attackers to gain unauthorized access or cause damage.
+              Application security focuses on protecting software applications from vulnerabilities and exploits that
+              could be used by attackers to gain unauthorized access or cause damage.
             </p>
           </div>
         </div>
@@ -222,7 +229,8 @@
               <h2 class="title glow-text-learning">Incident Response</h2>
             </a>
             <p>
-              Incident response is the process of detecting, responding to, and recovering from a security breach or cyberattack.
+              Incident response is the process of detecting, responding to, and recovering from a security breach or
+              cyberattack.
             </p>
           </div>
         </div>
@@ -231,11 +239,12 @@
             <div class="">
               <img src="img" alt="" class="img-fluid">
             </div>
-            <a  href="/disaster_recovery.html">
+            <a href="/disaster_recovery.html">
               <h2 class="title glow-text-learning">Disaster Recovery</h2>
             </a>
             <p>
-              Disaster recovery focuses on preparing for and recovering from significant events that cause data loss, corruption, or system downtime, such as cyberattacks, natural disasters, or technical failures.
+              Disaster recovery focuses on preparing for and recovering from significant events that cause data loss,
+              corruption, or system downtime, such as cyberattacks, natural disasters, or technical failures.
             </p>
           </div>
         </div>
@@ -244,129 +253,154 @@
             <div class="">
               <img src="img" alt="" class="img-fluid">
             </div>
-            <a href="/endpoint_security.html" >
+            <a href="/endpoint_security.html">
               <h2 class="title  glow-text-learning">Endpoint Security</h2>
             </a>
             <p>
-              Endpoint security involves securing individual devices (endpoints) such as computers, smartphones, tablets, and other devices that connect to the network.
+              Endpoint security involves securing individual devices (endpoints) such as computers, smartphones,
+              tablets, and other devices that connect to the network.
             </p>
           </div>
         </div>
       </div>
     </div>
-    <section id="cves"><br><br>
+    <section id="about"><br><br>
       <div class="container">
+        <style>
+          .responsive-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+          }
+        </style>
         <header class="section-header">
-          <h3 class="glow-text">What is CVEs?</h3>
-          <p>CVE (Common Vulnerabilities and Exposures) is a standardized system for identifying and cataloging publicly disclosed cybersecurity vulnerabilities. It is maintained by MITRE Corporation with funding from the U.S. Department of Homeland Security (DHS). Each vulnerability is assigned a unique CVE ID to ensure that security professionals refer to the same issue consistently across different platforms and tools.</p>
+          <h3 class="glow-text">Periodic Table of Offensive Security</h3>
+          <p>A visual reference of 118 essential tools, frameworks, and standards used in offensive security and red
+            teaming, organized like a periodic table.</p>
         </header>
-        <div class="row about-cols">
+        <img src="img/periodic_table_offsec_v1.0.png" alt="Periodic Table of Offensive Security" class="responsive-img">
 
-          <div class="col-md-4 wow fadeInUp">
-            <div class="about-col">
-              <div class="">
-                <img src="img" alt="" class="img-fluid">
+      </div>
+      <section id="cves"><br><br>
+        <div class="container">
+          <header class="section-header">
+            <h3 class="glow-text">What is CVEs?</h3>
+            <p>CVE (Common Vulnerabilities and Exposures) is a standardized system for identifying and cataloging
+              publicly disclosed cybersecurity vulnerabilities. It is maintained by MITRE Corporation with funding from
+              the U.S. Department of Homeland Security (DHS). Each vulnerability is assigned a unique CVE ID to ensure
+              that security professionals refer to the same issue consistently across different platforms and tools.</p>
+          </header>
+          <div class="row about-cols">
+
+            <div class="col-md-4 wow fadeInUp">
+              <div class="about-col">
+                <div class="">
+                  <img src="img" alt="" class="img-fluid">
+                </div>
+                <a>
+                  <h2 class="title glow-text">Buffer Overflow</h2>
+                </a>
+                <p>
+                  Occurs when more data is written to a buffer than it can hold.
+                  Can lead to crashes, arbitrary code execution, and security breaches.
+                </p><br>
               </div>
-              <a>
-                <h2 class="title glow-text">Buffer Overflow</h2>
-              </a>
-              <p>
-                Occurs when more data is written to a buffer than it can hold.
-                Can lead to crashes, arbitrary code execution, and security breaches.
-              </p><br>
             </div>
-          </div>
-  
-          <div class="col-md-4 wow fadeInUp" data-wow-delay="0.1s">
-            <div class="about-col">
-              <div class="">
-                <img src="img" alt="" class="img-fluid">
+
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.1s">
+              <div class="about-col">
+                <div class="">
+                  <img src="img" alt="" class="img-fluid">
+                </div>
+                <a>
+                  <h2 class="title glow-text-learning">Injection Attacks</h2>
+                </a>
+                <p>
+                  Includes SQL Injection (SQLi), Command Injection, and Code Injection.
+                  Attackers insert malicious code into an application to manipulate or steal data.
+                </p><br>
               </div>
-              <a>
-                <h2 class="title glow-text-learning">Injection Attacks</h2>
-              </a>
-              <p>
-                Includes SQL Injection (SQLi), Command Injection, and Code Injection.
-                Attackers insert malicious code into an application to manipulate or steal data.
-              </p><br>
             </div>
-          </div>
-  
-          <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
-            <div class="about-col">
-              <div class="">
-                <img src="img" alt="" class="img-fluid">
+
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+              <div class="about-col">
+                <div class="">
+                  <img src="img" alt="" class="img-fluid">
+                </div>
+                <a>
+                  <h2 class="title glow-text">Security Misconfigurations</h2>
+                </a>
+                <p>
+                  Happens when applications or systems have weak security settings.
+                  Examples: Default passwords, open cloud storage, and excessive permissions.
+                </p>
               </div>
-              <a>
-                <h2 class="title glow-text">Security Misconfigurations</h2>
-              </a>
-              <p>
-                Happens when applications or systems have weak security settings.
-                Examples: Default passwords, open cloud storage, and excessive permissions.
-              </p>
             </div>
-          </div>
-          <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
-            <div class="about-col">
-              <div class="">
-                <img src="img" alt="" class="img-fluid">
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+              <div class="about-col">
+                <div class="">
+                  <img src="img" alt="" class="img-fluid">
+                </div>
+                <a>
+                  <h2 class="title glow-text-learning">Cross-Site Scripting (XSS)</h2>
+                </a>
+                <p>
+                  A web vulnerability where attackers inject malicious scripts into web pages.
+                  Affects users by stealing session cookies, redirecting to malicious sites, etc.
+                </p>
               </div>
-              <a>
-                <h2 class="title glow-text-learning">Cross-Site Scripting (XSS)</h2>
-              </a>
-              <p>
-                A web vulnerability where attackers inject malicious scripts into web pages.
-                Affects users by stealing session cookies, redirecting to malicious sites, etc.
-              </p>
             </div>
-          </div>
-          <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
-            <div class="about-col">
-              <div class="">
-                <img src="img" alt="" class="img-fluid">
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+              <div class="about-col">
+                <div class="">
+                  <img src="img" alt="" class="img-fluid">
+                </div>
+                <a>
+                  <h2 class="title glow-text">Denial-of-Service (DoS)</h2>
+                </a>
+                <p>
+                  Overloads a system, making it unavailable for legitimate users.
+                  DDoS attacks use multiple systems to attack a target at once.
+                </p>
               </div>
-              <a>
-                <h2 class="title glow-text">Denial-of-Service (DoS)</h2>
-              </a>
-              <p>
-                Overloads a system, making it unavailable for legitimate users.
-                DDoS attacks use multiple systems to attack a target at once.
-              </p>
             </div>
-          </div>
-          <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
-            <div class="about-col">
-              <div class="">
-                <img src="img" alt="" class="img-fluid">
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+              <div class="about-col">
+                <div class="">
+                  <img src="img" alt="" class="img-fluid">
+                </div>
+                <a>
+                  <h2 class="title  glow-text-learning">Privilege Escalation</h2>
+                </a>
+                <p>
+                  Attackers exploit vulnerabilities to gain higher-level access to systems.
+                  Can be Vertical (admin-level access) or Horizontal (user-level access to other accounts).
+                </p>
               </div>
-              <a>
-                <h2 class="title  glow-text-learning">Privilege Escalation</h2>
-              </a>
-              <p>
-                Attackers exploit vulnerabilities to gain higher-level access to systems.
-                Can be Vertical (admin-level access) or Horizontal (user-level access to other accounts).
-              </p>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-    <section id="cvss"><br><br>
-      <div class="container">
-        <header class="section-header">
-          <h3 class="glow-text">What is CVSS?</h3>
-          <p>CVSS (Common Vulnerability Scoring System) is a framework used to assess the severity of security vulnerabilities. It provides a numerical score from 0.0 to 10.0, with higher scores indicating more severe vulnerabilities.</p>
-        </header>
-      </div>
-    </section>
-    <section id="cpe"><br><br>
-      <div class="container">
-        <header class="section-header">
-          <h3 class="glow-text">What is CPE?</h3>
-          <p>CPE (Common Platform Enumeration) is a structured naming system for IT products, software, and hardware. It is used to uniquely identify products in security databases and vulnerability management systems.</p>
-        </header>
-      </div>
-    </section>
+      </section>
+      <section id="cvss"><br><br>
+        <div class="container">
+          <header class="section-header">
+            <h3 class="glow-text">What is CVSS?</h3>
+            <p>CVSS (Common Vulnerability Scoring System) is a framework used to assess the severity of security
+              vulnerabilities. It provides a numerical score from 0.0 to 10.0, with higher scores indicating more severe
+              vulnerabilities.</p>
+          </header>
+        </div>
+      </section>
+      <section id="cpe"><br><br>
+        <div class="container">
+          <header class="section-header">
+            <h3 class="glow-text">What is CPE?</h3>
+            <p>CPE (Common Platform Enumeration) is a structured naming system for IT products, software, and hardware.
+              It is used to uniquely identify products in security databases and vulnerability management systems.</p>
+          </header>
+        </div>
+      </section>
 </main>
 <!--==========================
     Footer
@@ -497,4 +531,4 @@
   }
 </script>
 
-</html> 
+</html>
