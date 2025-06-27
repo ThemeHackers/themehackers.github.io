@@ -151,58 +151,74 @@
     </div>
   </div>
 </section><!-- #intro -->
+
+<section id="endpoint-security-content" style="background: #111; color: #eee; padding: 40px 0;">
+  <div class="container">
+    <h2 class="glow-text-learning">What is Endpoint Security?</h2>
+    <p>Endpoint security refers to the protection of end-user devices such as computers, laptops, smartphones, and tablets from cyber threats. It involves securing each device that connects to the corporate network to prevent exploitation by attackers.</p>
+
+    <h3>Why is Endpoint Security Important?</h3>
+    <ul>
+      <li>Endpoints are common targets for cyberattacks and malware</li>
+      <li>Protects sensitive data stored or accessed on devices</li>
+      <li>Prevents unauthorized access to corporate resources</li>
+      <li>Supports compliance with data protection regulations</li>
+    </ul>
+
+    <h3>Common Endpoint Threats</h3>
+    <ul>
+      <li>Malware (viruses, ransomware, spyware, trojans)</li>
+      <li>Phishing and social engineering attacks</li>
+      <li>Unpatched vulnerabilities</li>
+      <li>Device theft or loss</li>
+      <li>Insider threats</li>
+    </ul>
+
+    <h2 class="glow-text-learning">Key Components and Technologies</h2>
+    <ul>
+      <li><strong>Antivirus/Antimalware:</strong> Detects and removes malicious software</li>
+      <li><strong>Endpoint Detection and Response (EDR):</strong> Monitors, detects, and responds to advanced threats</li>
+      <li><strong>Device Control:</strong> Manages use of USBs and external devices</li>
+      <li><strong>Application Control:</strong> Restricts unauthorized applications from running</li>
+      <li><strong>Data Encryption:</strong> Protects data at rest and in transit on endpoints</li>
+      <li><strong>Patch Management:</strong> Ensures devices are up-to-date with security patches</li>
+      <li><strong>Mobile Device Management (MDM):</strong> Secures and manages mobile endpoints</li>
+      <li><strong>Firewall:</strong> Provides local protection against network-based attacks</li>
+    </ul>
+
+    <h3>Best Practices for Organizations</h3>
+    <ul>
+      <li>Enforce strong authentication and access controls</li>
+      <li>Regularly update and patch endpoint devices</li>
+      <li>Educate users about phishing and safe device usage</li>
+      <li>Implement device encryption and secure backups</li>
+      <li>Monitor endpoint activity for suspicious behavior</li>
+      <li>Develop and test incident response plans for endpoint breaches</li>
+    </ul>
+
+    <h3>Endpoint Security in Corporate Environments</h3>
+    <ul>
+      <li>Support for Bring Your Own Device (BYOD) policies</li>
+      <li>Secure remote work and mobile access</li>
+      <li>Segmentation of corporate and personal data</li>
+      <li>Remote wipe and lock capabilities for lost/stolen devices</li>
+    </ul>
+
+    <h2 class="glow-text-learning">Related Topics</h2>
+    <ul>
+      <li>Patch Management</li>
+      <li>Mobile Security</li>
+      <li>Zero Trust Security</li>
+      <li>Network Access Control (NAC)</li>
+      <li>Incident Response</li>
+    </ul>
+
+    <h3>Conclusion</h3>
+    <p>Endpoint security is a critical layer in an organization's defense strategy. By protecting every device that connects to the network, businesses can reduce risk, prevent data breaches, and ensure a secure working environment for all users.</p>
+  </div>
+</section>
+
 <main id="main">
-
-  <!--==========================
-      Cooming Soon ... Us Section
-    ============================-->
-  <section id="learn"><br><br>
-    <div class="container">
-      <header class="section-header">
-        <h3 class="glow-text">Cooming Soon ...</h3>
-        <style>
-          body {
-              background-color: black;
-              color: limegreen;
-              font-family: monospace;
-              padding: 20px;
-          }
-          #terminal {
-              width: 600px;
-              height: 300px;
-              background-color: black;
-              border: 2px solid limegreen;
-              padding: 10px;
-              overflow-y: auto;
-              white-space: pre-wrap;
-          }
-        </style>
-        <p>
-          <div id="terminal"></div>
-          <script>
-            const terminal = document.getElementById("terminal");
-            const text = "Coming Soon ...\n";
-            let index = 0;
-
-            function typeText() {
-              if (index < text.length) {
-                terminal.innerHTML += text[index];
-                index++;
-                setTimeout(typeText, 150);
-              } else {
-                setTimeout(() => {
-                  terminal.innerHTML = "user@web:~$ ";
-                  index = 0;
-                  setTimeout(typeText, 500);
-                }, 1000);
-              }
-            }
-
-            terminal.innerHTML = "user@web:~$ ";
-            setTimeout(typeText, 500);
-          </script>
-        </p>
-      </header>
 </main>
 
 <!--==========================
