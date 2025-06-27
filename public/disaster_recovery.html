@@ -111,7 +111,7 @@
           <div class="carousel-container">
             <div class="carousel-content">
               <h2 class="glow-text-learning">Disaster Recovery</h2>
-              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
+              <a href="#disaster-recovery-content" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
         </div>
@@ -121,7 +121,7 @@
           <div class="carousel-container">
             <div class="carousel-content">
               <h2 class="glow-text-learning">Disaster Recovery</h2>
-              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
+              <a href="#disaster-recovery-content" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
         </div>
@@ -131,7 +131,7 @@
           <div class="carousel-container">
             <div class="carousel-content">
               <h2 class="glow-text-learning">Disaster Recovery</h2>
-              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
+              <a href="#disaster-recovery-content" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
         </div>
@@ -152,57 +152,82 @@
   </div>
 </section><!-- #intro -->
 <main id="main">
+      <!-- ==========================
+           Disaster Recovery Content
+           =========================== -->
+      <section id="disaster-recovery-content" style="background: #111; color: #eee; padding: 40px 0;">
+        <div class="container">
+          <h2 class="glow-text-learning">What is Disaster Recovery?</h2>
+          <p>Disaster Recovery (DR) is a set of policies, tools, and procedures that enable the recovery or continuation of vital technology infrastructure and systems following a natural or human-induced disaster. The goal is to minimize downtime and data loss, ensuring business continuity.</p>
 
-  <!--==========================
-      Cooming Soon ... Us Section
-    ============================-->
-  <section id="learn"><br><br>
-    <div class="container">
-      <header class="section-header">
-        <h3 class="glow-text">Cooming Soon ...</h3>
-        <style>
-          body {
-              background-color: black;
-              color: limegreen;
-              font-family: monospace;
-              padding: 20px;
-          }
-          #terminal {
-              width: 600px;
-              height: 300px;
-              background-color: black;
-              border: 2px solid limegreen;
-              padding: 10px;
-              overflow-y: auto;
-              white-space: pre-wrap;
-          }
-        </style>
-        <p>
-          <div id="terminal"></div>
-          <script>
-            const terminal = document.getElementById("terminal");
-            const text = "Coming Soon ...\n";
-            let index = 0;
+          <h3>Why is Disaster Recovery Important?</h3>
+          <ul>
+            <li>Protects organizations from data loss and operational disruption</li>
+            <li>Ensures rapid recovery after unexpected events</li>
+            <li>Helps maintain customer trust and regulatory compliance</li>
+            <li>Reduces financial and reputational impact of disasters</li>
+          </ul>
 
-            function typeText() {
-              if (index < text.length) {
-                terminal.innerHTML += text[index];
-                index++;
-                setTimeout(typeText, 150);
-              } else {
-                setTimeout(() => {
-                  terminal.innerHTML = "user@web:~$ ";
-                  index = 0;
-                  setTimeout(typeText, 500);
-                }, 1000);
-              }
-            }
+          <h3>Types of Disasters</h3>
+          <ul>
+            <li><strong>Natural:</strong> Floods, earthquakes, fires, storms</li>
+            <li><strong>Technical:</strong> Hardware failures, software bugs, power outages</li>
+            <li><strong>Human:</strong> Cyberattacks, accidental deletions, sabotage</li>
+          </ul>
 
-            terminal.innerHTML = "user@web:~$ ";
-            setTimeout(typeText, 500);
-          </script>
-        </p>
-      </header>
+          <h2 class="glow-text-learning">Key Components of a Disaster Recovery Plan</h2>
+          <ul>
+            <li><strong>Risk Assessment:</strong> Identify potential threats and vulnerabilities</li>
+            <li><strong>Business Impact Analysis (BIA):</strong> Determine critical systems and acceptable downtime</li>
+            <li><strong>Recovery Strategies:</strong> Define methods for restoring systems and data</li>
+            <li><strong>Data Backup:</strong> Regularly back up data to secure, offsite locations</li>
+            <li><strong>Communication Plan:</strong> Establish clear communication channels for stakeholders</li>
+            <li><strong>Roles and Responsibilities:</strong> Assign tasks to specific personnel</li>
+            <li><strong>Testing and Drills:</strong> Regularly test the plan to ensure effectiveness</li>
+            <li><strong>Plan Maintenance:</strong> Update the plan as systems and risks evolve</li>
+          </ul>
+
+          <h3>Best Practices for Organizations</h3>
+          <ul>
+            <li>Automate backups and verify their integrity</li>
+            <li>Use geographically diverse data centers</li>
+            <li>Implement Disaster Recovery as a Service (DRaaS) solutions</li>
+            <li>Document and regularly update recovery procedures</li>
+            <li>Train staff on disaster recovery roles and processes</li>
+            <li>Integrate disaster recovery with business continuity planning</li>
+          </ul>
+
+          <h3>Technologies and Solutions</h3>
+          <ul>
+            <li><strong>Cloud-based DR:</strong> Use cloud platforms for scalable, flexible recovery</li>
+            <li><strong>Virtualization:</strong> Rapidly restore virtual machines and environments</li>
+            <li><strong>Replication:</strong> Real-time or scheduled data replication to secondary sites</li>
+            <li><strong>Automated Orchestration:</strong> Streamline failover and failback processes</li>
+          </ul>
+
+          <h3>Testing and Maintenance</h3>
+          <ul>
+            <li>Conduct regular disaster recovery drills and simulations</li>
+            <li>Review and update the plan after major changes or incidents</li>
+            <li>Document lessons learned and improve procedures</li>
+          </ul>
+
+          <h2 class="glow-text-learning">Related Topics</h2>
+          <ul>
+            <li>Business Continuity Planning (BCP)</li>
+            <li>Incident Response</li>
+            <li>Data Protection and Backup Strategies</li>
+            <li>Risk Management</li>
+            <li>Cyber Insurance</li>
+          </ul>
+
+          <h3>Conclusion</h3>
+          <p>Disaster recovery is essential for every organization. By preparing for the unexpected, businesses can minimize losses, recover quickly, and maintain trust with customers and partners.</p>
+        </div>
+      </section>
+      <!-- ========================== End Disaster Recovery Content =========================== -->
+    </div>
+  </section>
 </main>
 
 <!--==========================
