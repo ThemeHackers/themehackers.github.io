@@ -112,7 +112,7 @@
           <div class="carousel-container">
             <div class="carousel-content">
               <h2 class="glow-text-learning">Application Security</h2>
-              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
+              <a href="#application-security-content" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
         </div>
@@ -122,7 +122,7 @@
           <div class="carousel-container">
             <div class="carousel-content">
               <h2 class="glow-text-learning">Application Security</h2>
-              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
+              <a href="#application-security-content" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
         </div>
@@ -132,7 +132,7 @@
           <div class="carousel-container">
             <div class="carousel-content">
               <h2 class="glow-text-learning">Application Security</h2>
-              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
+              <a href="#application-security-content" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
         </div>
@@ -152,58 +152,58 @@
     </div>
   </div>
 </section><!-- #intro -->
+
+<section id="application-security-content" style="background: #111; color: #eee; padding: 40px 0;">
+  <div class="container">
+    <h2 class="glow-text-learning">What is Application Security?</h2>
+    <p>Application security is the process of making applications more secure by identifying, fixing, and preventing security vulnerabilities throughout the software development lifecycle. It includes measures taken during application design, development, deployment, and maintenance to protect against threats and attacks.</p>
+
+    <h2 class="glow-text-learning">OWASP Top 10 Application Security Risks</h2>
+    <ol>
+      <li><strong>Broken Access Control:</strong> Restrictions on what authenticated users are allowed to do are not properly enforced.</li>
+      <li><strong>Cryptographic Failures:</strong> Problems with cryptography or sensitive data exposure due to weak or missing encryption.</li>
+      <li><strong>Injection:</strong> Attacker-supplied data is sent to an interpreter as part of a command or query (e.g., SQL, NoSQL, OS, LDAP injection).</li>
+      <li><strong>Insecure Design:</strong> Flaws in design and architecture that lead to security weaknesses.</li>
+      <li><strong>Security Misconfiguration:</strong> Insecure default configurations, incomplete or ad hoc configurations, open cloud storage, etc.</li>
+      <li><strong>Vulnerable and Outdated Components:</strong> Use of components with known vulnerabilities.</li>
+      <li><strong>Identification and Authentication Failures:</strong> Issues with authentication or session management (e.g., brute force, credential stuffing).</li>
+      <li><strong>Software and Data Integrity Failures:</strong> Code and infrastructure that do not protect against integrity violations (e.g., supply chain attacks).</li>
+      <li><strong>Security Logging and Monitoring Failures:</strong> Lack of proper logging, monitoring, and alerting for security events.</li>
+      <li><strong>Server-Side Request Forgery (SSRF):</strong> The server is tricked into making requests to unintended locations.</li>
+    </ol>
+
+    <h2 class="glow-text-learning">Additional Application Security Topics</h2>
+    <ul>
+      <li><strong>Secure Software Development Lifecycle (SDLC):</strong> Integrating security into every phase of development.</li>
+      <li><strong>Code Review and Static Analysis:</strong> Identifying vulnerabilities in source code before deployment.</li>
+      <li><strong>DevSecOps:</strong> Embedding security practices into DevOps pipelines.</li>
+      <li><strong>API Security:</strong> Protecting APIs from abuse, data leaks, and attacks.</li>
+      <li><strong>Mobile Application Security:</strong> Securing mobile apps against platform-specific threats.</li>
+      <li><strong>Threat Modeling:</strong> Systematically identifying and addressing potential threats during design.</li>
+      <li><strong>Penetration Testing:</strong> Simulating attacks to find and fix vulnerabilities.</li>
+      <li><strong>Dependency Management:</strong> Keeping third-party libraries and frameworks up to date and secure.</li>
+      <li><strong>Security Headers:</strong> Using HTTP headers to protect web applications (e.g., CSP, HSTS, X-Frame-Options).</li>
+      <li><strong>Input Validation and Output Encoding:</strong> Preventing injection and XSS attacks.</li>
+    </ul>
+
+    <h3>Best Practices</h3>
+    <ul>
+      <li>Follow secure coding standards and guidelines</li>
+      <li>Perform regular security testing and code reviews</li>
+      <li>Keep all components and dependencies updated</li>
+      <li>Implement strong authentication and access controls</li>
+      <li>Encrypt sensitive data in transit and at rest</li>
+      <li>Monitor and log security events</li>
+      <li>Educate developers and staff on security awareness</li>
+    </ul>
+
+    <h3>Conclusion</h3>
+    <p>Application security is essential for protecting users, data, and business operations. By understanding common risks like the OWASP Top 10 and following best practices, organizations can build and maintain secure applications in an ever-evolving threat landscape.</p>
+  </div>
+</section>
+
 <main id="main">
 
-  <!--==========================
-      Cooming Soon ... Us Section
-    ============================-->
-  <section id="learn"><br><br>
-    <div class="container">
-      <header class="section-header">
-        <h3 class="glow-text">Cooming Soon ...</h3>
-        <style>
-          body {
-              background-color: black;
-              color: limegreen;
-              font-family: monospace;
-              padding: 20px;
-          }
-          #terminal {
-              width: 600px;
-              height: 300px;
-              background-color: black;
-              border: 2px solid limegreen;
-              padding: 10px;
-              overflow-y: auto;
-              white-space: pre-wrap;
-          }
-        </style>
-        <p>
-          <div id="terminal"></div>
-          <script>
-            const terminal = document.getElementById("terminal");
-            const text = "Coming Soon ...\n";
-            let index = 0;
-
-            function typeText() {
-              if (index < text.length) {
-                terminal.innerHTML += text[index];
-                index++;
-                setTimeout(typeText, 150);
-              } else {
-                setTimeout(() => {
-                  terminal.innerHTML = "user@web:~$ ";
-                  index = 0;
-                  setTimeout(typeText, 500);
-                }, 1000);
-              }
-            }
-
-            terminal.innerHTML = "user@web:~$ ";
-            setTimeout(typeText, 500);
-          </script>
-        </p>
-      </header>
 </main>
 
 <!--==========================
