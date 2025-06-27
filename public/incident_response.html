@@ -111,7 +111,7 @@
           <div class="carousel-container">
             <div class="carousel-content">
               <h2 class="glow-text-learning">Incident Response</h2>
-              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
+              <a href="#incident-response-content" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
         </div>
@@ -121,7 +121,7 @@
           <div class="carousel-container">
             <div class="carousel-content">
               <h2 class="glow-text-learning">Incident Response</h2>
-              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
+              <a href="#incident-response-content" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
         </div>
@@ -131,7 +131,7 @@
           <div class="carousel-container">
             <div class="carousel-content">
               <h2 class="glow-text-learning">Incident Response</h2>
-              <a href="#learn" class="btn-get-started scrollto">Learn More</a>
+              <a href="#incident-response-content" class="btn-get-started scrollto">Learn More</a>
             </div>
           </div>
         </div>
@@ -151,58 +151,110 @@
     </div>
   </div>
 </section><!-- #intro -->
+
+<section id="incident-response-content" style="background: #111; color: #eee; padding: 40px 0;">
+  <div class="container">
+    <h2 class="glow-text-learning">What is Incident Response?</h2>
+    <p>Incident response is the organized approach to addressing and managing the aftermath of a security breach or cyberattack. The goal is to handle the situation in a way that limits damage, reduces recovery time and costs, and prevents future incidents.</p>
+
+    <h3>Types of Security Incidents</h3>
+    <ul>
+      <li>Malware infections</li>
+      <li>Data breaches</li>
+      <li>Insider threats</li>
+      <li>Denial of Service (DoS/DDoS) attacks</li>
+      <li>Phishing and social engineering</li>
+      <li>Unauthorized access</li>
+    </ul>
+
+    <h2 class="glow-text-learning">Incident Response Lifecycle</h2>
+    <ol>
+      <li><strong>Preparation:</strong> Develop policies, assign roles, train staff, and deploy tools</li>
+      <li><strong>Identification:</strong> Detect and confirm security incidents</li>
+      <li><strong>Containment:</strong> Limit the spread and impact of the incident</li>
+      <li><strong>Eradication:</strong> Remove the threat from the environment</li>
+      <li><strong>Recovery:</strong> Restore systems and operations to normal</li>
+      <li><strong>Lessons Learned:</strong> Analyze the incident and improve future response</li>
+    </ol>
+
+    <h3>Building an Incident Response Team (IRT/CSIRT)</h3>
+    <ul>
+      <li>Define roles and responsibilities (team lead, communications, forensics, legal, etc.)</li>
+      <li>Decide on internal vs. external resources</li>
+    </ul>
+
+    <h3>Tools and Technologies</h3>
+    <ul>
+      <li>Security Information and Event Management (SIEM)</li>
+      <li>Intrusion Detection/Prevention Systems (IDS/IPS)</li>
+      <li>Forensic tools</li>
+      <li>Ticketing and case management systems</li>
+    </ul>
+
+    <h3>Incident Detection and Analysis</h3>
+    <ul>
+      <li>Indicators of compromise (IoCs)</li>
+      <li>Log analysis and monitoring</li>
+      <li>Threat intelligence</li>
+    </ul>
+
+    <h3>Communication During an Incident</h3>
+    <ul>
+      <li>Internal communication protocols</li>
+      <li>External communication (customers, partners, regulators, media)</li>
+      <li>Legal and compliance considerations</li>
+    </ul>
+
+    <h3>Containment Strategies</h3>
+    <ul>
+      <li>Short-term vs. long-term containment</li>
+      <li>Network segmentation</li>
+      <li>Isolating affected systems</li>
+    </ul>
+
+    <h3>Forensics and Evidence Collection</h3>
+    <ul>
+      <li>Preserving evidence for legal or regulatory purposes</li>
+      <li>Chain of custody</li>
+      <li>Documentation best practices</li>
+    </ul>
+
+    <h3>Recovery and Restoration</h3>
+    <ul>
+      <li>System and data restoration</li>
+      <li>Validating system integrity</li>
+      <li>Monitoring for reinfection</li>
+    </ul>
+
+    <h3>Post-Incident Activities</h3>
+    <ul>
+      <li>Incident reporting and documentation</li>
+      <li>Root cause analysis</li>
+      <li>Updating policies and controls</li>
+      <li>Training and awareness</li>
+    </ul>
+
+    <h3>Best Practices and Frameworks</h3>
+    <ul>
+      <li>NIST Incident Response Framework</li>
+      <li>SANS Incident Handler's Handbook</li>
+      <li>Regular testing and tabletop exercises</li>
+    </ul>
+
+    <h2 class="glow-text-learning">Related Topics</h2>
+    <ul>
+      <li>Business Continuity Planning (BCP)</li>
+      <li>Disaster Recovery (DR)</li>
+      <li>Threat hunting</li>
+      <li>Vulnerability management</li>
+    </ul>
+
+    <h3>Conclusion</h3>
+    <p>Incident response is a critical part of any organization's cybersecurity strategy. By preparing for and effectively managing incidents, organizations can minimize damage, recover quickly, and strengthen their overall security posture.</p>
+  </div>
+</section>
+
 <main id="main">
-
-  <!--==========================
-      Cooming Soon ... Us Section
-    ============================-->
-  <section id="learn"><br><br>
-    <div class="container">
-      <header class="section-header">
-        <h3 class="glow-text">Cooming Soon ...</h3>
-        <style>
-          body {
-              background-color: black;
-              color: limegreen;
-              font-family: monospace;
-              padding: 20px;
-          }
-          #terminal {
-              width: 600px;
-              height: 300px;
-              background-color: black;
-              border: 2px solid limegreen;
-              padding: 10px;
-              overflow-y: auto;
-              white-space: pre-wrap;
-          }
-        </style>
-        <p>
-          <div id="terminal"></div>
-          <script>
-            const terminal = document.getElementById("terminal");
-            const text = "Coming Soon ...\n";
-            let index = 0;
-
-            function typeText() {
-              if (index < text.length) {
-                terminal.innerHTML += text[index];
-                index++;
-                setTimeout(typeText, 150);
-              } else {
-                setTimeout(() => {
-                  terminal.innerHTML = "user@web:~$ ";
-                  index = 0;
-                  setTimeout(typeText, 500);
-                }, 1000);
-              }
-            }
-
-            terminal.innerHTML = "user@web:~$ ";
-            setTimeout(typeText, 500);
-          </script>
-        </p>
-      </header>
 </main>
 
 <!--==========================
