@@ -368,35 +368,35 @@
         <div class="row">
           <!-- Course 1 -->
           <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
-              <div class="course-box" data-course-id="intro-cybersecurity">
+              <div class="course-box" onclick="showCourseDetails('intro-cybersecurity')">
               <div class="course-icon">
                 <i class="ion-ios-lock"></i>
               </div>
               <div class="course-content">
                   <h4>Introduction to Cybersecurity</h4>
                   <p>Learn the fundamentals of cybersecurity and protect digital assets.</p>
-                  <button class="btn-details" onclick="showCourseDetails('intro-cybersecurity')">View Details</button>
+                  <button class="btn-details">View Details</button>
               </div>
             </div>
           </div>
 
           <!-- Course 2 -->
           <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
-              <div class="course-box" data-course-id="ethical-hacking">
+              <div class="course-box" onclick="showCourseDetails('ethical-hacking')">
               <div class="course-icon">
-                <i class="ion-ios-bug"></i>
+                <i class="ion-bug"></i>
               </div>
               <div class="course-content">
                   <h4>Ethical Hacking</h4>
                   <p>Learn penetration testing and ethical hacking techniques.</p>
-                  <button class="btn-details" onclick="showCourseDetails('ethical-hacking')">View Details</button>
+                  <button class="btn-details">View Details</button>
               </div>
             </div>
           </div>
 
           <!-- Course 3 -->
           <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
-            <div class="course-box" data-toggle="modal" data-target="#courseModal10">
+            <div class="course-box" onclick="showCourseDetails('web-app-security')">
               <div class="course-icon">
                 <i class="ion-shield"></i>
               </div>
@@ -407,35 +407,46 @@
               </div>
             </div>
           </div>
-
           <div class="col-md-4 wow fadeInUp" data-wow-delay="0.3s">
-            <div class="course-box" data-toggle="modal" data-target="#courseModal11">
+            <div class="course-box" onclick="showCourseDetails('network-security')">
+              <div class="course-icon">
+                <i class="ion-link"></i>
+              </div>
+              <div class="course-content">
+                <h4>Network Security</h4>
+                <p>Defend networks with firewalls, IDS/IPS, VPNs, and hands-on labs for real-world protection.</p>
+                <button class="btn-details">View Details</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 wow fadeInUp" data-wow-delay="0.3s">
+            <div class="course-box" onclick="showCourseDetails('cryptography')">
               <div class="course-icon">
                 <i class="ion-key"></i>
               </div>
               <div class="course-content">
                 <h4>Cryptography</h4>
-                <p>Understand encryption algorithms, digital signatures, and cryptographic protocols.</p>
+                <p>Understand encryption, digital signatures, and cryptographic protocols.</p>
                 <button class="btn-details">View Details</button>
               </div>
             </div>
           </div>
 
           <div class="col-md-4 wow fadeInUp" data-wow-delay="0.4s">
-            <div class="course-box" data-toggle="modal" data-target="#courseModal12">
+            <div class="course-box" onclick="showCourseDetails('malware-analysis')">
               <div class="course-icon">
                 <i class="ion-bug"></i>
               </div>
               <div class="course-content">
                 <h4>Malware Analysis</h4>
-                <p>Learn to analyze and reverse engineer malicious software.</p>
+                <p>Analyze and reverse engineer malicious software.</p>
                 <button class="btn-details">View Details</button>
               </div>
             </div>
           </div>
 
           <div class="col-md-4 wow fadeInUp" data-wow-delay="0.5s">
-            <div class="course-box" data-toggle="modal" data-target="#courseModal13">
+            <div class="course-box" onclick="showCourseDetails('social-engineering')">
               <div class="course-icon">
                 <i class="ion-ios-people"></i>
               </div>
@@ -448,20 +459,20 @@
           </div>
 
           <div class="col-md-4 wow fadeInUp" data-wow-delay="0.6s">
-            <div class="course-box" data-toggle="modal" data-target="#courseModal14">
+            <div class="course-box" onclick="showCourseDetails('cloud-security')">
               <div class="course-icon">
                 <i class="ion-ios-cloud"></i>
               </div>
               <div class="course-content">
                 <h4>Cloud Security</h4>
-                <p>Learn about securing cloud infrastructure and services.</p>
+                <p>Secure cloud infrastructure and services.</p>
                 <button class="btn-details">View Details</button>
               </div>
             </div>
           </div>
 
           <div class="col-md-4 wow fadeInUp" data-wow-delay="0.7s">
-            <div class="course-box" data-toggle="modal" data-target="#courseModal15">
+            <div class="course-box" onclick="showCourseDetails('mobile-security')">
               <div class="course-icon">
                 <i class="ion-ios-phone-portrait"></i>
               </div>
@@ -474,26 +485,38 @@
           </div>
 
           <div class="col-md-4 wow fadeInUp" data-wow-delay="0.8s">
-            <div class="course-box" data-toggle="modal" data-target="#courseModal16">
+            <div class="course-box" onclick="showCourseDetails('incident-response')">
               <div class="course-icon">
                 <i class="ion-ios-pulse"></i>
               </div>
               <div class="course-content">
                 <h4>Incident Response</h4>
-                <p>Learn how to handle and respond to security incidents effectively.</p>
+                <p>Handle and respond to security incidents effectively.</p>
                 <button class="btn-details">View Details</button>
               </div>
             </div>
           </div>
 
           <div class="col-md-4 wow fadeInUp" data-wow-delay="0.9s">
-            <div class="course-box" data-toggle="modal" data-target="#courseModal17">
+            <div class="course-box" onclick="showCourseDetails('iot-security')">
               <div class="course-icon">
                 <i class="ion-ios-locked"></i>
               </div>
               <div class="course-content">
                 <h4>IoT Security</h4>
                 <p>Secure Internet of Things devices and networks.</p>
+                <button class="btn-details">View Details</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 wow fadeInUp" data-wow-delay="0.9s">
+            <div class="course-box" onclick="showCourseDetails('python-hacking')">
+              <div class="course-icon">
+                <i class="ion-code-working"></i>
+              </div>
+              <div class="course-content">
+                <h4>Python <br>For Hacking</h4>
+                <p>Code hacking tools and automate security tasks with Python.</p>
                 <button class="btn-details">View Details</button>
               </div>
             </div>
@@ -693,36 +716,13 @@ const courses = {
     ],
     tags: ['Beginner', 'Fundamentals', 'Security Basics']
   },
-  'network-security': {
-    title: 'Network Security',
-    description: 'Master network security concepts, protocols, and tools to protect network infrastructure.',
-    duration: '6 weeks',
-    level: 'Intermediate',
-    price: '$14.89',
-    icon: 'ion-ios-shield',
-    learningPoints: [
-      'Network security fundamentals',
-      'Firewall configuration and management',
-      'Intrusion detection and prevention',
-      'VPN and secure remote access',
-      'Network monitoring and analysis',
-      'Wireless security',
-      'Network segmentation',
-      'Security protocols and standards'
-    ],
-    prerequisites: [
-      'Basic networking knowledge',
-      'Understanding of TCP/IP protocols'
-    ],
-    tags: ['Networking', 'Intermediate', 'Infrastructure']
-  },
   'ethical-hacking': {
     title: 'Ethical Hacking',
-    description: 'Learn penetration testing techniques and ethical hacking methodologies.',
+    description: 'Master penetration testing and ethical hacking methodologies to identify and secure vulnerabilities.',
     duration: '8 weeks',
     level: 'Advanced',
     price: '$38.75',
-    icon: 'ion-ios-bug',
+    icon: 'ion-bug',
     learningPoints: [
       'Penetration testing methodologies',
       'Vulnerability assessment',
@@ -739,6 +739,227 @@ const courses = {
       'Understanding of operating systems'
     ],
     tags: ['Advanced', 'Penetration Testing', 'Security Testing']
+  },
+  'web-app-security': {
+    title: 'Web Application Security',
+    description: 'Master web security with a focus on OWASP Top 10, secure coding, and real-world attack prevention.',
+    duration: '8 weeks',
+    level: 'Advanced',
+    price: '$18.07',
+    icon: 'ion-shield',
+    learningPoints: [
+      'OWASP Top 10 vulnerabilities',
+      'Secure coding practices',
+      'Web application penetration testing',
+      'Security headers and configurations',
+      'Authentication and authorization',
+      'Session management',
+      'Input validation',
+      'Real-world case studies'
+    ],
+    prerequisites: [
+      'Basic web development knowledge',
+      'Familiarity with HTML, CSS, and JavaScript'
+    ],
+    tags: ['Web', 'Advanced', 'OWASP']
+  },
+  'network-security': {
+    title: 'Network Security',
+    description: 'Defend networks with firewalls, IDS/IPS, VPNs, and hands-on labs for real-world protection.',
+    duration: '6 weeks',
+    level: 'Intermediate',
+    price: '$14.89',
+    icon: 'ion-link',
+    learningPoints: [
+      'Network security fundamentals',
+      'Firewall configuration and management',
+      'Intrusion detection and prevention',
+      'VPN and secure remote access',
+      'Network monitoring and analysis',
+      'Wireless security',
+      'Network segmentation',
+      'Security protocols and standards'
+    ],
+    prerequisites: [
+      'Basic networking knowledge',
+      'Understanding of TCP/IP protocols'
+    ],
+    tags: ['Networking', 'Intermediate', 'Infrastructure']
+  },
+  'cryptography': {
+    title: 'Cryptography',
+    description: 'Understand encryption algorithms, digital signatures, and cryptographic protocols for secure communication.',
+    duration: '6 weeks',
+    level: 'Advanced',
+    price: '$21.09',
+    icon: 'ion-key',
+    learningPoints: [
+      'Symmetric and asymmetric encryption',
+      'Hash functions and digital signatures',
+      'Public Key Infrastructure (PKI)',
+      'Cryptographic protocols',
+      'Quantum cryptography basics',
+      'Secure key management',
+      'Real-world cryptography applications'
+    ],
+    prerequisites: [
+      'Basic mathematics',
+      'Interest in security'
+    ],
+    tags: ['Advanced', 'Encryption', 'Mathematics']
+  },
+  'malware-analysis': {
+    title: 'Malware Analysis',
+    description: 'Analyze and reverse engineer malicious software to understand and defend against threats.',
+    duration: '4 weeks',
+    level: 'Advanced',
+    price: '$30.14',
+    icon: 'ion-bug',
+    learningPoints: [
+      'Static and dynamic analysis',
+      'Reverse engineering techniques',
+      'Malware behavior analysis',
+      'Sandbox environments',
+      'Malware detection and prevention',
+      'Memory forensics',
+      'Real-world malware case studies'
+    ],
+    prerequisites: [
+      'Basic programming knowledge',
+      'Familiarity with Windows and Linux environments'
+    ],
+    tags: ['Malware', 'Reverse Engineering', 'Advanced']
+  },
+  'social-engineering': {
+    title: 'Social Engineering',
+    description: 'Understand and defend against human-based security threats and manipulation techniques.',
+    duration: '6 weeks',
+    level: 'Intermediate',
+    price: '$33.51',
+    icon: 'ion-ios-people',
+    learningPoints: [
+      'Psychology of social engineering',
+      'Common attack vectors',
+      'Prevention and detection techniques',
+      'Security awareness training',
+      'Policy development',
+      'Real-world case studies'
+    ],
+    prerequisites: [
+      'None'
+    ],
+    tags: ['Intermediate', 'Human Factors', 'Awareness']
+  },
+  'cloud-security': {
+    title: 'Cloud Security',
+    description: 'Learn to secure cloud infrastructure, manage identities, and protect data in the cloud.',
+    duration: '8 weeks',
+    level: 'Intermediate',
+    price: '$39.19',
+    icon: 'ion-ios-cloud',
+    learningPoints: [
+      'Cloud security fundamentals',
+      'Identity and access management',
+      'Data protection in the cloud',
+      'Cloud compliance and governance',
+      'Security monitoring and incident response',
+      'Cloud provider security tools',
+      'Best practices for cloud security'
+    ],
+    prerequisites: [
+      'Basic cloud computing knowledge',
+      'Familiarity with AWS, Azure, or GCP is a plus'
+    ],
+    tags: ['Cloud', 'Intermediate', 'Infrastructure']
+  },
+  'mobile-security': {
+    title: 'Mobile Security',
+    description: 'Secure mobile applications and devices against modern threats and vulnerabilities.',
+    duration: '8 weeks',
+    level: 'Intermediate',
+    price: '$36.17',
+    icon: 'ion-ios-phone-portrait',
+    learningPoints: [
+      'Mobile security fundamentals',
+      'iOS and Android security',
+      'Mobile app security testing',
+      'Mobile device management',
+      'Secure mobile app development',
+      'Mobile malware analysis',
+      'Best practices for mobile security'
+    ],
+    prerequisites: [
+      'Basic mobile development knowledge',
+      'Interest in mobile technology'
+    ],
+    tags: ['Mobile', 'Intermediate', 'App Security']
+  },
+  'incident-response': {
+    title: 'Incident Response',
+    description: 'Learn to handle and respond to security incidents with confidence and skill.',
+    duration: '8 weeks',
+    level: 'Advanced',
+    price: '$30.14',
+    icon: 'ion-ios-pulse',
+    learningPoints: [
+      'Incident response planning',
+      'Detection and analysis',
+      'Containment and eradication',
+      'Recovery and lessons learned',
+      'Digital forensics basics',
+      'Communication during incidents',
+      'Real-world incident case studies'
+    ],
+    prerequisites: [
+      'Basic security knowledge',
+      'Interest in digital forensics'
+    ],
+    tags: ['Advanced', 'Forensics', 'Response']
+  },
+  'iot-security': {
+    title: 'IoT Security',
+    description: 'Secure Internet of Things devices and networks from emerging threats.',
+    duration: '8 weeks',
+    level: 'Intermediate',
+    price: '$39.19',
+    icon: 'ion-ios-locked',
+    learningPoints: [
+      'IoT security fundamentals',
+      'Device security',
+      'Network security for IoT',
+      'Data security and privacy',
+      'IoT security best practices',
+      'Threat modeling for IoT',
+      'Case studies in IoT security'
+    ],
+    prerequisites: [
+      'Basic networking knowledge',
+      'Interest in IoT technology'
+    ],
+    tags: ['IoT', 'Intermediate', 'Emerging Tech']
+  },
+  'python-hacking': {
+    title: 'Python For Hacking',
+    description: 'Code hacking tools and automate security tasks with Python, from reconnaissance to exploitation.',
+    duration: '8 weeks',
+    level: 'Intermediate',
+    price: '$29.99',
+    icon: 'ion-code-working',
+    learningPoints: [
+      'Python basics for security professionals',
+      'Writing scripts for penetration testing',
+      'Automating reconnaissance and scanning',
+      'Exploit development with Python',
+      'Building custom hacking tools',
+      'Network packet manipulation',
+      'Web scraping and data extraction',
+      'Real-world hacking projects'
+    ],
+    prerequisites: [
+      'Basic Python knowledge',
+      'Interest in automation'
+    ],
+    tags: ['Python', 'Intermediate', 'Automation']
   },
 };
 
@@ -781,349 +1002,6 @@ function showCourseDetails(courseId) {
   $('#courseModal').modal('show');
 }
 </script>
-
-<!-- Course Modals -->
-<!-- Course Modal 9 -->
-<div class="modal fade" id="courseModal9" tabindex="-1" role="dialog" aria-labelledby="courseModal9Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="courseModal9Label">Network Security</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="course-icon-large text-center">
-          <i class="ion-lock-combination"></i>
-        </div>
-        <div class="course-description">
-          <p>This course covers essential network security concepts, including:</p>
-          <ul class="course-details-list">
-            <li><i class="ion-checkmark"></i> Network security fundamentals</li>
-            <li><i class="ion-checkmark"></i> Firewall configuration and management</li>
-            <li><i class="ion-checkmark"></i> Intrusion Detection/Prevention Systems</li>
-            <li><i class="ion-checkmark"></i> VPN technologies</li>
-            <li><i class="ion-checkmark"></i> Network monitoring and analysis</li>
-          </ul>
-        </div>
-        <div class="course-meta">
-          <p><i class="ion-clock"></i> Duration: 4 weeks</p>
-          <p><i class="ion-ios-book"></i> Level: Intermediate</p>
-          <p><i class="ion-ios-people"></i> Prerequisites: Basic networking knowledge</p>
-          <p class="price">$499</p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="https://instagram.com/_tthemzdl5678" target="_blank" rel="noopener" class="btn btn-enroll">Enroll Now</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Course Modal 10 -->
-<div class="modal fade" id="courseModal10" tabindex="-1" role="dialog" aria-labelledby="courseModal10Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="courseModal10Label">Web Application Security</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="course-icon-large text-center">
-          <i class="ion-shield"></i>
-        </div>
-        <div class="course-description">
-          <p>Master web security with this comprehensive course covering:</p>
-          <ul class="course-details-list">
-            <li><i class="ion-checkmark"></i> OWASP Top 10 vulnerabilities</li>
-            <li><i class="ion-checkmark"></i> Secure coding practices</li>
-            <li><i class="ion-checkmark"></i> Web application penetration testing</li>
-            <li><i class="ion-checkmark"></i> Security headers and configurations</li>
-            <li><i class="ion-checkmark"></i> Authentication and authorization</li>
-          </ul>
-        </div>
-        <div class="course-meta">
-          <p><i class="ion-clock"></i> Duration: 8 weeks</p>
-          <p><i class="ion-ios-book"></i> Level: Advanced</p>
-          <p><i class="ion-ios-people"></i> Prerequisites: Basic web development knowledge</p>
-          <p class="price">$18.07</p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="https://instagram.com/_tthemzdl5678" target="_blank" rel="noopener" class="btn btn-enroll">Enroll Now</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Course Modal 11 -->
-<div class="modal fade" id="courseModal11" tabindex="-1" role="dialog" aria-labelledby="courseModal11Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="courseModal11Label">Cryptography</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="course-icon-large text-center">
-          <i class="ion-key"></i>
-        </div>
-        <div class="course-description">
-          <p>Dive deep into the world of cryptography with this course covering:</p>
-          <ul class="course-details-list">
-            <li><i class="ion-checkmark"></i> Symmetric and asymmetric encryption</li>
-            <li><i class="ion-checkmark"></i> Hash functions and digital signatures</li>
-            <li><i class="ion-checkmark"></i> Public Key Infrastructure (PKI)</li>
-            <li><i class="ion-checkmark"></i> Cryptographic protocols</li>
-            <li><i class="ion-checkmark"></i> Quantum cryptography basics</li>
-          </ul>
-        </div>
-        <div class="course-meta">
-          <p><i class="ion-clock"></i> Duration: 6 weeks</p>
-          <p><i class="ion-ios-book"></i> Level: Advanced</p>
-          <p><i class="ion-ios-people"></i> Prerequisites: Basic mathematics</p>
-          <p class="price">$21.09</p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="https://instagram.com/_tthemzdl5678" target="_blank" rel="noopener" class="btn btn-enroll">Enroll Now</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Course Modal 12 -->
-<div class="modal fade" id="courseModal12" tabindex="-1" role="dialog" aria-labelledby="courseModal12Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="courseModal12Label">Malware Analysis</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="course-icon-large text-center">
-          <i class="ion-bug"></i>
-        </div>
-        <div class="course-description">
-          <p>Learn to analyze and understand malicious software with this course covering:</p>
-          <ul class="course-details-list">
-            <li><i class="ion-checkmark"></i> Static and dynamic analysis</li>
-            <li><i class="ion-checkmark"></i> Reverse engineering techniques</li>
-            <li><i class="ion-checkmark"></i> Malware behavior analysis</li>
-            <li><i class="ion-checkmark"></i> Sandbox environments</li>
-            <li><i class="ion-checkmark"></i> Malware detection and prevention</li>
-          </ul>
-        </div>
-        <div class="course-meta">
-          <p><i class="ion-clock"></i> Duration: 4 weeks</p>
-          <p><i class="ion-ios-book"></i> Level: Advanced</p>
-          <p><i class="ion-ios-people"></i> Prerequisites: Basic programming knowledge</p>
-          <p class="price">$30.14</p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="https://instagram.com/_tthemzdl5678" target="_blank" rel="noopener" class="btn btn-enroll">Enroll Now</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Course Modal 13 -->
-<div class="modal fade" id="courseModal13" tabindex="-1" role="dialog" aria-labelledby="courseModal13Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="courseModal13Label">Social Engineering</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="course-icon-large text-center">
-          <i class="ion-ios-people"></i>
-        </div>
-        <div class="course-description">
-          <p>Understand and defend against human-based security threats with this course covering:</p>
-          <ul class="course-details-list">
-            <li><i class="ion-checkmark"></i> Psychology of social engineering</li>
-            <li><i class="ion-checkmark"></i> Common attack vectors</li>
-            <li><i class="ion-checkmark"></i> Prevention and detection techniques</li>
-            <li><i class="ion-checkmark"></i> Security awareness training</li>
-            <li><i class="ion-checkmark"></i> Policy development</li>
-          </ul>
-        </div>
-        <div class="course-meta">
-          <p><i class="ion-clock"></i> Duration: 6 weeks</p>
-          <p><i class="ion-ios-book"></i> Level: Intermediate</p>
-          <p><i class="ion-ios-people"></i> Prerequisites: None</p>
-          <p class="price">$33.51</p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="https://instagram.com/_tthemzdl5678" target="_blank" rel="noopener" class="btn btn-enroll">Enroll Now</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Course Modal 14 -->
-<div class="modal fade" id="courseModal14" tabindex="-1" role="dialog" aria-labelledby="courseModal14Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="courseModal14Label">Cloud Security</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="course-icon-large text-center">
-          <i class="ion-ios-cloud"></i>
-        </div>
-        <div class="course-description">
-          <p>Secure cloud infrastructure with this comprehensive course covering:</p>
-          <ul class="course-details-list">
-            <li><i class="ion-checkmark"></i> Cloud security fundamentals</li>
-            <li><i class="ion-checkmark"></i> Identity and access management</li>
-            <li><i class="ion-checkmark"></i> Data protection in the cloud</li>
-            <li><i class="ion-checkmark"></i> Cloud compliance and governance</li>
-            <li><i class="ion-checkmark"></i> Security monitoring and incident response</li>
-          </ul>
-        </div>
-        <div class="course-meta">
-          <p><i class="ion-clock"></i> Duration: 8 weeks</p>
-          <p><i class="ion-ios-book"></i> Level: Intermediate</p>
-          <p><i class="ion-ios-people"></i> Prerequisites: Basic cloud computing knowledge</p>
-          <p class="price">$39.19</p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="https://instagram.com/_tthemzdl5678" target="_blank" rel="noopener" class="btn btn-enroll">Enroll Now</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Course Modal 15 -->
-<div class="modal fade" id="courseModal15" tabindex="-1" role="dialog" aria-labelledby="courseModal15Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="courseModal15Label">Mobile Security</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="course-icon-large text-center">
-          <i class="ion-ios-phone-portrait"></i>
-        </div>
-        <div class="course-description">
-          <p>Secure mobile applications and devices with this course covering:</p>
-          <ul class="course-details-list">
-            <li><i class="ion-checkmark"></i> Mobile security fundamentals</li>
-            <li><i class="ion-checkmark"></i> iOS and Android security</li>
-            <li><i class="ion-checkmark"></i> Mobile app security testing</li>
-            <li><i class="ion-checkmark"></i> Mobile device management</li>
-            <li><i class="ion-checkmark"></i> Secure mobile app development</li>
-          </ul>
-        </div>
-        <div class="course-meta">
-          <p><i class="ion-clock"></i> Duration: 8 weeks</p>
-          <p><i class="ion-ios-book"></i> Level: Intermediate</p>
-          <p><i class="ion-ios-people"></i> Prerequisites: Basic mobile development knowledge</p>
-          <p class="price">$36.17</p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="https://instagram.com/_tthemzdl5678" target="_blank" rel="noopener" class="btn btn-enroll">Enroll Now</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Course Modal 16 -->
-<div class="modal fade" id="courseModal16" tabindex="-1" role="dialog" aria-labelledby="courseModal16Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="courseModal16Label">Incident Response</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="course-icon-large text-center">
-          <i class="ion-ios-pulse"></i>
-        </div>
-        <div class="course-description">
-          <p>Learn to handle security incidents effectively with this course covering:</p>
-          <ul class="course-details-list">
-            <li><i class="ion-checkmark"></i> Incident response planning</li>
-            <li><i class="ion-checkmark"></i> Detection and analysis</li>
-            <li><i class="ion-checkmark"></i> Containment and eradication</li>
-            <li><i class="ion-checkmark"></i> Recovery and lessons learned</li>
-            <li><i class="ion-checkmark"></i> Digital forensics basics</li>
-          </ul>
-        </div>
-        <div class="course-meta">
-          <p><i class="ion-clock"></i> Duration: 8 weeks</p>
-          <p><i class="ion-ios-book"></i> Level: Advanced</p>
-          <p><i class="ion-ios-people"></i> Prerequisites: Basic security knowledge</p>
-          <p class="price">$30.14</p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="https://instagram.com/_tthemzdl5678" target="_blank" rel="noopener" class="btn btn-enroll">Enroll Now</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Course Modal 17 -->
-<div class="modal fade" id="courseModal17" tabindex="-1" role="dialog" aria-labelledby="courseModal17Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="courseModal17Label">IoT Security</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="course-icon-large text-center">
-          <i class="ion-ios-locked"></i>
-        </div>
-        <div class="course-description">
-          <p>Secure Internet of Things devices and networks with this course covering:</p>
-          <ul class="course-details-list">
-            <li><i class="ion-checkmark"></i> IoT security fundamentals</li>
-            <li><i class="ion-checkmark"></i> Device security</li>
-            <li><i class="ion-checkmark"></i> Network security for IoT</li>
-            <li><i class="ion-checkmark"></i> Data security and privacy</li>
-            <li><i class="ion-checkmark"></i> IoT security best practices</li>
-          </ul>
-        </div>
-        <div class="course-meta">
-          <p><i class="ion-clock"></i> Duration: 8 weeks</p>
-          <p><i class="ion-ios-book"></i> Level: Intermediate</p>
-          <p><i class="ion-ios-people"></i> Prerequisites: Basic networking knowledge</p>
-          <p class="price">$39.19</p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="https://instagram.com/_tthemzdl5678" target="_blank" rel="noopener" class="btn btn-enroll">Enroll Now</a>
-      </div>
-    </div>
-  </div>
-</div>
 
 </body>
 <script type="text/javascript">
