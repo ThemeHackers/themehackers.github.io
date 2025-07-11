@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="img/favicon.png" rel="icon">
+    <title>Cybersecurity Course Schedule</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --hacker-blue: #28ee0d;
+            --hacker-blue-glow: #3cff00cc;
+            --hacker-bg: #101a10;
+            --hacker-card: #181e24;
+            --hacker-sidebar: #13161a;
+            --hacker-border: #06eb06;
+            --hacker-text: #3bd61b;
+            --hacker-muted: #27dd17;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: var(--hacker-bg);
+            color: var(--hacker-text);
+            font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+            min-height: 100vh;
+            box-sizing: border-box;
+            font-size: 16px;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: "";
+            pointer-events: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                to bottom,
+                rgba(0,207,255,0.04) 0px,
+                rgba(0,207,255,0.01) 2px,
+                transparent 4px,
+                transparent 8px
+            );
+            z-index: 1;
+            mix-blend-mode: overlay;
+            animation: scanlines 1s linear infinite;
+        }
+        @keyframes scanlines {
+            0% { background-position-y: 0; }
+            100% { background-position-y: 8px; }
+        }
+        .matrix-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.32;
+            display: block;
+        }
+        .container {
+            max-width: 800px;
+            margin: 60px auto 0 auto;
+            background: var(--hacker-card);
+            border-radius: 16px;
+            box-shadow: 0 0 32px var(--hacker-blue-glow), 0 0 8px var(--hacker-blue-glow);
+            padding: 40px 28px 32px 28px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        h1 {
+            color: var(--hacker-blue);
+            text-shadow: 0 0 8px var(--hacker-blue-glow), 0 0 2px #fff;
+            margin-bottom: 18px;
+            font-size: 2.5em;
+            letter-spacing: 2px;
+        }
+        p {
+            color: var(--hacker-muted);
+            font-size: 1.18em;
+            margin-bottom: 36px;
+            text-shadow: 0 0 2px var(--hacker-blue-glow);
+        }
+        img.schedule {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 0 32px var(--hacker-blue), 0 0 8px #00e1ff;
+            border: 3px solid var(--hacker-blue);
+            background: #10181f;
+            margin-top: 10px;
+        }
+        @media (max-width: 900px) {
+            .container {
+                margin: 32px 2vw 0 2vw;
+                padding: 24px 6vw 20px 6vw;
+            }
+            h1 {
+                font-size: 1.6em;
+            }
+            p {
+                font-size: 1.05em;
+            }
+        }
+        @media (max-width: 600px) {
+            html, body {
+                font-size: 15px;
+            }
+            .container {
+                margin: 18px 0 0 0;
+                padding: 14vw 2vw 8vw 2vw;
+                border-radius: 8px;
+            }
+            h1 {
+                font-size: 1.15em;
+            }
+            p {
+                font-size: 0.98em;
+            }
+            img.schedule {
+                border-radius: 7px;
+                border-width: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="matrix-bg"></canvas>
+    <div class="container">
+        <h1>Cybersecurity Course Schedule</h1>
+        <p>
+            This is the main schedule for all students who have purchased courses and are studying cybersecurity.<br>
+            Please check this schedule regularly to stay updated on important activities and lessons.
+        </p>
+        <img src="img/schedule.png" alt="Cybersecurity Course Schedule" class="schedule">
+    </div>
+    <script>
+
+    const canvas = document.querySelector('.matrix-bg');
+    const ctx = canvas.getContext('2d');
+    function resizeMatrix() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeMatrix();
+    let fontSize = Math.max(16, Math.floor(window.innerWidth / 30));
+    let cols = Math.floor(window.innerWidth / fontSize);
+    let ypos = Array(cols).fill(0);
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(16,19,26,0.13)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.font = fontSize + "px Fira Mono, monospace";
+        for (let i = 0; i < cols; i++) {
+            let hex = Math.floor(Math.random() * 16).toString(16).toUpperCase();
+            ctx.fillStyle = '#00cfff';
+            ctx.shadowColor = '#00cfff';
+            ctx.shadowBlur = 8;
+            ctx.fillText(hex, i * fontSize, ypos[i] * fontSize);
+            ctx.shadowBlur = 0;
+            if (Math.random() > 0.975) ypos[i] = 0;
+            else ypos[i]++;
+            if (ypos[i] * fontSize > canvas.height) ypos[i] = 0;
+        }
+    }
+    setInterval(drawMatrix, 50);
+    window.addEventListener('resize', () => {
+        resizeMatrix();
+        fontSize = Math.max(16, Math.floor(window.innerWidth / 30));
+        cols = Math.floor(window.innerWidth / fontSize);
+        ypos = Array(cols).fill(0);
+    });
+    </script>
+</body>
+</html> 
