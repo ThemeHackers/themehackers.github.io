@@ -308,22 +308,22 @@ class AuthHandler {
             return String(input).trim();
         }
         
-      
-        return input
-          
-            .replace(/<[^>]*>/g, '')
-       
-            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-           
-            .replace(/[<>]/g, '')
+        let sanitized = input.trim();
+        let previous;
         
-            .replace(/\0/g, '')
-           
-            .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')
-         
-            .replace(/\s+/g, ' ')
-          
-            .trim();
+        do {
+            previous = sanitized;
+            sanitized = sanitized
+                .replace(/<[^>]*>/g, '')
+                .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+                .replace(/[<>]/g, '')
+                .replace(/\0/g, '')
+                .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+        } while (sanitized !== previous);
+        
+        return sanitized;
     }
 
     async signInWithGoogle() {
