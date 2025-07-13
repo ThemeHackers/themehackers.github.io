@@ -1,13 +1,3 @@
-/**
- * Environment Configuration Helper
- * 
- * This script helps with environment variable loading and provides
- * fallback configurations for development.
- * 
- * @author ThemeHackers Security Team
- * @version 1.0.0
- */
-
 class EnvironmentConfig {
     constructor() {
         this.config = null;
@@ -15,23 +5,20 @@ class EnvironmentConfig {
                            window.location.hostname !== '127.0.0.1';
     }
 
-    /**
-     * Get environment variables from various sources
-     */
+    
+    
     getEnvironmentVariables() {
         const env = {};
         
-        // Try to get from window.ENV (Netlify injection)
+        
         if (window.ENV) {
             Object.assign(env, window.ENV);
         }
-        
-        // Try to get from window.process.env
+      
         if (window.process?.env) {
             Object.assign(env, window.process.env);
         }
-        
-        // Try to get from meta tags
+     
         const metaTags = document.querySelectorAll('meta[name*="firebase"]');
         metaTags.forEach(tag => {
             const name = tag.getAttribute('name');
@@ -44,23 +31,23 @@ class EnvironmentConfig {
         return env;
     }
 
-    /**
-     * Check if Firebase environment variables are available
-     */
+
     hasFirebaseConfig() {
         const env = this.getEnvironmentVariables();
         const requiredVars = [
-            'FIREBASE_API_KEY',
+            'FIREBASE_AUTHORIZED_DOMAINS',
             'FIREBASE_AUTH_DOMAIN', 
-            'FIREBASE_PROJECT_ID'
+            'FIREBASE_API_KEY',
+            'FIREBASE_MESSAGING_SENDER_ID',
+            'FIREBASE_PROJECT_ID',
+            'FIREBASE_MEASUREMENT_ID',
+            'FIREBASE_STORAGE_BUCKET',
+            'FIREBASE_APP_ID'
         ];
         
         return requiredVars.every(varName => env[varName]);
     }
 
-    /**
-     * Get Firebase configuration from environment
-     */
     getFirebaseConfig() {
         const env = this.getEnvironmentVariables();
         
@@ -75,9 +62,6 @@ class EnvironmentConfig {
         };
     }
 
-    /**
-     * Debug environment variables
-     */
     debugEnvironment() {
         console.log('🔍 Environment Configuration Debug:');
         console.log('Is Production:', this.isProduction);
@@ -92,9 +76,7 @@ class EnvironmentConfig {
         }
     }
 
-    /**
-     * Show configuration status to user
-     */
+
     showConfigStatus() {
         const alertContainer = document.getElementById('alertContainer');
         if (!alertContainer) return;
@@ -120,20 +102,20 @@ class EnvironmentConfig {
     }
 }
 
-// Create global instance
+
 window.envConfig = new EnvironmentConfig();
 
-// Debug in development
+
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     window.envConfig.debugEnvironment();
 }
 
-// Show config status when DOM is ready
+
 document.addEventListener('DOMContentLoaded', function() {
     window.envConfig.showConfigStatus();
 });
 
-// Export for module systems
+
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = EnvironmentConfig;
 } 
