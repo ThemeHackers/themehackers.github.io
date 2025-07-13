@@ -990,12 +990,14 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
     
+    <script src="js/env-config.js"></script>
     <script src="js/firebase-config.js"></script>
+    <script src="js/health-check.js"></script>
     <script src="js/security.js"></script>
     <script src="js/dashboard.js"></script>
 
     <script>
-        // Global DashboardHandler instance
+       
         let dashboardHandler = null;
 
         function createMatrixEffect() {
@@ -1018,34 +1020,28 @@
 
         createMatrixEffect();
 
-        // Wait for Firebase to initialize before creating DashboardHandler
+      
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if Firebase is initialized
             const checkFirebaseReady = setInterval(() => {
                 if (window.auth && window.db) {
                     clearInterval(checkFirebaseReady);
-                    console.log('✅ Firebase ready, initializing DashboardHandler...');
-                    
-                    // Initialize DashboardHandler
                     if (!dashboardHandler) {
                         dashboardHandler = new DashboardHandler();
                     }
                 }
             }, 100);
 
-            // Timeout after 10 seconds
             setTimeout(() => {
                 clearInterval(checkFirebaseReady);
-                console.error('❌ Firebase initialization timeout');
-                
-                // Try to initialize anyway with fallback
-                if (!dashboardHandler) {
-                    console.warn('⚠️  Attempting to initialize DashboardHandler with fallback...');
-                    dashboardHandler = new DashboardHandler();
+                if (!window.auth || !window.db) {
+                    var alertContainer = document.createElement('div');
+                    alertContainer.className = 'alert alert-danger mt-3';
+                    alertContainer.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i><strong>Error:</strong> Unable to initialize Firebase. Please refresh the page or contact support.';
+                    var container = document.querySelector('.container');
+                    if (container) container.prepend(alertContainer);
                 }
             }, 10000);
 
-            // Remove all inline event handlers and add JS listeners
             var editBtn = document.getElementById('editBtn');
             if (editBtn) editBtn.addEventListener('click', function() { toggleEditMode(); });
             var cancelEditBtn = document.getElementById('cancelEditBtn');
