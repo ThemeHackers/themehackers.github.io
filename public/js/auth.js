@@ -289,7 +289,7 @@ class AuthHandler {
                 'icloud.com', 'protonmail.com', 'aol.com'
             ];
             const isCommonProvider = commonProviders.some(provider => 
-                domain === provider
+                domain === provider || domain.endsWith('.ac.th')
             );
             return {
                 isValid: isValidFormat && !isDisposable,
