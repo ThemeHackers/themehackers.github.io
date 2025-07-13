@@ -1,25 +1,32 @@
+
 /*    /index.html   200
 
-http://:host/*    https://:host/:splat    301!
 
-/dashboard    /login.html    302
-/dashboard/*  /login.html    302
+http://*    https://:splat    301!
+
+
+/dashboard      /login.html      302
+/dashboard/*    /login.html      302
+
 
 /api/*    /.netlify/functions/:splat    200
+
 
 /404    /404.html    404
 /500    /500.html    500
 
-/login    /login.html    200
-/logout   /logout.html   200
-/dashboard /dashboard.html 200
+
+/login     /login.html     200
+/logout    /logout.html    200
 
 
+/dashboard    /dashboard.html    200
+
+# Static assets passthrough
 /assets/*    /:splat    200
 
 
 /*
-  # Security Headers
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
