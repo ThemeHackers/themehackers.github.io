@@ -1,5 +1,10 @@
 class AuthHandler {
     constructor() {
+        if (!window.auth || !window.db) {
+            throw new Error('Firebase not initialized');
+        }
+        this.auth = window.auth;
+        this.db = window.db;
         this.provider = new firebase.auth.GoogleAuthProvider();
         this.loginAttempts = 0;
         this.maxLoginAttempts = 5;
