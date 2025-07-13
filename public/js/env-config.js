@@ -35,14 +35,13 @@ class EnvironmentConfig {
     hasFirebaseConfig() {
         const env = this.getEnvironmentVariables();
         const requiredVars = [
-            'FIREBASE_AUTHORIZED_DOMAINS',
-            'FIREBASE_AUTH_DOMAIN', 
             'FIREBASE_API_KEY',
-            'FIREBASE_MESSAGING_SENDER_ID',
+            'FIREBASE_AUTH_DOMAIN', 
             'FIREBASE_PROJECT_ID',
-            'FIREBASE_MEASUREMENT_ID',
             'FIREBASE_STORAGE_BUCKET',
-            'FIREBASE_APP_ID'
+            'FIREBASE_MESSAGING_SENDER_ID',
+            'FIREBASE_APP_ID',
+            'FIREBASE_MEASUREMENT_ID'
         ];
         
         return requiredVars.every(varName => env[varName]);
