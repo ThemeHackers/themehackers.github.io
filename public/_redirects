@@ -1,27 +1,16 @@
 
 /*    /index.html   200
 
-
 http://*    https://:splat    301!
-
 
 /dashboard      /login.html      302
 /dashboard/*    /login.html      302
 
-
-/api/*    /.netlify/functions/:splat    200
-
-
 /404    /404.html    404
-/500    /500.html    500
-
 
 /login     /login.html     200
 /logout    /logout.html    200
 
-
 /dashboard    /dashboard.html    200
 
-
-/assets/*    /:splat    200
 
