@@ -19,37 +19,62 @@ console.log('📁 Current directory:', process.cwd());
 console.log('📦 Package.json exists:', fs.existsSync('package.json'));
 
 
+function simpleBuild() {
+    console.log('🚀 Simple build script running...');
+    console.log('📁 Checking directory structure...');
+    
+    
+    if (fs.existsSync('public')) {
+        console.log('✅ Public directory found');
+        
+       
+        const publicFiles = fs.readdirSync('public');
+        console.log('📁 Files in public directory:', publicFiles);
+        
+        
+        const htmlFiles = publicFiles.filter(file => file.endsWith('.html'));
+        console.log('📄 HTML files found:', htmlFiles);
+        
+    } else {
+        console.log('⚠️  Public directory not found');
+    }
+    
+    console.log('✅ Build completed successfully!');
+}
+
+
 function injectEnvVarsIntoHTML(filePath) {
     try {
         console.log(`📝 Processing: ${filePath}`);
         
         let content = fs.readFileSync(filePath, 'utf8');
         
-     
+      
         if (content.includes('firebase-api-key')) {
             console.log(`⚠️  File already has environment injection: ${filePath}`);
             return;
         }
         
- 
+       
         const headMatch = content.match(/<head[^>]*>/i);
         if (!headMatch) {
             console.log(`⚠️  No head tag found in: ${filePath}`);
             return;
         }
-
+        
+       
         const metaTags = envVars.map(varName => {
             const value = process.env[varName] || '';
             return `    <meta name="${varName.toLowerCase()}" content="${value}">`;
         }).join('\n');
         
-  
+       
         const headTag = headMatch[0];
         const injectionPoint = headTag + '\n' + metaTags;
         
         content = content.replace(headTag, injectionPoint);
         
-  
+      le
         fs.writeFileSync(filePath, content, 'utf8');
         console.log(`✅ Injected environment variables into: ${filePath}`);
         
@@ -58,6 +83,9 @@ function injectEnvVarsIntoHTML(filePath) {
     }
 }
 
+
+ * Create JavaScript object with environment variables
+ */
 function createEnvScript() {
     const envObject = {};
     
@@ -66,6 +94,7 @@ function createEnvScript() {
     });
     
     const scriptContent = `
+
 window.ENV = ${JSON.stringify(envObject, null, 2)};
 window.FIREBASE_CONFIG = {
     apiKey: "${process.env.FIREBASE_API_KEY || ''}",
@@ -92,14 +121,16 @@ function build() {
         process.exit(1);
     }
     
- 
+
     const htmlFiles = [
+        'public/index.html',
         'public/login.html',
-        'public/logout.html',
         'public/dashboard.html',
     ];
     
     let processedFiles = 0;
+    
+
     htmlFiles.forEach(filePath => {
         if (fs.existsSync(filePath)) {
             injectEnvVarsIntoHTML(filePath);
@@ -117,8 +148,16 @@ function build() {
     console.log('✅ Environment variable injection completed!');
 }
 
+
 if (require.main === module) {
-    build();
+  
+    if (fs.existsSync('package.json')) {
+        console.log('📦 Package.json found, running full build...');
+        build();
+    } else {
+        console.log('⚠️  No package.json found, running simple build...');
+        simpleBuild();
+    }
 }
 
-module.exports = { build, injectEnvVarsIntoHTML, createEnvScript }; 
+module.exports = { build, injectEnvVarsIntoHTML, createEnvScript, simpleBuild }; 
