@@ -33,7 +33,6 @@ class FirebaseConfigLoader {
             }
             await this.loadFromNetlifyFunction();
         } catch (error) {
-            // Only log essential error
             console.error('❌ Error loading Firebase configuration:', error);
             if (this.retryCount < this.maxRetries) {
                 this.retryCount++;
