@@ -83,6 +83,9 @@ class FirebaseConfigLoader {
             // Final fallback to default config for development
             console.warn('⚠️ Using fallback configuration for development');
             this.config = this.getFallbackConfig();
+            
+            // Show user-friendly error message
+            this.showConfigurationError();
             await this.initializeFirebase();
             
         } finally {
@@ -254,6 +257,27 @@ class FirebaseConfigLoader {
     getFallbackConfig() {
         // This should only be used for development/testing
         // In production, environment variables should provide the real config
+        console.warn('⚠️ Using fallback configuration - this may not work in production');
+        
+        // Try to get from a local config file or use a development config
+        const devConfig = {
+            apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", // Placeholder - replace with actual dev key
+            authDomain: "dashsecurity-database.firebaseapp.com",
+            projectId: "dashsecurity-database",
+            storageBucket: "dashsecurity-database.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdefghijklmnop",
+            measurementId: "G-XXXXXXXXXX"
+        };
+        
+        // Check if we're in development mode
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            console.log('🔧 Development mode detected, using fallback config');
+            return devConfig;
+        }
+        
+        // For production, return empty config to force proper environment variable setup
+        console.error('❌ No Firebase configuration found. Please set up environment variables in Netlify.');
         return {
             apiKey: "",
             authDomain: "",
@@ -295,6 +319,23 @@ class FirebaseConfigLoader {
             
             checkFirebase();
         });
+    }
+
+    /**
+     * Show configuration error to user
+     */
+    showConfigurationError() {
+        const alertContainer = document.getElementById('alertContainer');
+        if (!alertContainer) return;
+        
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'alert alert-warning';
+        errorDiv.innerHTML = `
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>Configuration Issue:</strong> Firebase configuration not found. 
+            <br><small>This may affect authentication functionality. Please contact support if this persists.</small>
+        `;
+        alertContainer.appendChild(errorDiv);
     }
 
     /**

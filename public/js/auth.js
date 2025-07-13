@@ -3,6 +3,9 @@ class AuthHandler {
 
         if (!window.auth || !window.db) {
             console.warn('⚠️  Firebase not ready, AuthHandler initialization failed');
+            
+            // Show user-friendly error message
+            this.showFirebaseError();
             throw new Error('Firebase not initialized');
         }
 
@@ -16,6 +19,20 @@ class AuthHandler {
         
         console.log('✅ AuthHandler initialized with Firebase');
         this.init();
+    }
+
+    showFirebaseError() {
+        const alertContainer = document.getElementById('alertContainer');
+        if (alertContainer) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'alert alert-danger';
+            errorDiv.innerHTML = `
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Configuration Error:</strong> Firebase is not properly configured. 
+                Please contact ThemeHackers support or try refreshing the page.
+            `;
+            alertContainer.appendChild(errorDiv);
+        }
     }
 
     init() {
@@ -346,7 +363,9 @@ class AuthHandler {
             let errorMessage = 'Google sign-in failed. Please try again.';
             
             
-            if (error.code === 'auth/popup-closed-by-user') {
+            if (error.code === 'auth/api-key-not-valid') {
+                errorMessage = 'Firebase configuration error. Please contact ThemeHackers support.';
+            } else if (error.code === 'auth/popup-closed-by-user') {
                 errorMessage = 'Authentication cancelled. Please try again.';
             } else if (error.code === 'auth/popup-blocked') {
                 errorMessage = 'Pop-up was blocked by your browser. Please allow pop-ups and try again.';
