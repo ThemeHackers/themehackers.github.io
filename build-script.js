@@ -84,8 +84,7 @@ function injectEnvVarsIntoHTML(filePath) {
 }
 
 
- * Create JavaScript object with environment variables
- */
+
 function createEnvScript() {
     const envObject = {};
     
