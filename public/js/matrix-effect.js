@@ -317,10 +317,17 @@ class ThemeHackersUtils {
     static sanitizeInput(input) {
         if (typeof input !== 'string') return '';
         
-        return input
-            .replace(/<[^>]*>/g, '')
-            .replace(/[<>]/g, '')
-            .trim();
+        let sanitizedInput = input.trim();
+        let previousInput;
+        
+        do {
+            previousInput = sanitizedInput;
+            sanitizedInput = sanitizedInput
+                .replace(/<[^>]*>/g, '') // Remove HTML tags
+                .replace(/[<>]/g, '');  // Remove leftover < and >
+        } while (sanitizedInput !== previousInput);
+        
+        return sanitizedInput;
     }
 }
 
