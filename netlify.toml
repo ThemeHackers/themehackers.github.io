@@ -4,7 +4,10 @@
 
 [functions]
   directory = "netlify/functions"
-  node_bundler = "esbuild" 
+  node_bundler = "esbuild"
 
 [[plugins]]
-package = "@netlify/plugin-functions-install-core"
+  package = "@netlify/plugin-functions-install-core"
+
+[build.environment]
+  NODE_VERSION = "18"  
