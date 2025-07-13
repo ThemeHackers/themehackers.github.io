@@ -1,20 +1,15 @@
 .env
 .env.local
-.env.production
-.env.development
-.env.test
-production.env
-env-template.txt
+.env.development.local
+.env.test.local
+.env.production.local
 
 
-firebase-config.js
-firebase-config.prod.js
-firebase-config.dev.js
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
 
-
-security-keys.json
-api-keys.json
-secrets.json
 
 node_modules/
 npm-debug.log*
@@ -34,13 +29,17 @@ out/
 *.swo
 *~
 
-
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
 
+logs
 *.log
-logs/
 
 
 pids
@@ -50,29 +49,10 @@ pids
 
 
 coverage/
-.nyc_output
-
-
-jspm_packages/
-
-.npm
-
-
-.node_repl_history
-
-
-*.tgz
-
-
-.yarn-integrity
-
-
-.env
 
 
 .netlify/
 
 
-.firebase/
-firebase-debug.log
-firebase-debug.*.log 
+tmp/
+temp/ 
