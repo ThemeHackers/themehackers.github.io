@@ -1,0 +1,35 @@
+/*    /index.html   200
+
+http://:host/*    https://:host/:splat    301!
+
+/dashboard    /login.html    302
+/dashboard/*  /login.html    302
+
+/api/*    /.netlify/functions/:splat    200
+
+/404    /404.html    404
+/500    /500.html    500
+
+/login    /login.html    200
+/logout   /logout.html   200
+/dashboard /dashboard.html 200
+
+
+/assets/*    /:splat    200
+
+
+/*
+  # Security Headers
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  X-Content-Type-Options: nosniff
+  X-Download-Options: noopen
+  X-Permitted-Cross-Domain-Policies: none
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Origin-Agent-Cluster: ?1
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Permissions-Policy: accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()
+  Clear-Site-Data: "cache", "cookies", "storage"
