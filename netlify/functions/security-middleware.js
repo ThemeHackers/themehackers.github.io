@@ -360,12 +360,18 @@ class SecurityMiddleware {
             return str;
         }
 
-        return str
-            .replace(/<[^>]*>/g, '')
-            .replace(/[<>]/g, '') 
-            .replace(/javascript:/gi, '')
-            .replace(/<script/gi, '') 
-            .trim();
+        let previous;
+        do {
+            previous = str;
+            str = str
+                .replace(/<[^>]*>/g, '')
+                .replace(/[<>]/g, '') 
+                .replace(/javascript:/gi, '')
+                .replace(/<script/gi, '') 
+                .trim();
+        } while (str !== previous);
+
+        return str;
     }
 
     /**
