@@ -12,7 +12,14 @@ class AuthHandler {
         this.lastLoginAttempt = 0;
         this.init();
     }
-    
+    showFirebaseError() {
+        const alertContainer = document.getElementById('alertContainer');
+        if (alertContainer) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'alert alert-danger';
+            alertContainer.appendChild(errorDiv);
+        }
+    }
     init() {
         this.auth.onAuthStateChanged((user) => {
             if (user) {
