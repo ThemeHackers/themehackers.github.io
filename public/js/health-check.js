@@ -18,17 +18,12 @@ class HealthChecker {
         };
     }
 
-    /**
-     * Perform comprehensive health check
-     */
     async performHealthCheck() {
-        console.log('🏥 Starting comprehensive health check...');
         
         try {
             const currentDomain = window.location.origin;
             const healthUrl = `${currentDomain}/.netlify/functions/health-check`;
             
-            console.log('📡 Checking health at:', healthUrl);
             
             const response = await fetch(healthUrl, {
                 method: 'GET',
@@ -52,10 +47,7 @@ class HealthChecker {
                 lastCheck: new Date().toISOString(),
                 details: healthData
             };
-
-            console.log('✅ Health check completed:', this.healthStatus);
-            
-            // Show status to user if there are issues
+                
             if (healthData.status === 'unhealthy') {
                 this.showHealthWarning(healthData);
             }
@@ -124,13 +116,9 @@ class HealthChecker {
         }
     }
 
-    /**
-     * Show health warning to user
-     */
     showHealthWarning(healthData) {
         const warningMessage = this.formatHealthWarning(healthData);
         
-        // Try to show alert if available
         if (window.showAlert) {
             window.showAlert(warningMessage, 'warning');
         } else {
@@ -138,9 +126,6 @@ class HealthChecker {
         }
     }
 
-    /**
-     * Format health warning message
-     */
     formatHealthWarning(healthData) {
         let message = 'ThemeHackers Security: System health check detected issues.';
         
@@ -154,25 +139,14 @@ class HealthChecker {
         
         return message;
     }
-
-    /**
-     * Get current health status
-     */
     getHealthStatus() {
         return this.healthStatus;
     }
-
-    /**
-     * Check if system is healthy
-     */
     isHealthy() {
         return this.healthStatus.functions === 'healthy' && 
                this.healthStatus.firebase === 'configured';
     }
 
-    /**
-     * Get detailed health report
-     */
     getDetailedReport() {
         return {
             timestamp: new Date().toISOString(),
@@ -187,12 +161,11 @@ class HealthChecker {
     }
 }
 
-// Create global instance
 window.healthChecker = new HealthChecker();
 
-// Auto-perform health check when page loads
+
 document.addEventListener('DOMContentLoaded', async function() {
-    // Wait a bit for other scripts to initialize
+   
     setTimeout(async () => {
         try {
             await window.healthChecker.performHealthCheck();
@@ -202,7 +175,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     }, 2000);
 });
 
-// Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = HealthChecker;
 } 
