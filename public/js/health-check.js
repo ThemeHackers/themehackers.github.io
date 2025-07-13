@@ -1,13 +1,3 @@
-/**
- * Health Check Utility
- * 
- * This script provides health check functionality to verify
- * environment variables and Firebase configuration status.
- * 
- * @author ThemeHackers Security Team
- * @version 1.0.0
- */
-
 class HealthChecker {
     constructor() {
         this.healthStatus = {
