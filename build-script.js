@@ -74,7 +74,7 @@ function injectEnvVarsIntoHTML(filePath) {
         
         content = content.replace(headTag, injectionPoint);
         
-      le
+      
         fs.writeFileSync(filePath, content, 'utf8');
         console.log(`✅ Injected environment variables into: ${filePath}`);
         
@@ -150,7 +150,7 @@ function build() {
 
 
 if (require.main === module) {
-  
+    
     if (fs.existsSync('package.json')) {
         console.log('📦 Package.json found, running full build...');
         build();
