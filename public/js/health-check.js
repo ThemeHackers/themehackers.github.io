@@ -65,9 +65,6 @@ class HealthChecker {
         }
     }
 
-    /**
-     * Check Firebase configuration specifically
-     */
     async checkFirebaseConfig() {
         try {
             const currentDomain = window.location.origin;
