@@ -158,55 +158,7 @@
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
 
-/500.html
-  Cache-Control: public, max-age=3600
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-
-
-*.php
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-
-*.asp
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-
-*.aspx
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-
-
-*.env
-  Cache-Control: no-cache, no-store, must-revalidate
-  Pragma: no-cache
-  Expires: 0
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-
-*.log
-  Cache-Control: no-cache, no-store, must-revalidate
-  Pragma: no-cache
-  Expires: 0
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-
-
-/manifest.json
-  Cache-Control: public, max-age=86400
-  X-Content-Type-Options: nosniff
-  Content-Type: application/manifest+json
-
-/sw.js
-  Cache-Control: public, max-age=0, must-revalidate
-  X-Content-Type-Options: nosniff
-  Content-Type: application/javascript
-
 
 /robots.txt
   Cache-Control: public, max-age=86400
   X-Content-Type-Options: nosniff
-
-/sitemap.xml
-  Cache-Control: public, max-age=86400
-  X-Content-Type-Options: nosniff 
