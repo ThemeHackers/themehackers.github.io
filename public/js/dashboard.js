@@ -1,34 +1,26 @@
 
 class DashboardHandler {
     constructor() {
-        // Check if Firebase is available
         if (!window.auth || !window.db) {
             console.warn('⚠️  Firebase not ready, DashboardHandler initialization failed');
             throw new Error('Firebase not initialized');
         }
-
-        // Enhanced security cookie setup with better attributes
         try {
             if (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                // Set enhanced security cookies with proper attributes
+
                 const secureFlag = window.location.protocol === 'https:' ? '; Secure' : '';
-                const expires = '; Expires=' + new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString(); // 24 hours
+                const expires = '; Expires=' + new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString(); 
                 
-                // Main security test cookie
                 document.cookie = `themehackers_session=1; Path=/; SameSite=Strict${secureFlag}${expires}`;
                 
-                // SameSite test cookie
+
                 document.cookie = `th_samesite_test=1; Path=/; SameSite=Strict${secureFlag}${expires}`;
-                
-                // Additional security cookie for comprehensive testing
+
                 document.cookie = `th_security_level=enhanced; Path=/; SameSite=Strict${secureFlag}${expires}`;
             }
         } catch (e) { 
             console.warn('Could not set enhanced security test cookies:', e);
         }
-        
-        // Note: Removed eval/Function hardening as it breaks Firebase functionality
-        // Firebase and other libraries need these functions to work properly
         
         this.auth = window.auth;
         this.db = window.db;
@@ -37,10 +29,8 @@ class DashboardHandler {
         this.sessionTimeout = 30 * 60 * 1000; 
         this.lastActivity = Date.now();
         
-        console.log('✅ DashboardHandler initialized with Firebase');
         this.init();
     }
-
     init() {
 
         this.auth.onAuthStateChanged((user) => {
@@ -58,7 +48,7 @@ class DashboardHandler {
     }
 
     setupEventHandlers() {
-        // Logout buttons
+        
         const logoutBtn = document.getElementById('logoutBtn');
         const testLogoutBtn = document.getElementById('testLogoutBtn');
         
@@ -76,7 +66,7 @@ class DashboardHandler {
             });
         }
 
-        // Profile editing form
+      
         const editProfileForm = document.getElementById('editProfileForm');
         if (editProfileForm) {
             editProfileForm.addEventListener('submit', (e) => {
@@ -85,7 +75,6 @@ class DashboardHandler {
             });
         }
 
-        // Password validation for edit form
         const editPassword = document.getElementById('editPassword');
         if (editPassword) {
             editPassword.addEventListener('input', () => {
@@ -93,7 +82,7 @@ class DashboardHandler {
             });
         }
 
-        // Export data button
+   
         const exportDataBtn = document.getElementById('exportDataBtn');
         if (exportDataBtn) {
             exportDataBtn.addEventListener('click', () => {
@@ -119,7 +108,7 @@ class DashboardHandler {
             this.checkSessionTimeout();
         }, 60000);
 
-        // Update system info every 30 seconds
+    
         setInterval(() => {
             this.updateSystemInfo();
         }, 30000);
@@ -185,13 +174,13 @@ class DashboardHandler {
                 this.updateDashboard();
                 this.updateLastLogin();
             } else {
-                // Create user data if it doesn't exist
+                
                 await this.createUserData();
             }
         } catch (error) {
             console.error('Error loading user data:', error);
             
-            // Handle specific Firebase errors
+         
             if (error.code === 'unavailable' || error.message.includes('offline')) {
                 this.showAlert('ThemeHackers Security: Connection issue. Please check your internet connection and try again.', 'warning');
             } else if (error.code === 'permission-denied') {
@@ -200,7 +189,6 @@ class DashboardHandler {
                 this.showAlert('ThemeHackers Security: Error loading user data. Please refresh the page.', 'danger');
             }
             
-            // Try to load basic user info from Firebase Auth as fallback
             try {
                 this.userData = {
                     uid: this.currentUser.uid,
@@ -321,23 +309,23 @@ class DashboardHandler {
 
     async handleLogout() {
         try {
-            // Clear all security test cookies
+         
             document.cookie = 'themehackers_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT';
             document.cookie = 'th_samesite_test=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT';
             document.cookie = 'th_security_level=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT';
             
-            // Clear storage
+            
             sessionStorage.clear();
             localStorage.removeItem('user_session');
             
-            // Sign out from Firebase
+           
             await this.auth.signOut();
             
-            // Redirect to logout page
+         
             window.location.href = 'logout.html';
         } catch (error) {
             console.error('Error signing out:', error);
-            // Still redirect even if there's an error
+            
             window.location.href = 'logout.html';
         }
     }
@@ -360,20 +348,20 @@ class DashboardHandler {
         }, 5000);
     }
 
-    // Account Editing Methods
+    
     toggleEditMode() {
         const viewMode = document.getElementById('viewMode');
         const editMode = document.getElementById('editMode');
         const editBtn = document.getElementById('editBtn');
 
         if (viewMode.style.display === 'none') {
-            // Switch to view mode
+           
             viewMode.style.display = 'block';
             editMode.style.display = 'none';
             editBtn.innerHTML = '<i class="fas fa-edit me-1"></i>Edit';
             editBtn.className = 'btn btn-outline-primary btn-sm';
         } else {
-            // Switch to edit mode
+            
             viewMode.style.display = 'none';
             editMode.style.display = 'block';
             editBtn.innerHTML = '<i class="fas fa-eye me-1"></i>View';
@@ -416,7 +404,7 @@ class DashboardHandler {
             return;
         }
 
-        // Check password complexity
+        
         const hasUpperCase = /[A-Z]/.test(passwordValue);
         const hasLowerCase = /[a-z]/.test(passwordValue);
         const hasNumbers = /\d/.test(passwordValue);
@@ -459,20 +447,20 @@ class DashboardHandler {
             const password = document.getElementById('editPassword').value;
             const confirmPassword = document.getElementById('editConfirmPassword').value;
 
-            // Validate required fields
+           
             if (!fullName || !email) {
                 this.showAlert('Please fill in all required fields', 'danger');
                 return;
             }
 
-            // Validate email format
+         
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 this.showAlert('Please enter a valid email address', 'danger');
                 return;
             }
 
-            // Email verification for new email
+           
             if (email !== this.currentUser.email) {
                 const emailVerification = await this.verifyEmailWithMailgun(email);
                 if (!emailVerification.isValid) {
@@ -481,7 +469,7 @@ class DashboardHandler {
                 }
             }
 
-            // Validate password if provided
+            
             if (password) {
                 if (password !== confirmPassword) {
                     this.showAlert('Passwords do not match', 'danger');
@@ -493,7 +481,7 @@ class DashboardHandler {
                     return;
                 }
 
-                // Check password complexity
+                
                 const hasUpperCase = /[A-Z]/.test(password);
                 const hasLowerCase = /[a-z]/.test(password);
                 const hasNumbers = /\d/.test(password);
@@ -505,7 +493,7 @@ class DashboardHandler {
                 }
             }
 
-            // Update user data
+         
             const updateData = {
                 fullName: fullName,
                 email: email,
@@ -514,17 +502,17 @@ class DashboardHandler {
 
             await this.db.collection('users').doc(this.currentUser.uid).update(updateData);
 
-            // Update password if provided
+           
             if (password) {
                 await this.currentUser.updatePassword(password);
             }
 
-            // Update display name in Firebase Auth
+           
             await this.currentUser.updateProfile({
                 displayName: fullName
             });
 
-            // Reload user data
+            
             await this.loadUserData();
 
             this.showAlert('Profile updated successfully!', 'success');
@@ -533,7 +521,7 @@ class DashboardHandler {
         } catch (error) {
             console.error('Error updating profile:', error);
             if (error.code === 'auth/requires-recent-login') {
-                // Prompt the user to re-authenticate
+                
                 console.log('User needs to re-authenticate for this operation.');
                 this.promptForReauthentication();
             } else {
@@ -541,20 +529,12 @@ class DashboardHandler {
             }
         }
     }
-
-    /**
-     * Verify email using Mailgun API (same as auth.js)
-     * @param {string} email - Email to verify
-     * @returns {object} Verification result
-     */
     async verifyEmailWithMailgun(email) {
         try {
-            // Note: In production, this should be done server-side
-            // For demo purposes, we'll use a simple regex check
+           
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const isValidFormat = emailRegex.test(email);
-            
-            // Check for common disposable email domains
+      
             const disposableDomains = [
                 'tempmail.org', 'guerrillamail.com', 'mailinator.com', 
                 '10minutemail.com', 'throwaway.email', 'temp-mail.org'
@@ -565,7 +545,7 @@ class DashboardHandler {
                 domain.includes(disposable)
             );
 
-            // Check for common email providers (more likely to be valid)
+         
             const commonProviders = [
                 'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com',
                 'icloud.com', 'protonmail.com', 'aol.com'
@@ -594,11 +574,9 @@ class DashboardHandler {
         }
     }
 
-    /**
-     * Prompt user for re-authentication
-     */
+
     promptForReauthentication() {
-        // Create re-authentication modal
+     
         const modal = document.createElement('div');
         modal.className = 'modal fade';
         modal.id = 'reauthModal';
@@ -643,26 +621,23 @@ class DashboardHandler {
         
         document.body.appendChild(modal);
         
-        // Initialize Bootstrap modal
+
         const bootstrapModal = new bootstrap.Modal(modal);
         bootstrapModal.show();
         
-        // Handle form submission
+    
         const reauthForm = modal.querySelector('#reauthForm');
         reauthForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             await this.handleReauthentication(modal, bootstrapModal);
         });
         
-        // Clean up modal when hidden
+       
         modal.addEventListener('hidden.bs.modal', () => {
             modal.remove();
         });
     }
 
-    /**
-     * Handle re-authentication process
-     */
     async handleReauthentication(modal, bootstrapModal) {
         try {
             const password = document.getElementById('reauthPassword').value;
@@ -672,13 +647,13 @@ class DashboardHandler {
                 return;
             }
 
-            // Show loading state
+          
             const submitBtn = modal.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Verifying...';
             submitBtn.disabled = true;
 
-            // Re-authenticate user
+            
             const credential = firebase.auth.EmailAuthProvider.credential(
                 this.currentUser.email, 
                 password
@@ -686,13 +661,13 @@ class DashboardHandler {
             
             await this.currentUser.reauthenticateWithCredential(credential);
             
-            // Close modal
+         
             bootstrapModal.hide();
             
-            // Show success message
+        
             this.showAlert('Identity verified successfully! You can now update your profile.', 'success');
             
-            // Retry the profile update
+       
             setTimeout(() => {
                 this.handleProfileUpdate();
             }, 1000);
@@ -712,14 +687,14 @@ class DashboardHandler {
             
             this.showAlert(errorMessage, 'danger');
             
-            // Reset button state
+          
             const submitBtn = modal.querySelector('button[type="submit"]');
             submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Verify Identity';
             submitBtn.disabled = false;
         }
     }
 
-    // Security Testing Methods
+  
     async runSecurityTests() {
         const testResults = document.getElementById('testResults');
         const resultsContainer = document.getElementById('securityTestResults');
@@ -1072,7 +1047,7 @@ class DashboardHandler {
     }
 
     testCookieSecurity() {
-        // Enhanced cookie security testing with comprehensive detection
+
         const cookies = document.cookie.split(';');
         const hasSecure = cookies.some(cookie => cookie.includes('Secure'));
         const hasSameSite = cookies.some(cookie => cookie.includes('SameSite'));
@@ -1080,33 +1055,31 @@ class DashboardHandler {
         const hasSameSiteTest = cookies.some(cookie => cookie.includes('th_samesite_test'));
         const hasSecurityLevel = cookies.some(cookie => cookie.includes('th_security_level'));
         
-        // Check for additional security attributes
-        const hasHttpOnly = false; // Cannot detect from client-side JS
+       
+        const hasHttpOnly = false; 
         const hasPath = cookies.some(cookie => cookie.includes('Path=/'));
         const hasExpires = cookies.some(cookie => cookie.includes('Expires='));
         
-        // Check if we're in a secure context (HTTPS or localhost)
+       
         const isSecureContext = window.location.protocol === 'https:' || 
                                window.location.hostname === 'localhost' || 
                                window.location.hostname === '127.0.0.1';
 
-        // Enhanced scoring system with comprehensive checks
+       
         let score = 0;
         if (hasSecure || isSecureContext) score += 3;
         if (hasSameSite) score += 4;
-        if (hasThemeHackersSession) score += 2; // Bonus for main security test cookie
-        if (hasSameSiteTest) score += 1; // Bonus for SameSite test cookie
-        if (hasSecurityLevel) score += 1; // Bonus for security level cookie
-        if (hasPath) score += 1; // Bonus for proper path setting
-        if (hasExpires) score += 1; // Bonus for expiration setting
+        if (hasThemeHackersSession) score += 2; 
+        if (hasSameSiteTest) score += 1; 
+        if (hasSecurityLevel) score += 1; 
+        if (hasPath) score += 1; 
+        if (hasExpires) score += 1;
 
-        // Additional security checks
         const cookieCount = cookies.length;
         const hasMultipleSecurityCookies = (hasThemeHackersSession && hasSameSiteTest && hasSecurityLevel) ? 2 : 
                                          (hasThemeHackersSession && hasSameSiteTest) ? 1 : 0;
         score += hasMultipleSecurityCookies;
 
-        // Security level assessment
         let securityLevel = 'Basic';
         if (score >= 9) securityLevel = 'Enhanced';
         else if (score >= 7) securityLevel = 'Standard';
@@ -1172,7 +1145,7 @@ class DashboardHandler {
         if (hasStyleSrc) score += 2;
         if (hasConnectSrc) score += 1;
         if (hasFirebaseDomains) score += 1;
-        if (!hasUnsafeInline) score += 2; // Bonus for avoiding unsafe-inline
+        if (!hasUnsafeInline) score += 2; 
 
         return {
             passed: hasCSP && hasDefaultSrc && hasConnectSrc,
@@ -1245,21 +1218,20 @@ class DashboardHandler {
     }
 
     testDOMSecurity() {
-        // Check for potentially dangerous inline event handlers
+
         const hasOnClick = document.querySelectorAll('[onclick]').length;
         const hasOnLoad = document.querySelectorAll('[onload]').length;
         const hasOnError = document.querySelectorAll('[onerror]').length;
         const hasOnMouseOver = document.querySelectorAll('[onmouseover]').length;
         const hasOnFocus = document.querySelectorAll('[onfocus]').length;
 
-        // Count Bootstrap data attributes as legitimate
         const hasBootstrapData = document.querySelectorAll('[data-bs-toggle], [data-bs-target], [data-bs-dismiss]').length;
         
-        // Only count non-Bootstrap inline events as security risks
+       
         const dangerousEvents = hasOnClick + hasOnLoad + hasOnError + hasOnMouseOver + hasOnFocus;
         const legitimateEvents = hasBootstrapData;
         
-        // Score based on ratio of dangerous vs legitimate events
+        
         const score = dangerousEvents === 0 ? 10 : Math.max(0, 10 - dangerousEvents * 2);
 
         return {
@@ -1280,13 +1252,10 @@ class DashboardHandler {
         const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
         let score = 10;
-        // Don't penalize for eval/Function as they're needed for Firebase
-        // if (hasEval) score -= 3;
-        // if (hasFunction) score -= 2;
+
         if (hasSetTimeout) score -= 1;
         if (hasSetInterval) score -= 1;
-        
-        // Add bonus for development environment
+
         if (isLocalhost) score += 2;
 
         return {
@@ -1300,7 +1269,7 @@ class DashboardHandler {
     }
 
     testBrowserSecurity() {
-        // Enhanced browser security testing with comprehensive API detection
+ 
         const hasWebGL = !!window.WebGLRenderingContext;
         const hasGeolocation = !!navigator.geolocation;
         const hasCamera = !!navigator.mediaDevices;
@@ -1317,37 +1286,35 @@ class DashboardHandler {
         const hasIndexedDB = !!window.indexedDB;
         const hasWebAssembly = !!window.WebAssembly;
 
-        // Enhanced scoring system with risk-based assessment
+       
         let score = 10;
         let riskLevel = 'Low';
         let riskDetails = [];
         
-        // Critical-risk APIs (heavy penalty)
+  
         if (hasBluetooth) { score -= 3; riskDetails.push('Bluetooth'); }
         if (hasVibration) { score -= 2; riskDetails.push('Vibration'); }
         
-        // High-risk APIs (moderate penalty)
+       
         if (hasBattery) { score -= 2; riskDetails.push('Battery'); }
         if (hasGeolocation) { score -= 1; riskDetails.push('Geolocation'); }
         if (hasCamera) { score -= 1; riskDetails.push('Camera'); }
         if (hasWebRTC) { score -= 1; riskDetails.push('WebRTC'); }
         if (hasClipboard) { score -= 1; riskDetails.push('Clipboard'); }
         
-        // Medium-risk APIs (light penalty)
+        
         if (hasPermissions) { score -= 0.5; riskDetails.push('Permissions'); }
         
-        // Low-risk APIs (no penalty)
-        if (hasWebGL) { score -= 0; } // WebGL is common and safe
-        if (hasNotifications) { score -= 0; } // Notifications are useful
-        if (hasGamepad) { score -= 0; } // Gamepad is harmless
-        if (hasStorage) { score -= 0; } // Storage is essential
-        if (hasIndexedDB) { score -= 0; } // IndexedDB is useful
-        if (hasWebAssembly) { score -= 0; } // WebAssembly is safe
+       
+        if (hasWebGL) { score -= 0; } 
+        if (hasNotifications) { score -= 0; } 
+        if (hasGamepad) { score -= 0; } 
+        if (hasStorage) { score -= 0; } 
+        if (hasIndexedDB) { score -= 0; } 
+        if (hasWebAssembly) { score -= 0; } 
         
-        // Security-enhancing APIs (bonus)
         if (hasServiceWorker) { score += 1; }
         
-        // Determine risk level
         if (score <= 5) riskLevel = 'High';
         else if (score <= 7) riskLevel = 'Medium';
         else riskLevel = 'Low';
@@ -1476,7 +1443,6 @@ class DashboardHandler {
 
         let html = '';
         
-        // Overall security status with improved styling
         const statusClass = this.getStatusClass(overallScore);
         const statusIcon = this.getStatusIcon(overallScore);
         const statusColor = this.getStatusColor(overallScore);
@@ -1508,7 +1474,6 @@ class DashboardHandler {
             </div>
         `;
 
-        // Individual test results with improved styling
         results.forEach(result => {
             const statusClass = result.passed ? 'text-success' : 'text-danger';
             const statusIcon = result.passed ? 'fas fa-check-circle' : 'fas fa-times-circle';
@@ -1683,21 +1648,21 @@ class DashboardHandler {
         const warnings = [];
         const good = [];
 
-        // Critical issues
+       
         if (!currentUser) issues.push('User not authenticated');
         if (currentUser && currentUser.isAnonymous) issues.push('Using anonymous authentication');
         if (!report.csrfToken) issues.push('CSRF protection inactive');
         if (report.isLockedOut) issues.push('Account temporarily locked');
         if (!isHTTPS && !isLocalhost) issues.push('Not using HTTPS');
 
-        // Warnings
+      
         if (currentUser && !currentUser.emailVerified) warnings.push('Email not verified');
         if (report.rateLimitAttempts > 2) warnings.push('Multiple failed attempts detected');
         if (!report.securityHeaders.contentTypeOptions) warnings.push('Missing Content-Type header');
         if (!report.securityHeaders.frameOptions) warnings.push('Missing Frame Options header');
         if (!report.securityHeaders.xssProtection) warnings.push('Missing XSS Protection header');
 
-        // Good practices
+       
         if (currentUser && !currentUser.isAnonymous) good.push('Authenticated user session');
         if (report.csrfToken) good.push('CSRF protection active');
         if (isHTTPS || isLocalhost) good.push('Secure connection');
@@ -1726,7 +1691,7 @@ class DashboardHandler {
     }
 
     updateSystemInfo() {
-        // Update browser information
+        
         const browserInfo = document.getElementById('browserInfo');
         if (browserInfo) {
             const userAgent = navigator.userAgent;
@@ -1738,13 +1703,13 @@ class DashboardHandler {
             browserInfo.textContent = browser;
         }
 
-        // Update platform information
+     
         const platformInfo = document.getElementById('platformInfo');
         if (platformInfo) {
             platformInfo.textContent = navigator.platform || 'Unknown';
         }
 
-        // Update connection information
+        
         const connectionInfo = document.getElementById('connectionInfo');
         if (connectionInfo) {
             const isHTTPS = window.location.protocol === 'https:';
@@ -1762,7 +1727,7 @@ class DashboardHandler {
             }
         }
 
-        // Update session time
+ 
         const sessionTime = document.getElementById('sessionTime');
         if (sessionTime) {
             const now = Date.now();
@@ -1772,7 +1737,7 @@ class DashboardHandler {
     }
 
     updateActivityInfo() {
-        // Update last login time
+
         const lastLoginTime = document.getElementById('lastLoginTime');
         if (lastLoginTime && this.userData && this.userData.lastLogin) {
             const lastLogin = this.userData.lastLogin;
@@ -1884,7 +1849,6 @@ function refreshUserData() {
     }
 }
 
-// Global functions for dashboard
 function toggleEditMode() {
     if (window.dashboardHandler) {
         window.dashboardHandler.toggleEditMode();
