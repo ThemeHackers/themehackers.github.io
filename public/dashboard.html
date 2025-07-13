@@ -995,6 +995,8 @@
     <script src="js/dashboard.js"></script>
 
     <script>
+        // Global DashboardHandler instance
+        let dashboardHandler = null;
 
         function createMatrixEffect() {
             const matrixBg = document.getElementById('matrixBg');
@@ -1016,8 +1018,34 @@
 
         createMatrixEffect();
 
-        // Remove all inline event handlers and add JS listeners
+        // Wait for Firebase to initialize before creating DashboardHandler
         document.addEventListener('DOMContentLoaded', function() {
+            // Check if Firebase is initialized
+            const checkFirebaseReady = setInterval(() => {
+                if (window.auth && window.db) {
+                    clearInterval(checkFirebaseReady);
+                    console.log('✅ Firebase ready, initializing DashboardHandler...');
+                    
+                    // Initialize DashboardHandler
+                    if (!dashboardHandler) {
+                        dashboardHandler = new DashboardHandler();
+                    }
+                }
+            }, 100);
+
+            // Timeout after 10 seconds
+            setTimeout(() => {
+                clearInterval(checkFirebaseReady);
+                console.error('❌ Firebase initialization timeout');
+                
+                // Try to initialize anyway with fallback
+                if (!dashboardHandler) {
+                    console.warn('⚠️  Attempting to initialize DashboardHandler with fallback...');
+                    dashboardHandler = new DashboardHandler();
+                }
+            }, 10000);
+
+            // Remove all inline event handlers and add JS listeners
             var editBtn = document.getElementById('editBtn');
             if (editBtn) editBtn.addEventListener('click', function() { toggleEditMode(); });
             var cancelEditBtn = document.getElementById('cancelEditBtn');
