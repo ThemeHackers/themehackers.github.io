@@ -1161,8 +1161,18 @@ class DashboardHandler {
         const hasScriptSrc = cspContent.includes('script-src');
         const hasStyleSrc = cspContent.includes('style-src');
         const hasConnectSrc = cspContent.includes('connect-src');
-        const hasFirebaseDomains = cspContent.includes('firebase.googleapis.com') || cspContent.includes('firestore.googleapis.com');
-        const hasGoogleDomains = cspContent.includes('googleapis.com');
+        const allowedDomains = ['firebase.googleapis.com', 'firestore.googleapis.com', 'googleapis.com'];
+
+        const parseCSP = (csp) => {
+            const directives = csp.split(';').map(d => d.trim());
+            const connectSrcDirective = directives.find(d => d.startsWith('connect-src'));
+            return connectSrcDirective ? connectSrcDirective.split(' ').slice(1) : [];
+        };
+
+        const cspDomains = parseCSP(cspContent);
+        const hasFirebaseDomains = allowedDomains.includes('firebase.googleapis.com') && cspDomains.includes('firebase.googleapis.com') ||
+                                   allowedDomains.includes('firestore.googleapis.com') && cspDomains.includes('firestore.googleapis.com');
+        const hasGoogleDomains = allowedDomains.includes('googleapis.com') && cspDomains.includes('googleapis.com');
         const hasUnsafeInline = cspContent.includes("'unsafe-inline'");
 
         let score = 0;
