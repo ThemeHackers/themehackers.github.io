@@ -12,6 +12,7 @@ class AuthHandler {
         this.lastLoginAttempt = 0;
         this.init();
     }
+    
     init() {
         this.auth.onAuthStateChanged((user) => {
             if (user) {
@@ -222,6 +223,7 @@ class AuthHandler {
             .replace(/\s+/g, ' ')
             .trim();
     }
+
     async signInWithGoogle() {
         try {
             if (!this.checkRateLimit()) return;
@@ -236,15 +238,15 @@ class AuthHandler {
             this.loginAttempts++;
             let errorMessage = 'Google sign-in failed. Please try again.';
             if (error.code === 'auth/api-key-not-valid') {
-                errorMessage = 'Firebase configuration error. Please contact ThemeHackers support.';
+                errorMessage = 'Firebase configuration error. Please contact TH Dashsecurity support.';
             } else if (error.code === 'auth/popup-closed-by-user') {
                 errorMessage = 'Authentication cancelled. Please try again.';
             } else if (error.code === 'auth/popup-blocked') {
                 errorMessage = 'Pop-up was blocked by your browser. Please allow pop-ups and try again.';
             } else if (error.code === 'auth/unauthorized-domain') {
-                errorMessage = 'This domain is not authorized for Google sign-in. Please contact ThemeHackers support.';
+                errorMessage = 'This domain is not authorized for Google sign-in. Please contact TH Dashsecurity support.';
             } else if (error.code === 'auth/operation-not-allowed') {
-                errorMessage = 'Google sign-in is not enabled. Please contact ThemeHackers administrator.';
+                errorMessage = 'Google sign-in is not enabled. Please contact TH Dashsecurity administrator.';
             } else if (error.code === 'auth/network-request-failed') {
                 errorMessage = 'Network error. Please check your internet connection and try again.';
             } else if (error.code === 'auth/account-exists-with-different-credential') {
@@ -252,7 +254,7 @@ class AuthHandler {
             }
             this.showAlert(errorMessage, 'danger');
             if (error.code === 'auth/operation-not-allowed') {
-                this.showAlert('ThemeHackers Security: To enable Google sign-in: 1) Go to Firebase Console 2) Authentication > Sign-in method 3) Enable Google provider', 'info');
+                this.showAlert('TH Dashsecurity - Login: To enable Google sign-in: 1) Go to Firebase Console 2) Authentication > Sign-in method 3) Enable Google provider', 'info');
             }
         } finally {
             this.hideLoading('googleSignIn');
