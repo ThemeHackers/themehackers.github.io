@@ -1,14 +1,9 @@
 class AuthHandler {
     constructor() {
-
         if (!window.auth || !window.db) {
-            console.warn('⚠️  Firebase not ready, AuthHandler initialization failed');
-            
-            // Show user-friendly error message
             this.showFirebaseError();
             throw new Error('Firebase not initialized');
         }
-
         this.auth = window.auth;
         this.db = window.db;
         this.provider = new firebase.auth.GoogleAuthProvider();
@@ -16,11 +11,8 @@ class AuthHandler {
         this.maxLoginAttempts = 5;
         this.lockoutTime = 15 * 60 * 1000; 
         this.lastLoginAttempt = 0;
-        
-        console.log('✅ AuthHandler initialized with Firebase');
         this.init();
     }
-
     showFirebaseError() {
         const alertContainer = document.getElementById('alertContainer');
         if (alertContainer) {
@@ -34,69 +26,49 @@ class AuthHandler {
             alertContainer.appendChild(errorDiv);
         }
     }
-
     init() {
-     
         this.auth.onAuthStateChanged((user) => {
             if (user) {
-               
                 window.location.href = 'dashboard.html';
             }
         });
-
-
         this.setupEventHandlers();
-        
-
         this.checkGoogleSignInConfig();
     }
-
     async checkGoogleSignInConfig() {
         try {
-            
             const currentUser = this.auth.currentUser;
             if (!currentUser) {
-                
                 const testProvider = new firebase.auth.GoogleAuthProvider();
-             
                 testProvider.addScope('email');
                 testProvider.addScope('profile');
             }
         } catch (error) {
-            console.warn('Google sign-in may not be properly configured:', error);
-          
             this.showGoogleConfigHint();
         }
     }
-
     showGoogleConfigHint() {
         try {
             const googleBtn = document.getElementById('googleSignIn');
             if (googleBtn && googleBtn.parentNode) {
-       
                 const hint = document.createElement('div');
                 hint.className = 'text-muted small mt-2';
                 hint.innerHTML = '<i class="fas fa-info-circle me-1"></i>Google sign-in may need to be enabled in Firebase Console';
                 googleBtn.parentNode.appendChild(hint);
             }
         } catch (error) {
-            console.warn('Could not show Google config hint:', error);
+            /* ignore */
         }
     }
-
     setupEventHandlers() {
-     
         const googleSignInBtn = document.getElementById('googleSignIn');
         if (googleSignInBtn) {
             googleSignInBtn.addEventListener('click', () => {
                 this.signInWithGoogle();
             });
         }
-   
     }
-
     setupInputValidation() {
-  
         const emailInputs = document.querySelectorAll('input[type="email"]');
         if (emailInputs.length > 0) {
             emailInputs.forEach(input => {
@@ -107,8 +79,6 @@ class AuthHandler {
                 }
             });
         }
-
-
         const passwordInputs = document.querySelectorAll('input[type="password"]');
         if (passwordInputs.length > 0) {
             passwordInputs.forEach(input => {
@@ -116,8 +86,6 @@ class AuthHandler {
                     input.addEventListener('input', () => {
                         this.validatePasswordRealTime(input);
                     });
-                    
-                  
                     input.addEventListener('focus', () => {
                         this.clearPasswordValidation(input);
                     });
@@ -125,86 +93,64 @@ class AuthHandler {
             });
         }
     }
-
     validatePasswordRealTime(input) {
         const password = input.value;
         const strengthIndicator = document.getElementById('passwordStrength');
-        
         if (!password) {
             this.clearPasswordValidation(input);
             return;
         }
-
-
         if (password.length < 6) {
             this.showPasswordError(input, 'Password must be at least 6 characters long');
             return;
         }
-
-     
         if (input.id === 'password' && document.getElementById('registrationForm')) {
             if (password.length < 8) {
                 this.showPasswordError(input, 'Password must be at least 8 characters long');
                 return;
             }
-
-
             const weakPasswords = ['password', '123456', 'qwerty', 'admin', 'letmein', 'password123'];
             if (weakPasswords.includes(password.toLowerCase())) {
                 this.showPasswordError(input, 'Please choose a stronger password');
                 return;
             }
-
             const hasUpperCase = /[A-Z]/.test(password);
             const hasLowerCase = /[a-z]/.test(password);
             const hasNumbers = /\d/.test(password);
             const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-
             if (!hasUpperCase || !hasLowerCase || !hasNumbers || !hasSpecialChar) {
                 this.showPasswordError(input, 'Password must contain uppercase, lowercase, number, and special character');
                 return;
             }
         }
-
-      
         this.showPasswordSuccess(input);
     }
-
     showPasswordError(input, message) {
         input.classList.remove('is-valid');
         input.classList.add('is-invalid');
-        
-
         const strengthIndicator = document.getElementById('passwordStrength');
         if (strengthIndicator) {
             strengthIndicator.className = 'password-strength strength-weak';
             strengthIndicator.textContent = message;
         }
     }
-
     showPasswordSuccess(input) {
         input.classList.remove('is-invalid');
         input.classList.add('is-valid');
-        
-
         const strengthIndicator = document.getElementById('passwordStrength');
         if (strengthIndicator) {
             strengthIndicator.className = 'password-strength strength-strong';
             strengthIndicator.textContent = '✓ Password strength: Strong';
         }
     }
-
     clearPasswordValidation(input) {
         input.classList.remove('is-valid', 'is-invalid');
-        
-       
         const strengthIndicator = document.getElementById('passwordStrength');
         if (strengthIndicator) {
             strengthIndicator.className = 'password-strength';
             strengthIndicator.textContent = '';
         }
     }
-
     validateEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
@@ -213,7 +159,6 @@ class AuthHandler {
         }
         return true;
     }
-
     validatePassword(password) {
         if (password.length < 6) {
             this.showAlert('Password must be at least 6 characters long', 'warning');
@@ -221,23 +166,14 @@ class AuthHandler {
         }
         return true;
     }
-
-  
     currentAlerts = new Set();
-
     showAlert(message, type) {
         try {
-          
             const alertKey = `${type}-${message}`;
-            
-          
             if (this.currentAlerts.has(alertKey)) {
                 return; 
             }
-            
-          
             this.currentAlerts.add(alertKey);
-            
             const alertContainer = document.getElementById('alertContainer');
             if (alertContainer) {
                 const alertDiv = document.createElement('div');
@@ -246,60 +182,31 @@ class AuthHandler {
                     ${message}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 `;
-                
-             
                 alertDiv.setAttribute('data-alert-key', alertKey);
-                
                 alertContainer.appendChild(alertDiv);
-
                 const removeFromTracking = () => {
                     this.currentAlerts.delete(alertKey);
                 };
-                
-               
                 setTimeout(() => {
                     if (alertDiv && alertDiv.parentNode) {
                         alertDiv.remove();
                         removeFromTracking();
                     }
                 }, 5000);
-                
-              
                 const closeBtn = alertDiv.querySelector('.btn-close');
                 if (closeBtn) {
                     closeBtn.addEventListener('click', removeFromTracking);
                 }
             } else {
-              
-                console.warn(`Alert (${type}): ${message}`);
-                
-                const tempAlert = document.createElement('div');
-                tempAlert.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
-                tempAlert.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
-                tempAlert.innerHTML = `
-                    ${message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                `;
-                
-                document.body.appendChild(tempAlert);
-                
-                setTimeout(() => {
-                    if (tempAlert && tempAlert.parentNode) {
-                        tempAlert.remove();
-                        this.currentAlerts.delete(alertKey);
-                    }
-                }, 5000);
+
             }
         } catch (error) {
+
             console.error('Error showing alert:', error);
-            console.warn(`Alert message: ${message}`);
         }
     }
-
     checkRateLimit() {
         const now = Date.now();
-        
-        
         if (this.loginAttempts >= this.maxLoginAttempts) {
             const timeSinceLastAttempt = now - this.lastLoginAttempt;
             if (timeSinceLastAttempt < this.lockoutTime) {
@@ -307,62 +214,41 @@ class AuthHandler {
                 this.showAlert(`Too many login attempts. Please try again in ${remainingTime} minutes.`, 'danger');
                 return false;
             } else {
-                
                 this.loginAttempts = 0;
             }
         }
-        
         this.lastLoginAttempt = now;
         return true;
     }
-
     sanitizeInput(input) {
         if (input === undefined || input === null) {
             return '';
         }
-        
         if (typeof input !== 'string') {
             return String(input).trim();
         }
-        
-      
         return input
-          
             .replace(/<[^>]*>/g, '')
-       
             .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-           
             .replace(/[<>]/g, '')
-        
             .replace(/\0/g, '')
-           
             .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')
-         
             .replace(/\s+/g, ' ')
-          
             .trim();
     }
-
     async signInWithGoogle() {
         try {
             if (!this.checkRateLimit()) return;
-            
             this.showLoading('googleSignIn');
             const result = await this.auth.signInWithPopup(this.provider);
-            
             if (result && result.user) {
-               
                 this.loginAttempts = 0;
                 await this.saveUserData(result.user);
                 window.location.href = 'dashboard.html';
             }
         } catch (error) {
-            console.error('Google sign-in error:', error);
             this.loginAttempts++;
-            
             let errorMessage = 'Google sign-in failed. Please try again.';
-            
-            
             if (error.code === 'auth/api-key-not-valid') {
                 errorMessage = 'Firebase configuration error. Please contact ThemeHackers support.';
             } else if (error.code === 'auth/popup-closed-by-user') {
@@ -378,10 +264,7 @@ class AuthHandler {
             } else if (error.code === 'auth/account-exists-with-different-credential') {
                 errorMessage = 'An account already exists with this email using a different sign-in method.';
             }
-            
             this.showAlert(errorMessage, 'danger');
-            
-            
             if (error.code === 'auth/operation-not-allowed') {
                 this.showAlert('ThemeHackers Security: To enable Google sign-in: 1) Go to Firebase Console 2) Authentication > Sign-in method 3) Enable Google provider', 'info');
             }
@@ -389,41 +272,25 @@ class AuthHandler {
             this.hideLoading('googleSignIn');
         }
     }
-
-  
-
-    /**
-     * Verify email using Mailgun API
-     * @param {string} email - Email to verify
-     * @returns {object} Verification result
-     */
     async verifyEmailWithMailgun(email) {
         try {
-            
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const isValidFormat = emailRegex.test(email);
-            
-     
             const disposableDomains = [
                 'tempmail.org', 'guerrillamail.com', 'mailinator.com', 
                 '10minutemail.com', 'throwaway.email', 'temp-mail.org'
             ];
-            
             const domain = email.split('@')[1];
             const isDisposable = disposableDomains.some(disposable => 
                 domain.includes(disposable)
             );
-
-
             const commonProviders = [
                 'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com',
                 'icloud.com', 'protonmail.com', 'aol.com'
             ];
-            
             const isCommonProvider = commonProviders.some(provider => 
                 domain === provider
             );
-
             return {
                 isValid: isValidFormat && !isDisposable,
                 reason: isDisposable ? 'Disposable email not allowed' : 
@@ -432,8 +299,8 @@ class AuthHandler {
                 isDisposable: isDisposable,
                 isCommonProvider: isCommonProvider
             };
-
         } catch (error) {
+        
             console.error('Email verification error:', error);
             return {
                 isValid: false,
@@ -442,7 +309,6 @@ class AuthHandler {
             };
         }
     }
-
     async saveUserData(user) {
         try {
             const userData = {
@@ -454,22 +320,18 @@ class AuthHandler {
                 lastLogin: new Date(),
                 loginCount: 1
             };
-
-            
             const existingUser = await this.db.collection('users').doc(user.uid).get();
             if (existingUser.exists) {
                 const existingData = existingUser.data();
                 userData.loginCount = (existingData.loginCount || 0) + 1;
             }
-
             await this.db.collection('users').doc(user.uid).set(userData, { merge: true });
         } catch (error) {
+          
             console.error('Error saving user data:', error);
         }
     }
-
     showLoading(formId) {
-        
         if (formId === 'googleSignIn') {
             const googleBtn = document.getElementById('googleSignIn');
             if (googleBtn) {
@@ -478,15 +340,12 @@ class AuthHandler {
             }
             return;
         }
-
-        
         const form = document.getElementById(formId);
         if (form) {
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn) {
                 const loadingSpan = submitBtn.querySelector('.loading');
                 const normalSpan = submitBtn.querySelector('.normal');
-                
                 if (loadingSpan && normalSpan) {
                     loadingSpan.style.display = 'inline';
                     normalSpan.style.display = 'none';
@@ -495,9 +354,7 @@ class AuthHandler {
             }
         }
     }
-
     hideLoading(formId) {
-        
         if (formId === 'googleSignIn') {
             const googleBtn = document.getElementById('googleSignIn');
             if (googleBtn) {
@@ -506,15 +363,12 @@ class AuthHandler {
             }
             return;
         }
-
-        
         const form = document.getElementById(formId);
         if (form) {
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn) {
                 const loadingSpan = submitBtn.querySelector('.loading');
                 const normalSpan = submitBtn.querySelector('.normal');
-                
                 if (loadingSpan && normalSpan) {
                     loadingSpan.style.display = 'none';
                     normalSpan.style.display = 'inline';
@@ -523,8 +377,5 @@ class AuthHandler {
             }
         }
     }
-
-
 }
-
 window.authHandler = new AuthHandler(); 
