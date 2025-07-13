@@ -22,21 +22,6 @@ http://*    https://:splat    301!
 
 /dashboard    /dashboard.html    200
 
-# Static assets passthrough
+
 /assets/*    /:splat    200
 
-
-/*
-  X-Frame-Options: DENY
-  X-XSS-Protection: 1; mode=block
-  X-Content-Type-Options: nosniff
-  X-Download-Options: noopen
-  X-Permitted-Cross-Domain-Policies: none
-  Referrer-Policy: strict-origin-when-cross-origin
-  Cross-Origin-Embedder-Policy: require-corp
-  Cross-Origin-Opener-Policy: same-origin
-  Cross-Origin-Resource-Policy: same-origin
-  Origin-Agent-Cluster: ?1
-  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  Permissions-Policy: accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()
-  Clear-Site-Data: "cache", "cookies", "storage"
