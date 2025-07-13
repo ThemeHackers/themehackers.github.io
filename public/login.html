@@ -448,16 +448,14 @@
     <script src="js/auth.js"></script>
 
     <script>
-        // Global AuthHandler instance
+     
         let authHandler = null;
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if Firebase is initialized
+         
             const checkFirebaseReady = setInterval(() => {
                 if (window.auth && window.db) {
-                    clearInterval(checkFirebaseReady);
-                    console.log('✅ Firebase ready, initializing AuthHandler...');
-                    
+                    clearInterval(checkFirebaseReady);                    
                     if (!authHandler) {
                         authHandler = new AuthHandler();
                     }
