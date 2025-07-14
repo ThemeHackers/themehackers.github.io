@@ -1136,7 +1136,16 @@ class DashboardHandler {
         const hasConnectSrc = cspContent.includes('connect-src');
         const connectSrcMatches = cspContent.match(/connect-src\s[^;]+/g);
         const connectSrcValues = connectSrcMatches ? connectSrcMatches[0].split(/\s+/).slice(1) : [];
-        const hasFirebaseDomains = connectSrcValues.includes('https://firebase.googleapis.com') || connectSrcValues.includes('https://firestore.googleapis.com');
+        const allowedFirebaseHosts = ['firebase.googleapis.com', 'firestore.googleapis.com'];
+        const hasFirebaseDomains = connectSrcValues.some(url => {
+            try {
+                const parsedUrl = new URL(url);
+                return allowedFirebaseHosts.includes(parsedUrl.host);
+            } catch (e) {
+                console.warn('Invalid URL in connect-src values:', url, e);
+                return false;
+            }
+        });
         const hasGoogleDomains = cspContent.includes('googleapis.com');
         const hasUnsafeInline = cspContent.includes("'unsafe-inline'");
 
