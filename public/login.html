@@ -447,7 +447,8 @@
 
                     <div id="alertContainer"></div>
 
-                    <div class="g-recaptcha mb-3" data-sitekey="6LecwIIrAAAAAETv2oLgdOAvqo0rb5ZF2c5RWFxh"></div>
+    
+                    <div id="recaptcha-container" class="mb-3"></div>
 
                     <button id="googleSignIn" class="btn google-btn w-100 mb-4" disabled>
                         <i class="fab fa-google me-2"></i>
@@ -466,6 +467,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 
     <script src="js/env-config.js"></script>
     <script src="js/firebase-config.js"></script>
@@ -479,20 +481,31 @@
     </script>
 
     <script>
+        
+        function onSubmit(token) {
+          
+            var googleBtn = document.getElementById('googleSignIn');
+            if (googleBtn) {
+                googleBtn.disabled = false;
+            }
+
+            window.recaptchaToken = token;
+        }
+        function onloadCallback() {
+            grecaptcha.render('recaptcha-container', {
+                'sitekey': '6LecwIIrAAAAAETv2oLgdOAvqo0rb5ZF2c5RWFxh',
+                'callback': onSubmit
+            });
+        }
         document.addEventListener('DOMContentLoaded', function () {
             const googleBtn = document.getElementById('googleSignIn');
             if (googleBtn) {
                 googleBtn.addEventListener('click', function (e) {
                     e.preventDefault();
-                    grecaptcha.ready(function() {
-                        grecaptcha.execute('YOUR_SITE_KEY', {action: 'login'}).then(function(token) {
-                          
-                            console.log('reCAPTCHA token:', token);
-                            if (authHandler && typeof authHandler.signInWithGoogle === 'function') {
-                                authHandler.signInWithGoogle();
-                            }
-                        });
-                    });
+                  
+                    if (authHandler && typeof authHandler.signInWithGoogle === 'function') {
+                        authHandler.signInWithGoogle();
+                    }
                 });
             }
         });
