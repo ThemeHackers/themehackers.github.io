@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,7 +39,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background:
+            background: 
                 radial-gradient(circle at 20% 80%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 40% 40%, rgba(0, 255, 65, 0.05) 0%, transparent 50%);
@@ -87,15 +86,8 @@
         }
 
         @keyframes pulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .brand-title {
@@ -251,17 +243,9 @@
             font-family: 'Courier New', monospace;
         }
 
-        .strength-weak {
-            color: #ff6b6b;
-        }
-
-        .strength-medium {
-            color: #ffc107;
-        }
-
-        .strength-strong {
-            color: var(--th-primary);
-        }
+        .strength-weak { color: #ff6b6b; }
+        .strength-medium { color: #ffc107; }
+        .strength-strong { color: var(--th-primary); }
 
         /* Password validation feedback */
         .form-control.is-valid {
@@ -348,15 +332,8 @@
         }
 
         @keyframes matrix-fall {
-            0% {
-                transform: translateY(-100vh);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
+            0% { transform: translateY(-100vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
         }
 
         /* Responsive Design */
@@ -365,27 +342,25 @@
                 margin: 1rem;
                 padding: 2rem !important;
             }
-
+            
             .logo-section {
                 margin-bottom: 1.5rem;
             }
-
+            
             .brand-title {
                 font-size: 1.5rem;
             }
-
+            
             .brand-subtitle {
                 font-size: 0.8rem;
             }
-
+            
             .form-control {
                 padding: 12px 14px;
-                font-size: 16px;
-                /* Prevents zoom on iOS */
+                font-size: 16px; /* Prevents zoom on iOS */
             }
-
-            .btn-primary,
-            .google-btn {
+            
+            .btn-primary, .google-btn {
                 padding: 12px 20px;
                 font-size: 16px;
             }
@@ -396,15 +371,15 @@
                 margin: 0.5rem;
                 padding: 1.5rem !important;
             }
-
+            
             .logo-icon {
                 font-size: 2rem;
             }
-
+            
             .brand-title {
                 font-size: 1.3rem;
             }
-
+            
             .divider span {
                 font-size: 0.8rem;
                 padding: 0 0.5rem;
@@ -415,11 +390,11 @@
             .auth-container {
                 padding: 1.5rem !important;
             }
-
+            
             .logo-section {
                 margin-bottom: 1rem;
             }
-
+            
             .logo-icon {
                 font-size: 2rem;
                 margin-bottom: 0.5rem;
@@ -427,7 +402,6 @@
         }
     </style>
 </head>
-
 <body>
 
     <div class="matrix-bg" id="matrixBg"></div>
@@ -436,7 +410,7 @@
         <div class="row justify-content-center align-items-center min-vh-100">
             <div class="col-md-6 col-lg-5">
                 <div class="auth-container p-5">
-
+               
                     <div class="logo-section">
                         <div class="logo-icon">
                             <i class="fas fa-shield-alt"></i>
@@ -445,12 +419,14 @@
                         <p class="brand-subtitle">Security Portal Access</p>
                     </div>
 
+                   
                     <div id="alertContainer"></div>
 
                     <button id="googleSignIn" class="btn google-btn w-100 mb-4">
                         <i class="fab fa-google me-2"></i>
                         Continue with Google
                     </button>
+
 
                     <div class="text-center">
                         <p class="mb-0 text-light">Login with your Google account to access ThemeHackers Dashboard.</p>
@@ -460,29 +436,84 @@
         </div>
     </div>
 
-    <script src="https://unpkg.com/dompurify@3.0.5/dist/purify.min.js"></script>
+    <script src="https://unpkg.com/dompurify@3.0.4/dist/purify.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    
+    <script src="https://www.google.com/recaptcha/api.js?render=6LexkoIrAAAAAJkwVASGopsaYqwXwOE2POaqpCoS"></script>
+
     <script src="js/env-config.js"></script>
     <script src="js/firebase-config.js"></script>
     <script src="js/health-check.js"></script>
     <script type="module" src="./js/security.js"></script>
     <script src="./js/auth.js"></script>
+
     <script>
-        document.addEventListener('firebaseReady', function () {
-            window.authHandler = new AuthHandler();
+        const RECAPTCHA_SITE_KEY = '6LexkoIrAAAAAJkwVASGopsaYqwXwOE2POaqpCoS';
+        let recaptchaToken = null;
+
+        function showRecaptchaStatus(message, type = 'info') {
+            let el = document.getElementById('recaptchaStatus');
+            if (!el) {
+                el = document.createElement('div');
+                el.id = 'recaptchaStatus';
+                el.style.margin = '10px 0';
+                el.style.textAlign = 'center';
+
+                const googleBtn = document.getElementById('googleSignIn');
+                if (googleBtn && googleBtn.parentNode) {
+                    googleBtn.parentNode.insertBefore(el, googleBtn.nextSibling);
+                } else {
+                    document.querySelector('.auth-container').appendChild(el);
+                }
+            }
+            el.innerHTML = `<span style="color:${type==='success'?'#00ff41':type==='error'?'#ff6b6b':'#ffc107'};font-weight:600;">${message}</span>`;
+        }
+
+        function executeRecaptcha(action = 'login') {
+            showRecaptchaStatus('Verifying security...');
+            return new Promise((resolve, reject) => {
+                if (!window.grecaptcha) {
+                    showRecaptchaStatus('reCAPTCHA failed to load', 'error');
+                    return reject('reCAPTCHA not loaded');
+                }
+                grecaptcha.ready(function() {
+                    grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: action}).then(function(token) {
+                        recaptchaToken = token;
+                        showRecaptchaStatus('Security verification successful', 'success');
+                        resolve(token);
+                    }).catch(function(err) {
+                        showRecaptchaStatus('reCAPTCHA error', 'error');
+                        reject(err);
+                    });
+                });
+            });
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function() {
             const googleBtn = document.getElementById('googleSignIn');
             if (googleBtn) {
-                googleBtn.addEventListener('click', function (e) {
+                googleBtn.addEventListener('click', async function(e) {
                     e.preventDefault();
-                    if (window.authHandler && typeof window.authHandler.signInWithGoogle === 'function') {
-                        window.authHandler.signInWithGoogle();
+                    googleBtn.disabled = true;
+                    googleBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Verifying security...';
+                    try {
+                        await executeRecaptcha('login');
+                      
+                        googleBtn.innerHTML = '<i class="fab fa-google me-2"></i> Continue with Google';
+                        googleBtn.disabled = false;
+                        if (authHandler && typeof authHandler.signInWithGoogle === 'function') {
+                            authHandler.signInWithGoogle();
+                        }
+                    } catch (err) {
+                        googleBtn.innerHTML = '<i class="fab fa-google me-2"></i> Continue with Google';
+                        googleBtn.disabled = false;
                     }
                 });
             }
         });
     </script>
 </body>
-
-</html>
+</html> 
