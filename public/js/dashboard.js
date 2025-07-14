@@ -1,4 +1,3 @@
-
 class DashboardHandler {
     constructor() {
         if (!window.auth || !window.db) {
@@ -238,45 +237,33 @@ class DashboardHandler {
 
     updateDashboard() {
         if (!this.userData) return;
-
-       
-        const userName = this.userData.fullName || this.currentUser.displayName || 'User';
-        const userEmail = this.userData.email || this.currentUser.email || '';
-        
- 
+        const userName = sanitizeInput(this.userData.fullName || this.currentUser.displayName || 'User');
+        const userEmail = sanitizeInput(this.userData.email || this.currentUser.email || '');
         const userNameElements = document.querySelectorAll('#userName, #welcomeUserName');
         userNameElements.forEach(element => {
             element.textContent = userName;
         });
-
-       
         const userInitials = this.getUserInitials(userName);
         const userAvatar = document.getElementById('userInitials');
         if (userAvatar) {
             userAvatar.textContent = userInitials;
         }
-
-        
         this.updateAccountInfo();
         this.updateActivityInfo();
     }
 
     updateAccountInfo() {
         if (!this.userData) return;
-
         const displayFullName = document.getElementById('displayFullName');
         const displayEmail = document.getElementById('displayEmail');
         const displayCreatedAt = document.getElementById('displayCreatedAt');
         const displayLastLogin = document.getElementById('displayLastLogin');
-
         if (displayFullName) {
-            displayFullName.textContent = this.userData.fullName || 'Not set';
+            displayFullName.textContent = sanitizeInput(this.userData.fullName || 'Not set');
         }
-
         if (displayEmail) {
-            displayEmail.textContent = this.userData.email || 'Not set';
+            displayEmail.textContent = sanitizeInput(this.userData.email || 'Not set');
         }
-
         if (displayCreatedAt) {
             const createdAt = this.userData.createdAt;
             if (createdAt) {
@@ -286,7 +273,6 @@ class DashboardHandler {
                 displayCreatedAt.textContent = 'Unknown';
             }
         }
-
         if (displayLastLogin) {
             const lastLogin = this.userData.lastLogin;
             if (lastLogin) {
@@ -1134,18 +1120,7 @@ class DashboardHandler {
         const hasScriptSrc = cspContent.includes('script-src');
         const hasStyleSrc = cspContent.includes('style-src');
         const hasConnectSrc = cspContent.includes('connect-src');
-        const connectSrcMatches = cspContent.match(/connect-src\s[^;]+/g);
-        const connectSrcValues = connectSrcMatches ? connectSrcMatches[0].split(/\s+/).slice(1) : [];
-        const allowedFirebaseHosts = ['firebase.googleapis.com', 'firestore.googleapis.com'];
-        const hasFirebaseDomains = connectSrcValues.some(url => {
-            try {
-                const parsedUrl = new URL(url);
-                return allowedFirebaseHosts.includes(parsedUrl.host);
-            } catch (e) {
-                console.warn('Invalid URL in connect-src values:', url, e);
-                return false;
-            }
-        });
+        const hasFirebaseDomains = cspContent.includes('firebase.googleapis.com') || cspContent.includes('firestore.googleapis.com');
         const hasGoogleDomains = cspContent.includes('googleapis.com');
         const hasUnsafeInline = cspContent.includes("'unsafe-inline'");
 
@@ -1438,7 +1413,7 @@ class DashboardHandler {
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
             const payload = JSON.parse(jsonPayload);
-            return payload.exp * 1000; // Convert to milliseconds
+            return payload.exp * 1000;
         } catch (error) {
             return null;
         }
@@ -1742,7 +1717,7 @@ class DashboardHandler {
         const sessionTime = document.getElementById('sessionTime');
         if (sessionTime) {
             const now = Date.now();
-            const sessionDuration = Math.floor((now - this.lastActivity) / 60000); // minutes
+            const sessionDuration = Math.floor((now - this.lastActivity) / 60000);
             sessionTime.textContent = `${sessionDuration} minutes active`;
         }
     }
@@ -1870,6 +1845,17 @@ function cancelEdit() {
     if (window.dashboardHandler) {
         window.dashboardHandler.toggleEditMode();
     }
+}
+
+
+function sanitizeInput(input) {
+    if (typeof input !== 'string') return '';
+    const doc = new DOMParser().parseFromString(input, 'text/html');
+    let text = doc.body.textContent || '';
+    text = text.replace(/(javascript:|data:|vbscript:)/gi, '');
+    text = text.replace(/on\w+=/gi, '');
+    text = text.replace(/[\x00-\x1F\x7F]/g, '');
+    return text.trim();
 }
 
  

@@ -1,17 +1,3 @@
-/**
- * Security Module - Client-side Security Utilities
- * 
- * This module provides comprehensive security features for the authentication system:
- * - Password strength validation
- * - Input sanitization and validation
- * - CSRF token management
- * - Security headers validation
- * - Rate limiting simulation
- * 
- * @author Security Team
- * @version 1.0.0
- */
-
 class SecurityManager {
     constructor() {
         this.csrfToken = null;
@@ -262,48 +248,18 @@ class SecurityManager {
      * @returns {string} Sanitized string
      */
     sanitizeInput(input) {
-        let value;
+        if (input === undefined || input === null) return '';
+        let value = typeof input === 'string' ? input : String(input).trim();
         
-        // Handle different input types
-        if (input === undefined || input === null) {
-            return '';
-        }
-        
-        if (typeof input === 'string') {
-            value = input;
-        } else if (input.value !== undefined) {
-            value = input.value;
-        } else {
-            return String(input).trim();
-        }
-        
-        // Comprehensive sanitization
-        value = value
-            // Remove HTML tags
-            .replace(/<[^>]*>/g, '')
-            // Remove script tags and their content
-            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-            // Remove dangerous characters
-            .replace(/[<>]/g, '')
-            // Remove null bytes
-            .replace(/\0/g, '')
-            // Remove control characters except newlines and tabs
-            .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')
-            // Remove JavaScript protocol
-            .replace(/javascript:/gi, '')
-            // Remove data URLs
-            .replace(/data:text\/html/gi, '')
-            // Normalize whitespace
-            .replace(/\s+/g, ' ')
-            // Trim whitespace
-            .trim();
-        
-        // If input is an element, update its value
-        if (input.value !== undefined) {
-            input.value = value;
-        }
-        
-        return value;
+        const doc = new DOMParser().parseFromString(value, 'text/html');
+        value = doc.body.textContent || '';
+    
+        value = value.replace(/(javascript:|data:|vbscript:)/gi, '');
+       
+        value = value.replace(/on\w+=/gi, '');
+
+        value = value.replace(/[\x00-\x1F\x7F]/g, '');
+        return value.trim();
     }
 
     /**

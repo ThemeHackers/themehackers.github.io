@@ -1,8 +1,7 @@
-import DOMPurify from 'dompurify';
-
 class AuthHandler {
     constructor() {
         if (!window.auth || !window.db) {
+            this.showFirebaseError();
             throw new Error('Firebase not initialized');
         }
         this.auth = window.auth;
@@ -14,11 +13,29 @@ class AuthHandler {
         this.lastLoginAttempt = 0;
         this.init();
     }
+
+    isAllowedEmailDomain(email) {
+        if (!email || typeof email !== 'string') return false;
+        const allowedDomains = [
+            'gmail.com', 'hotmail.com', 'outlook.com', 'icloud.com', 'yahoo.com', 'protonmail.com', 'aol.com'
+        ];
+        const domain = email.split('@')[1]?.toLowerCase();
+        if (!domain) return false;
+
+        if (domain.endsWith('.ac.th')) return true;
+
+        if (allowedDomains.includes(domain)) return true;
+        return false;
+    }
     showFirebaseError() {
         const alertContainer = document.getElementById('alertContainer');
         if (alertContainer) {
             const errorDiv = document.createElement('div');
             errorDiv.className = 'alert alert-danger';
+            errorDiv.innerHTML = `
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Configuration Error:</strong> Firebase is not properly configured. 
+                Please contact ThemeHackers support or try refreshing the page.`;
             alertContainer.appendChild(errorDiv);
         }
     }
@@ -52,9 +69,7 @@ class AuthHandler {
                 hint.innerHTML = '<i class="fas fa-info-circle me-1"></i>Google sign-in may need to be enabled in Firebase Console';
                 googleBtn.parentNode.appendChild(hint);
             }
-        } catch (error) {
-            /* ignore */
-        }
+        } catch (error) { /* ignore */ }
     }
     setupEventHandlers() {
         const googleSignInBtn = document.getElementById('googleSignIn');
@@ -153,6 +168,10 @@ class AuthHandler {
             this.showAlert('Please enter a valid email address', 'warning');
             return false;
         }
+        if (!this.isAllowedEmailDomain(email)) {
+            this.showAlert('Only university (.ac.th) or trusted provider emails (e.g. Gmail) are allowed.', 'danger');
+            return false;
+        }
         return true;
     }
     validatePassword(password) {
@@ -193,11 +212,8 @@ class AuthHandler {
                 if (closeBtn) {
                     closeBtn.addEventListener('click', removeFromTracking);
                 }
-            } else {
-
             }
         } catch (error) {
-
             console.error('Error showing alert:', error);
         }
     }
@@ -221,17 +237,30 @@ class AuthHandler {
             return '';
         }
         if (typeof input !== 'string') {
-            return DOMPurify.sanitize(String(input).trim());
+            return String(input).trim();
         }
-        return DOMPurify.sanitize(input.trim());
+        return input
+            .replace(/<[^>]*>/g, '')
+            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+            .replace(/[<>]/g, '')
+            .replace(/\0/g, '')
+            .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')
+            .replace(/\s+/g, ' ')
+            .trim();
     }
-
     async signInWithGoogle() {
         try {
             if (!this.checkRateLimit()) return;
             this.showLoading('googleSignIn');
             const result = await this.auth.signInWithPopup(this.provider);
             if (result && result.user) {
+            
+                if (!this.isAllowedEmailDomain(result.user.email)) {
+                    this.showAlert('Only university (.ac.th) or trusted provider emails (e.g. Gmail) are allowed.', 'danger');
+                    await this.auth.signOut();
+                    this.hideLoading('googleSignIn');
+                    return;
+                }
                 this.loginAttempts = 0;
                 await this.saveUserData(result.user);
                 window.location.href = 'dashboard.html';
@@ -240,15 +269,15 @@ class AuthHandler {
             this.loginAttempts++;
             let errorMessage = 'Google sign-in failed. Please try again.';
             if (error.code === 'auth/api-key-not-valid') {
-                errorMessage = 'Firebase configuration error. Please contact TH Dashsecurity support.';
+                errorMessage = 'Firebase configuration error. Please contact ThemeHackers support.';
             } else if (error.code === 'auth/popup-closed-by-user') {
                 errorMessage = 'Authentication cancelled. Please try again.';
             } else if (error.code === 'auth/popup-blocked') {
                 errorMessage = 'Pop-up was blocked by your browser. Please allow pop-ups and try again.';
             } else if (error.code === 'auth/unauthorized-domain') {
-                errorMessage = 'This domain is not authorized for Google sign-in. Please contact TH Dashsecurity support.';
+                errorMessage = 'This domain is not authorized for Google sign-in. Please contact ThemeHackers support.';
             } else if (error.code === 'auth/operation-not-allowed') {
-                errorMessage = 'Google sign-in is not enabled. Please contact TH Dashsecurity administrator.';
+                errorMessage = 'Google sign-in is not enabled. Please contact ThemeHackers administrator.';
             } else if (error.code === 'auth/network-request-failed') {
                 errorMessage = 'Network error. Please check your internet connection and try again.';
             } else if (error.code === 'auth/account-exists-with-different-credential') {
@@ -256,7 +285,7 @@ class AuthHandler {
             }
             this.showAlert(errorMessage, 'danger');
             if (error.code === 'auth/operation-not-allowed') {
-                this.showAlert('TH Dashsecurity - Login: To enable Google sign-in: 1) Go to Firebase Console 2) Authentication > Sign-in method 3) Enable Google provider', 'info');
+                this.showAlert('ThemeHackers Security: To enable Google sign-in: 1) Go to Firebase Console 2) Authentication > Sign-in method 3) Enable Google provider', 'info');
             }
         } finally {
             this.hideLoading('googleSignIn');
@@ -274,23 +303,17 @@ class AuthHandler {
             const isDisposable = disposableDomains.some(disposable => 
                 domain.includes(disposable)
             );
-            const commonProviders = [
-                'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com',
-                'icloud.com', 'protonmail.com', 'aol.com'
-            ];
-            const isCommonProvider = commonProviders.some(provider => 
-                domain === provider || domain.endsWith('.ac.th')
-            );
+      
+            const isAllowed = this.isAllowedEmailDomain(email);
             return {
-                isValid: isValidFormat && !isDisposable,
+                isValid: isValidFormat && !isDisposable && isAllowed,
                 reason: isDisposable ? 'Disposable email not allowed' : 
-                        !isValidFormat ? 'Invalid email format' : 'Valid',
-                score: isCommonProvider ? 0.9 : 0.7,
+                        !isValidFormat ? 'Invalid email format' : !isAllowed ? 'Email domain not allowed' : 'Valid',
+                score: isAllowed ? 0.9 : 0.7,
                 isDisposable: isDisposable,
-                isCommonProvider: isCommonProvider
+                isAllowed: isAllowed
             };
         } catch (error) {
-        
             console.error('Email verification error:', error);
             return {
                 isValid: false,
@@ -317,7 +340,6 @@ class AuthHandler {
             }
             await this.db.collection('users').doc(user.uid).set(userData, { merge: true });
         } catch (error) {
-          
             console.error('Error saving user data:', error);
         }
     }

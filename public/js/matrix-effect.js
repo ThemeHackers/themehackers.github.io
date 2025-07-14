@@ -69,20 +69,18 @@ class MatrixEffect {
      */
     createMatrixChar() {
         if (!this.matrixBg) return;
-
-        const char = document.createElement('div');
-        char.className = 'matrix-char';
-        char.textContent = this.chars[Math.floor(Math.random() * this.chars.length)];
-        char.style.left = Math.random() * 100 + '%';
-        char.style.fontSize = this.fontSize;
-        char.style.animationDuration = (Math.random() * 2 + 2) + 's';
-        
-        this.matrixBg.appendChild(char);
-        
-        
+        let char = this.chars[Math.floor(Math.random() * this.chars.length)];
+        char = sanitizeInput(char);
+        const charDiv = document.createElement('div');
+        charDiv.className = 'matrix-char';
+        charDiv.textContent = char;
+        charDiv.style.left = Math.random() * 100 + '%';
+        charDiv.style.fontSize = this.fontSize;
+        charDiv.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        this.matrixBg.appendChild(charDiv);
         setTimeout(() => {
-            if (char && char.parentNode) {
-                char.remove();
+            if (charDiv && charDiv.parentNode) {
+                charDiv.remove();
             }
         }, this.duration);
     }
@@ -322,6 +320,17 @@ class ThemeHackersUtils {
             .replace(/[<>]/g, '')
             .trim();
     }
+}
+
+// Add a helper function for sanitization
+function sanitizeInput(input) {
+    if (typeof input !== 'string') return '';
+    const doc = new DOMParser().parseFromString(input, 'text/html');
+    let text = doc.body.textContent || '';
+    text = text.replace(/(javascript:|data:|vbscript:)/gi, '');
+    text = text.replace(/on\w+=/gi, '');
+    text = text.replace(/[\x00-\x1F\x7F]/g, '');
+    return text.trim();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
