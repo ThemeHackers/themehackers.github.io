@@ -132,6 +132,9 @@ class FirebaseConfigLoader {
                 throw new Error('No Firebase configuration available');
             }
             if (window.firebase && window.firebase.apps && window.firebase.apps.length > 0) {
+
+                window.auth = window.firebase.auth();
+                window.db = window.firebase.firestore();
                 return;
             }
             if (window.firebase) {
@@ -146,7 +149,7 @@ class FirebaseConfigLoader {
             }
         } catch (error) {
          
-            console.error('❌ Error initializing Firebase:', error);
+            console.error('\u274c Error initializing Firebase:', error);
             throw error;
         }
     }
