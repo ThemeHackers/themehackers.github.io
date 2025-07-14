@@ -17,7 +17,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-
+const sanitizeHtml = require('sanitize-html');
 class SecurityMiddleware {
     constructor() {
         this.saltRounds = 12;
@@ -360,18 +360,11 @@ class SecurityMiddleware {
             return str;
         }
 
-        let sanitized;
-        do {
-            sanitized = str;
-            str = str
-                .replace(/<[^>]*>/g, '')
-                .replace(/[<>]/g, '') 
-                .replace(/javascript:/gi, '')
-                .replace(/<script/gi, '') 
-                .trim();
-        } while (str !== sanitized);
-
-        return str;
+        const sanitizeHtml = require('sanitize-html');
+        return sanitizeHtml(str, {
+            allowedTags: [],
+            allowedAttributes: {}
+        });
     }
 
     /**
