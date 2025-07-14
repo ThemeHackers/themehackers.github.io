@@ -17,7 +17,5 @@ package = "@netlify/plugin-functions-install-core"
   force = true
   conditions = {Role = ["guest"]}
 
-/js/*      /403.html   403
-/lib/*     /403.html   403
-/dashboard /login.html 200
+
 
