@@ -1,3 +1,5 @@
+import DOMPurify from 'dompurify';
+
 class AuthHandler {
     constructor() {
         if (!window.auth || !window.db) {
@@ -219,16 +221,9 @@ class AuthHandler {
             return '';
         }
         if (typeof input !== 'string') {
-            return String(input).trim();
+            return DOMPurify.sanitize(String(input).trim());
         }
-        return input
-            .replace(/<[^>]*>/g, '')
-            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-            .replace(/[<>]/g, '')
-            .replace(/\0/g, '')
-            .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')
-            .replace(/\s+/g, ' ')
-            .trim();
+        return DOMPurify.sanitize(input.trim());
     }
 
     async signInWithGoogle() {
