@@ -441,7 +441,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
     
-    <script src="https://www.google.com/recaptcha/api.js?render=6LexkoIrAAAAAJkwVASGopsaYqwXwOE2POaqpCoS"></script>
 
     <script src="js/env-config.js"></script>
     <script src="js/firebase-config.js"></script>
@@ -450,70 +449,51 @@
     <script src="./js/auth.js"></script>
 
     <script>
-        const RECAPTCHA_SITE_KEY = '6LexkoIrAAAAAJkwVASGopsaYqwXwOE2POaqpCoS';
-        let recaptchaToken = null;
-
-        function showRecaptchaStatus(message, type = 'info') {
-            let el = document.getElementById('recaptchaStatus');
-            if (!el) {
-                el = document.createElement('div');
-                el.id = 'recaptchaStatus';
-                el.style.margin = '10px 0';
-                el.style.textAlign = 'center';
-
-                const googleBtn = document.getElementById('googleSignIn');
-                if (googleBtn && googleBtn.parentNode) {
-                    googleBtn.parentNode.insertBefore(el, googleBtn.nextSibling);
-                } else {
-                    document.querySelector('.auth-container').appendChild(el);
-                }
-            }
-            el.innerHTML = `<span style="color:${type==='success'?'#00ff41':type==='error'?'#ff6b6b':'#ffc107'};font-weight:600;">${message}</span>`;
-        }
-
-        function executeRecaptcha(action = 'login') {
-            showRecaptchaStatus('Verifying security...');
-            return new Promise((resolve, reject) => {
-                if (!window.grecaptcha) {
-                    showRecaptchaStatus('reCAPTCHA failed to load', 'error');
-                    return reject('reCAPTCHA not loaded');
-                }
-                grecaptcha.ready(function() {
-                    grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: action}).then(function(token) {
-                        recaptchaToken = token;
-                        showRecaptchaStatus('Security verification successful', 'success');
-                        resolve(token);
-                    }).catch(function(err) {
-                        showRecaptchaStatus('reCAPTCHA error', 'error');
-                        reject(err);
-                    });
-                });
-            });
-        }
-
+     
+        let authHandler = null;
 
         document.addEventListener('DOMContentLoaded', function() {
-            const googleBtn = document.getElementById('googleSignIn');
-            if (googleBtn) {
-                googleBtn.addEventListener('click', async function(e) {
-                    e.preventDefault();
-                    googleBtn.disabled = true;
-                    googleBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Verifying security...';
-                    try {
-                        await executeRecaptcha('login');
-                      
-                        googleBtn.innerHTML = '<i class="fab fa-google me-2"></i> Continue with Google';
-                        googleBtn.disabled = false;
-                        if (authHandler && typeof authHandler.signInWithGoogle === 'function') {
-                            authHandler.signInWithGoogle();
-                        }
-                    } catch (err) {
-                        googleBtn.innerHTML = '<i class="fab fa-google me-2"></i> Continue with Google';
-                        googleBtn.disabled = false;
+         
+            const checkFirebaseReady = setInterval(() => {
+                if (window.auth && window.db) {
+                    clearInterval(checkFirebaseReady);                    
+                    if (!authHandler) {
+                        authHandler = new AuthHandler();
                     }
-                });
-            }
+                }
+            }, 100);
+
+        
+            setTimeout(() => {
+                clearInterval(checkFirebaseReady);
+                
+              
+                if (!authHandler) {
+                    authHandler = new AuthHandler();
+                }
+            }, 150000);
         });
+
+        function createMatrixEffect() {
+            const matrixBg = document.getElementById('matrixBg');
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            
+            setInterval(() => {
+                const char = document.createElement('div');
+                char.className = 'matrix-char';
+                char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                char.style.left = Math.random() * 100 + '%';
+                char.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                matrixBg.appendChild(char);
+                
+                setTimeout(() => {
+                    char.remove();
+                }, 4000);
+            }, 100);
+        }
+
+
+        createMatrixEffect();
     </script>
 </body>
 </html> 
