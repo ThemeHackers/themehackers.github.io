@@ -482,13 +482,14 @@
 
     <script>
         
+       
         function onSubmit(token) {
-          
+        
             var googleBtn = document.getElementById('googleSignIn');
             if (googleBtn) {
                 googleBtn.disabled = false;
             }
-
+          
             window.recaptchaToken = token;
         }
         function onloadCallback() {
@@ -502,9 +503,36 @@
             if (googleBtn) {
                 googleBtn.addEventListener('click', function (e) {
                     e.preventDefault();
-                  
+                    
+                    if (!window.recaptchaToken) {
+                        
+                        let el = document.getElementById('recaptchaStatus');
+                        if (!el) {
+                            el = document.createElement('div');
+                            el.id = 'recaptchaStatus';
+                            el.style.margin = '10px 0';
+                            el.style.textAlign = 'center';
+                            googleBtn.parentNode.insertBefore(el, googleBtn.nextSibling);
+                        }
+                        el.innerHTML = '<span style="color:#ff6b6b;font-weight:600;">Please complete the reCAPTCHA</span>';
+                        googleBtn.disabled = true;
+                        return;
+                    }
+                   
                     if (authHandler && typeof authHandler.signInWithGoogle === 'function') {
-                        authHandler.signInWithGoogle();
+                        authHandler.signInWithGoogle()
+                            .then(function() {
+                              
+                                grecaptcha.reset();
+                                window.recaptchaToken = null;
+                                googleBtn.disabled = true;
+                            })
+                            .catch(function() {
+                               
+                                grecaptcha.reset();
+                                window.recaptchaToken = null;
+                                googleBtn.disabled = true;
+                            });
                     }
                 });
             }
