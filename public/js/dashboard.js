@@ -1134,7 +1134,9 @@ class DashboardHandler {
         const hasScriptSrc = cspContent.includes('script-src');
         const hasStyleSrc = cspContent.includes('style-src');
         const hasConnectSrc = cspContent.includes('connect-src');
-        const hasFirebaseDomains = cspContent.includes('firebase.googleapis.com') || cspContent.includes('firestore.googleapis.com');
+        const connectSrcMatches = cspContent.match(/connect-src\s[^;]+/g);
+        const connectSrcValues = connectSrcMatches ? connectSrcMatches[0].split(/\s+/).slice(1) : [];
+        const hasFirebaseDomains = connectSrcValues.includes('https://firebase.googleapis.com') || connectSrcValues.includes('https://firestore.googleapis.com');
         const hasGoogleDomains = cspContent.includes('googleapis.com');
         const hasUnsafeInline = cspContent.includes("'unsafe-inline'");
 
