@@ -1,3 +1,5 @@
+import DOMPurify from 'dompurify';
+
 class SecurityManager {
     constructor() {
         this.csrfToken = null;
@@ -251,14 +253,10 @@ class SecurityManager {
         if (input === undefined || input === null) return '';
         let value = typeof input === 'string' ? input : String(input).trim();
         
-        const doc = new DOMParser().parseFromString(value, 'text/html');
-        value = doc.body.textContent || '';
-    
-        value = value.replace(/(javascript:|data:|vbscript:)/gi, '');
-       
-        value = value.replace(/on\w+=/gi, '');
-
-        value = value.replace(/[\x00-\x1F\x7F]/g, '');
+        // Use DOMPurify to sanitize the input
+        value = DOMPurify.sanitize(value, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+        
+        // Additional safety: Ensure the result is a plain string
         return value.trim();
     }
 
