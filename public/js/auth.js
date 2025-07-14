@@ -1,7 +1,6 @@
 class AuthHandler {
     constructor() {
         if (!window.auth || !window.db) {
-            this.showFirebaseError();
             throw new Error('Firebase not initialized');
         }
         this.auth = window.auth;
@@ -26,18 +25,6 @@ class AuthHandler {
 
         if (allowedDomains.includes(domain)) return true;
         return false;
-    }
-    showFirebaseError() {
-        const alertContainer = document.getElementById('alertContainer');
-        if (alertContainer) {
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'alert alert-danger';
-            errorDiv.innerHTML = `
-                <i class="fas fa-exclamation-triangle me-2"></i>
-                <strong>Configuration Error:</strong> Firebase is not properly configured. 
-                Please contact ThemeHackers support or try refreshing the page.`;
-            alertContainer.appendChild(errorDiv);
-        }
     }
     init() {
         this.auth.onAuthStateChanged((user) => {
