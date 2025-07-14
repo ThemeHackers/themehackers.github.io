@@ -1,5 +1,3 @@
-import DOMPurify from 'dompurify';
-
 class SecurityManager {
     constructor() {
         this.csrfToken = null;
@@ -250,14 +248,16 @@ class SecurityManager {
      * @returns {string} Sanitized string
      */
     sanitizeInput(input) {
-        if (input === undefined || input === null) return '';
-        let value = typeof input === 'string' ? input : String(input).trim();
-        
-        // Use DOMPurify to sanitize the input
-        value = DOMPurify.sanitize(value, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
-        
-        // Additional safety: Ensure the result is a plain string
-        return value.trim();
+
+        const DOMPurify = window.DOMPurify;
+        if (!DOMPurify) return input;
+        if (typeof input === 'string') {
+            return DOMPurify.sanitize(input);
+        } else if (input && input.value) {
+            input.value = DOMPurify.sanitize(input.value);
+            return input.value;
+        }
+        return input;
     }
 
     /**
@@ -359,7 +359,7 @@ class SecurityManager {
        
         const securityLogs = JSON.parse(sessionStorage.getItem('security_logs') || '[]');
         securityLogs.push(logEntry);
-        sessionStorage.setItem('security_logs', JSON.stringify(securityLogs.slice(-10))); // Keep last 10
+        sessionStorage.setItem('security_logs', JSON.stringify(securityLogs.slice(-10)));
     }
 
     /**
