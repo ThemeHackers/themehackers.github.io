@@ -1850,11 +1850,20 @@ function cancelEdit() {
 
 function sanitizeInput(input) {
     if (typeof input !== 'string') return '';
-    const doc = new DOMParser().parseFromString(input, 'text/html');
-    let text = doc.body.textContent || '';
-    text = text.replace(/(javascript:|data:|vbscript:)/gi, '');
-    text = text.replace(/on\w+=/gi, '');
+
+    let text = input.replace(/<[^>]*>/g, '');
+    text = text.replace(/([jJ\u006A\u004A][aA\u0061\u0041][vV\u0076\u0056][aA\u0061\u0041][sS\u0073\u0053][cC\u0063\u0043][rR\u0072\u0052][iI\u0069\u0049][pP\u0070\u0050][tT\u0074\u0054]\s*:?)/gi, '');
+    text = text.replace(/([dD][aA][tT][aA]\s*:?)/gi, '');
+    text = text.replace(/([vV][bB][sS][cC][rR][iI][pP][tT]\s*:?)/gi, '');
+    
+    text = text.replace(/(&#x.{0,2};?)+/gi, '');
+    
+    text = text.replace(/on\w+\s*=\s*(['"]).*?\1/gi, '');
+    text = text.replace(/on\w+\s*=\s*[^\s>]+/gi, '');
+    
     text = text.replace(/[\x00-\x1F\x7F]/g, '');
+    
+    text = text.replace(/javascript:|data:|vbscript:/gi, '');
     return text.trim();
 }
 
