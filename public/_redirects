@@ -1,14 +1,14 @@
-/js/auth.js      /403.html   403
-/js/dashboard.js      /403.html   403
-/js/env-config.js      /403.html   403
-/js/firebase-config.js      /403.html   403
-/js/main.js      /403.html   403
-/js/matrix-effect.js      /403.html   403
-/js/security.js      /403.html   403
-
-/lib/*      /403.html   403
-/db/*      /403.html   403
-/cc-exam-db/*      /403.html   403
-/cissp-exam-db/*      /403.html   403
+/js/auth.js /403.html 403
+/js/dashboard.js /403.html 403
+/js/env-config.js /403.html 403
+/js/firebase-config.js /403.html 403
+/js/main.js /403.html 403
+/js/matrix-effect.js /403.html 403
+/js/security.js /403.html 403
+/lib/* /403.html 403
+/db/* /403.html 403
+/js/* /403.html 403
+/cc-exam-db/* /403.html 403
+/cissp-exam-db/* /403.html 403
 
 
