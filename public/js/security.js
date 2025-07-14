@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 /**
  * Security Module - Client-side Security Utilities
  * 
@@ -278,24 +279,12 @@ class SecurityManager {
         }
         
         // Comprehensive sanitization
+        // Use DOMPurify to sanitize input and remove any malicious content
+        value = DOMPurify.sanitize(value, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+        
+        // Normalize whitespace
         value = value
-            // Remove HTML tags
-            .replace(/<[^>]*>/g, '')
-            // Remove script tags and their content
-            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-            // Remove dangerous characters
-            .replace(/[<>]/g, '')
-            // Remove null bytes
-            .replace(/\0/g, '')
-            // Remove control characters except newlines and tabs
-            .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')
-            // Remove JavaScript protocol
-            .replace(/javascript:/gi, '')
-            // Remove data URLs
-            .replace(/data:text\/html/gi, '')
-            // Normalize whitespace
             .replace(/\s+/g, ' ')
-            // Trim whitespace
             .trim();
         
         // If input is an element, update its value
