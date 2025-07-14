@@ -21,7 +21,9 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "dompurify": "^3.2.6"
+  },
   "devDependencies": {},
   "repository": {
     "type": "git",
@@ -31,4 +33,4 @@
     "url": "https://github.com/themehackers/themehackers.github.io/issues"
   },
   "homepage": "https://dashsecurity.netlify.app/"
-} 
+}
