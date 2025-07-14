@@ -1,4 +1,3 @@
-import DOMPurify from 'dompurify';
 class AuthHandler {
     constructor() {
         if (!window.auth || !window.db) {
@@ -240,7 +239,7 @@ class AuthHandler {
         if (typeof input !== 'string') {
             return String(input).trim();
         }
-        // Use DOMPurify to sanitize the input
+
         return DOMPurify.sanitize(input).trim();
     }
     async signInWithGoogle() {
@@ -386,3 +385,4 @@ class AuthHandler {
     }
 }
 window.authHandler = new AuthHandler(); 
+window.AuthHandler = AuthHandler; 
