@@ -364,6 +364,8 @@ class SecurityMiddleware {
             .replace(/<[^>]*>/g, '')
             .replace(/[<>]/g, '') 
             .replace(/javascript:/gi, '')
+            .replace(/data:/gi, '')
+            .replace(/vbscript:/gi, '')
             .replace(/<script/gi, '') 
             .trim();
     }
