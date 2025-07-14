@@ -1146,7 +1146,16 @@ class DashboardHandler {
                 return false;
             }
         });
-        const hasGoogleDomains = cspContent.includes('googleapis.com');
+        const connectSrcGoogleMatches = connectSrcValues.some(url => {
+            try {
+                const parsedUrl = new URL(url);
+                return parsedUrl.host.endsWith('googleapis.com');
+            } catch (e) {
+                console.warn('Invalid URL in connect-src values:', url, e);
+                return false;
+            }
+        });
+        const hasGoogleDomains = connectSrcGoogleMatches;
         const hasUnsafeInline = cspContent.includes("'unsafe-inline'");
 
         let score = 0;
