@@ -1,23 +1,7 @@
-/**
- * Security Middleware for Netlify Functions
- * 
- * This module provides comprehensive server-side security features:
- * - bcrypt password hashing (12 salt rounds)
- * - JWT token management (access + refresh tokens)
- * - CSRF protection
- * - Rate limiting
- * - Input validation and sanitization
- * - Security headers
- * - Brute force protection
- * 
- * @author Security Team
- * @version 1.0.0
- */
-
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const sanitizeHtml = require('sanitize-html');
+
 class SecurityMiddleware {
     constructor() {
         this.saltRounds = 12;
@@ -360,11 +344,12 @@ class SecurityMiddleware {
             return str;
         }
 
-        const sanitizeHtml = require('sanitize-html');
-        return sanitizeHtml(str, {
-            allowedTags: [],
-            allowedAttributes: {}
-        });
+        return str
+            .replace(/<[^>]*>/g, '')
+            .replace(/[<>]/g, '') 
+            .replace(/javascript:/gi, '')
+            .replace(/<script/gi, '') 
+            .trim();
     }
 
     /**
