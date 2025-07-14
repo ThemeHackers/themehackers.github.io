@@ -289,9 +289,9 @@ class SecurityManager {
             .replace(/\0/g, '')
             // Remove control characters except newlines and tabs
             .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '')
-            // Remove JavaScript protocol
-            .replace(/javascript:/gi, '')
-            // Remove data URLs
+            // Remove JavaScript, data, and vbscript protocols
+            .replace(/(?:javascript:|data:|vbscript:)/gi, '')
+            // Remove data URLs (including text/html)
             .replace(/data:text\/html/gi, '')
             // Normalize whitespace
             .replace(/\s+/g, ' ')
