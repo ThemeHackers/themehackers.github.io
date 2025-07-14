@@ -449,7 +449,7 @@
 
                     <div class="g-recaptcha mb-3" data-sitekey="6LecwIIrAAAAAETv2oLgdOAvqo0rb5ZF2c5RWFxh"></div>
 
-                    <button id="googleSignIn" class="btn google-btn w-100 mb-4">
+                    <button id="googleSignIn" class="btn google-btn w-100 mb-4" disabled>
                         <i class="fab fa-google me-2"></i>
                         Continue with Google
                     </button>
@@ -484,33 +484,15 @@
             if (googleBtn) {
                 googleBtn.addEventListener('click', function (e) {
                     e.preventDefault();
-                    const recaptchaResponse = grecaptcha.getResponse();
-                    if (!recaptchaResponse) {
-                       
-                        let el = document.getElementById('recaptchaStatus');
-                        if (!el) {
-                            el = document.createElement('div');
-                            el.id = 'recaptchaStatus';
-                            el.style.margin = '10px 0';
-                            el.style.textAlign = 'center';
-                            const googleBtn = document.getElementById('googleSignIn');
-                            if (googleBtn && googleBtn.parentNode) {
-                                googleBtn.parentNode.insertBefore(el, googleBtn.nextSibling);
-                            } else {
-                                document.querySelector('.auth-container').appendChild(el);
+                    grecaptcha.ready(function() {
+                        grecaptcha.execute('YOUR_SITE_KEY', {action: 'login'}).then(function(token) {
+                          
+                            console.log('reCAPTCHA token:', token);
+                            if (authHandler && typeof authHandler.signInWithGoogle === 'function') {
+                                authHandler.signInWithGoogle();
                             }
-                        }
-                        el.innerHTML = '<span style="color:#ff6b6b;font-weight:600;">Please complete the reCAPTCHA</span>';
-                        return;
-                    }
-                    googleBtn.disabled = true;
-                    googleBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Checking...';
-          
-                    googleBtn.innerHTML = '<i class="fab fa-google me-2"></i> Continue with Google';
-                    googleBtn.disabled = false;
-                    if (authHandler && typeof authHandler.signInWithGoogle === 'function') {
-                        authHandler.signInWithGoogle();
-                    }
+                        });
+                    });
                 });
             }
         });
