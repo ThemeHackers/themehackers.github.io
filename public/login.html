@@ -445,14 +445,14 @@
                         <p class="brand-subtitle">Security Portal Access</p>
                     </div>
 
-
                     <div id="alertContainer"></div>
+
+                    <div class="g-recaptcha mb-3" data-sitekey="6LecwIIrAAAAAETv2oLgdOAvqo0rb5ZF2c5RWFxh"></div>
 
                     <button id="googleSignIn" class="btn google-btn w-100 mb-4">
                         <i class="fab fa-google me-2"></i>
                         Continue with Google
                     </button>
-
 
                     <div class="text-center">
                         <p class="mb-0 text-light">Login with your Google account to access ThemeHackers Dashboard.</p>
@@ -467,8 +467,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
 
-    <script src="https://www.google.com/recaptcha/api.js?render=6LexkoIrAAAAAJkwVASGopsaYqwXwOE2POaqpCoS"></script>
-
     <script src="js/env-config.js"></script>
     <script src="js/firebase-config.js"></script>
     <script src="js/health-check.js"></script>
@@ -481,66 +479,37 @@
     </script>
 
     <script>
-        const RECAPTCHA_SITE_KEY = '6LexkoIrAAAAAJkwVASGopsaYqwXwOE2POaqpCoS';
-        let recaptchaToken = null;
-
-        function showRecaptchaStatus(message, type = 'info') {
-            let el = document.getElementById('recaptchaStatus');
-            if (!el) {
-                el = document.createElement('div');
-                el.id = 'recaptchaStatus';
-                el.style.margin = '10px 0';
-                el.style.textAlign = 'center';
-
-                const googleBtn = document.getElementById('googleSignIn');
-                if (googleBtn && googleBtn.parentNode) {
-                    googleBtn.parentNode.insertBefore(el, googleBtn.nextSibling);
-                } else {
-                    document.querySelector('.auth-container').appendChild(el);
-                }
-            }
-            el.innerHTML = `<span style="color:${type === 'success' ? '#00ff41' : type === 'error' ? '#ff6b6b' : '#ffc107'};font-weight:600;">${message}</span>`;
-        }
-
-        function executeRecaptcha(action = 'login') {
-            showRecaptchaStatus('Verifying security...');
-            return new Promise((resolve, reject) => {
-                if (!window.grecaptcha) {
-                    showRecaptchaStatus('reCAPTCHA failed to load', 'error');
-                    return reject('reCAPTCHA not loaded');
-                }
-                grecaptcha.ready(function () {
-                    grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: action }).then(function (token) {
-                        recaptchaToken = token;
-                        showRecaptchaStatus('Security verification successful', 'success');
-                        resolve(token);
-                    }).catch(function (err) {
-                        showRecaptchaStatus('reCAPTCHA error', 'error');
-                        reject(err);
-                    });
-                });
-            });
-        }
-
-
         document.addEventListener('DOMContentLoaded', function () {
             const googleBtn = document.getElementById('googleSignIn');
             if (googleBtn) {
-                googleBtn.addEventListener('click', async function (e) {
+                googleBtn.addEventListener('click', function (e) {
                     e.preventDefault();
-                    googleBtn.disabled = true;
-                    googleBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Verifying security...';
-                    try {
-                        await executeRecaptcha('login');
-
-                        googleBtn.innerHTML = '<i class="fab fa-google me-2"></i> Continue with Google';
-                        googleBtn.disabled = false;
-                        if (authHandler && typeof authHandler.signInWithGoogle === 'function') {
-                            authHandler.signInWithGoogle();
+                    const recaptchaResponse = grecaptcha.getResponse();
+                    if (!recaptchaResponse) {
+                       
+                        let el = document.getElementById('recaptchaStatus');
+                        if (!el) {
+                            el = document.createElement('div');
+                            el.id = 'recaptchaStatus';
+                            el.style.margin = '10px 0';
+                            el.style.textAlign = 'center';
+                            const googleBtn = document.getElementById('googleSignIn');
+                            if (googleBtn && googleBtn.parentNode) {
+                                googleBtn.parentNode.insertBefore(el, googleBtn.nextSibling);
+                            } else {
+                                document.querySelector('.auth-container').appendChild(el);
+                            }
                         }
-                    } catch (err) {
-                        googleBtn.innerHTML = '<i class="fab fa-google me-2"></i> Continue with Google';
-                        googleBtn.disabled = false;
+                        el.innerHTML = '<span style="color:#ff6b6b;font-weight:600;">Please complete the reCAPTCHA</span>';
+                        return;
+                    }
+                    googleBtn.disabled = true;
+                    googleBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Checking...';
+          
+                    googleBtn.innerHTML = '<i class="fab fa-google me-2"></i> Continue with Google';
+                    googleBtn.disabled = false;
+                    if (authHandler && typeof authHandler.signInWithGoogle === 'function') {
+                        authHandler.signInWithGoogle();
                     }
                 });
             }
