@@ -1135,7 +1135,18 @@ class DashboardHandler {
         const hasStyleSrc = cspContent.includes('style-src');
         const hasConnectSrc = cspContent.includes('connect-src');
         const hasFirebaseDomains = cspContent.includes('firebase.googleapis.com') || cspContent.includes('firestore.googleapis.com');
-        const hasGoogleDomains = cspContent.includes('googleapis.com');
+        const allowedGoogleHosts = ['googleapis.com'];
+        const hasGoogleDomains = cspContent.split(';').some(directive => {
+            const urls = directive.split(' ').slice(1); // Skip the directive name (e.g., "default-src").
+            return urls.some(url => {
+                try {
+                    const host = new URL(url).host;
+                    return allowedGoogleHosts.includes(host);
+                } catch {
+                    return false; // Ignore invalid URLs.
+                }
+            });
+        });
         const hasUnsafeInline = cspContent.includes("'unsafe-inline'");
 
         let score = 0;
