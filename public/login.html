@@ -447,7 +447,7 @@
 
                     <div id="alertContainer"></div>
 
-    
+
                     <div id="recaptcha-container" class="mb-3"></div>
 
                     <button id="googleSignIn" class="btn google-btn w-100 mb-4" disabled>
@@ -463,7 +463,7 @@
         </div>
     </div>
 
-    <script src="https://unpkg.com/dompurify@3.0.4/dist/purify.min.js"></script>
+    <script src="https://unpkg.com/dompurify@3.0.5/dist/purify.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
@@ -475,7 +475,7 @@
     <script type="module" src="./js/security.js"></script>
     <script src="./js/auth.js"></script>
     <script>
-       
+
         document.addEventListener('firebaseReady', function () {
             window.authHandler = new AuthHandler();
 
@@ -499,12 +499,12 @@
                     }
                     if (window.authHandler && typeof window.authHandler.signInWithGoogle === 'function') {
                         window.authHandler.signInWithGoogle()
-                            .then(function() {
+                            .then(function () {
                                 grecaptcha.reset();
                                 window.recaptchaToken = null;
                                 googleBtn.disabled = true;
                             })
-                            .catch(function() {
+                            .catch(function () {
                                 grecaptcha.reset();
                                 window.recaptchaToken = null;
                                 googleBtn.disabled = true;
