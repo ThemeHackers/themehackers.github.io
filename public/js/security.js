@@ -282,7 +282,15 @@ class SecurityManager {
             // Remove HTML tags
             .replace(/<[^>]*>/g, '')
             // Remove script tags and their content
-            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+            // Remove script tags and their content repeatedly
+            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, function sanitizeScripts(value) {
+                let previous;
+                do {
+                    previous = value;
+                    value = previous.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+                } while (value !== previous);
+                return value;
+            })
             // Remove dangerous characters
             .replace(/[<>]/g, '')
             // Remove null bytes
