@@ -471,6 +471,11 @@
                 googleBtn.disabled = false;
             }
             window.recaptchaToken = token;
+        
+            var el = document.getElementById('recaptchaStatus');
+            if (el) {
+                el.remove();
+            }
         }
         function onloadCallback() {
             grecaptcha.render('recaptcha-container', {
@@ -506,28 +511,56 @@
                             el.style.textAlign = 'center';
                             googleBtn.parentNode.insertBefore(el, googleBtn.nextSibling);
                         }
-                        el.innerHTML = '<span style="color:#ff6b6b;font-weight:600;">Please complete the reCAPTCHA</span>';
+                        el.innerHTML = '<span style="color:#ff6b6b;font-weight:600;">กรุณายืนยัน reCAPTCHA อีกครั้ง</span>';
                         googleBtn.disabled = true;
                         return;
                     }
                     if (window.authHandler && typeof window.authHandler.signInWithGoogle === 'function') {
-                        
                         var result = window.authHandler.signInWithGoogle();
                         if (result && typeof result.then === 'function') {
                             result.then(function () {
                                 grecaptcha.reset();
                                 window.recaptchaToken = null;
                                 googleBtn.disabled = true;
+                             
+                                let el = document.getElementById('recaptchaStatus');
+                                if (!el) {
+                                    el = document.createElement('div');
+                                    el.id = 'recaptchaStatus';
+                                    el.style.margin = '10px 0';
+                                    el.style.textAlign = 'center';
+                                    googleBtn.parentNode.insertBefore(el, googleBtn.nextSibling);
+                                }
+                                el.innerHTML = '<span style="color:#ff6b6b;font-weight:600;">กรุณายืนยัน reCAPTCHA อีกครั้ง</span>';
                             }).catch(function () {
                                 grecaptcha.reset();
                                 window.recaptchaToken = null;
                                 googleBtn.disabled = true;
+                             
+                                let el = document.getElementById('recaptchaStatus');
+                                if (!el) {
+                                    el = document.createElement('div');
+                                    el.id = 'recaptchaStatus';
+                                    el.style.margin = '10px 0';
+                                    el.style.textAlign = 'center';
+                                    googleBtn.parentNode.insertBefore(el, googleBtn.nextSibling);
+                                }
+                                el.innerHTML = '<span style="color:#ff6b6b;font-weight:600;">กรุณายืนยัน reCAPTCHA อีกครั้ง</span>';
                             });
                         } else {
-                           
                             grecaptcha.reset();
                             window.recaptchaToken = null;
                             googleBtn.disabled = true;
+                        
+                            let el = document.getElementById('recaptchaStatus');
+                            if (!el) {
+                                el = document.createElement('div');
+                                el.id = 'recaptchaStatus';
+                                el.style.margin = '10px 0';
+                                el.style.textAlign = 'center';
+                                googleBtn.parentNode.insertBefore(el, googleBtn.nextSibling);
+                            }
+                            el.innerHTML = '<span style="color:#ff6b6b;font-weight:600;">กรุณายืนยัน reCAPTCHA อีกครั้ง</span>';
                         }
                     }
                 });
