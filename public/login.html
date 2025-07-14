@@ -475,37 +475,16 @@
     <script type="module" src="./js/security.js"></script>
     <script src="./js/auth.js"></script>
     <script>
+       
         document.addEventListener('firebaseReady', function () {
             window.authHandler = new AuthHandler();
-        });
-    </script>
 
-    <script>
-        
-       
-        function onSubmit(token) {
-        
-            var googleBtn = document.getElementById('googleSignIn');
-            if (googleBtn) {
-                googleBtn.disabled = false;
-            }
-          
-            window.recaptchaToken = token;
-        }
-        function onloadCallback() {
-            grecaptcha.render('recaptcha-container', {
-                'sitekey': '6LecwIIrAAAAAETv2oLgdOAvqo0rb5ZF2c5RWFxh',
-                'callback': onSubmit
-            });
-        }
-        document.addEventListener('DOMContentLoaded', function () {
+
             const googleBtn = document.getElementById('googleSignIn');
             if (googleBtn) {
                 googleBtn.addEventListener('click', function (e) {
                     e.preventDefault();
-                    
                     if (!window.recaptchaToken) {
-                        
                         let el = document.getElementById('recaptchaStatus');
                         if (!el) {
                             el = document.createElement('div');
@@ -518,17 +497,14 @@
                         googleBtn.disabled = true;
                         return;
                     }
-                   
-                    if (authHandler && typeof authHandler.signInWithGoogle === 'function') {
-                        authHandler.signInWithGoogle()
+                    if (window.authHandler && typeof window.authHandler.signInWithGoogle === 'function') {
+                        window.authHandler.signInWithGoogle()
                             .then(function() {
-                              
                                 grecaptcha.reset();
                                 window.recaptchaToken = null;
                                 googleBtn.disabled = true;
                             })
                             .catch(function() {
-                               
                                 grecaptcha.reset();
                                 window.recaptchaToken = null;
                                 googleBtn.disabled = true;
