@@ -240,7 +240,7 @@ class AuthHandler {
         if (typeof input !== 'string') {
             return String(input).trim();
         }
-        // Use DOMPurify to sanitize the input
+
         return DOMPurify.sanitize(input).trim();
     }
     async signInWithGoogle() {
