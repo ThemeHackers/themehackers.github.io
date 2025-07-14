@@ -463,23 +463,36 @@
         </div>
     </div>
 
+    <script>
+       
+        function onSubmit(token) {
+            var googleBtn = document.getElementById('googleSignIn');
+            if (googleBtn) {
+                googleBtn.disabled = false;
+            }
+            window.recaptchaToken = token;
+        }
+        function onloadCallback() {
+            grecaptcha.render('recaptcha-container', {
+                'sitekey': '6LecwIIrAAAAAETv2oLgdOAvqo0rb5ZF2c5RWFxh',
+                'callback': onSubmit
+            });
+        }
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
     <script src="https://unpkg.com/dompurify@3.0.5/dist/purify.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
-
     <script src="js/env-config.js"></script>
     <script src="js/firebase-config.js"></script>
     <script src="js/health-check.js"></script>
     <script type="module" src="./js/security.js"></script>
     <script src="./js/auth.js"></script>
     <script>
-
+       
         document.addEventListener('firebaseReady', function () {
             window.authHandler = new AuthHandler();
-
-
             const googleBtn = document.getElementById('googleSignIn');
             if (googleBtn) {
                 googleBtn.addEventListener('click', function (e) {
@@ -498,17 +511,24 @@
                         return;
                     }
                     if (window.authHandler && typeof window.authHandler.signInWithGoogle === 'function') {
-                        window.authHandler.signInWithGoogle()
-                            .then(function () {
+                        
+                        var result = window.authHandler.signInWithGoogle();
+                        if (result && typeof result.then === 'function') {
+                            result.then(function () {
                                 grecaptcha.reset();
                                 window.recaptchaToken = null;
                                 googleBtn.disabled = true;
-                            })
-                            .catch(function () {
+                            }).catch(function () {
                                 grecaptcha.reset();
                                 window.recaptchaToken = null;
                                 googleBtn.disabled = true;
                             });
+                        } else {
+                           
+                            grecaptcha.reset();
+                            window.recaptchaToken = null;
+                            googleBtn.disabled = true;
+                        }
                     }
                 });
             }
