@@ -18,7 +18,8 @@
   "dependencies": {
     "bcrypt": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "crypto": "^1.0.1"
+    "crypto": "^1.0.1",
+    "sanitize-html": "^2.17.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -27,4 +28,4 @@
   "engines": {
     "node": ">=18.0.0"
   }
-} 
+}
