@@ -504,8 +504,8 @@
                       
                         googleBtn.innerHTML = '<i class="fab fa-google me-2"></i> Continue with Google';
                         googleBtn.disabled = false;
-                        if (authHandler && typeof authHandler.googleSignIn === 'function') {
-                            authHandler.googleSignIn();
+                        if (authHandler && typeof authHandler.signInWithGoogle === 'function') {
+                            authHandler.signInWithGoogle();
                         }
                     } catch (err) {
                         googleBtn.innerHTML = '<i class="fab fa-google me-2"></i> Continue with Google';
