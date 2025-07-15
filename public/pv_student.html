@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Student Portal | ThemeHackers</title>
+    <link href="img/favicon.png" rel="icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="css/themehackers.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background: rgba(26, 26, 26, 0.95);
+            border-bottom: 2px solid #00ff41;
+            box-shadow: 0 0 20px rgba(0,255,65,0.08);
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #00ff41 0%, #009926 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .btn-dashboard {
+            background: linear-gradient(135deg, #00ff41 0%, #009926 100%);
+            color: #0a0a0a;
+            font-weight: 700;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,255,65,0.08);
+            transition: all 0.2s;
+        }
+        .btn-dashboard:hover {
+            color: #fff;
+            background: #009926;
+        }
+        .portal-header {
+            color: #00ff41;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .user-info {
+            color: #f0f0f0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .card-portal {
+            background: rgba(26,26,26,0.95);
+            border: 2px solid #00ff41;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,255,65,0.08);
+            padding: 2rem 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .placeholder-content {
+            color: #aaa;
+            text-align: center;
+            font-size: 1.1rem;
+            padding: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-door-open me-2"></i>Student Portal
+            </a>
+            <div class="ms-auto">
+                <a href="dashboard.html" class="btn btn-dashboard">
+                    <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="portal-header">
+            <i class="fas fa-user-graduate me-2"></i>Welcome to the Student Portal
+        </div>
+        <div class="user-info" id="userInfo">
+            <span class="spinner-border spinner-border-sm text-success"></span> Loading user info...
+        </div>
+        <!-- Topics Section -->
+        <div class="mb-4">
+            <h3 class="text-success fw-bold mb-3 text-center"><i class="fas fa-list-ul me-2"></i>Security Topics</h3>
+            <div class="row g-3 justify-content-center">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm text-center p-3 border-success topic-card" data-topic="ato" style="cursor:pointer;">
+                        <div class="mb-2"><i class="fas fa-user-lock fa-2x text-success"></i></div>
+                        <div class="fw-bold">1. Account Takeover (ATO)</div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm text-center p-3 border-info topic-card" data-topic="apikey" style="cursor:pointer;">
+                        <div class="mb-2"><i class="fas fa-key fa-2x text-info"></i></div>
+                        <div class="fw-bold">2. API Key and Token Leaks</div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm text-center p-3 border-warning topic-card" data-topic="upload" style="cursor:pointer;">
+                        <div class="mb-2"><i class="fas fa-upload fa-2x text-warning"></i></div>
+                        <div class="fw-bold">3. Bypass Upload Tricky</div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm text-center p-3 border-danger topic-card" data-topic="clickjacking" style="cursor:pointer;">
+                        <div class="mb-2"><i class="fas fa-clone fa-2x text-danger"></i></div>
+                        <div class="fw-bold">4. Clickjacking</div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm text-center p-3 border-primary topic-card" data-topic="cspt" style="cursor:pointer;">
+                        <div class="mb-2"><i class="fas fa-folder-open fa-2x text-primary"></i></div>
+                        <div class="fw-bold">5. Client Side Path Traversal</div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm text-center p-3 border-dark topic-card" data-topic="cmdi" style="cursor:pointer;">
+                        <div class="mb-2"><i class="fas fa-terminal fa-2x text-dark"></i></div>
+                        <div class="fw-bold">6. Command Injection</div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm text-center p-3 border-secondary topic-card" data-topic="contentinj" style="cursor:pointer;">
+                        <div class="mb-2"><i class="fas fa-file-alt fa-2x text-secondary"></i></div>
+                        <div class="fw-bold">7. Content Injection</div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm text-center p-3 border-success topic-card" data-topic="cors" style="cursor:pointer;">
+                        <div class="mb-2"><i class="fas fa-exchange-alt fa-2x text-success"></i></div>
+                        <div class="fw-bold">8. CORS (OAuth, Misconfiguration)</div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm text-center p-3 border-info topic-card" data-topic="crlf" style="cursor:pointer;">
+                        <div class="mb-2"><i class="fas fa-random fa-2x text-info"></i></div>
+                        <div class="fw-bold">9. CRLF Injection</div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm text-center p-3 border-warning topic-card" data-topic="csv" style="cursor:pointer;">
+                        <div class="mb-2"><i class="fas fa-file-csv fa-2x text-warning"></i></div>
+                        <div class="fw-bold">10. CSV Injection</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal for topic explanations -->
+        <div class="modal fade" id="topicModal" tabindex="-1" aria-labelledby="topicModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="topicModalLabel">Topic</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" id="topicModalBody">
+                ...
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-portal animate__animated animate__fadeInUp">
+            <div class="placeholder-content">
+                <i class="fas fa-info-circle fa-2x mb-2"></i><br>
+                This area is reserved for student content.<br>
+                (e.g., Announcements, Schedules, Resources, etc.)
+            </div>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="js/env-config.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html> 
