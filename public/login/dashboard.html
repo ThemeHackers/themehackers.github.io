@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+    <title>★彡[TH Dashsecurity Dashboard]彡★</title>
+    <link href="/css/themehackers.css" rel="stylesheet">
+    <link href="/img/favicon.png" rel="icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <style>
+        .matrix-bg-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.08;
+        }
+        .th-dashboard-center {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+        .th-dashboard-container {
+            background: rgba(26, 26, 26, 0.97);
+            border: 2px solid var(--th-primary);
+            border-radius: 18px;
+            box-shadow: var(--th-glow);
+            max-width: 500px;
+            width: 100%;
+            padding: 2.5rem 2rem 2rem 2rem;
+            margin: 2rem auto;
+            position: relative;
+        }
+        .th-dashboard-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 30px var(--th-primary);
+            margin-bottom: 1rem;
+            background: var(--th-dark);
+        }
+        .th-dashboard-logout {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+        }
+        .th-dashboard-label {
+            color: var(--th-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .th-dashboard-value {
+            color: var(--th-light);
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+        }
+        .th-dashboard-footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #888;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .th-spinner {
+            display: inline-block;
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 4px solid var(--th-primary);
+            border-top: 4px solid var(--th-dark);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto 1rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @media (max-width: 600px) {
+            .th-dashboard-container { padding: 1.5rem 0.5rem; }
+            .th-dashboard-logout { right: 1rem; top: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="matrix-bg-canvas" id="matrix-bg"></canvas>
+    <div class="th-dashboard-center">
+        <div class="th-dashboard-container">
+            <button id="logout-btn" class="th-btn-outline-danger th-dashboard-logout"><i class="fas fa-sign-out-alt me-1"></i> Logout</button>
+            <div style="text-align:center;">
+                <img src="/img/favicon.png" alt="Avatar" class="th-dashboard-avatar" id="user-avatar" style="display:none;">
+                <div class="th-brand-title" id="user-name">Loading...</div>
+                <div class="th-brand-subtitle" id="user-email"></div>
+            </div>
+            <div style="margin:2.5rem 0 1.5rem 0;">
+                <div class="row mb-2">
+                    <div class="col-6 th-dashboard-label">Account Created</div>
+                    <div class="col-6 th-dashboard-value" id="created-at">-</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6 th-dashboard-label">Last Login</div>
+                    <div class="col-6 th-dashboard-value" id="last-login">-</div>
+                </div>
+            </div>
+            <div id="dashboard-alert" style="display:none;"></div>
+            <div id="dashboard-loading" style="text-align:center;">
+                <div class="th-spinner"></div>
+                <div class="th-dashboard-label">Loading your secure dashboard...</div>
+            </div>
+        </div>
+    </div>
+    <div class="th-dashboard-footer">
+        &copy; 2024 ThemeHackers. All rights reserved.
+    </div>
+    <script>
+    // Matrix background effect
+    const canvas = document.getElementById('matrix-bg');
+    const ctx = canvas.getContext('2d');
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+    let fontSize = 18;
+    let columns = Math.floor(width / fontSize);
+    let drops = Array(columns).fill(1);
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(10,10,10,0.08)';
+      ctx.fillRect(0, 0, width, height);
+      ctx.font = fontSize + "px Courier New";
+      ctx.fillStyle = '#00ff41';
+      for (let i = 0; i < drops.length; i++) {
+        let text = String.fromCharCode(0x30A0 + Math.random() * 96);
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    setInterval(drawMatrix, 50);
+    window.addEventListener('resize', () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+      columns = Math.floor(width / fontSize);
+      drops = Array(columns).fill(1);
+    });
+    </script>
+    <script>
+    // Supabase Auth Dashboard Logic
+    const SUPABASE_URL = window.ENV?.SUPABASE_URL;
+    const SUPABASE_ANON_KEY = window.ENV?.SUPABASE_ANON_KEY;
+    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+        document.getElementById('dashboard-loading').style.display = 'none';
+        document.getElementById('dashboard-alert').style.display = 'block';
+        document.getElementById('dashboard-alert').className = 'th-alert th-alert-danger';
+        document.getElementById('dashboard-alert').textContent = 'Supabase environment variables are not set. Please check your Netlify configuration.';
+        throw new Error('Missing Supabase environment variables');
+    }
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    async function loadUser() {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+            window.location.href = '/login/';
+            return;
+        }
+        const user = session.user;
+        // Show avatar if available
+        const avatar = document.getElementById('user-avatar');
+        if (user.user_metadata && user.user_metadata.avatar_url) {
+            avatar.src = user.user_metadata.avatar_url;
+            avatar.style.display = 'inline-block';
+        } else {
+            avatar.src = '/img/favicon.png';
+            avatar.style.display = 'inline-block';
+        }
+        // Show name/email
+        document.getElementById('user-name').textContent = user.user_metadata.full_name || user.email;
+        document.getElementById('user-email').textContent = user.email;
+        // Created at
+        document.getElementById('created-at').textContent = user.created_at ? new Date(user.created_at).toLocaleString() : '-';
+        // Last login (from session)
+        document.getElementById('last-login').textContent = session.expires_at ? new Date(session.expires_at * 1000).toLocaleString() : '-';
+        // Hide loading
+        document.getElementById('dashboard-loading').style.display = 'none';
+    }
+    loadUser();
+    // Logout
+    document.getElementById('logout-btn').onclick = async () => {
+        await supabase.auth.signOut();
+        window.location.href = '/login/';
+    };
+    </script>
+</body>
+</html> 
