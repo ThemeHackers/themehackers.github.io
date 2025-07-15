@@ -55,6 +55,15 @@ async function getUserAndProfile() {
       profileStatusEl.className = 'th-text-warning';
     }
   }
+
+  const roleEl = document.getElementById('profile-role-value');
+  if (roleEl) {
+    if (user.role === 'authenticated') {
+      roleEl.textContent = 'Account is protected';
+    } else {
+      roleEl.textContent = user.role || '-';
+    }
+  }
 }
 
 const logoutBtn = document.getElementById('logout-btn');
