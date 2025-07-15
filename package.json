@@ -5,9 +5,16 @@
   "scripts": {
     "build": ""
   },
-  "devDependencies": {},
-  "dependencies": {},
-  "keywords": ["static", "netlify", "supabase", "auth", "themehackers"],
+  "devDependencies": {
+    "netlify-plugin-inline-env": "^1.0.2"
+  },
+  "keywords": [
+    "static",
+    "netlify",
+    "supabase",
+    "auth",
+    "themehackers"
+  ],
   "author": "ThemeHackers",
   "license": "MIT"
-} 
+}
