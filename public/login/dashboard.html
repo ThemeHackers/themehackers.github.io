@@ -382,6 +382,7 @@
         setTheme(current === 'dark' ? 'light' : 'dark');
     }
     window.addEventListener('DOMContentLoaded', function() {
+        // Theme toggle
         let theme = localStorage.getItem('theme-mode');
         if (!theme) {
             theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
@@ -389,10 +390,20 @@
         setTheme(theme);
         document.getElementById('theme-toggle').onclick = toggleTheme;
 
-     
+        // Logout
+        document.getElementById('logout-btn').onclick = async () => {
+            await supabase.auth.signOut();
+            alert('You have been signed out.');
+            window.location.href = '/login/';
+        };
+
+        // ลบ access_token hash ออกจาก URL หลังจากโหลดเสร็จ
         if (window.location.hash && window.location.hash.includes('access_token')) {
             history.replaceState(null, '', window.location.pathname + window.location.search);
         }
+
+        // โหลดข้อมูล user
+        loadUser();
     });
 
 
@@ -448,14 +459,6 @@
             console.error('Error upserting profile:', error);
         }
     }
-    loadUser();
-   
-    document.getElementById('logout-btn').onclick = async () => {
-        await supabase.auth.signOut();
-        alert('You have been signed out.');
-        window.location.href = '/login/';
-    };
-
     </script>
 </body>
 </html> 
