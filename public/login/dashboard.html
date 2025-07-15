@@ -450,6 +450,10 @@
         alert('You have been signed out.');
         window.location.href = '/login/';
     };
+
+    if (window.location.hash && window.location.hash.includes('access_token')) {
+      history.replaceState(null, '', window.location.pathname);
+    }
     </script>
 </body>
 </html> 
