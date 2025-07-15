@@ -68,8 +68,8 @@ async function loadUser() {
         console.log('[loadUser] called');
         const { data: { session }, error } = await supabase.auth.getSession();
         console.log('[loadUser] session:', session, 'error:', error);
-        if (error) throw error;
         if (!session) {
+            console.warn('[loadUser] No session, will redirect to /login/');
             window.location.href = '/login/';
             return;
         }
