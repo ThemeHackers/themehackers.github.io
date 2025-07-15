@@ -1,3 +1,5 @@
+// Dashboard logic for authenticated users
+
 const SUPABASE_URL = window.ENV?.SUPABASE_URL;
 const SUPABASE_ANON_KEY = window.ENV?.SUPABASE_ANON_KEY;
 const REDIRECT_TO = window.ENV?.REDIRECT_TO || (window.location.origin + '/login/dashboard.html');
@@ -12,28 +14,69 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 async function getUserAndProfile() {
   const { data: { user }, error } = await supabase.auth.getUser();
   if (error || !user) {
-    window.location.href = '../index.html';
+    window.location.href = '/login/';
     return;
   }
-
+  // Fetch profile from 'profiles' table
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select('*')
     .eq('user_id', user.id)
     .single();
 
+  // Set user info in DOM
   document.getElementById('user-name').textContent = profile?.name || user.user_metadata?.full_name || user.email;
-  document.getElementById('user-email').textContent = user.email;
-  document.getElementById('user-avatar').src = user.user_metadata?.avatar_url || '../img/favicon.png';
+  document.getElementById('user-email').textContent = profile?.email || user.email;
+  document.getElementById('user-avatar').src = profile?.avatar_url || user.user_metadata?.avatar_url || '../img/favicon.png';
+
+  // Fill Profile Details card
+  document.getElementById('profile-detail-name').textContent = profile?.name || user.user_metadata?.full_name || user.email;
+  document.getElementById('profile-detail-email').textContent = profile?.email || user.email;
+  document.getElementById('profile-detail-avatar').textContent = profile?.avatar_url || user.user_metadata?.avatar_url || '-';
+
+  // Dynamic greeting
+  const greetingEl = document.getElementById('greeting');
+  if (greetingEl) {
+    const hour = new Date().getHours();
+    let greet = 'Welcome';
+    if (hour < 12) greet = 'Good morning';
+    else if (hour < 18) greet = 'Good afternoon';
+    else greet = 'Good evening';
+    greetingEl.textContent = `${greet}, ${profile?.name || user.user_metadata?.full_name || user.email}!`;
+  }
+
+  // Last login (from user metadata if available)
+  const lastLoginEl = document.getElementById('last-login-value');
+  if (lastLoginEl && user.last_sign_in_at) {
+    const date = new Date(user.last_sign_in_at);
+    lastLoginEl.textContent = date.toLocaleString();
+  } else if (lastLoginEl) {
+    lastLoginEl.textContent = '-';
+  }
+
+  // Profile status
+  const profileStatusEl = document.getElementById('profile-status');
+  if (profileStatusEl) {
+    if (profile && profile.name) {
+      profileStatusEl.textContent = 'Active';
+      profileStatusEl.className = 'th-text-success';
+    } else {
+      profileStatusEl.textContent = 'Incomplete';
+      profileStatusEl.className = 'th-text-warning';
+    }
+  }
+
+  // Optionally, update recent activity (static for now)
 }
 
-
+// Logout handler
 const logoutBtn = document.getElementById('logout-btn');
 if (logoutBtn) {
   logoutBtn.addEventListener('click', async () => {
     await supabase.auth.signOut();
-    window.location.href = '../index.html';
+    window.location.href = '/login/';
   });
 }
 
+// On page load
 window.addEventListener('DOMContentLoaded', getUserAndProfile);
