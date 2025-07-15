@@ -46,7 +46,7 @@
       background: #d63031;
     }
     .dashboard-container {
-      max-width: 900px;
+      max-width: 1100px;
       margin: 2.5rem auto;
       background: #181c24;
       border-radius: 18px;
@@ -55,39 +55,69 @@
       position: relative;
       z-index: 1;
     }
-    .user-info {
+    .profile-card {
       display: flex;
       align-items: center;
       gap: 1.5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
+      background: rgba(26,26,26,0.98);
+      border: 2.5px solid #00ff41;
+      border-radius: 15px;
+      box-shadow: 0 0 32px #00ff41cc;
+      padding: 2rem 1.5rem;
     }
     .user-avatar {
-      width: 70px;
-      height: 70px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       object-fit: cover;
       box-shadow: 0 0 18px #00ff41;
       background: #222;
+      border: 3px solid #00ff41;
     }
     .user-details {
       flex: 1;
     }
     .user-name {
-      font-size: 1.3rem;
+      font-size: 1.6rem;
       font-weight: bold;
       color: #00ff41;
+      display: flex;
+      align-items: center;
     }
     .user-email {
+      color: #fff;
+      font-size: 1.1rem;
+      margin-bottom: 0.5em;
+    }
+    .profile-note {
       color: #aaa;
-      font-size: 1rem;
+      font-size: 0.95em;
     }
-    .dashboard-content {
-      margin-top: 2.5rem;
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
     }
-    @media (max-width: 700px) {
-      .dashboard-container { padding: 1.2rem 0.3rem; }
-      .dashboard-navbar { flex-direction: column; gap: 1em; }
-      .user-info { flex-direction: column; align-items: flex-start; gap: 0.7rem; }
+    .dashboard-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .dashboard-row > .th-card {
+      flex: 1 1 320px;
+      min-width: 280px;
+    }
+    @media (max-width: 900px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .dashboard-row {
+        flex-direction: column;
+        gap: 1.2rem;
+      }
     }
   </style>
 </head>
@@ -97,16 +127,18 @@
     <button id="logout-btn" class="logout-btn">Logout</button>
   </nav>
   <div class="dashboard-container th-container">
-    <div class="user-info th-card" style="margin-bottom:2rem; box-shadow:0 0 32px #00ff41cc; border:2.5px solid #00ff41; background:rgba(26,26,26,0.98);">
-      <img id="user-avatar" class="user-avatar" src="../img/favicon.png" alt="User Avatar" style="border:3px solid #00ff41;">
+    <!-- Profile Card -->
+    <div class="profile-card">
+      <img id="user-avatar" class="user-avatar" src="../img/favicon.png" alt="User Avatar">
       <div class="user-details">
-        <div id="user-name" class="user-name" style="font-size:1.5rem; color:#00ff41; display:flex; align-items:center;"><i class="fa fa-user-circle" style="margin-right:0.5em;"></i> <span>Loading...</span></div>
-        <div id="user-email" class="user-email" style="font-size:1.1rem; color:#fff; margin-bottom:0.5em;"></div>
-        <div style="color:#aaa; font-size:0.95em;">This information is loaded from your Profile database.</div>
+        <div id="user-name" class="user-name"><i class="fa fa-user-circle" style="margin-right:0.5em;"></i> <span>Loading...</span></div>
+        <div id="user-email" class="user-email"></div>
+        <div class="profile-note">This information is loaded from your Profile database.</div>
       </div>
     </div>
-    <div class="dashboard-content">
-      <div class="th-card" style="margin-bottom:2rem;">
+    <!-- Main Grid: Profile Details & Quick Stats -->
+    <div class="dashboard-grid">
+      <div class="th-card">
         <div class="th-card-header"><i class="fa fa-id-badge"></i> Profile Details</div>
         <div class="th-card-body">
           <ul style="list-style:none; padding:0; margin:0;">
@@ -114,44 +146,28 @@
             <li><b>Email:</b> <span id="profile-detail-email">Loading...</span></li>
             <li><b>Avatar URL:</b> <span id="profile-detail-avatar">-</span></li>
             <li><b>Status:</b> <span id="profile-status" class="th-text-success">Active</span></li>
-            <li><b>More fields:</b> <span style="color:#888;">(coming soon)</span></li>
           </ul>
         </div>
       </div>
-      <div class="th-card" style="margin-bottom:2rem;">
-        <div class="th-card-header">Welcome</div>
+      <div class="th-card">
+        <div class="th-card-header"><i class="fa fa-chart-line"></i> Quick Stats</div>
         <div class="th-card-body">
-          <h2 id="greeting">Welcome to your Dashboard!</h2>
-          <p>Manage your security, view your activity, and stay up to date with the latest tips from ThemeHackers.</p>
+          <ul style="list-style:none; padding:0; margin:0;">
+            <li><b>Profile:</b> <span id="profile-status" class="th-text-success">Active</span></li>
+          </ul>
         </div>
       </div>
-      <div style="display:flex; flex-wrap:wrap; gap:2rem; margin-bottom:2rem;">
-        <div class="th-card" style="flex:1; min-width:220px;">
-          <div class="th-card-header"><i class="fa fa-user-shield"></i> Account Status</div>
-          <div class="th-card-body">
-            <div><span class="th-text-primary">Authenticated</span> via Google</div>
-            <div id="last-login" style="margin-top:0.7em; color:#aaa; font-size:0.95em;">Last login: <span id="last-login-value">-</span></div>
-          </div>
-        </div>
-        <div class="th-card" style="flex:1; min-width:220px;">
-          <div class="th-card-header"><i class="fa fa-chart-line"></i> Quick Stats</div>
-          <div class="th-card-body">
-            <ul style="list-style:none; padding:0; margin:0;">
-              <li><b>Profile:</b> <span id="profile-status" class="th-text-success">Active</span></li>
-              <li><b>Security Level:</b> <span class="th-text-warning">Standard</span></li>
-              <li><b>2FA:</b> <span class="th-text-danger">Not enabled</span></li>
-            </ul>
-          </div>
-        </div>
-        <div class="th-card" style="flex:1; min-width:220px;">
-          <div class="th-card-header"><i class="fa fa-lightbulb"></i> Security Tips</div>
-          <div class="th-card-body">
-            <ul style="padding-left:1.2em;">
-              <li>Enable 2FA for extra protection</li>
-              <li>Use strong, unique passwords</li>
-              <li>Review your account activity regularly</li>
-            </ul>
-          </div>
+    </div>
+    <!-- Row: Security Tips & Recent Activity -->
+    <div class="dashboard-row">
+      <div class="th-card">
+        <div class="th-card-header"><i class="fa fa-lightbulb"></i> Security Tips</div>
+        <div class="th-card-body">
+          <ul style="padding-left:1.2em;">
+            <li>Enable 2FA for extra protection</li>
+            <li>Use strong, unique passwords</li>
+            <li>Review your account activity regularly</li>
+          </ul>
         </div>
       </div>
       <div class="th-card">
@@ -163,6 +179,14 @@
             <li>Checked security tips</li>
           </ul>
         </div>
+      </div>
+    </div>
+    <!-- Welcome Card -->
+    <div class="th-card" style="margin-bottom:0;">
+      <div class="th-card-header">Welcome</div>
+      <div class="th-card-body">
+        <h2 id="greeting">Welcome to your Dashboard!</h2>
+        <p>Manage your security, view your activity, and stay up to date with the latest tips from ThemeHackers.</p>
       </div>
     </div>
   </div>
