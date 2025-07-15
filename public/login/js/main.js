@@ -50,3 +50,48 @@ if (googleBtn && alertBox) {
     }
   });
 }
+
+async function fetchAllProfiles() {
+    const { data, error } = await supabase
+        .from('profiles')
+        .select('*');
+    if (error) {
+        console.error('Error fetching profiles:', error);
+        return [];
+    }
+    return data;
+}
+
+
+async function fetchCurrentUserProfile(userId) {
+    const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', userId)
+        .single();
+    if (error) {
+        console.error('Error fetching user profile:', error);
+        return null;
+    }
+    return data;
+}
+
+async function upsertProfile(user) {
+    if (!user) return;
+    try {
+        const { error } = await supabase
+            .from('profiles')
+            .upsert([
+                {
+                    user_id: user.id, 
+                    name: user.user_metadata.full_name || user.email,
+                    updated_at: new Date().toISOString()
+                }
+            ], { onConflict: ['user_id'] });
+        if (error && error.code !== '42P01') {
+            console.error('Error upserting profile:', error);
+        }
+    } catch (e) {
+        console.error('Error upserting profile:', e);
+    }
+}
