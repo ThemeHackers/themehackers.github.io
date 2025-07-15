@@ -698,27 +698,54 @@
     </nav>
 
     <div class="container mt-4">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <!-- Welcome Section -->
-                <div class="welcome-section mb-4">
-                    <div class="row align-items-center">
-                        <div class="col-md-8">
-                            <h2 class="fw-bold mb-2">Welcome back, <span id="welcomeUserName">User</span>! 👋</h2>
-                            <p class="mb-0 opacity-75">You have successfully accessed the ThemeHackers Security Portal.</p>
+
+        <div class="row mb-3">
+            <div class="col-12 text-end">
+                <a href="pv_student.html" class="btn btn-success btn-lg animate__animated animate__pulse animate__infinite" style="min-width:220px;">
+                    <i class="fas fa-door-open me-2"></i>Go to Student Portal
+                </a>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card p-4 d-flex flex-row align-items-center justify-content-between flex-wrap" style="background: linear-gradient(90deg, #00ff41 0%, #009926 100%); color: #0a0a0a; box-shadow: 0 4px 24px rgba(0,255,65,0.08);">
+                    <div class="d-flex align-items-center mb-2 mb-md-0">
+                        <div class="me-3">
+                            <i class="fas fa-user-shield fa-2x"></i>
                         </div>
-                        <div class="col-md-4 text-end">
-                            <div class="user-avatar" id="userAvatar">
-                                <span id="userInitials">U</span>
-                            </div>
+                        <div>
+                            <div class="fw-bold fs-5">Welcome, <span id="welcomeUserName">User</span>!</div>
+                            <div class="small">Your security dashboard at a glance</div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <div class="text-center">
+                            <div class="fw-bold"><i class="fas fa-lock text-success"></i> Session</div>
+                            <div id="sessionTime" class="small">Active</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="fw-bold"><i class="fas fa-check-circle text-success"></i> Status</div>
+                            <div class="small">Verified</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="fw-bold"><i class="fas fa-shield-alt text-success"></i> Auth</div>
+                            <div class="small">Secure</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="fw-bold"><i class="fas fa-user-circle text-success"></i> Account</div>
+                            <div id="displayEmail" class="small">Loading...</div>
                         </div>
                     </div>
                 </div>
-
-                <!-- User Info Card -->
-                <div class="card">
+            </div>
+        </div>
+        <div class="row g-4">
+            <!-- Account Info & Security Status side by side on desktop -->
+            <div class="col-lg-6">
+                <!-- Account Info Card -->
+                <div class="card mb-4">
                     <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 fw-bold">Account Information</h5>
+                        <h5 class="mb-0 fw-bold"><i class="fas fa-user me-2"></i>Account Information</h5>
                         <button class="btn btn-outline-primary btn-sm" id="editBtn">
                             <i class="fas fa-edit me-1"></i>Edit
                         </button>
@@ -727,47 +754,31 @@
                         <!-- View Mode -->
                         <div id="viewMode">
                             <div class="row">
-                                <div class="col-md-6 mb-3">
+                                <div class="col-12 mb-3">
                                     <label class="form-label fw-bold">Full Name</label>
                                     <p class="text-muted" id="displayFullName">Loading...</p>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-12 mb-3">
                                     <label class="form-label fw-bold">Email Address</label>
-                                    <p class="text-muted" id="displayEmail">Loading...</p>
+                                    <p class="text-muted" id="displayEmail2">Loading...</p>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-6 mb-3">
                                     <label class="form-label fw-bold">Account Created</label>
                                     <p class="text-muted" id="displayCreatedAt">Loading...</p>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-6 mb-3">
                                     <label class="form-label fw-bold">Last Login</label>
                                     <p class="text-muted" id="displayLastLogin">Loading...</p>
                                 </div>
                             </div>
                         </div>
-
                         <!-- Edit Mode -->
                         <div id="editMode" style="display: none;">
                             <form id="editProfileForm">
                                 <div class="row">
-                                    <div class="col-md-6 mb-3">
+                                    <div class="col-12 mb-3">
                                         <label class="form-label fw-bold">Full Name</label>
                                         <input type="text" class="form-control" id="editFullName" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">Email Address</label>
-                                        <input type="email" class="form-control" id="editEmail" required>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">New Password (Optional)</label>
-                                        <input type="password" class="form-control" id="editPassword" placeholder="Leave blank to keep current">
-                                        <div class="password-strength mt-1" id="editPasswordStrength"></div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">Confirm Password</label>
-                                        <input type="password" class="form-control" id="editConfirmPassword" placeholder="Confirm new password">
                                     </div>
                                 </div>
                                 <div class="d-flex gap-2">
@@ -782,37 +793,38 @@
                         </div>
                     </div>
                 </div>
-
+            </div>
+            <div class="col-lg-6">
                 <!-- Security Status Card -->
-                <div class="card mt-4">
+                <div class="card mb-4">
                     <div class="card-header bg-transparent">
-                        <h5 class="mb-0 fw-bold">Security Status</h5>
+                        <h5 class="mb-0 fw-bold"><i class="fas fa-shield-alt me-2"></i>Security Status</h5>
                     </div>
                     <div class="card-body">
                         <div class="row g-3">
-                            <div class="col-md-3">
-                                <div class="text-center p-3 border rounded">
-                                    <i class="fas fa-shield-alt text-success mb-2" style="font-size: 2rem;"></i>
-                                    <h6 class="mb-1">Authentication</h6>
-                                    <small class="text-success">Secure</small>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="text-center p-3 border rounded">
+                            <div class="col-6 col-md-6">
+                                <div class="text-center p-3 border rounded bg-light bg-opacity-10 animate__animated animate__fadeInDown">
                                     <i class="fas fa-lock text-success mb-2" style="font-size: 2rem;"></i>
                                     <h6 class="mb-1">Session</h6>
                                     <small class="text-success">Active</small>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="text-center p-3 border rounded">
+                            <div class="col-6 col-md-6">
+                                <div class="text-center p-3 border rounded bg-light bg-opacity-10 animate__animated animate__fadeInDown">
                                     <i class="fas fa-user-shield text-success mb-2" style="font-size: 2rem;"></i>
                                     <h6 class="mb-1">Privacy</h6>
                                     <small class="text-success">Protected</small>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="text-center p-3 border rounded">
+                            <div class="col-6 col-md-6">
+                                <div class="text-center p-3 border rounded bg-light bg-opacity-10 animate__animated animate__fadeInDown">
+                                    <i class="fas fa-shield-alt text-success mb-2" style="font-size: 2rem;"></i>
+                                    <h6 class="mb-1">Authentication</h6>
+                                    <small class="text-success">Secure</small>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <div class="text-center p-3 border rounded bg-light bg-opacity-10 animate__animated animate__fadeInDown">
                                     <i class="fas fa-check-circle text-success mb-2" style="font-size: 2rem;"></i>
                                     <h6 class="mb-1">Status</h6>
                                     <small class="text-success">Verified</small>
@@ -821,15 +833,18 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Security Features Card -->
-                <div class="card mt-4">
+            </div>
+        </div>
+        <div class="row g-4">
+            <!-- Security Features -->
+            <div class="col-lg-6">
+                <div class="card mb-4">
                     <div class="card-header bg-transparent">
-                        <h5 class="mb-0 fw-bold">Security Features</h5>
+                        <h5 class="mb-0 fw-bold"><i class="fas fa-cogs me-2"></i>Security Features</h5>
                     </div>
                     <div class="card-body">
                         <div class="row g-3">
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 <div class="d-flex align-items-center p-3 border rounded">
                                     <i class="fas fa-google text-primary me-3" style="font-size: 1.5rem;"></i>
                                     <div>
@@ -838,7 +853,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 <div class="d-flex align-items-center p-3 border rounded">
                                     <i class="fas fa-fire text-warning me-3" style="font-size: 1.5rem;"></i>
                                     <div>
@@ -847,7 +862,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 <div class="d-flex align-items-center p-3 border rounded">
                                     <i class="fas fa-shield-virus text-info me-3" style="font-size: 1.5rem;"></i>
                                     <div>
@@ -856,7 +871,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 <div class="d-flex align-items-center p-3 border rounded">
                                     <i class="fas fa-user-secret text-success me-3" style="font-size: 1.5rem;"></i>
                                     <div>
@@ -868,116 +883,84 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Activity Dashboard -->
-                <div class="card mt-4">
+            </div>
+            <!-- Recent Activity Timeline -->
+            <div class="col-lg-6">
+                <div class="card mb-4">
                     <div class="card-header bg-transparent">
-                        <h5 class="mb-0 fw-bold">Recent Activity</h5>
+                        <h5 class="mb-0 fw-bold"><i class="fas fa-history me-2"></i>Recent Activity</h5>
                     </div>
                     <div class="card-body">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center p-3 border rounded">
-                                    <div class="bg-success rounded-circle me-3" style="width: 10px; height: 10px;"></div>
-                                    <div>
-                                        <h6 class="mb-1">Login Successful</h6>
-                                        <small class="text-muted" id="lastLoginTime">Just now</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center p-3 border rounded">
-                                    <div class="bg-info rounded-circle me-3" style="width: 10px; height: 10px;"></div>
-                                    <div>
-                                        <h6 class="mb-1">Session Active</h6>
-                                        <small class="text-muted">30 minutes remaining</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center p-3 border rounded">
-                                    <div class="bg-warning rounded-circle me-3" style="width: 10px; height: 10px;"></div>
-                                    <div>
-                                        <h6 class="mb-1">Profile Updated</h6>
-                                        <small class="text-muted">Last modified: Today</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center p-3 border rounded">
-                                    <div class="bg-primary rounded-circle me-3" style="width: 10px; height: 10px;"></div>
-                                    <div>
-                                        <h6 class="mb-1">Security Check</h6>
-                                        <small class="text-muted">All systems secure</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <ul class="timeline list-unstyled mb-0">
+                            <li class="timeline-item mb-4 animate__animated animate__fadeInLeft">
+                                <span class="timeline-icon bg-success"><i class="fas fa-sign-in-alt"></i></span>
+                                <span class="timeline-content">
+                                    <strong>Login Successful</strong>
+                                    <span class="text-muted small" id="lastLoginTime">Just now</span>
+                                </span>
+                            </li>
+                            <li class="timeline-item mb-4 animate__animated animate__fadeInLeft">
+                                <span class="timeline-icon bg-info"><i class="fas fa-bolt"></i></span>
+                                <span class="timeline-content">
+                                    <strong>Session Active</strong>
+                                    <span class="text-muted small">30 minutes remaining</span>
+                                </span>
+                            </li>
+                            <li class="timeline-item mb-4 animate__animated animate__fadeInLeft">
+                                <span class="timeline-icon bg-warning"><i class="fas fa-user-edit"></i></span>
+                                <span class="timeline-content">
+                                    <strong>Profile Updated</strong>
+                                    <span class="text-muted small">Last modified: Today</span>
+                                </span>
+                            </li>
+                            <li class="timeline-item animate__animated animate__fadeInLeft">
+                                <span class="timeline-icon bg-primary"><i class="fas fa-shield-alt"></i></span>
+                                <span class="timeline-content">
+                                    <strong>Security Check</strong>
+                                    <span class="text-muted small">All systems secure</span>
+                                </span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-
-                <!-- Quick Actions -->
-                <div class="card mt-4">
+            </div>
+        </div>
+        <!-- System Information -->
+        <div class="row g-4">
+            <div class="col-12">
+                <div class="card mb-4">
                     <div class="card-header bg-transparent">
-                        <h5 class="mb-0 fw-bold">Quick Actions</h5>
+                        <h5 class="mb-0 fw-bold"><i class="fas fa-desktop me-2"></i>System Information</h5>
                     </div>
                     <div class="card-body">
                         <div class="row g-3">
-                            <div class="col-md-4">
-                                <a href="logout.html" class="btn btn-outline-danger w-100">
-                                    <i class="fas fa-sign-out-alt me-2"></i>Sign Out
-                                </a>
-                            </div>
-                            <div class="col-md-4">
-                                <button class="btn btn-outline-primary w-100" id="refreshUserDataBtn">
-                                    <i class="fas fa-sync-alt me-2"></i>Refresh Data
-                                </button>
-                            </div>
-                            <div class="col-md-4">
-                                <button class="btn btn-outline-success w-100" id="exportDataBtn">
-                                    <i class="fas fa-download me-2"></i>Export Data
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- System Information -->
-                <div class="card mt-4">
-                    <div class="card-header bg-transparent">
-                        <h5 class="mb-0 fw-bold">System Information</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row g-3">
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-6">
                                 <div class="d-flex justify-content-between align-items-center p-3 border rounded">
                                     <span class="fw-bold">Browser</span>
                                     <span class="text-muted" id="browserInfo">Chrome</span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-6">
                                 <div class="d-flex justify-content-between align-items-center p-3 border rounded">
                                     <span class="fw-bold">Platform</span>
                                     <span class="text-muted" id="platformInfo">Windows</span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-6">
                                 <div class="d-flex justify-content-between align-items-center p-3 border rounded">
                                     <span class="fw-bold">Connection</span>
                                     <span class="text-success" id="connectionInfo">Secure (HTTPS)</span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3 col-6">
                                 <div class="d-flex justify-content-between align-items-center p-3 border rounded">
                                     <span class="fw-bold">Session Time</span>
-                                    <span class="text-muted" id="sessionTime">Active</span>
+                                    <span class="text-muted" id="sessionTime2">Active</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
