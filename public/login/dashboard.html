@@ -97,17 +97,72 @@
     <button id="logout-btn" class="logout-btn">Logout</button>
   </nav>
   <div class="dashboard-container th-container">
-    <div class="user-info">
-      <img id="user-avatar" class="user-avatar" src="../img/favicon.png" alt="User Avatar">
+    <div class="user-info th-card" style="margin-bottom:2rem; box-shadow:0 0 32px #00ff41cc; border:2.5px solid #00ff41; background:rgba(26,26,26,0.98);">
+      <img id="user-avatar" class="user-avatar" src="../img/favicon.png" alt="User Avatar" style="border:3px solid #00ff41;">
       <div class="user-details">
-        <div id="user-name" class="user-name">Loading...</div>
-        <div id="user-email" class="user-email"></div>
+        <div id="user-name" class="user-name" style="font-size:1.5rem; color:#00ff41;">Loading...</div>
+        <div id="user-email" class="user-email" style="font-size:1.1rem; color:#fff; margin-bottom:0.5em;"></div>
+        <div style="color:#aaa; font-size:0.95em;">(ข้อมูลนี้ดึงจากฐานข้อมูล Profile ของคุณ)</div>
       </div>
     </div>
     <div class="dashboard-content">
-      <h2>Welcome to your Dashboard</h2>
-      <p>This is a secure area for authenticated users. More features coming soon!</p>
-      <!-- Add dashboard widgets or content here -->
+      <div class="th-card" style="margin-bottom:2rem;">
+        <div class="th-card-header">Profile Details</div>
+        <div class="th-card-body">
+          <ul style="list-style:none; padding:0; margin:0;">
+            <li><b>Name:</b> <span id="profile-detail-name">Loading...</span></li>
+            <li><b>Email:</b> <span id="profile-detail-email">Loading...</span></li>
+            <li><b>Avatar URL:</b> <span id="profile-detail-avatar">-</span></li>
+            <li><b>More fields:</b> <span style="color:#888;">(coming soon)</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="th-card" style="margin-bottom:2rem;">
+        <div class="th-card-header">Welcome</div>
+        <div class="th-card-body">
+          <h2 id="greeting">Welcome to your Dashboard!</h2>
+          <p>Manage your security, view your activity, and stay up to date with the latest tips from ThemeHackers.</p>
+        </div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:2rem; margin-bottom:2rem;">
+        <div class="th-card" style="flex:1; min-width:220px;">
+          <div class="th-card-header"><i class="fa fa-user-shield"></i> Account Status</div>
+          <div class="th-card-body">
+            <div><span class="th-text-primary">Authenticated</span> via Google</div>
+            <div id="last-login" style="margin-top:0.7em; color:#aaa; font-size:0.95em;">Last login: <span id="last-login-value">-</span></div>
+          </div>
+        </div>
+        <div class="th-card" style="flex:1; min-width:220px;">
+          <div class="th-card-header"><i class="fa fa-chart-line"></i> Quick Stats</div>
+          <div class="th-card-body">
+            <ul style="list-style:none; padding:0; margin:0;">
+              <li><b>Profile:</b> <span id="profile-status" class="th-text-success">Active</span></li>
+              <li><b>Security Level:</b> <span class="th-text-warning">Standard</span></li>
+              <li><b>2FA:</b> <span class="th-text-danger">Not enabled</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="th-card" style="flex:1; min-width:220px;">
+          <div class="th-card-header"><i class="fa fa-lightbulb"></i> Security Tips</div>
+          <div class="th-card-body">
+            <ul style="padding-left:1.2em;">
+              <li>Enable 2FA for extra protection</li>
+              <li>Use strong, unique passwords</li>
+              <li>Review your account activity regularly</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="th-card">
+        <div class="th-card-header"><i class="fa fa-history"></i> Recent Activity</div>
+        <div class="th-card-body">
+          <ul id="recent-activity" style="padding-left:1.2em; color:#aaa;">
+            <li>Signed in to dashboard</li>
+            <li>Viewed profile</li>
+            <li>Checked security tips</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
   <div class="login-footer" style="text-align:center; margin-top:2rem; color:#888; font-size:0.9rem; opacity:0.7;">
