@@ -1,5 +1,6 @@
 const SUPABASE_URL = window.ENV?.SUPABASE_URL;
 const SUPABASE_ANON_KEY = window.ENV?.SUPABASE_ANON_KEY;
+const REDIRECT_TO = window.ENV?.REDIRECT_TO || (window.location.origin + '/login/dashboard.html');
 
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   alert('Supabase environment variables are not set. Please check your Netlify configuration.');
