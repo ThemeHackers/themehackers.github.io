@@ -122,6 +122,10 @@
             color: var(--sidebar-accent);
             box-shadow: 0 2px 12px #00ff4133;
         }
+        .sidebar-nav a:focus {
+            outline: 2px solid var(--accent);
+            box-shadow: 0 0 0 2px #00ff4144;
+        }
         .sidebar-footer {
             margin-top: auto;
             font-size: 0.97rem;
@@ -320,11 +324,11 @@
 <body>
     <div class="dashboard-root">
         <aside class="sidebar">
-            <img src="../img/favicon.png" alt="ThemeHackers Logo" class="sidebar-logo">
+            <img src="../img/favicon.png" alt="ThemeHackers Logo" class="sidebar-logo" aria-label="ThemeHackers Logo">
             <div class="sidebar-title">DASHSECURITY</div>
             <nav class="sidebar-nav">
-                <a href="#" class="active"><i class="fas fa-gauge"></i> Dashboard</a>
-                <a href="/" target="_blank"><i class="fas fa-home"></i> Main Site</a>
+                <a href="#" class="active" tabindex="0" aria-current="page"><i class="fas fa-gauge"></i> Dashboard</a>
+                <a href="/" target="_blank" tabindex="0"><i class="fas fa-home"></i> Main Site</a>
             </nav>
             <div class="sidebar-footer">&copy; 2024 ThemeHackers</div>
         </aside>
@@ -334,7 +338,7 @@
                     <div id="user-name" class="dashboard-name">Loading...</div>
                     <div id="user-email" class="dashboard-email"></div>
                 </div>
-                <img id="user-avatar" class="dashboard-avatar" src="../img/favicon.png" alt="Avatar">
+                <img id="user-avatar" class="dashboard-avatar" src="../img/favicon.png" alt="User Avatar" aria-label="User Avatar">
                 <button id="logout-btn" class="dashboard-logout-btn" title="Sign out">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </button>
@@ -365,16 +369,17 @@
         </main>
     </div>
     <script>
+    // NOTE: For maintainability, consider moving inline script and style to separate .js and .css files.
     function setTheme(theme) {
         document.body.setAttribute('data-theme', theme);
         localStorage.setItem('theme-mode', theme);
         const icon = document.getElementById('theme-icon');
         if (theme === 'dark') {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-        } else {
             icon.classList.remove('fa-moon');
             icon.classList.add('fa-sun');
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
         }
     }
     function toggleTheme() {
@@ -393,8 +398,8 @@
        
         document.getElementById('logout-btn').onclick = async () => {
             await supabase.auth.signOut();
-            alert('You have been signed out.');
-            window.location.href = '/login/';
+            showToast('You have been signed out.');
+            setTimeout(() => { window.location.href = '/login/'; }, 1200);
         };
 
        
@@ -404,6 +409,23 @@
         loadUser();
     });
 
+    function showToast(msg) {
+        let toast = document.createElement('div');
+        toast.textContent = msg;
+        toast.style.position = 'fixed';
+        toast.style.bottom = '32px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.background = 'var(--accent)';
+        toast.style.color = '#23272f';
+        toast.style.padding = '0.9em 2em';
+        toast.style.borderRadius = '12px';
+        toast.style.boxShadow = '0 2px 12px #00ff4133';
+        toast.style.fontWeight = '600';
+        toast.style.zIndex = 9999;
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.remove(); }, 1100);
+    }
 
     const SUPABASE_URL = window.ENV?.SUPABASE_URL;
     const SUPABASE_ANON_KEY = window.ENV?.SUPABASE_ANON_KEY;
@@ -416,45 +438,54 @@
     }
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     async function loadUser() {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) {
-            window.location.href = '/login/';
-            return;
+        try {
+            const { data: { session }, error } = await supabase.auth.getSession();
+            if (error) throw error;
+            if (!session) {
+                window.location.href = '/login/';
+                return;
+            }
+            const user = session.user;
+            const avatar = document.getElementById('user-avatar');
+            if (user.user_metadata && user.user_metadata.avatar_url) {
+                avatar.src = user.user_metadata.avatar_url;
+            } else {
+                avatar.src = '../img/favicon.png';
+            }
+            document.getElementById('user-name').textContent = user.user_metadata.full_name || user.email;
+            document.getElementById('user-email').textContent = user.email;
+            document.getElementById('created-at').textContent = user.created_at ? new Date(user.created_at).toLocaleString() : '-';
+            // Use last_sign_in_at if available, else fallback
+            let lastLogin = user.last_sign_in_at || user.user_metadata?.last_sign_in_at;
+            if (!lastLogin && session.expires_at) lastLogin = new Date(session.expires_at * 1000).toISOString();
+            document.getElementById('last-login').textContent = lastLogin ? new Date(lastLogin).toLocaleString() : '-';
+            document.getElementById('dashboard-loading').style.display = 'none';
+            upsertProfile(user);
+        } catch (err) {
+            document.getElementById('dashboard-loading').style.display = 'none';
+            document.getElementById('dashboard-alert').style.display = 'block';
+            document.getElementById('dashboard-alert').className = 'th-alert th-alert-danger';
+            document.getElementById('dashboard-alert').textContent = 'Error loading user session: ' + (err.message || err);
         }
-        const user = session.user;
-        
-        const avatar = document.getElementById('user-avatar');
-        if (user.user_metadata && user.user_metadata.avatar_url) {
-            avatar.src = user.user_metadata.avatar_url;
-        } else {
-            avatar.src = '../img/favicon.png';
-        }
-        
-        document.getElementById('user-name').textContent = user.user_metadata.full_name || user.email;
-        document.getElementById('user-email').textContent = user.email;
-        
-        document.getElementById('created-at').textContent = user.created_at ? new Date(user.created_at).toLocaleString() : '-';
-        
-        document.getElementById('last-login').textContent = session.expires_at ? new Date(session.expires_at * 1000).toLocaleString() : '-';
-       
-        document.getElementById('dashboard-loading').style.display = 'none';
-
-        upsertProfile(user);
     }
 
     async function upsertProfile(user) {
         if (!user) return;
-        const { error } = await supabase
-            .from('profiles')
-            .upsert([
-                {
-                    user_id: user.id,
-                    name: user.user_metadata.full_name || user.email,
-                    updated_at: new Date().toISOString()
-                }
-            ], { onConflict: ['user_id'] });
-        if (error) {
-            console.error('Error upserting profile:', error);
+        try {
+            const { error } = await supabase
+                .from('profiles')
+                .upsert([
+                    {
+                        user_id: user.id,
+                        name: user.user_metadata.full_name || user.email,
+                        updated_at: new Date().toISOString()
+                    }
+                ], { onConflict: ['user_id'] });
+            if (error && error.code !== '42P01') { // 42P01: undefined_table
+                console.error('Error upserting profile:', error);
+            }
+        } catch (e) {
+            console.error('Error upserting profile:', e);
         }
     }
     </script>
