@@ -424,7 +424,7 @@
         document.getElementById('last-login').textContent = session.expires_at ? new Date(session.expires_at * 1000).toLocaleString() : '-';
        
         document.getElementById('dashboard-loading').style.display = 'none';
-        // Upsert profile to database
+
         upsertProfile(user);
     }
 
