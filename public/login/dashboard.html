@@ -18,358 +18,70 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
     <script src="js/env.js" defer></script>
-    <style>
-        :root {
-            --sidebar-bg: linear-gradient(135deg, #181c24 60%, #232a36 100%);
-            --sidebar-accent: #00ff41;
-            --main-bg: #f6f8fa;
-            --card-bg: #fff;
-            --card-shadow: 0 4px 32px #00ff4122, 0 2px 8px #0001;
-            --text-main: #23272f;
-            --text-muted: #888;
-            --accent: #00ff41;
-            --danger: #ff3b3b;
-            --header-bg: #fff;
-            --header-shadow: 0 2px 12px #00ff4111;
-            --sidebar-glow: 0 0 32px #00ff4133;
-            --transition: 0.22s cubic-bezier(.4,2,.6,1);
-        }
-        body[data-theme='dark'] {
-            --sidebar-bg: linear-gradient(135deg, #181c24 60%, #232a36 100%);
-            --sidebar-accent: #00ff41;
-            --main-bg: #10141a;
-            --card-bg: #181c24;
-            --card-shadow: 0 4px 32px #00ff4133, 0 2px 8px #000a;
-            --text-main: #f6f8fa;
-            --text-muted: #aaa;
-            --accent: #00ff41;
-            --danger: #ff3b3b;
-            --header-bg: #181c24;
-            --header-shadow: 0 2px 12px #00ff4133;
-            --sidebar-glow: 0 0 32px #00ff4166;
-            --transition: 0.22s cubic-bezier(.4,2,.6,1);
-        }
-        html, body {
-            height: 100%;
-        }
-        body {
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Segoe UI', 'Arial', sans-serif;
-            background: var(--main-bg);
-            color: var(--text-main);
-            transition: background var(--transition), color var(--transition);
-        }
-        .dashboard-root {
-            display: flex;
-            min-height: 100vh;
-        }
-        .sidebar {
-            width: 250px;
-            background: var(--sidebar-bg);
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2.5rem 1.2rem 1.2rem 1.2rem;
-            box-shadow: 2px 0 24px #0003, var(--sidebar-glow);
-            position: relative;
-            z-index: 2;
-            border-top-right-radius: 32px;
-            border-bottom-right-radius: 32px;
-            overflow: hidden;
-        }
-        .sidebar-logo {
-            width: 62px;
-            height: 62px;
-            border-radius: 18px;
-            margin-bottom: 1.3rem;
-            box-shadow: 0 0 24px var(--sidebar-accent);
-            background: #222;
-            object-fit: cover;
-            border: 2.5px solid var(--sidebar-accent);
-            transition: box-shadow var(--transition);
-        }
-        .sidebar-title {
-            font-size: 1.35rem;
-            font-weight: bold;
-            color: var(--sidebar-accent);
-            margin-bottom: 2.7rem;
-            letter-spacing: 1.5px;
-            text-shadow: 0 2px 12px #00ff4133;
-        }
-        .sidebar-nav {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-        }
-        .sidebar-nav a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.08rem;
-            padding: 0.8em 1.2em;
-            border-radius: 10px;
-            transition: background var(--transition), color var(--transition), box-shadow var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.7em;
-            font-weight: 500;
-            position: relative;
-        }
-        .sidebar-nav a.active, .sidebar-nav a:hover {
-            background: #232a36cc;
-            color: var(--sidebar-accent);
-            box-shadow: 0 2px 12px #00ff4133;
-        }
-        .sidebar-nav a:focus {
-            outline: 2px solid var(--accent);
-            box-shadow: 0 0 0 2px #00ff4144;
-        }
-        .sidebar-footer {
-            margin-top: auto;
-            font-size: 0.97rem;
-            color: #aaa;
-            opacity: 0.7;
-            text-align: center;
-            letter-spacing: 0.5px;
-        }
-        .main-content {
-            flex: 1;
-            padding: 2.7rem 2.2rem 2rem 2.2rem;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-        }
-        .dashboard-header {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 1.7rem;
-            margin-bottom: 2.7rem;
-            background: var(--header-bg);
-            box-shadow: var(--header-shadow);
-            border-radius: 16px;
-            padding: 1.1rem 2rem;
-            transition: background var(--transition), box-shadow var(--transition);
-            position: relative;
-        }
-        .dashboard-avatar {
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
-            object-fit: cover;
-            box-shadow: 0 0 12px var(--accent);
-            background: #eee;
-            border: 2px solid var(--accent);
-            transition: box-shadow var(--transition), border var(--transition);
-        }
-        .dashboard-userinfo {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            min-width: 0;
-        }
-        .dashboard-name {
-            font-size: 1.13rem;
-            font-weight: 600;
-            color: var(--accent);
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            letter-spacing: 0.5px;
-        }
-        .dashboard-email {
-            font-size: 0.99rem;
-            color: var(--text-muted);
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-        .dashboard-logout-btn {
-            background: var(--danger);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            padding: 0.55em 1.3em;
-            font-size: 1.05rem;
-            cursor: pointer;
-            transition: background var(--transition), box-shadow var(--transition), transform 0.12s;
-            display: flex;
-            align-items: center;
-            gap: 0.5em;
-            box-shadow: 0 2px 8px #ff3b3b33;
-            font-weight: 500;
-        }
-        .dashboard-logout-btn:hover, .dashboard-logout-btn:focus {
-            background: #d32f2f;
-            box-shadow: 0 4px 16px #ff3b3b55;
-            outline: none;
-            transform: translateY(-2px) scale(1.04);
-        }
-        .theme-toggle-btn {
-            background: none;
-            border: none;
-            font-size: 1.7rem;
-            cursor: pointer;
-            color: var(--accent);
-            margin-left: 1.2rem;
-            transition: color var(--transition), transform 0.15s;
-            border-radius: 50%;
-            padding: 0.2em 0.3em;
-            box-shadow: 0 0 0 transparent;
-        }
-        .theme-toggle-btn:focus {
-            outline: 2px solid var(--accent);
-            box-shadow: 0 0 0 2px #00ff4144;
-        }
-        .theme-toggle-btn:hover {
-            color: #fff;
-            background: var(--accent);
-            transform: scale(1.13) rotate(-10deg);
-        }
-        .dashboard-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 2.2rem;
-            margin-bottom: 2.7rem;
-        }
-        .dashboard-card {
-            background: var(--card-bg);
-            border-radius: 18px;
-            box-shadow: var(--card-shadow);
-            padding: 2.2rem 1.7rem 1.7rem 1.7rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.3rem;
-            min-width: 0;
-            transition: background var(--transition), box-shadow var(--transition), transform 0.15s;
-            border: 1.5px solid #00ff4122;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInCard 0.7s cubic-bezier(.4,2,.6,1);
-        }
-        .dashboard-card:hover {
-            box-shadow: 0 8px 32px #00ff4144, 0 2px 8px #0002;
-            transform: translateY(-2px) scale(1.015);
-            border-color: var(--accent);
-        }
-        @keyframes fadeInCard {
-            from { opacity: 0; transform: translateY(24px) scale(0.98); }
-            to { opacity: 1; transform: none; }
-        }
-        .dashboard-card-title {
-            font-size: 1.13rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 0.5em;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 0.5em;
-        }
-        .dashboard-label {
-            color: var(--accent);
-            font-weight: 600;
-            margin-right: 0.5em;
-            font-size: 1.07rem;
-        }
-        .dashboard-value {
-            color: var(--text-main);
-            font-family: 'Courier New', monospace;
-            font-size: 1.07rem;
-        }
-        .dashboard-footer {
-            text-align: center;
-            margin-top: auto;
-            color: var(--text-muted);
-            font-size: 0.97rem;
-            opacity: 0.7;
-            letter-spacing: 0.5px;
-        }
-        .th-spinner {
-            display: inline-block;
-            width: 2.2rem;
-            height: 2.2rem;
-            border: 4px solid var(--accent);
-            border-top: 4px solid #fff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 2rem auto 1rem auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @media (max-width: 1100px) {
-            .dashboard-cards { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 900px) {
-            .dashboard-root { flex-direction: column; }
-            .sidebar { width: 100%; flex-direction: row; justify-content: flex-start; align-items: center; padding: 1.2rem; box-shadow: none; border-radius: 0; }
-            .sidebar-logo { margin-bottom: 0; margin-right: 1rem; }
-            .sidebar-title { margin-bottom: 0; }
-            .sidebar-nav { flex-direction: row; gap: 1rem; margin-left: 2rem; }
-            .sidebar-footer { display: none; }
-        }
-        @media (max-width: 600px) {
-            .main-content { padding: 1rem 0.2rem; }
-            .dashboard-cards { gap: 1rem; }
-            .dashboard-card { padding: 1rem 0.7rem; }
-            .dashboard-header { flex-direction: column; gap: 0.7rem; align-items: flex-start; padding: 0.7rem 0.5rem; }
-            .dashboard-avatar { width: 40px; height: 40px; }
-        }
-    </style>
 </head>
 <body>
-    <div class="dashboard-root">
-        <aside class="sidebar">
-            <img src="../img/favicon.png" alt="ThemeHackers Logo" class="sidebar-logo" aria-label="ThemeHackers Logo">
-            <div class="sidebar-title">DASHSECURITY</div>
-            <nav class="sidebar-nav">
-                <a href="#" class="active" tabindex="0" aria-current="page"><i class="fas fa-gauge"></i> Dashboard</a>
-                <a href="/" target="_blank" tabindex="0"><i class="fas fa-home"></i> Main Site</a>
-            </nav>
-            <div class="sidebar-footer">&copy; 2024 ThemeHackers</div>
-        </aside>
-        <main class="main-content">
-            <div class="dashboard-header">
-                <div class="dashboard-userinfo">
-                    <div id="user-name" class="dashboard-name">Loading...</div>
-                    <div id="user-email" class="dashboard-email"></div>
+    <div class="th-navbar d-flex align-items-center justify-content-between px-4 py-2">
+        <div class="d-flex align-items-center">
+            <img src="../img/favicon.png" alt="ThemeHackers Logo" style="width:44px;height:44px;border-radius:12px;margin-right:1rem;">
+            <span class="th-navbar-brand">DASHSECURITY</span>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <button id="theme-toggle" class="theme-toggle-btn th-btn-outline-primary" title="Toggle theme" aria-label="Toggle theme" style="font-size:1.5rem;padding:0.3em 0.7em;">
+                <i id="theme-icon" class="fas fa-moon"></i>
+            </button>
+            <button id="logout-btn" class="th-btn-outline-danger" title="Sign out">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="th-card p-4 mb-4 d-flex flex-column flex-md-row align-items-center gap-4">
+                    <img id="user-avatar" src="../img/favicon.png" alt="User Avatar" style="width:80px;height:80px;border-radius:50%;box-shadow:0 0 16px var(--th-primary);background:#eee;border:3px solid var(--th-primary);">
+                    <div class="flex-grow-1">
+                        <div class="d-flex flex-column flex-md-row align-items-md-center gap-2 mb-2">
+                            <span id="user-name" class="th-brand-title">Loading...</span>
+                            <span id="user-email" class="th-text-info ms-md-3"></span>
+                        </div>
+                        <div class="d-flex flex-wrap gap-3">
+                            <div><span class="th-form-label">Account Created:</span> <span id="created-at" class="th-text-primary">-</span></div>
+                            <div><span class="th-form-label">Last Login:</span> <span id="last-login" class="th-text-primary">-</span></div>
+                        </div>
+                    </div>
                 </div>
-                <img id="user-avatar" class="dashboard-avatar" src="../img/favicon.png" alt="User Avatar" aria-label="User Avatar">
-                <button id="logout-btn" class="dashboard-logout-btn" title="Sign out">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
-                <button id="theme-toggle" class="theme-toggle-btn" title="Toggle theme" aria-label="Toggle theme">
-                    <i id="theme-icon" class="fas fa-moon"></i>
-                </button>
-            </div>
-            <div class="dashboard-cards">
-                <div class="dashboard-card">
-                    <div class="dashboard-card-title"><i class="fas fa-user"></i> Account Details</div>
-                    <div><span class="dashboard-label">Account Created:</span><span id="created-at" class="dashboard-value">-</span></div>
-                    <div><span class="dashboard-label">Last Login:</span><span id="last-login" class="dashboard-value">-</span></div>
+                <div class="row g-4">
+                    <div class="col-12 col-md-6">
+                        <div class="th-card p-4">
+                            <div class="th-card-header mb-2"><i class="fas fa-user-shield"></i> Security Status</div>
+                            <div class="mb-2"><span class="th-form-label">Authentication:</span> <span class="th-text-primary">Google Sign-In</span></div>
+                            <div><span class="th-form-label">Session:</span> <span class="th-text-success" id="session-status">Active</span></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="th-card p-4">
+                            <div class="th-card-header mb-2"><i class="fas fa-shield-alt"></i> Security Features</div>
+                            <ul class="th-security-features">
+                                <li>Google OAuth 2.0 Only</li>
+                                <li>Supabase Secure Session</li>
+                                <li>Strict CSP &amp; Security Headers</li>
+                                <li>Theme Toggle (Dark/Light)</li>
+                                <li>Responsive Design</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="dashboard-card">
-                    <div class="dashboard-card-title"><i class="fas fa-shield-alt"></i> Security Status</div>
-                    <div><span class="dashboard-label">Authentication:</span><span class="dashboard-value">Google Sign-In</span></div>
-                    <div><span class="dashboard-label">Session:</span><span class="dashboard-value" id="session-status">Active</span></div>
+                <div id="dashboard-loading" class="text-center my-5">
+                    <div class="th-spinner" style="font-size:2.5rem;"></div>
+                    <div class="th-form-label mt-2">Loading your secure dashboard...</div>
                 </div>
+                <div id="dashboard-alert" style="display:none;"></div>
             </div>
-            <div id="dashboard-loading" style="text-align:center;">
-                <div class="th-spinner"></div>
-                <div class="dashboard-label">Loading your secure dashboard...</div>
-            </div>
-            <div id="dashboard-alert" style="display:none;"></div>
-            <div class="dashboard-footer">
-                &copy; 2024 ThemeHackers. All rights reserved.
-            </div>
-        </main>
+        </div>
+        <div class="text-center th-divider mt-5 mb-2"><span>ThemeHackers</span></div>
+        <div class="text-center th-text-secondary mb-4">&copy; 2024 ThemeHackers. All rights reserved.</div>
     </div>
     <script>
-
     function setTheme(theme) {
         document.body.setAttribute('data-theme', theme);
         localStorage.setItem('theme-mode', theme);
@@ -387,28 +99,22 @@
         setTheme(current === 'dark' ? 'light' : 'dark');
     }
     window.addEventListener('DOMContentLoaded', function() {
-
         let theme = localStorage.getItem('theme-mode');
         if (!theme) {
             theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
         setTheme(theme);
         document.getElementById('theme-toggle').onclick = toggleTheme;
-
-       
         document.getElementById('logout-btn').onclick = async () => {
             await supabase.auth.signOut();
             showToast('You have been signed out.');
             setTimeout(() => { window.location.href = '/login/'; }, 1200);
         };
-
-       
         if (window.location.hash && window.location.hash.includes('access_token')) {
             history.replaceState(null, '', window.location.pathname + window.location.search);
         }
         loadUser();
     });
-
     function showToast(msg) {
         let toast = document.createElement('div');
         toast.textContent = msg;
@@ -416,7 +122,7 @@
         toast.style.bottom = '32px';
         toast.style.left = '50%';
         toast.style.transform = 'translateX(-50%)';
-        toast.style.background = 'var(--accent)';
+        toast.style.background = 'var(--th-primary)';
         toast.style.color = '#23272f';
         toast.style.padding = '0.9em 2em';
         toast.style.borderRadius = '12px';
@@ -426,7 +132,6 @@
         document.body.appendChild(toast);
         setTimeout(() => { toast.remove(); }, 1100);
     }
-
     const SUPABASE_URL = window.ENV?.SUPABASE_URL;
     const SUPABASE_ANON_KEY = window.ENV?.SUPABASE_ANON_KEY;
     const REDIRECT_TO = window.ENV?.REDIRECT_TO || (window.location.origin + '/login/dashboard.html');
@@ -456,7 +161,6 @@
             document.getElementById('user-name').textContent = user.user_metadata.full_name || user.email;
             document.getElementById('user-email').textContent = user.email;
             document.getElementById('created-at').textContent = user.created_at ? new Date(user.created_at).toLocaleString() : '-';
-     
             let lastLogin = user.last_sign_in_at || user.user_metadata?.last_sign_in_at;
             if (!lastLogin && session.expires_at) lastLogin = new Date(session.expires_at * 1000).toISOString();
             document.getElementById('last-login').textContent = lastLogin ? new Date(lastLogin).toLocaleString() : '-';
@@ -469,7 +173,6 @@
             document.getElementById('dashboard-alert').textContent = 'Error loading user session: ' + (err.message || err);
         }
     }
-
     async function upsertProfile(user) {
         if (!user) return;
         try {
@@ -482,7 +185,7 @@
                         updated_at: new Date().toISOString()
                     }
                 ], { onConflict: ['user_id'] });
-            if (error && error.code !== '42P01') { 
+            if (error && error.code !== '42P01') {
                 console.error('Error upserting profile:', error);
             }
         } catch (e) {
