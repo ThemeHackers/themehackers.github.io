@@ -424,6 +424,24 @@
         document.getElementById('last-login').textContent = session.expires_at ? new Date(session.expires_at * 1000).toLocaleString() : '-';
        
         document.getElementById('dashboard-loading').style.display = 'none';
+        // Upsert profile to database
+        upsertProfile(user);
+    }
+
+    async function upsertProfile(user) {
+        if (!user) return;
+        const { error } = await supabase
+            .from('profiles')
+            .upsert([
+                {
+                    user_id: user.id,
+                    name: user.user_metadata.full_name || user.email,
+                    updated_at: new Date().toISOString()
+                }
+            ], { onConflict: ['user_id'] });
+        if (error) {
+            console.error('Error upserting profile:', error);
+        }
     }
     loadUser();
    
