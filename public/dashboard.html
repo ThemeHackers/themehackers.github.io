@@ -1004,7 +1004,93 @@
         createMatrixEffect();
 
       
+        
+        function updateDashboardUserInfo(userData, currentUser) {
+          
+            const welcomeUserName = document.getElementById('welcomeUserName');
+            if (welcomeUserName) {
+                welcomeUserName.textContent = userData.fullName || currentUser.displayName || 'User';
+            }
+            const displayEmail = document.getElementById('displayEmail');
+            if (displayEmail) {
+                displayEmail.textContent = userData.email || currentUser.email || '-';
+            }
+          
+            const displayFullName = document.getElementById('displayFullName');
+            if (displayFullName) {
+                displayFullName.textContent = userData.fullName || currentUser.displayName || '-';
+            }
+            const displayEmail2 = document.getElementById('displayEmail2');
+            if (displayEmail2) {
+                displayEmail2.textContent = userData.email || currentUser.email || '-';
+            }
+            const displayCreatedAt = document.getElementById('displayCreatedAt');
+            if (displayCreatedAt) {
+                let date = userData.createdAt;
+                if (date && date.toDate) date = date.toDate();
+                else if (date) date = new Date(date);
+                else date = currentUser.metadata && currentUser.metadata.creationTime ? new Date(currentUser.metadata.creationTime) : null;
+                displayCreatedAt.textContent = date ? date.toLocaleDateString() + ' ' + date.toLocaleTimeString() : '-';
+            }
+            const displayLastLogin = document.getElementById('displayLastLogin');
+            if (displayLastLogin) {
+                let date = userData.lastLogin;
+                if (date && date.toDate) date = date.toDate();
+                else if (date) date = new Date(date);
+                else date = currentUser.metadata && currentUser.metadata.lastSignInTime ? new Date(currentUser.metadata.lastSignInTime) : null;
+                displayLastLogin.textContent = date ? date.toLocaleDateString() + ' ' + date.toLocaleTimeString() : '-';
+            }
+            
+            const lastLoginTime = document.getElementById('lastLoginTime');
+            if (lastLoginTime && userData.lastLogin) {
+                let date = userData.lastLogin;
+                if (date && date.toDate) date = date.toDate();
+                else if (date) date = new Date(date);
+                const now = new Date();
+                const diffMinutes = Math.floor((now - date) / 60000);
+                if (diffMinutes < 1) {
+                    lastLoginTime.textContent = 'Just now';
+                } else if (diffMinutes < 60) {
+                    lastLoginTime.textContent = `${diffMinutes} minutes ago`;
+                } else if (diffMinutes < 1440) {
+                    const hours = Math.floor(diffMinutes / 60);
+                    lastLoginTime.textContent = `${hours} hours ago`;
+                } else {
+                    const days = Math.floor(diffMinutes / 1440);
+                    lastLoginTime.textContent = `${days} days ago`;
+                }
+            }
+        }
+
+        function loadAndDisplayUserData() {
+            if (!window.auth || !window.db) return;
+            window.auth.onAuthStateChanged(async function(user) {
+                if (user) {
+                    try {
+                        const userDoc = await window.db.collection('users').doc(user.uid).get();
+                        let userData = userDoc.exists ? userDoc.data() : {};
+                    
+                        if (!userData.fullName) userData.fullName = user.displayName;
+                        if (!userData.email) userData.email = user.email;
+                        if (!userData.createdAt) userData.createdAt = user.metadata && user.metadata.creationTime ? new Date(user.metadata.creationTime) : null;
+                        if (!userData.lastLogin) userData.lastLogin = user.metadata && user.metadata.lastSignInTime ? new Date(user.metadata.lastSignInTime) : null;
+                        updateDashboardUserInfo(userData, user);
+                    } catch (e) {
+                   
+                        updateDashboardUserInfo({
+                            fullName: user.displayName,
+                            email: user.email,
+                            createdAt: user.metadata && user.metadata.creationTime ? new Date(user.metadata.creationTime) : null,
+                            lastLogin: user.metadata && user.metadata.lastSignInTime ? new Date(user.metadata.lastSignInTime) : null
+                        }, user);
+                    }
+                }
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+            loadAndDisplayUserData();
+
             const checkFirebaseReady = setInterval(() => {
                 if (window.auth && window.db) {
                     clearInterval(checkFirebaseReady);
