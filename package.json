@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "dashsecurity.netlify.app with Supabase Auth and Netlify environment variable injection.",
   "scripts": {
-    "build": "npm install -D netlify-plugin-inline-env"
+    "build": ""
   },
   "devDependencies": {},
   "dependencies": {},
