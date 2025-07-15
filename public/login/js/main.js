@@ -6,6 +6,9 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   throw new Error('Missing Supabase environment variables');
 }
 
+console.log('SUPABASE_URL', SUPABASE_URL);
+console.log('SUPABASE_ANON_KEY', SUPABASE_ANON_KEY);
+
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const googleBtn = document.getElementById('google-signin');
@@ -17,13 +20,14 @@ if (googleBtn) {
     googleBtn.innerHTML = '<span class="th-spinner"></span> Signing in...';
     alertBox.style.display = 'none';
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: window.location.origin + '/dashboard.html'
+          redirectTo: window.location.origin + '/login/dashboard.html'
         }
       });
       if (error) {
+        console.error('OAuth error:', error);
         alertBox.style.display = 'block';
         alertBox.className = 'th-alert th-alert-danger';
         alertBox.textContent = 'Login failed: ' + error.message;
