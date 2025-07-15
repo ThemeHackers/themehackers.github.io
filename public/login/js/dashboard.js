@@ -28,7 +28,6 @@ async function getUserAndProfile() {
 
   document.getElementById('profile-detail-name').textContent = profile?.name || user.user_metadata?.full_name || user.email;
   document.getElementById('profile-detail-email').textContent = profile?.email || user.email;
-  document.getElementById('profile-detail-avatar').textContent = profile?.avatar_url || user.user_metadata?.avatar_url || '-';
 
   const createdAtEl = document.getElementById('created-at-value');
   if (createdAtEl && user.created_at) {
