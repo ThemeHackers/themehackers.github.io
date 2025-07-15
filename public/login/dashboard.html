@@ -11,79 +11,284 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: https://cdn.jsdelivr.net; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' https://tcjxrlsebxdyoohcugsr.supabase.co; frame-ancestors 'none';">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
-    <title>★彡[TH Dashsecurity Dashboard]彡★</title>
-    <link href="/css/themehackers.css" rel="stylesheet">
-    <link href="/img/favicon.png" rel="icon">
+    <title>Dashboard | ThemeHackers</title>
+    <link href="../css/themehackers.css" rel="stylesheet">
+    <link href="../img/favicon.png" rel="icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
     <script src="js/env.js" defer></script>
     <style>
-        .matrix-bg-canvas {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.08;
+        :root {
+            --sidebar-bg: linear-gradient(135deg, #181c24 60%, #232a36 100%);
+            --sidebar-accent: #00ff41;
+            --main-bg: #f6f8fa;
+            --card-bg: #fff;
+            --card-shadow: 0 4px 32px #00ff4122, 0 2px 8px #0001;
+            --text-main: #23272f;
+            --text-muted: #888;
+            --accent: #00ff41;
+            --danger: #ff3b3b;
+            --header-bg: #fff;
+            --header-shadow: 0 2px 12px #00ff4111;
+            --sidebar-glow: 0 0 32px #00ff4133;
+            --transition: 0.22s cubic-bezier(.4,2,.6,1);
         }
-        .th-dashboard-center {
+        body[data-theme='dark'] {
+            --sidebar-bg: linear-gradient(135deg, #181c24 60%, #232a36 100%);
+            --sidebar-accent: #00ff41;
+            --main-bg: #10141a;
+            --card-bg: #181c24;
+            --card-shadow: 0 4px 32px #00ff4133, 0 2px 8px #000a;
+            --text-main: #f6f8fa;
+            --text-muted: #aaa;
+            --accent: #00ff41;
+            --danger: #ff3b3b;
+            --header-bg: #181c24;
+            --header-shadow: 0 2px 12px #00ff4133;
+            --sidebar-glow: 0 0 32px #00ff4166;
+            --transition: 0.22s cubic-bezier(.4,2,.6,1);
+        }
+        html, body {
+            height: 100%;
+        }
+        body {
             min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background: var(--main-bg);
+            color: var(--text-main);
+            transition: background var(--transition), color var(--transition);
+        }
+        .dashboard-root {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar-bg);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2.5rem 1.2rem 1.2rem 1.2rem;
+            box-shadow: 2px 0 24px #0003, var(--sidebar-glow);
+            position: relative;
+            z-index: 2;
+            border-top-right-radius: 32px;
+            border-bottom-right-radius: 32px;
+            overflow: hidden;
+        }
+        .sidebar-logo {
+            width: 62px;
+            height: 62px;
+            border-radius: 18px;
+            margin-bottom: 1.3rem;
+            box-shadow: 0 0 24px var(--sidebar-accent);
+            background: #222;
+            object-fit: cover;
+            border: 2.5px solid var(--sidebar-accent);
+            transition: box-shadow var(--transition);
+        }
+        .sidebar-title {
+            font-size: 1.35rem;
+            font-weight: bold;
+            color: var(--sidebar-accent);
+            margin-bottom: 2.7rem;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 12px #00ff4133;
+        }
+        .sidebar-nav {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .sidebar-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.08rem;
+            padding: 0.8em 1.2em;
+            border-radius: 10px;
+            transition: background var(--transition), color var(--transition), box-shadow var(--transition);
             display: flex;
             align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 1;
-        }
-        .th-dashboard-container {
-            background: rgba(26, 26, 26, 0.97);
-            border: 2px solid var(--th-primary);
-            border-radius: 18px;
-            box-shadow: var(--th-glow);
-            max-width: 500px;
-            width: 100%;
-            padding: 2.5rem 2rem 2rem 2rem;
-            margin: 2rem auto;
+            gap: 0.7em;
+            font-weight: 500;
             position: relative;
         }
-        .th-dashboard-avatar {
-            width: 90px;
-            height: 90px;
+        .sidebar-nav a.active, .sidebar-nav a:hover {
+            background: #232a36cc;
+            color: var(--sidebar-accent);
+            box-shadow: 0 2px 12px #00ff4133;
+        }
+        .sidebar-footer {
+            margin-top: auto;
+            font-size: 0.97rem;
+            color: #aaa;
+            opacity: 0.7;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+        .main-content {
+            flex: 1;
+            padding: 2.7rem 2.2rem 2rem 2.2rem;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 1.7rem;
+            margin-bottom: 2.7rem;
+            background: var(--header-bg);
+            box-shadow: var(--header-shadow);
+            border-radius: 16px;
+            padding: 1.1rem 2rem;
+            transition: background var(--transition), box-shadow var(--transition);
+            position: relative;
+        }
+        .dashboard-avatar {
+            width: 54px;
+            height: 54px;
             border-radius: 50%;
             object-fit: cover;
-            box-shadow: 0 0 30px var(--th-primary);
-            margin-bottom: 1rem;
-            background: var(--th-dark);
+            box-shadow: 0 0 12px var(--accent);
+            background: #eee;
+            border: 2px solid var(--accent);
+            transition: box-shadow var(--transition), border var(--transition);
         }
-        .th-dashboard-logout {
-            position: absolute;
-            top: 1.5rem;
-            right: 2rem;
+        .dashboard-userinfo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            min-width: 0;
         }
-        .th-dashboard-label {
-            color: var(--th-primary);
+        .dashboard-name {
+            font-size: 1.13rem;
             font-weight: 600;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: var(--accent);
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
         }
-        .th-dashboard-value {
-            color: var(--th-light);
-            font-size: 1.1rem;
+        .dashboard-email {
+            font-size: 0.99rem;
+            color: var(--text-muted);
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .dashboard-logout-btn {
+            background: var(--danger);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 0.55em 1.3em;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: background var(--transition), box-shadow var(--transition), transform 0.12s;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            box-shadow: 0 2px 8px #ff3b3b33;
+            font-weight: 500;
+        }
+        .dashboard-logout-btn:hover, .dashboard-logout-btn:focus {
+            background: #d32f2f;
+            box-shadow: 0 4px 16px #ff3b3b55;
+            outline: none;
+            transform: translateY(-2px) scale(1.04);
+        }
+        .theme-toggle-btn {
+            background: none;
+            border: none;
+            font-size: 1.7rem;
+            cursor: pointer;
+            color: var(--accent);
+            margin-left: 1.2rem;
+            transition: color var(--transition), transform 0.15s;
+            border-radius: 50%;
+            padding: 0.2em 0.3em;
+            box-shadow: 0 0 0 transparent;
+        }
+        .theme-toggle-btn:focus {
+            outline: 2px solid var(--accent);
+            box-shadow: 0 0 0 2px #00ff4144;
+        }
+        .theme-toggle-btn:hover {
+            color: #fff;
+            background: var(--accent);
+            transform: scale(1.13) rotate(-10deg);
+        }
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2.2rem;
+            margin-bottom: 2.7rem;
+        }
+        .dashboard-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: var(--card-shadow);
+            padding: 2.2rem 1.7rem 1.7rem 1.7rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.3rem;
+            min-width: 0;
+            transition: background var(--transition), box-shadow var(--transition), transform 0.15s;
+            border: 1.5px solid #00ff4122;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInCard 0.7s cubic-bezier(.4,2,.6,1);
+        }
+        .dashboard-card:hover {
+            box-shadow: 0 8px 32px #00ff4144, 0 2px 8px #0002;
+            transform: translateY(-2px) scale(1.015);
+            border-color: var(--accent);
+        }
+        @keyframes fadeInCard {
+            from { opacity: 0; transform: translateY(24px) scale(0.98); }
+            to { opacity: 1; transform: none; }
+        }
+        .dashboard-card-title {
+            font-size: 1.13rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.5em;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+        }
+        .dashboard-label {
+            color: var(--accent);
+            font-weight: 600;
+            margin-right: 0.5em;
+            font-size: 1.07rem;
+        }
+        .dashboard-value {
+            color: var(--text-main);
             font-family: 'Courier New', monospace;
+            font-size: 1.07rem;
         }
-        .th-dashboard-footer {
+        .dashboard-footer {
             text-align: center;
-            margin-top: 2rem;
-            color: #888;
-            font-size: 0.9rem;
+            margin-top: auto;
+            color: var(--text-muted);
+            font-size: 0.97rem;
             opacity: 0.7;
+            letter-spacing: 0.5px;
         }
         .th-spinner {
             display: inline-block;
-            width: 2.5rem;
-            height: 2.5rem;
-            border: 4px solid var(--th-primary);
-            border-top: 4px solid var(--th-dark);
+            width: 2.2rem;
+            height: 2.2rem;
+            border: 4px solid var(--accent);
+            border-top: 4px solid #fff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 2rem auto 1rem auto;
@@ -92,77 +297,100 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        @media (max-width: 1100px) {
+            .dashboard-cards { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 900px) {
+            .dashboard-root { flex-direction: column; }
+            .sidebar { width: 100%; flex-direction: row; justify-content: flex-start; align-items: center; padding: 1.2rem; box-shadow: none; border-radius: 0; }
+            .sidebar-logo { margin-bottom: 0; margin-right: 1rem; }
+            .sidebar-title { margin-bottom: 0; }
+            .sidebar-nav { flex-direction: row; gap: 1rem; margin-left: 2rem; }
+            .sidebar-footer { display: none; }
+        }
         @media (max-width: 600px) {
-            .th-dashboard-container { padding: 1.5rem 0.5rem; }
-            .th-dashboard-logout { right: 1rem; top: 1rem; }
+            .main-content { padding: 1rem 0.2rem; }
+            .dashboard-cards { gap: 1rem; }
+            .dashboard-card { padding: 1rem 0.7rem; }
+            .dashboard-header { flex-direction: column; gap: 0.7rem; align-items: flex-start; padding: 0.7rem 0.5rem; }
+            .dashboard-avatar { width: 40px; height: 40px; }
         }
     </style>
 </head>
 <body>
-    <canvas class="matrix-bg-canvas" id="matrix-bg"></canvas>
-    <div class="th-dashboard-center">
-        <div class="th-dashboard-container">
-            <button id="logout-btn" class="th-btn-outline-danger th-dashboard-logout"><i class="fas fa-sign-out-alt me-1"></i> Logout</button>
-            <div style="text-align:center;">
-                <img src="/img/favicon.png" alt="Avatar" class="th-dashboard-avatar" id="user-avatar" style="display:none;">
-                <div class="th-brand-title" id="user-name">Loading...</div>
-                <div class="th-brand-subtitle" id="user-email"></div>
-            </div>
-            <div style="margin:2.5rem 0 1.5rem 0;">
-                <div class="row mb-2">
-                    <div class="col-6 th-dashboard-label">Account Created</div>
-                    <div class="col-6 th-dashboard-value" id="created-at">-</div>
+    <div class="dashboard-root">
+        <aside class="sidebar">
+            <img src="../img/favicon.png" alt="ThemeHackers Logo" class="sidebar-logo">
+            <div class="sidebar-title">DASHSECURITY</div>
+            <nav class="sidebar-nav">
+                <a href="#" class="active"><i class="fas fa-gauge"></i> Dashboard</a>
+                <a href="/" target="_blank"><i class="fas fa-home"></i> Main Site</a>
+            </nav>
+            <div class="sidebar-footer">&copy; 2024 ThemeHackers</div>
+        </aside>
+        <main class="main-content">
+            <div class="dashboard-header">
+                <div class="dashboard-userinfo">
+                    <div id="user-name" class="dashboard-name">Loading...</div>
+                    <div id="user-email" class="dashboard-email"></div>
                 </div>
-                <div class="row mb-2">
-                    <div class="col-6 th-dashboard-label">Last Login</div>
-                    <div class="col-6 th-dashboard-value" id="last-login">-</div>
+                <img id="user-avatar" class="dashboard-avatar" src="../img/favicon.png" alt="Avatar">
+                <button id="logout-btn" class="dashboard-logout-btn" title="Sign out">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+                <button id="theme-toggle" class="theme-toggle-btn" title="Toggle theme" aria-label="Toggle theme">
+                    <i id="theme-icon" class="fas fa-moon"></i>
+                </button>
+            </div>
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <div class="dashboard-card-title"><i class="fas fa-user"></i> Account Details</div>
+                    <div><span class="dashboard-label">Account Created:</span><span id="created-at" class="dashboard-value">-</span></div>
+                    <div><span class="dashboard-label">Last Login:</span><span id="last-login" class="dashboard-value">-</span></div>
+                </div>
+                <div class="dashboard-card">
+                    <div class="dashboard-card-title"><i class="fas fa-shield-alt"></i> Security Status</div>
+                    <div><span class="dashboard-label">Authentication:</span><span class="dashboard-value">Google Sign-In</span></div>
+                    <div><span class="dashboard-label">Session:</span><span class="dashboard-value" id="session-status">Active</span></div>
                 </div>
             </div>
-            <div id="dashboard-alert" style="display:none;"></div>
             <div id="dashboard-loading" style="text-align:center;">
                 <div class="th-spinner"></div>
-                <div class="th-dashboard-label">Loading your secure dashboard...</div>
+                <div class="dashboard-label">Loading your secure dashboard...</div>
             </div>
-        </div>
+            <div id="dashboard-alert" style="display:none;"></div>
+            <div class="dashboard-footer">
+                &copy; 2024 ThemeHackers. All rights reserved.
+            </div>
+        </main>
     </div>
-    <div class="th-dashboard-footer">
-        &copy; 2024 ThemeHackers. All rights reserved.
-    </div>
-    <script defer>
-    // Matrix background effect
-    const canvas = document.getElementById('matrix-bg');
-    const ctx = canvas.getContext('2d');
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-    let fontSize = 18;
-    let columns = Math.floor(width / fontSize);
-    let drops = Array(columns).fill(1);
-    function drawMatrix() {
-      ctx.fillStyle = 'rgba(10,10,10,0.08)';
-      ctx.fillRect(0, 0, width, height);
-      ctx.font = fontSize + "px Courier New";
-      ctx.fillStyle = '#00ff41';
-      for (let i = 0; i < drops.length; i++) {
-        let text = String.fromCharCode(0x30A0 + Math.random() * 96);
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > height && Math.random() > 0.975) {
-          drops[i] = 0;
+    <script>
+    function setTheme(theme) {
+        document.body.setAttribute('data-theme', theme);
+        localStorage.setItem('theme-mode', theme);
+        const icon = document.getElementById('theme-icon');
+        if (theme === 'dark') {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        } else {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
         }
-        drops[i]++;
-      }
     }
-    setInterval(drawMatrix, 50);
-    window.addEventListener('resize', () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-      columns = Math.floor(width / fontSize);
-      drops = Array(columns).fill(1);
+    function toggleTheme() {
+        const current = document.body.getAttribute('data-theme') || 'light';
+        setTheme(current === 'dark' ? 'light' : 'dark');
+    }
+    window.addEventListener('DOMContentLoaded', function() {
+        let theme = localStorage.getItem('theme-mode');
+        if (!theme) {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        setTheme(theme);
+        document.getElementById('theme-toggle').onclick = toggleTheme;
     });
-    // Supabase Auth Dashboard Logic
+
+
     const SUPABASE_URL = window.ENV?.SUPABASE_URL;
     const SUPABASE_ANON_KEY = window.ENV?.SUPABASE_ANON_KEY;
     if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
@@ -172,7 +400,7 @@
         document.getElementById('dashboard-alert').textContent = 'Supabase environment variables are not set. Please check your Netlify configuration.';
         throw new Error('Missing Supabase environment variables');
     }
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     async function loadUser() {
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
@@ -180,29 +408,28 @@
             return;
         }
         const user = session.user;
-        // Show avatar if available
+        
         const avatar = document.getElementById('user-avatar');
         if (user.user_metadata && user.user_metadata.avatar_url) {
             avatar.src = user.user_metadata.avatar_url;
-            avatar.style.display = 'inline-block';
         } else {
-            avatar.src = '/img/favicon.png';
-            avatar.style.display = 'inline-block';
+            avatar.src = '../img/favicon.png';
         }
-        // Show name/email
+        
         document.getElementById('user-name').textContent = user.user_metadata.full_name || user.email;
         document.getElementById('user-email').textContent = user.email;
-        // Created at
+        
         document.getElementById('created-at').textContent = user.created_at ? new Date(user.created_at).toLocaleString() : '-';
-        // Last login (from session)
+        
         document.getElementById('last-login').textContent = session.expires_at ? new Date(session.expires_at * 1000).toLocaleString() : '-';
-        // Hide loading
+       
         document.getElementById('dashboard-loading').style.display = 'none';
     }
     loadUser();
-    // Logout
+   
     document.getElementById('logout-btn').onclick = async () => {
         await supabase.auth.signOut();
+        alert('You have been signed out.');
         window.location.href = '/login/';
     };
     </script>
