@@ -179,6 +179,50 @@
       font-size: 0.95em;
       min-width: 180px;
     }
+    .quick-link-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .quick-link-list li {
+      background: #232a36;
+      border: 1.5px solid #00ff41;
+      border-radius: 10px;
+      margin-bottom: 1.1em;
+      padding: 1em 1.2em 0.7em 1.2em;
+      box-shadow: 0 2px 12px #00ff4133;
+      transition: box-shadow 0.18s, border 0.18s;
+      position: relative;
+    }
+    .quick-link-list li:hover {
+      box-shadow: 0 4px 24px #00ff41cc;
+      border: 2px solid #00ff41;
+    }
+    .quick-link-list a {
+      color: #00ff41;
+      font-size: 1.08rem;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 0.2em;
+    }
+    .quick-link-list a:hover {
+      text-decoration: underline;
+    }
+    .quick-link-desc {
+      color: #b6ffcb;
+      font-size: 0.98em;
+      margin-left: 0.2em;
+      margin-bottom: 0.1em;
+      opacity: 0.85;
+    }
+    .quick-link-desc-en {
+      color: #b6eaff;
+      font-size: 0.93em;
+      display: block;
+      margin-top: 0.1em;
+      opacity: 0.8;
+    }
     @media (max-width: 900px) {
       .dashboard-grid, .dashboard-row {
         grid-template-columns: 1fr;
@@ -223,17 +267,47 @@
       <div class="th-card">
         <div class="th-card-header"><i class="fa fa-chart-line"></i> Quick Link <span class="tooltip" data-tooltip="A summary of your account status and security."><i class="fa fa-info-circle"></i></span></div>
         <div class="th-card-body">
-          <ul>
-            <li><a href="/web3-thkx/" target="_blank">Get into the real blockchain with THKX</a></li>
-            <li><a href="/owasp/" target="_blank">OWASP</a></li>
-            <li><a href="/cc-exam.html" target="_blank">CC Exam</a></li>
-            <li><a href="/cissp-exam.html" target="_blank">CISSP Exam</a></li>
-            <li><a href="/learning.html" target="_blank">Start learning</a></li>
-            <li><a href="/schedule.html" target="_blank">Schedule</a></li>
-            <li><a href="/en_course.html" target="_blank">Enter the course contact (EN)</a></li>
-            <li><a href="/th_course.html" target="_blank">Enter the course contact (TH)</a></li>
-            <li><a href="/vuln-detect/" target="_blank">Vulnerability Scanning Service</a></li>
-            <li><a href="/security-policy.html" target="_blank">Security Policy</a></li>
+          <ul class="quick-link-list">
+            <li>
+              <a href="/web3-thkx/" target="_blank"><b>Get into the real blockchain with THKX</b></a>
+              <div class="quick-link-desc-en">Enter the real blockchain world with THKX Faucet, Staking, and Web3 docs</span></div>
+            </li>
+            <li>
+              <a href="/owasp/" target="_blank"><b>OWASP</b></a>
+              <div class="quick-link-desc-en">Knowledge base and standards for web application security</span></div>
+            </li>
+            <li>
+              <a href="/cc-exam.html" target="_blank"><b>CC Exam</b></a>
+              <div class="quick-link-desc-en">Practice exam for CompTIA Cybersecurity Analyst (CySA+)</span></div>
+            </li>
+            <li>
+              <a href="/cissp-exam.html" target="_blank"><b>CISSP Exam</b></a>
+              <div class="quick-link-desc-en">CISSP Practice exam for Certified Information Systems Security Professional (CISSP)</span></div>
+            </li>
+            <li>
+              <a href="/learning.html" target="_blank"><b>Start learning</b></a>
+              <div class="quick-link-desc-en">Start learning cybersecurity and technology content</span></div>
+            </li>
+            <li>
+              <a href="/schedule.html" target="_blank"><b>Schedule</b></a>
+              <div class="quick-link-desc-en">Cyber Security Student Class Schedule</span></div>
+            </li>
+            <li>
+              <a href="/en_course.html" target="_blank"><b>Enter the course contact (EN)</b></a>
+              <div class="quick-link-desc-en">Course contact and details (English)</span></div>
+            </li>
+            <li>
+              <a href="/th_course.html" target="_blank"><b>Enter the course contact (TH)</b></a>
+              <div class="quick-link-desc-en">Course contact and details (Thai)</span></div>
+            </li>
+            <li>
+              <a href="/vuln-detect/" target="_blank"><b>Vulnerability Scanning Service</b></a>
+              <div class="quick-link-desc-en">Vulnerability scanning service for systems and web applications based on CVE codes</span></div>
+            </li>
+            <li>
+              <a href="/security-policy.html" target="_blank"><b>Security Policy</b></a>
+              <div class="quick-link-desc-en">Security policy and user data protection guidelines</span></div>
+            </li>
           </ul>
         </div>
       </div>
@@ -243,7 +317,7 @@
       <div class="th-card-header"><i class="fa fa-handshake"></i> Welcome</div>
       <div class="th-card-body">
         <h2 id="greeting">Welcome to your Dashboard!</h2>
-        <p>Manage your security, view your activity, and stay up to date with the latest tips from TH - Dashsecurity.</p>
+        <p>Manage your security, view your activity, and stay up to date with the latest tips from ThemeHackers.</p>
       </div>
     </div>
   </div>
