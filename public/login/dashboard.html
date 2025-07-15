@@ -100,19 +100,20 @@
     <div class="user-info th-card" style="margin-bottom:2rem; box-shadow:0 0 32px #00ff41cc; border:2.5px solid #00ff41; background:rgba(26,26,26,0.98);">
       <img id="user-avatar" class="user-avatar" src="../img/favicon.png" alt="User Avatar" style="border:3px solid #00ff41;">
       <div class="user-details">
-        <div id="user-name" class="user-name" style="font-size:1.5rem; color:#00ff41;">Loading...</div>
+        <div id="user-name" class="user-name" style="font-size:1.5rem; color:#00ff41; display:flex; align-items:center;"><i class="fa fa-user-circle" style="margin-right:0.5em;"></i> <span>Loading...</span></div>
         <div id="user-email" class="user-email" style="font-size:1.1rem; color:#fff; margin-bottom:0.5em;"></div>
-        <div style="color:#aaa; font-size:0.95em;">(ข้อมูลนี้ดึงจากฐานข้อมูล Profile ของคุณ)</div>
+        <div style="color:#aaa; font-size:0.95em;">This information is loaded from your Profile database.</div>
       </div>
     </div>
     <div class="dashboard-content">
       <div class="th-card" style="margin-bottom:2rem;">
-        <div class="th-card-header">Profile Details</div>
+        <div class="th-card-header"><i class="fa fa-id-badge"></i> Profile Details</div>
         <div class="th-card-body">
           <ul style="list-style:none; padding:0; margin:0;">
             <li><b>Name:</b> <span id="profile-detail-name">Loading...</span></li>
             <li><b>Email:</b> <span id="profile-detail-email">Loading...</span></li>
             <li><b>Avatar URL:</b> <span id="profile-detail-avatar">-</span></li>
+            <li><b>Status:</b> <span id="profile-status" class="th-text-success">Active</span></li>
             <li><b>More fields:</b> <span style="color:#888;">(coming soon)</span></li>
           </ul>
         </div>
