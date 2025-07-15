@@ -29,7 +29,7 @@ class AuthHandler {
     init() {
         this.auth.onAuthStateChanged((user) => {
             if (user) {
-                window.location.href = 'dashboard.html';
+                window.location.replace('dashboard.html');
             }
         });
         this.setupEventHandlers();
@@ -244,7 +244,7 @@ class AuthHandler {
                 }
                 this.loginAttempts = 0;
                 await this.saveUserData(result.user);
-                window.location.href = 'dashboard.html';
+                window.location.replace('dashboard.html');
             }
         } catch (error) {
             this.loginAttempts++;
