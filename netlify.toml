@@ -14,7 +14,8 @@ package = "@netlify/plugin-functions-install-core"
 package = "netlify-plugin-snyk"
 
   [plugins.inputs]
-  target = "."
+  severity = "high"         
+  failOnPreviews = false   
 
 
 
