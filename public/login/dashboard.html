@@ -1,86 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
-    <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: https://cdn.jsdelivr.net; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' https://tcjxrlsebxdyoohcugsr.supabase.co; frame-ancestors 'none';">
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
-    <title>Dashboard | ThemeHackers</title>
-    <link href="../css/themehackers.css" rel="stylesheet">
-    <link href="../img/favicon.png" rel="icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-    <script src="js/env.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | ThemeHackers</title>
+  <link rel="stylesheet" href="../css/themehackers.css">
+  <link rel="icon" href="../img/favicon.png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="js/env.js" defer></script>
+  <script src="js/dashboard.js" defer></script>
+  <style>
+    body {
+      background: radial-gradient(ellipse at top left, #0f2027 0%, #2c5364 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      color: #fff;
+    }
+    .dashboard-navbar {
+      background: #181c24;
+      border-bottom: 2px solid #00ff41;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .dashboard-navbar .brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #00ff41;
+      letter-spacing: 2px;
+    }
+    .dashboard-navbar .logout-btn {
+      background: #ff4757;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5em 1.2em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .dashboard-navbar .logout-btn:hover {
+      background: #d63031;
+    }
+    .dashboard-container {
+      max-width: 900px;
+      margin: 2.5rem auto;
+      background: #181c24;
+      border-radius: 18px;
+      box-shadow: 0 0 24px #00ff41cc;
+      padding: 2.5rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .user-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 18px #00ff41;
+      background: #222;
+    }
+    .user-details {
+      flex: 1;
+    }
+    .user-name {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #00ff41;
+    }
+    .user-email {
+      color: #aaa;
+      font-size: 1rem;
+    }
+    .dashboard-content {
+      margin-top: 2.5rem;
+    }
+    @media (max-width: 700px) {
+      .dashboard-container { padding: 1.2rem 0.3rem; }
+      .dashboard-navbar { flex-direction: column; gap: 1em; }
+      .user-info { flex-direction: column; align-items: flex-start; gap: 0.7rem; }
+    }
+  </style>
 </head>
 <body>
-    <div class="th-navbar d-flex align-items-center justify-content-between px-4 py-2">
-        <div class="d-flex align-items-center">
-            <img src="../img/favicon.png" alt="ThemeHackers Logo" style="width:44px;height:44px;border-radius:12px;margin-right:1rem;">
-            <span class="th-navbar-brand">DASHSECURITY</span>
-        </div>
-        <div class="d-flex align-items-center gap-3">
-            <button id="theme-toggle" class="theme-toggle-btn th-btn-outline-primary" title="Toggle theme" aria-label="Toggle theme" style="font-size:1.5rem;padding:0.3em 0.7em;">
-                <i id="theme-icon" class="fas fa-moon"></i>
-            </button>
-            <button id="logout-btn" class="th-btn-outline-danger" title="Sign out">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-        </div>
+  <nav class="dashboard-navbar">
+    <div class="brand">TH - DASHSECURITY</div>
+    <button id="logout-btn" class="logout-btn">Logout</button>
+  </nav>
+  <div class="dashboard-container th-container">
+    <div class="user-info">
+      <img id="user-avatar" class="user-avatar" src="../img/favicon.png" alt="User Avatar">
+      <div class="user-details">
+        <div id="user-name" class="user-name">Loading...</div>
+        <div id="user-email" class="user-email"></div>
+      </div>
     </div>
-    <div class="container py-4">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8">
-                <div class="th-card p-4 mb-4 d-flex flex-column flex-md-row align-items-center gap-4">
-                    <img id="user-avatar" src="../img/favicon.png" alt="User Avatar" style="width:80px;height:80px;border-radius:50%;box-shadow:0 0 16px var(--th-primary);background:#eee;border:3px solid var(--th-primary);">
-                    <div class="flex-grow-1">
-                        <div class="d-flex flex-column flex-md-row align-items-md-center gap-2 mb-2">
-                            <span id="user-name" class="th-brand-title">Loading...</span>
-                            <span id="user-email" class="th-text-info ms-md-3"></span>
-                        </div>
-                        <div class="d-flex flex-wrap gap-3">
-                            <div><span class="th-form-label">Account Created:</span> <span id="created-at" class="th-text-primary">-</span></div>
-                            <div><span class="th-form-label">Last Login:</span> <span id="last-login" class="th-text-primary">-</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row g-4">
-                    <div class="col-12 col-md-6">
-                        <div class="th-card p-4">
-                            <div class="th-card-header mb-2"><i class="fas fa-user-shield"></i> Security Status</div>
-                            <div class="mb-2"><span class="th-form-label">Authentication:</span> <span class="th-text-primary">Google Sign-In</span></div>
-                            <div><span class="th-form-label">Session:</span> <span class="th-text-success" id="session-status">Active</span></div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="th-card p-4">
-                            <div class="th-card-header mb-2"><i class="fas fa-shield-alt"></i> Security Features</div>
-                            <ul class="th-security-features">
-                                <li>Google OAuth 2.0 Only</li>
-                                <li>Supabase Secure Session</li>
-                                <li>Strict CSP &amp; Security Headers</li>
-                                <li>Theme Toggle (Dark/Light)</li>
-                                <li>Responsive Design</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div id="dashboard-loading" class="text-center my-5">
-                    <div class="th-spinner" style="font-size:2.5rem;"></div>
-                    <div class="th-form-label mt-2">Loading your secure dashboard...</div>
-                </div>
-                <div id="dashboard-alert" style="display:none;"></div>
-            </div>
-        </div>
-        <div class="text-center th-divider mt-5 mb-2"><span>ThemeHackers</span></div>
-        <div class="text-center th-text-secondary mb-4">&copy; 2024 ThemeHackers. All rights reserved.</div>
+    <div class="dashboard-content">
+      <h2>Welcome to your Dashboard</h2>
+      <p>This is a secure area for authenticated users. More features coming soon!</p>
+      <!-- Add dashboard widgets or content here -->
     </div>
-    <script src="js/dashboard.js" defer></script>
+  </div>
+  <div class="login-footer" style="text-align:center; margin-top:2rem; color:#888; font-size:0.9rem; opacity:0.7;">
+    &copy; 2024 ThemeHackers. All rights reserved.
+  </div>
 </body>
-</html> 
+</html>
