@@ -83,6 +83,7 @@
     </div>
     <script>
     function setTheme(theme) {
+        console.log('[setTheme] theme:', theme);
         document.body.setAttribute('data-theme', theme);
         localStorage.setItem('theme-mode', theme);
         const icon = document.getElementById('theme-icon');
@@ -96,16 +97,19 @@
     }
     function toggleTheme() {
         const current = document.body.getAttribute('data-theme') || 'light';
+        console.log('[toggleTheme] current:', current);
         setTheme(current === 'dark' ? 'light' : 'dark');
     }
     window.addEventListener('DOMContentLoaded', function() {
         let theme = localStorage.getItem('theme-mode');
+        console.log('[DOMContentLoaded] theme from localStorage:', theme);
         if (!theme) {
             theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
         setTheme(theme);
         document.getElementById('theme-toggle').onclick = toggleTheme;
         document.getElementById('logout-btn').onclick = async () => {
+            console.log('[logout-btn] Clicked');
             await supabase.auth.signOut();
             showToast('You have been signed out.');
             setTimeout(() => { window.location.href = '/login/'; }, 1200);
@@ -145,7 +149,9 @@
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     async function loadUser() {
         try {
+            console.log('[loadUser] called');
             const { data: { session }, error } = await supabase.auth.getSession();
+            console.log('[loadUser] session:', session, 'error:', error);
             if (error) throw error;
             if (!session) {
                 window.location.href = '/login/';
@@ -167,6 +173,7 @@
             document.getElementById('dashboard-loading').style.display = 'none';
             upsertProfile(user);
         } catch (err) {
+            console.error('[loadUser] error:', err);
             document.getElementById('dashboard-loading').style.display = 'none';
             document.getElementById('dashboard-alert').style.display = 'block';
             document.getElementById('dashboard-alert').className = 'th-alert th-alert-danger';
@@ -176,6 +183,7 @@
     async function upsertProfile(user) {
         if (!user) return;
         try {
+            console.log('[upsertProfile] user:', user);
             const { error } = await supabase
                 .from('profiles')
                 .upsert([
@@ -186,10 +194,10 @@
                     }
                 ], { onConflict: ['user_id'] });
             if (error && error.code !== '42P01') {
-                console.error('Error upserting profile:', error);
+                console.error('[upsertProfile] error:', error);
             }
         } catch (e) {
-            console.error('Error upserting profile:', e);
+            console.error('[upsertProfile] exception:', e);
         }
     }
     </script>
