@@ -125,6 +125,7 @@ function build() {
         'public/index.html',
         'public/login.html',
         'public/dashboard.html',
+        'public/pv_student.html'
     ];
     
     let processedFiles = 0;
