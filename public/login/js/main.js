@@ -12,6 +12,10 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const googleBtn = document.getElementById('google-signin');
 const alertBox = document.getElementById('login-alert');
 
+if (googleBtn) {
+  googleBtn.setAttribute('aria-label', 'Sign in with Google');
+}
+
 if (googleBtn && alertBox) {
   googleBtn.addEventListener('click', async () => {
     googleBtn.disabled = true;
@@ -21,7 +25,7 @@ if (googleBtn && alertBox) {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: window.location.origin + '/login/dashboard.html'
+          redirectTo: REDIRECT_TO
         }
       });
       if (error) {
@@ -29,6 +33,11 @@ if (googleBtn && alertBox) {
         alertBox.style.display = 'block';
         alertBox.className = 'th-alert th-alert-danger';
         alertBox.textContent = 'Login failed: ' + error.message;
+      } else if (!data || !data.url) {
+
+        alertBox.style.display = 'block';
+        alertBox.className = 'th-alert th-alert-warning';
+        alertBox.textContent = 'Login was cancelled or popup was closed.';
       }
     } catch (err) {
       alertBox.style.display = 'block';
