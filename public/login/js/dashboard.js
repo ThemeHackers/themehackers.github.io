@@ -11,6 +11,7 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 async function getUserAndProfile() {
   const { data: { user }, error } = await supabase.auth.getUser();
+  console.log('Fetched user:', user);
   if (error || !user) {
     window.location.href = '/login/';
     return;
