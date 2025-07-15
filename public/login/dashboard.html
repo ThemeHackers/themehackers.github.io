@@ -12,7 +12,7 @@
   <script src="js/dashboard.js" defer></script>
   <style>
     body {
-      background: radial-gradient(ellipse at top left, #0f2027 0%, #2c5364 100%);
+      background: linear-gradient(135deg, #181c24 0%, #232a36 100%);
       min-height: 100vh;
       margin: 0;
       font-family: 'Segoe UI', 'Arial', sans-serif;
@@ -25,70 +25,87 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      box-shadow: 0 2px 12px #00ff4133;
     }
     .dashboard-navbar .brand {
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       font-weight: bold;
       color: #00ff41;
       letter-spacing: 2px;
+      text-transform: uppercase;
     }
     .dashboard-navbar .logout-btn {
       background: #ff4757;
       color: #fff;
       border: none;
       border-radius: 8px;
-      padding: 0.5em 1.2em;
+      padding: 0.6em 1.4em;
       font-weight: 600;
       cursor: pointer;
+      font-size: 1rem;
       transition: background 0.18s;
+      box-shadow: 0 2px 8px #ff475733;
     }
     .dashboard-navbar .logout-btn:hover {
       background: #d63031;
     }
     .dashboard-container {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 2.5rem auto;
-      background: #181c24;
-      border-radius: 18px;
-      box-shadow: 0 0 24px #00ff41cc;
-      padding: 2.5rem 2rem;
+      background: rgba(24,28,36,0.98);
+      border-radius: 20px;
+      box-shadow: 0 0 32px #00ff4133;
+      padding: 2.5rem 2rem 2rem 2rem;
       position: relative;
       z-index: 1;
     }
     .profile-card {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 2rem;
       margin-bottom: 2.5rem;
-      background: rgba(26,26,26,0.98);
+      background: #202632;
       border: 2.5px solid #00ff41;
-      border-radius: 15px;
+      border-radius: 16px;
       box-shadow: 0 0 32px #00ff41cc;
       padding: 2rem 1.5rem;
+      min-height: 120px;
     }
     .user-avatar {
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
       object-fit: cover;
       box-shadow: 0 0 18px #00ff41;
       background: #222;
       border: 3px solid #00ff41;
+      transition: box-shadow 0.2s;
+    }
+    .user-avatar:hover {
+      box-shadow: 0 0 32px #00ff41, 0 0 0 4px #fff1;
     }
     .user-details {
       flex: 1;
+      min-width: 0;
     }
     .user-name {
-      font-size: 1.6rem;
+      font-size: 1.7rem;
       font-weight: bold;
       color: #00ff41;
       display: flex;
       align-items: center;
+      gap: 0.5em;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
     .user-email {
       color: #fff;
       font-size: 1.1rem;
       margin-bottom: 0.5em;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
     .profile-note {
       color: #aaa;
@@ -101,22 +118,74 @@
       margin-bottom: 2rem;
     }
     .dashboard-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 2rem;
-      flex-wrap: wrap;
       margin-bottom: 2rem;
     }
-    .dashboard-row > .th-card {
-      flex: 1 1 320px;
-      min-width: 280px;
+    .th-card {
+      background: #232a36;
+      border-radius: 14px;
+      box-shadow: 0 4px 24px #00ff4133;
+      border: 1.5px solid #00ff41;
+      padding: 1.5rem 1.2rem;
+      margin-bottom: 0;
+      transition: box-shadow 0.2s, border 0.2s;
+    }
+    .th-card:hover {
+      box-shadow: 0 8px 32px #00ff41cc;
+      border: 2px solid #00ff41;
+    }
+    .th-card-header {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #00ff41;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .th-card-body {
+      color: #e0e0e0;
+      font-size: 1rem;
+    }
+    .th-card-body ul {
+      margin: 0;
+      padding-left: 1.2em;
+    }
+    .th-card-body li {
+      margin-bottom: 0.5em;
+    }
+    .tooltip {
+      border-bottom: 1px dotted #00ff41;
+      cursor: help;
+      color: #00ff41;
+      position: relative;
+    }
+    .tooltip:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: 0;
+      top: 120%;
+      background: #232a36;
+      color: #fff;
+      padding: 0.5em 1em;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px #00ff4133;
+      white-space: pre-line;
+      z-index: 10;
+      font-size: 0.95em;
+      min-width: 180px;
     }
     @media (max-width: 900px) {
-      .dashboard-grid {
+      .dashboard-grid, .dashboard-row {
         grid-template-columns: 1fr;
-      }
-      .dashboard-row {
-        flex-direction: column;
         gap: 1.2rem;
+      }
+      .dashboard-container {
+        padding: 1.2rem 0.3rem;
       }
     }
   </style>
@@ -131,7 +200,7 @@
     <div class="profile-card">
       <img id="user-avatar" class="user-avatar" src="../img/favicon.png" alt="User Avatar">
       <div class="user-details">
-        <div id="user-name" class="user-name"><i class="fa fa-user-circle" style="margin-right:0.5em;"></i> <span>Loading...</span></div>
+        <div id="user-name" class="user-name"><i class="fa fa-user-circle"></i> <span>Loading...</span></div>
         <div id="user-email" class="user-email"></div>
         <div class="profile-note">This information is loaded from your Profile database.</div>
       </div>
@@ -139,9 +208,9 @@
     <!-- Main Grid: Profile Details & Quick Stats -->
     <div class="dashboard-grid">
       <div class="th-card">
-        <div class="th-card-header"><i class="fa fa-id-badge"></i> Profile Details</div>
+        <div class="th-card-header"><i class="fa fa-id-badge"></i> Profile Details <span class="tooltip" data-tooltip="Your personal information as stored in our system."><i class="fa fa-info-circle"></i></span></div>
         <div class="th-card-body">
-          <ul style="list-style:none; padding:0; margin:0;">
+          <ul>
             <li><b>Name:</b> <span id="profile-detail-name">Loading...</span></li>
             <li><b>Email:</b> <span id="profile-detail-email">Loading...</span></li>
             <li><b>Avatar URL:</b> <span id="profile-detail-avatar">-</span></li>
@@ -150,10 +219,12 @@
         </div>
       </div>
       <div class="th-card">
-        <div class="th-card-header"><i class="fa fa-chart-line"></i> Quick Stats</div>
+        <div class="th-card-header"><i class="fa fa-chart-line"></i> Quick Stats <span class="tooltip" data-tooltip="A summary of your account status and security."><i class="fa fa-info-circle"></i></span></div>
         <div class="th-card-body">
-          <ul style="list-style:none; padding:0; margin:0;">
+          <ul>
             <li><b>Profile:</b> <span id="profile-status" class="th-text-success">Active</span></li>
+            <li><b>Security Level:</b> <span class="th-text-warning">Standard</span></li>
+            <li><b>2FA:</b> <span class="th-text-danger">Not enabled</span></li>
           </ul>
         </div>
       </div>
@@ -161,9 +232,9 @@
     <!-- Row: Security Tips & Recent Activity -->
     <div class="dashboard-row">
       <div class="th-card">
-        <div class="th-card-header"><i class="fa fa-lightbulb"></i> Security Tips</div>
+        <div class="th-card-header"><i class="fa fa-lightbulb"></i> Security Tips <span class="tooltip" data-tooltip="Best practices to keep your account safe."><i class="fa fa-info-circle"></i></span></div>
         <div class="th-card-body">
-          <ul style="padding-left:1.2em;">
+          <ul>
             <li>Enable 2FA for extra protection</li>
             <li>Use strong, unique passwords</li>
             <li>Review your account activity regularly</li>
@@ -171,9 +242,9 @@
         </div>
       </div>
       <div class="th-card">
-        <div class="th-card-header"><i class="fa fa-history"></i> Recent Activity</div>
+        <div class="th-card-header"><i class="fa fa-history"></i> Recent Activity <span class="tooltip" data-tooltip="Your latest actions on the platform."><i class="fa fa-info-circle"></i></span></div>
         <div class="th-card-body">
-          <ul id="recent-activity" style="padding-left:1.2em; color:#aaa;">
+          <ul id="recent-activity" style="color:#aaa;">
             <li>Signed in to dashboard</li>
             <li>Viewed profile</li>
             <li>Checked security tips</li>
@@ -183,7 +254,7 @@
     </div>
     <!-- Welcome Card -->
     <div class="th-card" style="margin-bottom:0;">
-      <div class="th-card-header">Welcome</div>
+      <div class="th-card-header"><i class="fa fa-handshake"></i> Welcome</div>
       <div class="th-card-body">
         <h2 id="greeting">Welcome to your Dashboard!</h2>
         <p>Manage your security, view your activity, and stay up to date with the latest tips from ThemeHackers.</p>
