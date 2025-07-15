@@ -11,4 +11,8 @@ package = "@netlify/plugin-functions-install-core"
 
 [[plugins]]
 package = "netlify-plugin-inline-env"
+  [plugins.inputs]
+  files = [
+    "public/login/js/env.js"
+  ]
 
