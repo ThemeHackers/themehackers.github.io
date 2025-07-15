@@ -388,6 +388,11 @@
         }
         setTheme(theme);
         document.getElementById('theme-toggle').onclick = toggleTheme;
+
+     
+        if (window.location.hash && window.location.hash.includes('access_token')) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
     });
 
 
@@ -451,9 +456,6 @@
         window.location.href = '/login/';
     };
 
-    if (window.location.hash && window.location.hash.includes('access_token')) {
-      history.replaceState(null, '', window.location.pathname);
-    }
     </script>
 </body>
 </html> 
