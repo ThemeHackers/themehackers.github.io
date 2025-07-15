@@ -7,21 +7,22 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: https://cdn.jsdelivr.net; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' https://tcjxrlsebxdyoohcugsr.supabase.co; frame-ancestors 'none';">
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
-  <title>Login | ThemeHackers</title>
+  <title>Sign In | ThemeHackers</title>
   <link rel="stylesheet" href="../css/themehackers.css">
   <link rel="icon" href="../img/favicon.png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="js/env.js" defer></script>
   <script src="js/main.js" defer></script>
   <style>
-    .matrix-bg-canvas {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.08;
+    body {
+      background: radial-gradient(ellipse at top left, #0f2027 0%, #2c5364 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      color: #fff;
     }
-    .th-login-center {
+    .login-center {
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -29,79 +30,100 @@
       position: relative;
       z-index: 1;
     }
-    .th-login-logo {
+    .login-container {
+      max-width: 400px;
+      width: 100%;
+      padding: 2.5rem 2rem 2rem 2rem;
+      background: #181c24;
+      border-radius: 18px;
+      box-shadow: 0 0 24px #00ff41cc;
+      text-align: center;
+      position: relative;
+    }
+    .login-logo {
       width: 80px;
       height: 80px;
       margin-bottom: 1rem;
       border-radius: 50%;
-      box-shadow: 0 0 30px var(--th-primary);
+      box-shadow: 0 0 30px #00ff41;
       object-fit: cover;
-      background: var(--th-dark);
+      background: #222;
     }
-    .th-login-footer {
+    .brand-title {
+      font-size: 1.7rem;
+      font-weight: bold;
+      color: #00ff41;
+      margin-bottom: 0.2em;
+      letter-spacing: 2px;
+    }
+    .brand-subtitle {
+      font-size: 1.1rem;
+      color: #aaa;
+      margin-bottom: 2.2rem;
+    }
+    .google-btn {
+      width: 100%;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7em;
+      background: #fff;
+      color: #222;
+      border: none;
+      border-radius: 8px;
+      padding: 0.7em 0;
+      font-weight: 600;
+      box-shadow: 0 2px 12px #00ff4133;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+    }
+    .google-btn:hover {
+      background: #00ff41;
+      color: #181c24;
+    }
+    .login-footer {
       text-align: center;
       margin-top: 2rem;
       color: #888;
       font-size: 0.9rem;
       opacity: 0.7;
     }
+    .th-spinner {
+      display: inline-block;
+      width: 1.7rem;
+      height: 1.7rem;
+      border: 3px solid #00ff41;
+      border-top: 3px solid #181c24;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 0.5em;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @media (max-width: 600px) {
+      .login-container { padding: 1.2rem 0.3rem; }
+      .brand-title { font-size: 1.2rem; }
+    }
   </style>
 </head>
 <body>
-  <canvas class="matrix-bg-canvas" id="matrix-bg"></canvas>
-  <div class="th-login-center">
-    <div class="th-container" style="max-width: 400px; width: 100%; padding: 2.5rem 2rem; box-shadow: 0 0 40px #00ff4133;">
-      <div style="text-align:center;">
-        <img src="../img/favicon.png" alt="ThemeHackers Logo" class="th-login-logo">
-        <div class="th-brand-title">TH - Dashsecurity</div>
-        <div class="th-brand-subtitle">Sign in securely to your account</div>
-      </div>
-      <div style="margin: 2.5rem 0 1.5rem 0; text-align:center;">
-        <button id="google-signin" class="th-google-btn" style="width:100%; font-size:1.1rem; display:flex; align-items:center; justify-content:center; gap:0.7em;">
-          <svg width="24" height="24" viewBox="0 0 48 48"><g><path fill="#4285F4" d="M43.6 20.5H42V20.5H24V27.5H35.1C33.6 31.4 29.1 34 24 34C17.4 34 12 28.6 12 22C12 15.4 17.4 10 24 10C27.1 10 29.9 11.1 32 13L37 8C33.5 4.8 28.1 3 24 3C13.5 3 5 11.5 5 22C5 32.5 13.5 41 24 41C34.5 41 43 32.5 43 22C43 21 43 20.7 43.6 20.5Z"></path><path fill="#34A853" d="M6.3 14.7L12.1 18.7C13.7 15.1 18.4 10 24 10C27.1 10 29.9 11.1 32 13L37 8C33.5 4.8 28.1 3 24 3C16.3 3 9.6 7.8 6.3 14.7Z"></path><path fill="#FBBC05" d="M24 41C29 41 33.4 39.2 36.7 36.3L31.3 31.7C29.3 33.1 26.8 34 24 34C18.9 34 14.4 31.4 12.9 27.5L6.2 31.8C9.5 38.2 16.2 41 24 41Z"></path><path fill="#EA4335" d="M43.6 20.5H42V20.5H24V27.5H35.1C34.4 29.3 33.2 30.8 31.3 31.7L36.7 36.3C39.7 33.6 41.7 28.9 41.7 22C41.7 21 41.6 20.7 43.6 20.5Z"></path></g></svg>
-          Sign in with Google
-        </button>
-      </div>
-      <div id="login-alert" style="display:none;"></div>
+  <div class="login-center">
+    <div class="login-container">
+      <img src="../img/favicon.png" alt="ThemeHackers Logo" class="login-logo">
+      <div class="brand-title">TH - DASHSECURITY</div>
+      <div class="brand-subtitle">Sign in securely to your account</div>
+      <button id="google-signin" class="google-btn">
+        <svg width="24" height="24" viewBox="0 0 48 48"><g><path fill="#4285F4" d="M43.6 20.5H42V20.5H24V27.5H35.1C33.6 31.4 29.1 34 24 34C17.4 34 12 28.6 12 22C12 15.4 17.4 10 24 10C27.1 10 29.9 11.1 32 13L37 8C33.5 4.8 28.1 3 24 3C13.5 3 5 11.5 5 22C5 32.5 13.5 41 24 41C34.5 41 43 32.5 43 22C43 21 43 20.7 43.6 20.5Z"></path><path fill="#34A853" d="M6.3 14.7L12.1 18.7C13.7 15.1 18.4 10 24 10C27.1 10 29.9 11.1 32 13L37 8C33.5 4.8 28.1 3 24 3C16.3 3 9.6 7.8 6.3 14.7Z"></path><path fill="#FBBC05" d="M24 41C29 41 33.4 39.2 36.7 36.3L31.3 31.7C29.3 33.1 26.8 34 24 34C18.9 34 14.4 31.4 12.9 27.5L6.2 31.8C9.5 38.2 16.2 41 24 41Z"></path><path fill="#EA4335" d="M43.6 20.5H42V20.5H24V27.5H35.1C34.4 29.3 33.2 30.8 31.3 31.7L36.7 36.3C39.7 33.6 41.7 28.9 41.7 22C41.7 21 41.6 20.7 43.6 20.5Z"></path></g></svg>
+        Sign in with Google
+      </button>
+      <div id="login-alert" style="display:none; margin-top:1.5em;"></div>
     </div>
   </div>
-  <div class="th-login-footer">
+  <div class="login-footer">
     &copy; 2024 ThemeHackers. All rights reserved.
   </div>
-  <script>
-    // Matrix background effect
-    const canvas = document.getElementById('matrix-bg');
-    const ctx = canvas.getContext('2d');
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-    let fontSize = 18;
-    let columns = Math.floor(width / fontSize);
-    let drops = Array(columns).fill(1);
-    function drawMatrix() {
-      ctx.fillStyle = 'rgba(10,10,10,0.08)';
-      ctx.fillRect(0, 0, width, height);
-      ctx.font = fontSize + "px Courier New";
-      ctx.fillStyle = '#00ff41';
-      for (let i = 0; i < drops.length; i++) {
-        let text = String.fromCharCode(0x30A0 + Math.random() * 96);
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-    }
-    setInterval(drawMatrix, 50);
-    window.addEventListener('resize', () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-      columns = Math.floor(width / fontSize);
-      drops = Array(columns).fill(1);
-    });
-  </script>
 </body>
 </html>
