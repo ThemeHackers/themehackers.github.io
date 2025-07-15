@@ -429,6 +429,7 @@
 
     const SUPABASE_URL = window.ENV?.SUPABASE_URL;
     const SUPABASE_ANON_KEY = window.ENV?.SUPABASE_ANON_KEY;
+    const REDIRECT_TO = window.ENV?.REDIRECT_TO || (window.location.origin + '/login/dashboard.html');
     if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
         document.getElementById('dashboard-loading').style.display = 'none';
         document.getElementById('dashboard-alert').style.display = 'block';
@@ -455,7 +456,7 @@
             document.getElementById('user-name').textContent = user.user_metadata.full_name || user.email;
             document.getElementById('user-email').textContent = user.email;
             document.getElementById('created-at').textContent = user.created_at ? new Date(user.created_at).toLocaleString() : '-';
-            // Use last_sign_in_at if available, else fallback
+     
             let lastLogin = user.last_sign_in_at || user.user_metadata?.last_sign_in_at;
             if (!lastLogin && session.expires_at) lastLogin = new Date(session.expires_at * 1000).toISOString();
             document.getElementById('last-login').textContent = lastLogin ? new Date(lastLogin).toLocaleString() : '-';
@@ -481,7 +482,7 @@
                         updated_at: new Date().toISOString()
                     }
                 ], { onConflict: ['user_id'] });
-            if (error && error.code !== '42P01') { // 42P01: undefined_table
+            if (error && error.code !== '42P01') { 
                 console.error('Error upserting profile:', error);
             }
         } catch (e) {
