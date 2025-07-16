@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bug Bounty Cheat Sheet | TH - Dashsecurity</title>
+  <link rel="stylesheet" href="../css/themehackers.css">
+  <link rel="icon" href="../img/favicon.png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="js/env.js" defer></script>
+  <script src="js/rule.js" defer></script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background: linear-gradient(135deg, #181c24 0%, #232a36 100%);
+      color: #fff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+    /* Animated background dots */
+    .bg-dots {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.13;
+    }
+    .bg-dots span {
+      position: absolute;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: #00ff41;
+      opacity: 0.7;
+      animation: floatDot 8s infinite linear;
+    }
+    @keyframes floatDot {
+      0% { transform: translateY(0) scale(1); opacity: 0.7; }
+      50% { transform: translateY(-40px) scale(1.2); opacity: 0.4; }
+      100% { transform: translateY(0) scale(1); opacity: 0.7; }
+    }
+    .container {
+      max-width: 900px;
+      margin: 3rem auto;
+      background: rgba(35, 42, 54, 0.85);
+      border-radius: 24px;
+      box-shadow: 0 8px 48px #00ff4133, 0 1.5px 16px #0008;
+      padding: 0 0 2.5rem 0;
+      position: relative;
+      z-index: 1;
+      backdrop-filter: blur(8px);
+      border: 1.5px solid #00ff41;
+    }
+    .hero {
+      text-align: center;
+      padding: 2.7rem 1rem 1.7rem 1rem;
+      background: linear-gradient(135deg, #00ff41 0%, #232a36 100%);
+      border-radius: 24px 24px 0 0;
+      box-shadow: 0 4px 32px #00ff4133;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; width: 100%; height: 100%;
+      background: linear-gradient(120deg, #00ff4133 0%, #232a36cc 100%);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .hero-icon {
+      font-size: 3.5rem;
+      color: #fff;
+      background: #00ff41;
+      border-radius: 50%;
+      padding: 0.5em 0.7em;
+      box-shadow: 0 0 24px #00ff41cc;
+      margin-bottom: 1rem;
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-title {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #181c24;
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-desc {
+      color: #232a36;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-sub {
+      color: #00ff41;
+      font-size: 1.05rem;
+      margin-bottom: 0.2rem;
+      opacity: 0.85;
+      position: relative;
+      z-index: 1;
+    }
+    .quick-nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(35, 42, 54, 0.85);
+      padding: 0.7rem 0.5rem;
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 2px 12px #00ff4133;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7em;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      border-bottom: 1.5px solid #00ff41;
+      border-left: 1.5px solid #00ff41;
+      border-right: 1.5px solid #00ff41;
+    }
+    .quick-nav a {
+      color: #00ff41;
+      background: #181c24cc;
+      border-radius: 8px;
+      padding: 0.4em 1em;
+      font-size: 0.98em;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s, box-shadow 0.18s, border 0.18s;
+      border: 1.5px solid #00ff41;
+      box-shadow: 0 1.5px 8px #00ff4133;
+      backdrop-filter: blur(2px);
+    }
+    .quick-nav a:hover, .quick-nav a:focus {
+      background: #00ff41;
+      color: #181c24;
+      box-shadow: 0 4px 16px #00ff41cc;
+      border: 1.5px solid #fff;
+    }
+    .cheat-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.2rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .th-card {
+      background: rgba(35, 42, 54, 0.97);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px #00ff4133;
+      border: 2px solid #00ff41;
+      padding: 1.5rem 1.2rem;
+      margin-bottom: 0;
+      min-width: 320px;
+      max-width: 420px;
+      flex: 1 1 320px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      animation: fadeInUp 0.7s cubic-bezier(.23,1.02,.53,.97) forwards;
+      scroll-margin-top: 90px;
+      transition: box-shadow 0.2s, border 0.2s, transform 0.2s;
+      overflow: hidden;
+    }
+    .th-card.th-fade-in {
+      /* This class is kept for compatibility, but animation is now on .th-card */
+    }
+    .th-card:hover {
+      box-shadow: 0 16px 48px #00ff41cc, 0 2px 12px #00ff4133;
+      border: 2.5px solid #fff;
+      transform: translateY(-8px) scale(1.045);
+      z-index: 2;
+      outline: 0.5px solid #00ff41;
+      outline-offset: 2px;
+    }
+    .th-card-header {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #00ff41;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .th-card-body {
+      color: #e0e0e0;
+      font-size: 1rem;
+    }
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(-8px) scale(1.01);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      right: 2.2rem;
+      bottom: 2.2rem;
+      background: #00ff41;
+      color: #181c24;
+      border: none;
+      border-radius: 50%;
+      width: 48px; height: 48px;
+      box-shadow: 0 4px 24px #00ff4133;
+      font-size: 1.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, background 0.18s, color 0.18s;
+      z-index: 100;
+    }
+    .back-to-top.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .back-to-top:hover {
+      background: #181c24;
+      color: #00ff41;
+      border: 1.5px solid #00ff41;
+    }
+    @media (max-width: 900px) {
+      .cheat-grid { gap: 1.2rem; }
+      .th-card { min-width: 90vw; max-width: 98vw; }
+      .container { padding: 1.2rem 0.3rem; }
+      .back-to-top { right: 1rem; bottom: 1rem; }
+    }
+    .footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      color: #888;
+      font-size: 0.95rem;
+      opacity: 0.7;
+      padding-bottom: 1.5rem;
+    }
+  </style>
+  <script>
+    // Animate cards with staggered delay
+    document.addEventListener('DOMContentLoaded', function() {
+      const cards = document.querySelectorAll('.th-card');
+      cards.forEach((card, i) => {
+        card.style.animationDelay = (i * 0.07) + 's';
+      });
+
+      // Floating dots background
+      const bgDots = document.createElement('div');
+      bgDots.className = 'bg-dots';
+      for (let i = 0; i < 18; i++) {
+        const dot = document.createElement('span');
+        dot.style.left = Math.random() * 100 + 'vw';
+        dot.style.top = Math.random() * 100 + 'vh';
+        dot.style.animationDelay = (Math.random() * 8) + 's';
+        dot.style.background = Math.random() > 0.5 ? '#00ff41' : '#fff';
+        dot.style.opacity = Math.random() * 0.5 + 0.3;
+        bgDots.appendChild(dot);
+      }
+      document.body.appendChild(bgDots);
+
+      // Back to Top button
+      const btn = document.createElement('button');
+      btn.className = 'back-to-top';
+      btn.innerHTML = '<i class="fa fa-arrow-up"></i>';
+      btn.title = 'Back to Top';
+      btn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.body.appendChild(btn);
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+          btn.classList.add('show');
+        } else {
+          btn.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <span class="hero-icon"><i class="fa fa-bug"></i></span>
+      <div class="hero-title">Bug Bounty Cheat Sheet</div>
+      <div class="hero-desc">A premium quick reference for real-world vulnerabilities, attack vectors, and bug bounty tips. Click a topic below to jump to details.</div>
+      <div class="hero-sub">Stay sharp. Hunt smart. Secure everything.</div>
+    </div>
+    <nav class="quick-nav">
+      <a href="#ato">ATO</a>
+      <a href="#api">API Leaks</a>
+      <a href="#upload">Upload Bypass</a>
+      <a href="#clickjacking">Clickjacking</a>
+      <a href="#cspt">CSPT</a>
+      <a href="#cmdinj">Command Injection</a>
+      <a href="#contentinj">Content Injection</a>
+      <a href="#cors">CORS</a>
+      <a href="#crlf">CRLF</a>
+      <a href="#csv">CSV Injection</a>
+      <a href="#cswsh">CSWSH/CSRF</a>
+      <a href="#dns">DNS Rebinding</a>
+      <a href="#domclob">DOM Clobbering</a>
+      <a href="#depconf">Dependency Confusion</a>
+      <a href="#dirtrav">Directory Traversal</a>
+      <a href="#extvar">External Var Mod</a>
+      <a href="#lfi">File Inclusion/LFI</a>
+      <a href="#graphql">GraphQL Injection</a>
+      <a href="#smuggling">Request Smuggling</a>
+      <a href="#deser">Insecure Deserialization</a>
+      <a href="#ldap">LDAP Injection</a>
+      <a href="#latex">LaTeX Injection</a>
+      <a href="#massassign">Mass Assignment</a>
+      <a href="#memdos">Memory DoS</a>
+      <a href="#nosql">NoSQL Injection</a>
+      <a href="#orm">ORM Leak</a>
+      <a href="#redirect">Open Redirect</a>
+      <a href="#prompt">Prompt Injection</a>
+      <a href="#proto">Prototype Pollution</a>
+      <a href="#race">Race Condition</a>
+      <a href="#redos">ReDoS</a>
+      <a href="#saml">SAML Injection</a>
+      <a href="#sqli">SQLi</a>
+      <a href="#ssi">SSI/Template Injection</a>
+      <a href="#smtp">SMTP Injection</a>
+      <a href="#tabnabbing">Tabnabbing</a>
+      <a href="#typejuggle">Type Juggling</a>
+      <a href="#cache">Web Cache Deception</a>
+      <a href="#xpath">XPATH/XXE/XSS</a>
+      <a href="#zipslip">Zip Slip</a>
+    </nav>
+    <div class="cheat-grid">
+      <div class="th-card th-fade-in" id="ato" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-user-secret"></i> 1. Account Takeover (ATO)</div>
+        <div class="th-card-body">When an attacker gains unauthorized access to a user’s account, often via stolen credentials, phishing, or brute force. Protect with MFA and strong password policies.</div>
+      </div>
+      <div class="th-card th-fade-in" id="api" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-key"></i> 2. API Key and Token Leaks</div>
+        <div class="th-card-body">Sensitive API keys or tokens exposed in code, logs, or public repos can let attackers access backend services. Always keep secrets out of client code and version control.</div>
+      </div>
+      <div class="th-card th-fade-in" id="upload" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-upload"></i> 3. Bypass Upload Tricky</div>
+        <div class="th-card-body">Attackers upload malicious files by bypassing file type checks, often using double extensions or MIME tricks. Validate and sanitize all uploads on the server side.</div>
+      </div>
+      <div class="th-card th-fade-in" id="clickjacking" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-clone"></i> 4. Clickjacking</div>
+        <div class="th-card-body">Tricking users into clicking something different from what they perceive, often by overlaying transparent frames. Use X-Frame-Options and frame busting scripts.</div>
+      </div>
+      <div class="th-card th-fade-in" id="cspt" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-folder-open"></i> 5. Client Side Path Traversal (CSPT)</div>
+        <div class="th-card-body">Manipulating file paths on the client to access restricted files. Always validate and sanitize file paths on the server, never trust client input.</div>
+      </div>
+      <div class="th-card th-fade-in" id="cmdinj" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-terminal"></i> 6. Command Injection</div>
+        <div class="th-card-body">Injecting system commands via unsanitized input, allowing attackers to execute arbitrary code. Always validate and escape user input before passing to system calls.</div>
+      </div>
+      <div class="th-card th-fade-in" id="contentinj" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-file-alt"></i> 7. Content Injection</div>
+        <div class="th-card-body">Injecting malicious content (HTML, scripts) into web pages, often leading to XSS or defacement. Sanitize all user-generated content before rendering.</div>
+      </div>
+      <div class="th-card th-fade-in" id="cors" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-exchange-alt"></i> 8. CORS (OAuth, Misconfiguration)</div>
+        <div class="th-card-body">Improper CORS settings can expose APIs to unauthorized domains. Always restrict allowed origins and use secure OAuth flows.</div>
+      </div>
+      <div class="th-card th-fade-in" id="crlf" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-level-down-alt"></i> 9. CRLF Injection</div>
+        <div class="th-card-body">Injecting carriage return and line feed characters to manipulate HTTP headers or responses. Sanitize all input used in headers.</div>
+      </div>
+      <div class="th-card th-fade-in" id="csv" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-file-csv"></i> 10. CSV Injection</div>
+        <div class="th-card-body">Malicious formulas injected into CSV files can execute when opened in spreadsheet software. Prefix user input with a single quote to neutralize formulas.</div>
+      </div>
+      <div class="th-card th-fade-in" id="cswsh" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-random"></i> 11. Cross-Site WebSocket Hijacking (CSWSH), (CSRF/XSRF)</div>
+        <div class="th-card-body">Exploiting WebSocket or cross-site request forgery to perform actions as a user. Use CSRF tokens and proper WebSocket origin checks.</div>
+      </div>
+      <div class="th-card th-fade-in" id="dns" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-globe"></i> 12. DNS Rebinding</div>
+        <div class="th-card-body">Tricking browsers into interacting with internal network resources by rebinding a domain to a local IP. Use network segmentation and browser security features.</div>
+      </div>
+      <div class="th-card th-fade-in" id="domclob" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-code"></i> 13. DOM Clobbering</div>
+        <div class="th-card-body">Manipulating DOM objects to override built-in properties or methods, leading to unexpected behavior or XSS. Avoid using predictable IDs and always validate DOM changes.</div>
+      </div>
+      <div class="th-card th-fade-in" id="depconf" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-cubes"></i> 14. Dependency Confusion</div>
+        <div class="th-card-body">Attackers publish malicious packages with the same name as internal dependencies, tricking build systems. Use private registries and pin dependency versions.</div>
+      </div>
+      <div class="th-card th-fade-in" id="dirtrav" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-folder"></i> 15. Directory Traversal</div>
+        <div class="th-card-body">Accessing files outside the intended directory by manipulating file paths (e.g., ../). Always sanitize and validate file paths on the server.</div>
+      </div>
+      <div class="th-card th-fade-in" id="extvar" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-sliders-h"></i> 16. External Variable Modification</div>
+        <div class="th-card-body">Changing environment variables or config values via user input, leading to privilege escalation or misbehavior. Never trust user input for critical configs.</div>
+      </div>
+      <div class="th-card th-fade-in" id="lfi" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-file-import"></i> 17. File Inclusion/LFI</div>
+        <div class="th-card-body">Including files based on user input, which can lead to code execution or data leaks. Restrict file paths and validate all input.</div>
+      </div>
+      <div class="th-card th-fade-in" id="graphql" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-project-diagram"></i> 18. GraphQL Injection</div>
+        <div class="th-card-body">Injecting malicious queries or mutations into GraphQL endpoints. Use query depth limiting and strict schema validation.</div>
+      </div>
+      <div class="th-card th-fade-in" id="smuggling" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-exchange-alt"></i> 19. HTTP Request Smuggling (Parameter Pollution (HPP))</div>
+        <div class="th-card-body">Manipulating HTTP requests to bypass security controls or poison caches. Use strict request parsing and avoid ambiguous parameter handling.</div>
+      </div>
+      <div class="th-card th-fade-in" id="deser" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-random"></i> 20. Insecure Deserialization (Direct Object References, Management Interface, Randomness, Source Code Management)</div>
+        <div class="th-card-body">Unsafe deserialization can let attackers execute code or tamper with objects. Use safe serialization formats and validate all input.</div>
+      </div>
+      <div class="th-card th-fade-in" id="ldap" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-search"></i> 21. LDAP Injection</div>
+        <div class="th-card-body">Injecting malicious LDAP queries to bypass authentication or extract data. Always sanitize and escape input used in LDAP queries.</div>
+      </div>
+      <div class="th-card th-fade-in" id="latex" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-superscript"></i> 22. LaTeX Injection</div>
+        <div class="th-card-body">Injecting LaTeX code to execute commands or render malicious content. Sanitize all user input before processing with LaTeX engines.</div>
+      </div>
+      <div class="th-card th-fade-in" id="massassign" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-tasks"></i> 23. Mass Assignment</div>
+        <div class="th-card-body">Allowing users to set unintended object properties via bulk updates. Use allow-lists and never bind user input directly to models.</div>
+      </div>
+      <div class="th-card th-fade-in" id="memdos" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-memory"></i> 24. Memory Exhaustion (DoS)</div>
+        <div class="th-card-body">Attackers exhaust server memory with large or infinite requests, causing denial of service. Implement resource limits and input validation.</div>
+      </div>
+      <div class="th-card th-fade-in" id="nosql" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-database"></i> 25. NoSQL Injection</div>
+        <div class="th-card-body">Injecting malicious queries into NoSQL databases to bypass auth or extract data. Always validate and sanitize input for database queries.</div>
+      </div>
+      <div class="th-card th-fade-in" id="orm" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-leak"></i> 26. ORM Leak</div>
+        <div class="th-card-body">Leaking sensitive data or logic via misconfigured Object-Relational Mappers. Review ORM configs and restrict data exposure.</div>
+      </div>
+      <div class="th-card th-fade-in" id="redirect" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-external-link-alt"></i> 27. Open URL Redirect</div>
+        <div class="th-card-body">Allowing user-controlled redirects can be abused for phishing. Always validate redirect URLs and use allow-lists.</div>
+      </div>
+      <div class="th-card th-fade-in" id="prompt" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-terminal"></i> 28. Prompt Injection</div>
+        <div class="th-card-body">Manipulating prompts in AI or chatbot systems to change their behavior or leak data. Sanitize and filter user input before passing to LLMs.</div>
+      </div>
+      <div class="th-card th-fade-in" id="proto" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-bug"></i> 29. Prototype Pollution</div>
+        <div class="th-card-body">Altering JavaScript object prototypes via user input, leading to unexpected behavior or vulnerabilities. Use libraries that guard against this and validate input.</div>
+      </div>
+      <div class="th-card th-fade-in" id="race" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-stopwatch"></i> 30. Race Condition</div>
+        <div class="th-card-body">Exploiting timing issues in code to perform actions out of order, often to bypass checks. Use locks and atomic operations for critical sections.</div>
+      </div>
+      <div class="th-card th-fade-in" id="redos" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-asterisk"></i> 31. Regular Expression DoS (ReDoS)</div>
+        <div class="th-card-body">Complex regex patterns can be abused to consume excessive CPU, causing DoS. Use safe regex patterns and limit input length.</div>
+      </div>
+      <div class="th-card th-fade-in" id="saml" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-shield-alt"></i> 32. SAML Injection</div>
+        <div class="th-card-body">Injecting malicious data into SAML assertions to bypass authentication. Validate and sign all SAML data.</div>
+      </div>
+      <div class="th-card th-fade-in" id="sqli" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-database"></i> 33. SQL Injection (SQLi)</div>
+        <div class="th-card-body">Injecting SQL queries via user input to access or modify data. Always use parameterized queries and ORM protections.</div>
+      </div>
+      <div class="th-card th-fade-in" id="ssi" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-code"></i> 34. Server Side Include Injection (Request Forgery, Template Injection)</div>
+        <div class="th-card-body">Injecting code into server-side templates or includes, leading to code execution. Sanitize all template input and use safe rendering engines.</div>
+      </div>
+      <div class="th-card th-fade-in" id="smtp" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-envelope"></i> 35. SMTP Header Injection</div>
+        <div class="th-card-body">Injecting newlines into email headers to send spam or spoof emails. Sanitize all input used in email headers.</div>
+      </div>
+      <div class="th-card th-fade-in" id="tabnabbing" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-window-restore"></i> 36. Tabnabbing</div>
+        <div class="th-card-body">Tricking users into switching tabs and capturing credentials. Use rel="noopener noreferrer" on external links.</div>
+      </div>
+      <div class="th-card th-fade-in" id="typejuggle" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-balance-scale"></i> 37. Type Juggling</div>
+        <div class="th-card-body">Exploiting loose type comparisons in code (e.g., PHP) to bypass checks. Use strict type checks and comparisons.</div>
+      </div>
+      <div class="th-card th-fade-in" id="cache" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-archive"></i> 38. Web Cache Deception</div>
+        <div class="th-card-body">Tricking web caches into storing sensitive content, making it accessible to others. Carefully configure cache rules and avoid caching user-specific data.</div>
+      </div>
+      <div class="th-card th-fade-in" id="xpath" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-code"></i> 39. XPATH (XSLT, XSS, XXE Injection)</div>
+        <div class="th-card-body">Injecting malicious XPATH, XSLT, or XML to access or modify data, or trigger XSS/XXE. Always sanitize XML input and use secure parsers.</div>
+      </div>
+      <div class="th-card th-fade-in" id="zipslip" style="flex:1 1 320px; min-width:320px; max-width:420px;">
+        <div class="th-card-header"><i class="fa fa-file-archive"></i> 40. Zip Slip Command Execution</div>
+        <div class="th-card-body">Exploiting zip extraction to overwrite files or execute code by using crafted file paths. Use secure extraction libraries and validate file paths.</div>
+      </div>
+    </div>
+    <div class="footer">&copy; 2025 TH - Dashsecurity. All rights reserved.</div>
+  </div>
+</body>
+</html> 
