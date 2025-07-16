@@ -3,3 +3,5 @@
 /js/* /403.html 403
 /cc-exam-db/* /403.html 403
 /cissp-exam-db/* /403.html 403
+/login/js/* /403.html 403
+/login/js/ /403.html 403
