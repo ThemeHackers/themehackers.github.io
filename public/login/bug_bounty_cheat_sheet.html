@@ -8,8 +8,8 @@
   <link rel="icon" href="../img/favicon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <!-- <script src="js/env.js" defer></script>
-  <script src="js/rule.js" defer></script> -->
+  <script src="js/env.js" defer></script>
+  <script src="js/rule.js" defer></script>
   <style>
     html {
       scroll-behavior: smooth;
@@ -21,27 +21,6 @@
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
-    }
-    /* Animated background dots */
-    .bg-dots {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.13;
-    }
-    .bg-dots span {
-      position: absolute;
-      width: 12px; height: 12px;
-      border-radius: 50%;
-      background: #00ff41;
-      opacity: 0.7;
-      animation: floatDot 8s infinite linear;
-    }
-    @keyframes floatDot {
-      0% { transform: translateY(0) scale(1); opacity: 0.7; }
-      50% { transform: translateY(-40px) scale(1.2); opacity: 0.4; }
-      100% { transform: translateY(0) scale(1); opacity: 0.7; }
     }
     .container {
       max-width: 900px;
@@ -112,9 +91,6 @@
       z-index: 1;
     }
     .quick-nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
       background: rgba(35, 42, 54, 0.85);
       padding: 0.7rem 0.5rem;
       border-radius: 0 0 20px 20px;
@@ -213,41 +189,10 @@
         transform: translateY(0) scale(1);
       }
     }
-    /* Back to Top Button */
-    .back-to-top {
-      position: fixed;
-      right: 2.2rem;
-      bottom: 2.2rem;
-      background: #00ff41;
-      color: #181c24;
-      border: none;
-      border-radius: 50%;
-      width: 48px; height: 48px;
-      box-shadow: 0 4px 24px #00ff4133;
-      font-size: 1.7rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s, background 0.18s, color 0.18s;
-      z-index: 100;
-    }
-    .back-to-top.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .back-to-top:hover {
-      background: #181c24;
-      color: #00ff41;
-      border: 1.5px solid #00ff41;
-    }
     @media (max-width: 900px) {
       .cheat-grid { gap: 1.2rem; }
       .th-card { min-width: 90vw; max-width: 98vw; }
       .container { padding: 1.2rem 0.3rem; }
-      .back-to-top { right: 1rem; bottom: 1rem; }
     }
     @media (max-width: 600px) {
       .container {
@@ -309,44 +254,6 @@
       padding-bottom: 1.5rem;
     }
   </style>
-  <script>
-    // Animate cards with staggered delay
-    document.addEventListener('DOMContentLoaded', function() {
-      const cards = document.querySelectorAll('.th-card');
-      cards.forEach((card, i) => {
-        card.style.animationDelay = (i * 0.07) + 's';
-      });
-
-      // Floating dots background
-      const bgDots = document.createElement('div');
-      bgDots.className = 'bg-dots';
-      for (let i = 0; i < 18; i++) {
-        const dot = document.createElement('span');
-        dot.style.left = Math.random() * 100 + 'vw';
-        dot.style.top = Math.random() * 100 + 'vh';
-        dot.style.animationDelay = (Math.random() * 8) + 's';
-        dot.style.background = Math.random() > 0.5 ? '#00ff41' : '#fff';
-        dot.style.opacity = Math.random() * 0.5 + 0.3;
-        bgDots.appendChild(dot);
-      }
-      document.body.appendChild(bgDots);
-
-      // Back to Top button
-      const btn = document.createElement('button');
-      btn.className = 'back-to-top';
-      btn.innerHTML = '<i class="fa fa-arrow-up"></i>';
-      btn.title = 'Back to Top';
-      btn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-      document.body.appendChild(btn);
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-          btn.classList.add('show');
-        } else {
-          btn.classList.remove('show');
-        }
-      });
-    });
-  </script>
 </head>
 <body>
   <div class="container">
