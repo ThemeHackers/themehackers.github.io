@@ -8,8 +8,8 @@
   <link rel="icon" href="../img/favicon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="js/env.js" defer></script>
-  <script src="js/rule.js" defer></script>
+  <!-- <script src="js/env.js" defer></script>
+  <script src="js/rule.js" defer></script> -->
   <style>
     html {
       scroll-behavior: smooth;
@@ -96,10 +96,10 @@
       z-index: 1;
     }
     .hero-desc {
-      color: #232a36;
+      color: #e0ffe0;
       font-size: 1.1rem;
       margin-bottom: 0.5rem;
-      opacity: 0.9;
+      opacity: 1;
       position: relative;
       z-index: 1;
     }
@@ -107,7 +107,7 @@
       color: #00ff41;
       font-size: 1.05rem;
       margin-bottom: 0.2rem;
-      opacity: 0.85;
+      opacity: 1;
       position: relative;
       z-index: 1;
     }
@@ -249,12 +249,63 @@
       .container { padding: 1.2rem 0.3rem; }
       .back-to-top { right: 1rem; bottom: 1rem; }
     }
+    @media (max-width: 600px) {
+      .container {
+        padding: 0.5rem 0.1rem;
+        margin: 1rem 0.1rem;
+        border-radius: 14px;
+      }
+      .cheat-grid {
+        gap: 0.7rem;
+        flex-direction: column;
+        align-items: center;
+      }
+      .th-card {
+        min-width: 98vw;
+        max-width: 99vw;
+        padding: 1rem 0.5rem;
+        border-radius: 10px;
+      }
+      .quick-nav {
+        flex-wrap: wrap;
+        gap: 0.3em;
+        padding: 0.4rem 0.1rem;
+        font-size: 0.95em;
+        border-radius: 0 0 12px 12px;
+      }
+      .quick-nav a {
+        padding: 0.3em 0.7em;
+        font-size: 0.95em;
+      }
+      .hero {
+        padding: 1.2rem 0.2rem 0.7rem 0.2rem;
+        border-radius: 12px 12px 0 0;
+      }
+      .footer {
+        font-size: 0.85rem;
+        padding-bottom: 0.7rem;
+      }
+    }
+    @media (max-width: 400px) {
+      .container {
+        padding: 0.2rem 0;
+        margin: 0.5rem 0;
+      }
+      .th-card {
+        min-width: 100vw;
+        max-width: 100vw;
+        padding: 0.7rem 0.1rem;
+      }
+      .quick-nav {
+        font-size: 0.9em;
+      }
+    }
     .footer {
       text-align: center;
       margin-top: 2.5rem;
-      color: #888;
-      font-size: 0.95rem;
-      opacity: 0.7;
+      color: #e0ffe0;
+      font-size: 0.98rem;
+      opacity: 1;
       padding-bottom: 1.5rem;
     }
   </style>
