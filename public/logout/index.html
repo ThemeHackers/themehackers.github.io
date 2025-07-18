@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logging Out | TH - Dashsecurity</title>
+  <link rel="stylesheet" href="../css/themehackers.css">
+  <link rel="icon" href="../img/favicon.png">
+  <style>
+    body {
+      background: linear-gradient(135deg, #181c24 0%, #232a36 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    .logout-card {
+      background: rgba(35, 42, 54, 0.75);
+      box-shadow: 0 8px 40px #00ff4140, 0 1.5px 16px #00ff4133;
+      border-radius: 24px;
+      padding: 2.5rem 2.5rem 2rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      backdrop-filter: blur(10px) saturate(120%);
+      border: 2px solid #00ff4166;
+      animation: fadeIn 1.1s cubic-bezier(.4,0,.2,1);
+      margin-top: 40px;
+      max-width: 350px;
+      position: relative;
+      z-index: 2;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .logout-svg {
+      width: 70px;
+      height: 70px;
+      margin-bottom: 1.2rem;
+      filter: drop-shadow(0 0 16px #00ff41cc);
+      animation: fadeIn 1.2s 0.2s both;
+    }
+    .spinner {
+      border: 7px solid #232a36;
+      border-top: 7px solid #00ff41;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 24px #00ff41cc, 0 0 0 4px #232a36;
+      transition: opacity 0.4s;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .checkmark {
+      width: 60px;
+      height: 60px;
+      display: none;
+      margin-bottom: 1.5rem;
+    }
+    .checkmark.active {
+      display: block;
+      animation: popIn 0.5s cubic-bezier(.4,2,.2,1);
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      80% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .logout-message {
+      font-size: 1.45rem;
+      color: #00ff41;
+      margin-bottom: 0.5em;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+    .logout-desc {
+      color: #b6ffcb;
+      font-size: 1.08rem;
+      margin-bottom: 1.2em;
+      text-align: center;
+      opacity: 0.92;
+    }
+    .goodbye-message {
+      color: #b6eaff;
+      font-size: 1.1rem;
+      margin-bottom: 0.5em;
+      text-align: center;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      opacity: 0.93;
+      min-height: 1.5em;
+      transition: opacity 0.5s;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 7px;
+      background: #232a36;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 1.2em;
+      box-shadow: 0 0 8px #00ff4133;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00ff41 0%, #b6eaff 100%);
+      border-radius: 6px;
+      transition: width 0.2s;
+      box-shadow: 0 0 12px #00ff41cc;
+    }
+    .confetti {
+      position: fixed;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .footer {
+      position: fixed;
+      bottom: 1.5em;
+      width: 100vw;
+      text-align: center;
+      color: #888;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      z-index: 2;
+    }
+    .spinner, .checkmark {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      display: block;
+    }
+    .checkmark {
+      display: none;
+    }
+    .checkmark.active {
+      display: block;
+      animation: popIn 0.5s cubic-bezier(.4,2,.2,1);
+    }
+    @media (max-width: 500px) {
+      .logout-card {
+        padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+        max-width: 98vw;
+      }
+      .footer {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script>
+
+    function launchConfetti() {
+      const confetti = document.createElement('canvas');
+      confetti.className = 'confetti';
+      document.body.appendChild(confetti);
+      const ctx = confetti.getContext('2d');
+      confetti.width = window.innerWidth;
+      confetti.height = window.innerHeight;
+      let pieces = [];
+      for (let i = 0; i < 60; i++) {
+        pieces.push({
+          x: Math.random() * confetti.width,
+          y: Math.random() * -confetti.height,
+          r: 6 + Math.random() * 8,
+          d: 2 + Math.random() * 2,
+          color: `hsl(${Math.random()*360}, 100%, 60%)`,
+          tilt: Math.random() * 10,
+          tiltAngle: 0
+        });
+      }
+      function draw() {
+        ctx.clearRect(0, 0, confetti.width, confetti.height);
+        for (let p of pieces) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = 0.85;
+          ctx.fill();
+        }
+      }
+      function update() {
+        for (let p of pieces) {
+          p.y += p.d;
+          p.tiltAngle += 0.05 + Math.random() * 0.03;
+          p.x += Math.sin(p.tiltAngle) * 1.2;
+          if (p.y > confetti.height) {
+            p.y = -10;
+            p.x = Math.random() * confetti.width;
+          }
+        }
+      }
+      let frame = 0;
+      function animate() {
+        draw();
+        update();
+        frame++;
+        if (frame < 90) requestAnimationFrame(animate);
+        else confetti.remove();
+      }
+      animate();
+    }
+
+    document.addEventListener('DOMContentLoaded', async function() {
+      localStorage.clear();
+      sessionStorage.clear();
+
+      if (window.createClient) {
+        const supabaseUrl = window.SUPABASE_URL || '';
+        const supabaseKey = window.SUPABASE_KEY || '';
+        if (supabaseUrl && supabaseKey) {
+          const supabase = window.createClient(supabaseUrl, supabaseKey);
+          try {
+            await supabase.auth.signOut();
+          } catch (e) {}
+        }
+      }
+
+      const bar = document.querySelector('.progress-bar-inner');
+      let progress = 0;
+      let interval = setInterval(() => {
+        progress += 2 + Math.random() * 3;
+        if (progress > 100) progress = 100;
+        bar.style.width = progress + '%';
+        if (progress === 100) clearInterval(interval);
+      }, 40);
+
+      const messages = [
+        'See you soon! Stay secure with TH - Dashsecurity.',
+        'Logged out safely. Have a great day!',
+        'Your session is secure. Goodbye!'
+      ];
+      let msgIdx = 0;
+      const goodbye = document.querySelector('.goodbye-message');
+      setInterval(() => {
+        msgIdx = (msgIdx + 1) % messages.length;
+        goodbye.style.opacity = 0;
+        setTimeout(() => {
+          goodbye.textContent = messages[msgIdx];
+          goodbye.style.opacity = 1;
+        }, 400);
+      }, 2600);
+      setTimeout(() => {
+        document.querySelector('.spinner').style.opacity = 0;
+        document.querySelector('.checkmark').classList.add('active');
+        launchConfetti();
+      }, 1200);
+
+      setTimeout(function() {
+        window.location.href = '../login';
+      }, 2600);
+    });
+  </script>
+</head>
+<body>
+  <div class="logout-card">
+    <svg class="logout-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="32" cy="32" r="30" stroke="#00ff41" stroke-width="4" fill="#181c24"/>
+      <path d="M40 32L24 32" stroke="#00ff41" stroke-width="4" stroke-linecap="round"/>
+      <path d="M32 24L40 32L32 40" stroke="#00ff41" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+    <div class="logout-message">Logging you out...</div>
+    <div class="logout-desc">Please wait while we securely log you out.<br>You will be redirected shortly.</div>
+    <div class="goodbye-message">See you soon! Stay secure with<br>TH - Dashsecurity.</div>
+    <div style="position: relative; width: 60px; height: 60px; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center;">
+      <div class="spinner"></div>
+      <svg class="checkmark" viewBox="0 0 52 52">
+        <circle cx="26" cy="26" r="25" fill="none" stroke="#00ff41" stroke-width="3"/>
+        <path fill="none" stroke="#00ff41" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14 28l8 8 16-16">
+          <animate attributeName="stroke-dasharray" from="0,40" to="40,0" dur="0.5s" fill="freeze" />
+        </path>
+      </svg>
+    </div>
+  </div>
+  <div class="footer">&copy; 2025 TH - Dashsecurity. All rights reserved.</div>
+</body>
+</html> 
