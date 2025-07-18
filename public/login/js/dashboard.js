@@ -121,3 +121,21 @@ async function handleDeleteAccount() {
 document.getElementById('confirm-delete-btn').addEventListener('click', handleDeleteAccount);
 
 window.addEventListener('DOMContentLoaded', getUserAndProfile);
+
+async function debugSupabaseUser() {
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  console.log('getUser:', user, userError);
+
+  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+  console.log('getSession:', session, sessionError);
+
+  if (session) {
+    console.log('access_token:', session.access_token);
+    console.log('user in session:', session.user);
+  }
+
+  console.log('localStorage:', localStorage);
+
+
+  console.log('document.cookie:', document.cookie);
+}
