@@ -80,22 +80,41 @@ async function handleDeleteAccount() {
     return;
   }
   const { data: { session } } = await supabase.auth.getSession();
-  const accessToken = session?.SUPABASE_ANON_KEY;
+  const accessToken = session?.access_token;
+  if (!accessToken) {
+    alert('No access token found. Please login again.');
+    return;
+  }
 
-  const response = await fetch('https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/smart-task', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${accessToken}`
-    },
-    body: JSON.stringify({ user_id: user.id })
-  });
-  const result = await response.json();
-  if (result.success) {
-    await supabase.auth.signOut();
-    window.location.href = '/login/';
-  } else {
-    alert('Error deleting account: ' + (result.error || 'Unknown error'));
+  try {
+    const response = await fetch('https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/smart-task', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+      body: JSON.stringify({ user_id: user.id })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      showResultModal(false, "Error deleting account: " + (errorData.error || "Unknown error"));
+      return;
+    }
+
+    const result = await response.json();
+    if (result.success) {
+      showResultModal(true, "Your account has been deleted successfully.");
+      setTimeout(() => {
+        supabase.auth.signOut().then(() => {
+          window.location.href = '/login/';
+        });
+      }, 1500);
+    } else {
+      showResultModal(false, "Error deleting account: " + (result.error || "Unknown error"));
+    }
+  } catch (error) {
+    showResultModal(false, "Network error: " + error.message);
   }
 }
 
