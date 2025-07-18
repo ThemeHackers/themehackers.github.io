@@ -337,6 +337,9 @@
       .dashboard-navbar .logout-btn {
         display: none;
       }
+      #delete-account-btn {
+        display: none !important;
+      }
     }
   </style>
 </head>
@@ -351,6 +354,9 @@
     <div class="mobile-menu" id="mobile-menu">
       <a href="../logout/" class="mobile-logout">
         <i class="fa fa-sign-out-alt"></i> Logout
+      </a>
+      <a href="#" id="mobile-delete-account-btn" class="mobile-delete" style="color:#ff4757; font-weight:600; text-decoration:none; font-size:1.1rem; display:flex; align-items:center; gap:0.6em; margin-top:1em;">
+        <i class="fa fa-user-times"></i> Delete Account
       </a>
     </div>
   </nav>
@@ -547,6 +553,15 @@
         hideDeleteModal();
       }
     });
+
+    const mobileDeleteAccountBtn = document.getElementById('mobile-delete-account-btn');
+    if (mobileDeleteAccountBtn) {
+      mobileDeleteAccountBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showDeleteModal();
+        mobileMenu.classList.remove('active');
+      });
+    }
   </script>
 </body>
 </html>
