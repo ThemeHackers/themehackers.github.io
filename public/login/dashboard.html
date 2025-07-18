@@ -8,8 +8,8 @@
   <link rel="icon" href="../img/favicon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="js/env.js" defer></script>
-  <script src="js/dashboard.js" defer></script>
+  <!-- <script src="js/env.js" defer></script>
+  <script src="js/dashboard.js" defer></script> -->
   <style>
     body {
       background: linear-gradient(135deg, #181c24 0%, #232a36 100%);
@@ -264,6 +264,59 @@
       gap: 0.6em;
     }
 
+    /* Modal Animation */
+    #delete-modal {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.28s cubic-bezier(.4,2,.6,1),
+                  background 0.28s cubic-bezier(.4,2,.6,1);
+      display: flex;
+    }
+    #delete-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+      background: rgba(24,28,36,0.85);
+    }
+    #delete-modal .modal-content {
+      transform: scale(0.85);
+      opacity: 0;
+      transition: transform 0.32s cubic-bezier(.4,2,.6,1), opacity 0.22s cubic-bezier(.4,2,.6,1);
+    }
+    #delete-modal.active .modal-content {
+      transform: scale(1);
+      opacity: 1;
+    }
+    /* Modal Button Effects */
+    #delete-modal button {
+      transition: transform 0.13s cubic-bezier(.4,2,.6,1), box-shadow 0.18s, background 0.18s, border 0.18s;
+      outline: none;
+    }
+    #confirm-delete-btn:hover {
+      transform: scale(1.07) rotate(-1deg);
+      box-shadow: 0 0 16px #ff475799, 0 2px 8px #ff475733;
+      animation: pulse-btn 0.5s;
+    }
+    #confirm-delete-btn:active {
+      transform: scale(0.97) rotate(1deg);
+      box-shadow: 0 0 8px #ff475799;
+    }
+    #cancel-delete-btn:hover {
+      background: #2e3440;
+      color: #ff4757;
+      border-color: #ff4757;
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #ff475799;
+    }
+    #cancel-delete-btn:active {
+      transform: scale(0.97);
+      background: #181c24;
+    }
+    @keyframes pulse-btn {
+      0% { box-shadow: 0 0 0 #ff475799; }
+      50% { box-shadow: 0 0 24px #ff475799; }
+      100% { box-shadow: 0 0 0 #ff475799; }
+    }
+
     @media (max-width: 900px) {
       .dashboard-grid, .dashboard-row {
         grid-template-columns: 1fr;
@@ -303,10 +356,18 @@
   </nav>
   <div class="dashboard-container th-container">
     <!-- Profile Card -->
-    <div class="profile-card">
+    <div class="profile-card" style="position:relative;">
+      <button id="delete-account-btn" style="position:absolute; top:1.2em; right:1.2em; background:linear-gradient(90deg,#ff4757 60%,#ff6b81 100%); color:#fff; border:none; border-radius:8px; padding:0.5em 1.2em; font-weight:600; cursor:pointer; font-size:0.98em; box-shadow:0 2px 8px #ff475733; transition:background 0.18s, box-shadow 0.18s, transform 0.12s; z-index:2;">Delete Account</button>
       <img id="user-avatar" class="user-avatar" src="../img/favicon.png" alt="User Avatar">
       <div class="user-details">
-        <div id="user-name" class="user-name"><i class="fa fa-user-circle"></i> <span>Loading...</span></div>
+        <div id="user-name" class="user-name"><i class="fa fa-user-circle"></i> <span id="user-name-text">Loading...</span>
+          <button id="edit-name-btn" style="margin-left:0.7em; background:none; border:none; color:#00ff41; cursor:pointer; font-size:1em;" title="Edit Name"><i class="fa fa-edit"></i></button>
+        </div>
+        <div id="edit-name-form" style="display:none; margin-top:0.5em;">
+          <input type="text" id="edit-name-input" style="padding:0.3em 0.7em; border-radius:6px; border:1px solid #00ff41; font-size:1em;" />
+          <button id="save-name-btn" style="background:#00ff41; color:#181c24; border:none; border-radius:6px; padding:0.3em 1em; font-weight:600; margin-left:0.5em; cursor:pointer;">Save</button>
+          <button id="cancel-edit-name-btn" style="background:#ff4757; color:#fff; border:none; border-radius:6px; padding:0.3em 1em; font-weight:600; margin-left:0.3em; cursor:pointer;">Cancel</button>
+        </div>
         <div id="user-email" class="user-email"></div>
         <div class="profile-note">This information is loaded from your Profile database.</div>
         <div class="profile-note">Please keep your information confidential in accordance with our policy.</div>
@@ -336,7 +397,7 @@
             </li>
             <li>
               <a href="/owasp/" target="_blank"><b>OWASP</b></a>
-              <div class="quick-link-desc-en">OWASP Knowledge Base and Core.</span></div>
+              <div class="quick-link-desc-en">Knowledge base and standards for web application security</span></div>
             </li>
             <li>
               <a href="/cc-exam.html" target="_blank"><b>CC Exam</b></a>
@@ -367,7 +428,7 @@
               <div class="quick-link-desc-en">Vulnerability scanning service for systems and web applications based on CVE codes</span></div>
             </li>
             <li>
-              <a href="./bug_bounty_cheat_sheet.html" target="_blank"><b>Bug Bounty Cheat Sheet</b></a>
+              <a href="./bug_bounty_cheat_sheet.html" target="_blank">Bug Bounty Cheat Sheet</b></a>
               <div class="quick-link-desc-en">Revealing real-world vulnerabilities in 2025: What are the vulnerabilities?</span></div>
             </li>
             <li>
@@ -385,13 +446,22 @@
         </div>
       </div>
     </div>
-    <!-- Welcome Card -->
+
     <div class="th-card" style="margin-bottom:0;">
       <div class="th-card-header"><i class="fa fa-handshake"></i> Welcome</div>
       <div class="th-card-body">
         <h2 id="greeting">Welcome to your Dashboard!</h2>
         <p>Manage your security, view your activity, and stay up to date with the latest tips from ThemeHackers.</p>
       </div>
+    </div>
+  </div>
+
+  <div id="delete-modal" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; align-items:center; justify-content:center;">
+    <div class="modal-content" style="background:#232a36; border-radius:16px; box-shadow:0 0 32px #ff475799; padding:2.2em 2em 1.5em 2em; max-width:350px; width:90vw; text-align:center; border:2px solid #ff4757;">
+      <div style="font-size:1.3em; color:#ff4757; font-weight:bold; margin-bottom:0.7em;"><i class='fa fa-exclamation-triangle'></i> Are you sure?</div>
+      <div style="color:#fff; margin-bottom:1.2em;">Are you sure you want to delete your account?<br>This action cannot be undone.</div>
+      <button id="confirm-delete-btn" style="background:linear-gradient(90deg,#ff4757 60%,#ff6b81 100%); color:#fff; border:none; border-radius:8px; padding:0.5em 1.5em; font-weight:600; font-size:1em; margin-right:0.7em; cursor:pointer;">Delete</button>
+      <button id="cancel-delete-btn" style="background:#232a36; color:#fff; border:1.5px solid #ff4757; border-radius:8px; padding:0.5em 1.5em; font-weight:600; font-size:1em; cursor:pointer;">Cancel</button>
     </div>
   </div>
   <div class="login-footer" style="text-align:center; margin-top:2rem; color:#888; font-size:0.9rem; opacity:0.7;">
@@ -405,10 +475,76 @@
       mobileMenu.classList.toggle('active');
     });
 
-    // Optional: Close menu when clicking outside
+  
     document.addEventListener('click', function(event) {
       if (!hamburgerBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
         mobileMenu.classList.remove('active');
+      }
+    });
+
+
+    const editNameBtn = document.getElementById('edit-name-btn');
+    const editNameForm = document.getElementById('edit-name-form');
+    const userNameText = document.getElementById('user-name-text');
+    const editNameInput = document.getElementById('edit-name-input');
+    const saveNameBtn = document.getElementById('save-name-btn');
+    const cancelEditNameBtn = document.getElementById('cancel-edit-name-btn');
+
+    editNameBtn.addEventListener('click', function() {
+      editNameInput.value = userNameText.textContent;
+      editNameForm.style.display = 'block';
+      userNameText.style.display = 'none';
+      editNameBtn.style.display = 'none';
+    });
+
+    saveNameBtn.addEventListener('click', function() {
+      const newName = editNameInput.value.trim();
+      if (newName) {
+       
+        userNameText.textContent = newName;
+      }
+      editNameForm.style.display = 'none';
+      userNameText.style.display = '';
+      editNameBtn.style.display = '';
+    });
+
+    cancelEditNameBtn.addEventListener('click', function() {
+      editNameForm.style.display = 'none';
+      userNameText.style.display = '';
+      editNameBtn.style.display = '';
+    });
+
+    const deleteAccountBtn = document.getElementById('delete-account-btn');
+    const deleteModal = document.getElementById('delete-modal');
+    const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+    const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+    const modalContent = deleteModal.querySelector('.modal-content');
+
+    function showDeleteModal() {
+      deleteModal.classList.add('active');
+      setTimeout(() => {
+        modalContent.classList.add('active');
+      }, 10);
+    }
+    function hideDeleteModal() {
+      modalContent.classList.remove('active');
+      setTimeout(() => {
+        deleteModal.classList.remove('active');
+      }, 250);
+    }
+
+    deleteAccountBtn.addEventListener('click', showDeleteModal);
+    cancelDeleteBtn.addEventListener('click', hideDeleteModal);
+    confirmDeleteBtn.addEventListener('click', function() {
+     
+      hideDeleteModal();
+      alert('Your account would be deleted (backend integration needed).');
+
+    });
+
+    deleteModal.addEventListener('click', function(e) {
+      if (e.target === deleteModal) {
+        hideDeleteModal();
       }
     });
   </script>
