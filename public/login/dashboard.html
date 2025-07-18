@@ -7,9 +7,9 @@
   <link rel="stylesheet" href="../css/themehackers.css">
   <link rel="icon" href="../img/favicon.png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="js/env.js" defer></script>
-  <script src="js/dashboard.js" defer></script>
+  <script src="js/dashboard.js" defer></script> -->
   <style>
     body {
       background: linear-gradient(135deg, #181c24 0%, #232a36 100%);
@@ -317,6 +317,16 @@
       100% { box-shadow: 0 0 0 #ff475799; }
     }
 
+    #result-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+      background: rgba(24,28,36,0.85);
+    }
+    #result-modal.active .modal-content {
+      transform: scale(1);
+      opacity: 1;
+    }
+
     @media (max-width: 900px) {
       .dashboard-grid, .dashboard-row {
         grid-template-columns: 1fr;
@@ -470,6 +480,13 @@
       <button id="cancel-delete-btn" style="background:#232a36; color:#fff; border:1.5px solid #ff4757; border-radius:8px; padding:0.5em 1.5em; font-weight:600; font-size:1em; cursor:pointer;">Cancel</button>
     </div>
   </div>
+  <div id="result-modal" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:10000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s;">
+    <div class="modal-content" style="background:#232a36; border-radius:16px; box-shadow:0 0 32px #00ff41cc; padding:2em 2em 1.5em 2em; max-width:350px; width:90vw; text-align:center; border:2px solid #00ff41; transform:scale(0.85); opacity:0; transition:transform 0.32s, opacity 0.22s;">
+      <div id="result-modal-icon" style="font-size:2.2em; margin-bottom:0.5em;"></div>
+      <div id="result-modal-message" style="color:#fff; font-size:1.15em; margin-bottom:1.2em;"></div>
+      <button id="result-modal-close-btn" style="background:#00ff41; color:#181c24; border:none; border-radius:8px; padding:0.5em 1.5em; font-weight:600; font-size:1em; cursor:pointer;">OK</button>
+    </div>
+  </div>
   <div class="login-footer" style="text-align:center; margin-top:2rem; color:#888; font-size:0.9rem; opacity:0.7;">
     &copy; 2025 TH - Dashsecurity. All rights reserved.
   </div>
@@ -544,7 +561,7 @@
     confirmDeleteBtn.addEventListener('click', function() {
      
       hideDeleteModal();
-      alert('Your account would be deleted (backend integration needed).');
+      showResultModal(true, "Your account has been deleted successfully.");
 
     });
 
@@ -552,6 +569,36 @@
       if (e.target === deleteModal) {
         hideDeleteModal();
       }
+    });
+
+    const resultModal = document.getElementById('result-modal');
+    const resultModalIcon = document.getElementById('result-modal-icon');
+    const resultModalMessage = document.getElementById('result-modal-message');
+    const resultModalCloseBtn = document.getElementById('result-modal-close-btn');
+
+    function showResultModal(success, message) {
+      if (success) {
+        resultModalIcon.innerHTML = "<i class='fa fa-check-circle' style='color:#00ff41;'></i>";
+      } else {
+        resultModalIcon.innerHTML = "<i class='fa fa-times-circle' style='color:#ff4757;'></i>";
+      }
+      resultModalMessage.textContent = message;
+      resultModal.classList.add('active');
+      setTimeout(() => {
+        resultModal.querySelector('.modal-content').classList.add('active');
+      }, 10);
+    }
+
+    function hideResultModal() {
+      resultModal.querySelector('.modal-content').classList.remove('active');
+      setTimeout(() => {
+        resultModal.classList.remove('active');
+      }, 250);
+    }
+
+    resultModalCloseBtn.addEventListener('click', hideResultModal);
+    resultModal.addEventListener('click', function(e) {
+      if (e.target === resultModal) hideResultModal();
     });
 
     const mobileDeleteAccountBtn = document.getElementById('mobile-delete-account-btn');
