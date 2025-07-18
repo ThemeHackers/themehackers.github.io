@@ -80,7 +80,7 @@ async function handleDeleteAccount() {
     return;
   }
   const { data: { session } } = await supabase.auth.getSession();
-  const accessToken = SUPABASE_ANON_KEY;
+  const accessToken = session?.SUPABASE_ANON_KEY;
 
   const response = await fetch('https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/smart-task', {
     method: 'POST',
