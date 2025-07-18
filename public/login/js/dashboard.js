@@ -73,4 +73,28 @@ if (logoutBtn) {
   });
 }
 
+async function handleDeleteAccount() {
+  const { data: { user }, error } = await supabase.auth.getUser();
+  if (error || !user) {
+    alert('User not found');
+    return;
+  }
+
+  const response = await fetch('https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/smart-task', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id: user.id })
+  });
+
+  const result = await response.json();
+  if (result.success) {
+    await supabase.auth.signOut();
+    window.location.href = '/login/';
+  } else {
+    alert('Error deleting account: ' + (result.error || 'Unknown error'));
+  }
+}
+
+document.getElementById('confirm-delete-btn').addEventListener('click', handleDeleteAccount);
+
 window.addEventListener('DOMContentLoaded', getUserAndProfile);
