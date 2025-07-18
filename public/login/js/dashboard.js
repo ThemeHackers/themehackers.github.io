@@ -107,7 +107,7 @@ async function handleDeleteAccount() {
       showResultModal(true, "Your account has been deleted successfully.");
       setTimeout(() => {
         supabase.auth.signOut().then(() => {
-          window.location.href = '/login/';
+          window.location.href = '/';
         });
       }, 1500);
     } else {
