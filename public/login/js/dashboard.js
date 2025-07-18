@@ -79,13 +79,11 @@ async function handleDeleteAccount() {
     alert('User not found');
     return;
   }
-
   const response = await fetch('https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/smart-task', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ user_id: user.id })
   });
-
   const result = await response.json();
   if (result.success) {
     await supabase.auth.signOut();
