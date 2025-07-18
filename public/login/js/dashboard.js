@@ -79,7 +79,7 @@ async function handleDeleteAccount() {
     alert('User not found');
     return;
   }
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { localStorage } } = await supabase.auth.getSession();
   const accessToken = localStorage?.accessToken;
   if (!accessToken) {
     alert('No access token found. Please login again.');
