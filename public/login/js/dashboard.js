@@ -301,7 +301,7 @@ async function getLatestProfileData() {
       .single();
 
     if (profileError) {
-      console.error('Error getting latest profile:', profileError);
+      console.error('Error getting latest profile:', profileError?.message || JSON.stringify(profileError));
       return null;
     }
 
