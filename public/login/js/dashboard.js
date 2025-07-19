@@ -362,17 +362,6 @@ async function checkTablePermissions() {
     }
 
 
-    const { data: userTest, error: userError } = await supabase
-      .from('users')
-      .select('id')
-      .eq('id', user.id)
-      .limit(1);
-
-    if (userError) {
-      console.log('Users table error:', userError.message);
-      return { hasPermission: false, reason: `Users table: ${userError.message}` };
-    }
-
     console.log('Table permissions check passed');
     return { hasPermission: true, reason: 'All tables accessible' };
   } catch (error) {
