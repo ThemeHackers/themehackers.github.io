@@ -164,16 +164,25 @@ async function handleDeleteAccount() {
 
   try {
     console.log('Attempting to delete account for user:', user.id);
-    const response = await fetch('https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/smart-task', {
+    console.log('Using access token:', accessToken ? 'Token exists' : 'No token');
+    
+    const url = 'https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/smart-task';
+    console.log('Making request to:', url);
+    
+    const requestBody = { user_id: user.id };
+    console.log('Request body:', requestBody);
+    
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
       },
-      body: JSON.stringify({ user_id: user.id })
+      body: JSON.stringify(requestBody)
     });
 
     console.log('Delete account response status:', response.status);
+    console.log('Response headers:', response.headers);
     
     if (!response.ok) {
       let errorMessage = "Unknown error";
@@ -322,3 +331,125 @@ function testTokenAccess() {
 }
 
 window.testTokenAccess = testTokenAccess;
+
+async function testEdgeFunction() {
+  console.log('=== Testing Edge Function Connectivity ===');
+  
+  try {
+    console.log('Testing Edge Function without auth...');
+    const response1 = await fetch('https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/smart-task', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ test: true })
+    });
+    console.log('Response without auth:', response1.status, response1.statusText);
+    
+    const token = getAccessTokenFromLocalStorage();
+    if (token) {
+      console.log('Testing Edge Function with auth...');
+      const response2 = await fetch('https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/smart-task', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ test: true })
+      });
+      console.log('Response with auth:', response2.status, response2.statusText);
+    } else {
+      console.log('No token available for auth test');
+    }
+  } catch (error) {
+    console.error('Edge Function test error:', error);
+    console.log('Error details:', {
+      name: error.name,
+      message: error.message,
+      stack: error.stack
+    });
+  }
+}
+
+window.testEdgeFunction = testEdgeFunction;
+
+async function deleteAccountDirect() {
+  console.log('=== Direct Account Deletion ===');
+  
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error || !user) {
+      console.error('User error:', error);
+      showResultModal(false, 'User not found');
+      return;
+    }
+    
+    console.log('Deleting user:', user.id);
+    
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .delete()
+      .eq('user_id', user.id);
+    
+    if (profileError) {
+      console.error('Error deleting profile:', profileError);
+      showResultModal(false, 'Error deleting profile: ' + profileError.message);
+      return;
+    }
+    
+    const { error: userError } = await supabase.auth.admin.deleteUser(user.id);
+    
+    if (userError) {
+      console.error('Error deleting user:', userError);
+      showResultModal(false, 'Error deleting user: ' + userError.message);
+      return;
+    }
+    
+    showResultModal(true, 'Account deleted successfully');
+    setTimeout(() => {
+      supabase.auth.signOut().then(() => {
+        window.location.href = '/';
+      });
+    }, 1500);
+    
+  } catch (error) {
+    console.error('Direct deletion error:', error);
+    showResultModal(false, 'Error: ' + error.message);
+  }
+}
+
+window.deleteAccountDirect = deleteAccountDirect;
+
+async function testNetworkConnectivity() {
+  console.log('=== Testing Network Connectivity ===');
+  
+  const tests = [
+    {
+      name: 'Google DNS',
+      url: 'https://8.8.8.8/resolve?name=google.com'
+    },
+    {
+      name: 'Supabase Domain',
+      url: 'https://tcjxrlsebxdyoohcugsr.supabase.co'
+    },
+    {
+      name: 'Edge Function Base',
+      url: 'https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/'
+    }
+  ];
+  
+  for (const test of tests) {
+    try {
+      console.log(`Testing ${test.name}...`);
+      const response = await fetch(test.url, { 
+        method: 'HEAD',
+        mode: 'no-cors'
+      });
+      console.log(`${test.name}: OK`);
+    } catch (error) {
+      console.error(`${test.name}: Failed -`, error.message);
+    }
+  }
+}
+
+window.testNetworkConnectivity = testNetworkConnectivity;
