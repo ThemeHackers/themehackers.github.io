@@ -24,31 +24,51 @@ async function getUserAndProfile() {
       window.location.href = '/login/';
       return;
     }
-  const { data: profile, error: profileError } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('user_id', user.id)
-    .single();
+
+  const profile = await getLatestProfileData();
 
   const userNameElement = document.getElementById('user-name');
   const userNameTextElement = document.getElementById('user-name-text');
+  
+ 
+  
   const displayName = profile?.name || user.user_metadata?.full_name || user.email;
   if (userNameTextElement) {
     userNameTextElement.textContent = displayName;
   } else if (userNameElement) {
     userNameElement.textContent = displayName;
   }
+  
+
   document.getElementById('user-email').textContent = profile?.email || user.email;
   document.getElementById('user-avatar').src = profile?.avatar_url || user.user_metadata?.avatar_url || '../img/favicon.png';
 
-  document.getElementById('profile-detail-name').textContent = profile?.name || user.user_metadata?.full_name || user.email;
-  document.getElementById('profile-detail-email').textContent = profile?.email || user.email;
   
+ 
+  const nameSource = document.getElementById('name-source');
+  const emailSource = document.getElementById('email-source');
+  const phoneSource = document.getElementById('phone-source');
+  
+
+  document.getElementById('profile-detail-name').textContent = profile?.name || user.user_metadata?.full_name || user.email;
+  if (nameSource) {
+    nameSource.textContent = profile?.name ? '(Database)' : profile?.name ? '(Database)' : '(Google)';
+  }
+  
+
+  document.getElementById('profile-detail-email').textContent = profile?.email || user.email;
+  if (emailSource) {
+    emailSource.textContent = profile?.email ? '(Database)' : '(Google)';
+  }
+  
+
   const phoneElement = document.getElementById('profile-detail-phone');
   if (phoneElement) {
     phoneElement.textContent = profile?.phone || '-';
   }
-
+  if (phoneSource) {
+    phoneSource.textContent = profile?.phone ? '(Database)' : '-';
+  }
 
   window.currentProfile = profile;
 
@@ -195,6 +215,101 @@ async function updateUserProfileDirect(name, phone) {
   } catch (error) {
     console.error('Error updating profile via Edge Function:', error);
     return { success: false, error: error.message };
+  }
+}
+
+async function refreshProfileData() {
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error || !user) {
+      console.log('No user found');
+      return null;
+    }
+
+    const profile = await getLatestProfileData();
+    
+    if (!profile) {
+      console.error('Failed to get latest profile data');
+      return null;
+    }
+
+  
+    const userNameElement = document.getElementById('user-name');
+    const userNameTextElement = document.getElementById('user-name-text');
+    
+    const displayName = profile.name || user.user_metadata?.full_name || user.email;
+    
+    if (userNameTextElement) {
+      userNameTextElement.textContent = displayName;
+    } else if (userNameElement) {
+      userNameElement.textContent = displayName;
+    }
+    
+   
+    document.getElementById('user-email').textContent = profile.email || user.email;
+    document.getElementById('user-avatar').src = profile.avatar_url || user.user_metadata?.avatar_url || '../img/favicon.png';
+
+
+    const nameSource = document.getElementById('name-source');
+    const emailSource = document.getElementById('email-source');
+    const phoneSource = document.getElementById('phone-source');
+    
+   
+    const profileDisplayName = profile.name || user.user_metadata?.full_name || user.email;
+    document.getElementById('profile-detail-name').textContent = profileDisplayName;
+    if (nameSource) {
+      nameSource.textContent = profile.name ? '(Database)' : profile?.name ? '(Database)' : '(Google)';
+    }
+    
+
+    document.getElementById('profile-detail-email').textContent = profile.email || user.email;
+    if (emailSource) {
+      emailSource.textContent = profile.email ? '(Database)' : '(Google)';
+    }
+    
+
+    const phoneElement = document.getElementById('profile-detail-phone');
+    if (phoneElement) {
+      phoneElement.textContent = profile.phone || '-';
+    }
+    if (phoneSource) {
+      phoneSource.textContent = profile.phone ? '(Database)' : '-';
+    }
+
+    window.currentProfile = profile;
+
+    console.log('Profile data refreshed from database:', profile);
+    return profile;
+  } catch (error) {
+    console.error('Error refreshing profile data:', error);
+    return null;
+  }
+}
+
+async function getLatestProfileData() {
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error || !user) {
+      console.log('No user found');
+      return null;
+    }
+
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('user_id', user.id)
+      .single();
+
+    if (profileError) {
+      console.error('Error getting latest profile:', profileError);
+      return null;
+    }
+
+    console.log('Latest profile data from database:', profile);
+    return profile;
+  } catch (error) {
+    console.error('Error getting latest profile data:', error);
+    return null;
   }
 }
 
