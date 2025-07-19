@@ -282,11 +282,7 @@ async function refreshProfileData() {
       const isFallbackProfile = !profile.user_id || profile.user_id === user.id;
       phoneSource.textContent = profile.phone && isFallbackProfile ? '(Database)' : '-';
     }
-
-
     window.currentProfile = profile;
-
-    console.log('Profile data refreshed from database:', profile);
     return profile;
   } catch (error) {
     console.error('Error refreshing profile data:', error);
@@ -302,7 +298,6 @@ async function getLatestProfileData() {
       return null;
     }
 
-    console.log('Attempting to get profile for user ID:', user.id);
 
     let { data: profile, error: profileError } = await supabase
       .from('profiles')
@@ -331,7 +326,6 @@ async function getLatestProfileData() {
       return null;
     }
 
-    console.log('Latest profile data from database:', profile);
     return profile;
   } catch (error) {
     console.error('Error getting latest profile data:', error);
@@ -578,7 +572,6 @@ async function getUserId() {
       console.log('No user found');
       return null;
     }
-    console.log('User ID:', user.id); 
     return user.id;
   } catch (error) {
     console.error('Error getting user ID:', error);
