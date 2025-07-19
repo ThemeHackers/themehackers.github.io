@@ -95,47 +95,29 @@ async function getUserAndProfile() {
 
 async function updateUserProfile(name, phone) {
   try {
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-    if (userError || !user) {
-      throw new Error('User not found');
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    if (sessionError || !session) {
+      throw new Error('No valid session found');
     }
 
-    const updateData = {};
-    if (name && name.trim()) {
-      updateData.name = name.trim();
-    }
-    if (phone && phone.trim()) {
-      updateData.phone = phone.trim();
-    }
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/update-profiles`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`
+      },
+      body: JSON.stringify({ name, phone })
+    });
 
-    if (Object.keys(updateData).length === 0) {
-      throw new Error('No data to update');
-    }
-
-    updateData.updated_at = new Date().toISOString();
-
-    const { data, error } = await supabase
-      .from('profiles')
-      .update(updateData)
-      .eq('user_id', user.id)
-      .select()
-      .single();
-
-    if (error) {
-      console.error('Supabase update error:', error);
-      
-      if (error.code === '42501') {
-        throw new Error('Permission denied. Please check your RLS policies.');
-      } else if (error.code === '23505') {
-        throw new Error('Profile already exists with this data.');
-      } else {
-        throw new Error(`Database error: ${error.message}`);
-      }
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to update profile');
     }
 
-    return { success: true, data };
+    const result = await response.json();
+    return { success: true, data: result.data };
   } catch (error) {
-    console.error('Error updating profile:', error);
+    console.error('Error updating profile via Edge Function:', error);
     return { success: false, error: error.message };
   }
 }
