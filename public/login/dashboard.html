@@ -510,9 +510,9 @@
         <div class="th-card-header"><i class="fa fa-id-badge"></i> Profile Details <span class="tooltip" data-tooltip="Your personal information as stored in our system."><i class="fa fa-info-circle"></i></span></div>
         <div class="th-card-body">
           <ul>
-            <li><b>Name:</b> <span id="profile-detail-name">Loading...</span></li>
-            <li><b>Email:</b> <span id="profile-detail-email">Loading...</span></li>
-            <li><b>Phone:</b> <span id="profile-detail-phone">-</span></li>
+            <li><b>Name:</b> <span id="profile-detail-name">Loading...</span> <span id="name-source" style="font-size:0.8em; color:#00ff41; margin-left:0.5em;"></span></li>
+            <li><b>Email:</b> <span id="profile-detail-email">Loading...</span> <span id="email-source" style="font-size:0.8em; color:#00ff41; margin-left:0.5em;"></span></li>
+            <li><b>Phone:</b> <span id="profile-detail-phone">-</span> <span id="phone-source" style="font-size:0.8em; color:#00ff41; margin-left:0.5em;"></span></li>
             <li><b>Created at:</b> <span id="created-at-value">-</span></li>
             <li><b>Last sign in at:</b> <span id="last-login-value">-</span></li>
             <li><b>Role:</b> <span id="profile-role-value">-</span></li>
@@ -663,32 +663,40 @@
       saveProfileBtn.style.background = '#666';
 
       try {
-
         const result = await updateUserProfileDirect(newName, newPhone);
         
         if (result.success) {
-        
-          userNameText.textContent = newName;
-          document.getElementById('profile-detail-name').textContent = newName;
-          
-        
-          const phoneElement = document.getElementById('profile-detail-phone');
-          if (phoneElement) {
-            phoneElement.textContent = newPhone || '-';
-          }
-          
-          
-          if (window.currentProfile) {
-            window.currentProfile.name = newName;
-            if (newPhone) {
-              window.currentProfile.phone = newPhone;
-            }
-          }
+ 
+          saveProfileBtn.textContent = 'Refreshing...';
+          saveProfileBtn.style.background = '#00aaff';
           
          
-          showResultModal(true, 'Profile updated successfully!');
+          const refreshedProfile = await refreshProfileData();
           
-
+          if (refreshedProfile) {
+            console.log('Profile refreshed successfully from database');
+            showResultModal(true, 'Profile updated successfully! Data refreshed from database.');
+          } else {
+            console.log('Failed to refresh profile from database, using local update');
+           
+            userNameText.textContent = newName;
+            document.getElementById('profile-detail-name').textContent = newName;
+            
+            const phoneElement = document.getElementById('profile-detail-phone');
+            if (phoneElement) {
+              phoneElement.textContent = newPhone || '-';
+            }
+            
+            if (window.currentProfile) {
+              window.currentProfile.name = newName;
+              if (newPhone) {
+                window.currentProfile.phone = newPhone;
+              }
+            }
+            
+            showResultModal(true, 'Profile updated successfully! (Using local data)');
+          }
+          
           editProfileForm.style.display = 'none';
           userNameText.style.display = '';
           editNameBtn.style.display = '';
