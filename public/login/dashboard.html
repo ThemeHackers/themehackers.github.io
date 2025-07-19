@@ -264,6 +264,28 @@
       gap: 0.6em;
     }
 
+    .mobile-delete {
+      color: #ff4757;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6em;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .mobile-delete:hover {
+      color: #ff6b81;
+      transform: scale(1.05);
+    }
+    .mobile-delete.loading {
+      color: #ff8a9e;
+      pointer-events: none;
+    }
+    .mobile-delete.success {
+      color: #00ff41;
+    }
+
     /* Modal Animation */
     #delete-modal {
       opacity: 0;
@@ -291,6 +313,10 @@
       transition: transform 0.13s cubic-bezier(.4,2,.6,1), box-shadow 0.18s, background 0.18s, border 0.18s;
       outline: none;
     }
+    #confirm-delete-btn {
+      position: relative;
+      overflow: hidden;
+    }
     #confirm-delete-btn:hover {
       transform: scale(1.07) rotate(-1deg);
       box-shadow: 0 0 16px #ff475799, 0 2px 8px #ff475733;
@@ -299,6 +325,48 @@
     #confirm-delete-btn:active {
       transform: scale(0.97) rotate(1deg);
       box-shadow: 0 0 8px #ff475799;
+    }
+    #confirm-delete-btn.loading {
+      background: linear-gradient(90deg, #ff6b81 60%, #ff8a9e 100%);
+      pointer-events: none;
+      color: rgba(255,255,255,0.8);
+    }
+    #confirm-delete-btn.loading::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2px solid transparent;
+      border-top: 2px solid #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    #confirm-delete-btn.loading::after {
+      content: 'Deleting...';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: rgba(255,255,255,0.8);
+      font-size: 0.9em;
+    }
+    #confirm-delete-btn.success {
+      background: linear-gradient(90deg, #00ff41 60%, #00ff6b 100%);
+      color: #181c24;
+      transform: scale(1.1);
+      box-shadow: 0 0 24px #00ff4199;
+    }
+    #confirm-delete-btn.success::after {
+      content: '✓ Deleted!';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #181c24;
+      font-weight: bold;
     }
     #cancel-delete-btn:hover {
       background: #2e3440;
@@ -315,6 +383,27 @@
       0% { box-shadow: 0 0 0 #ff475799; }
       50% { box-shadow: 0 0 24px #ff475799; }
       100% { box-shadow: 0 0 0 #ff475799; }
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes success-pulse {
+      0% { transform: scale(1.1); box-shadow: 0 0 24px #00ff4199; }
+      50% { transform: scale(1.15); box-shadow: 0 0 32px #00ff41cc; }
+      100% { transform: scale(1.1); box-shadow: 0 0 24px #00ff4199; }
+    }
+    .success-animation {
+      animation: success-pulse 0.6s ease-in-out;
+    }
+    /* Shake animation for error */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+    .shake-animation {
+      animation: shake 0.5s ease-in-out;
     }
 
     #result-modal.active {
@@ -473,7 +562,8 @@
   </div>
 
   <div id="delete-modal" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; align-items:center; justify-content:center;">
-    <div class="modal-content" style="background:#232a36; border-radius:16px; box-shadow:0 0 32px #ff475799; padding:2.2em 2em 1.5em 2em; max-width:350px; width:90vw; text-align:center; border:2px solid #ff4757;">
+    <div class="modal-content" style="background:#232a36; border-radius:16px; box-shadow:0 0 32px #ff475799; padding:2.2em 2em 1.5em 2em; max-width:350px; width:90vw; text-align:center; border:2px solid #ff4757; position:relative;">
+      <div style="position:absolute; top:-2px; left:-2px; right:-2px; bottom:-2px; background:linear-gradient(45deg, #ff4757, #ff6b81, #ff4757); border-radius:16px; z-index:-1; opacity:0.3; filter:blur(8px);"></div>
       <div style="font-size:1.3em; color:#ff4757; font-weight:bold; margin-bottom:0.7em;"><i class='fa fa-exclamation-triangle'></i> Are you sure?</div>
       <div style="color:#fff; margin-bottom:1.2em;">Are you sure you want to delete your account?<br>This action cannot be undone.</div>
       <button id="confirm-delete-btn" style="background:linear-gradient(90deg,#ff4757 60%,#ff6b81 100%); color:#fff; border:none; border-radius:8px; padding:0.5em 1.5em; font-weight:600; font-size:1em; margin-right:0.7em; cursor:pointer;">Delete</button>
@@ -553,6 +643,14 @@
       modalContent.classList.remove('active');
       setTimeout(() => {
         deleteModal.classList.remove('active');
+
+        const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+        const mobileDeleteBtn = document.getElementById('mobile-delete-account-btn');
+        confirmDeleteBtn.classList.remove('loading', 'success', 'success-animation', 'shake-animation');
+        confirmDeleteBtn.textContent = 'Delete';
+        if (mobileDeleteBtn) {
+          mobileDeleteBtn.classList.remove('loading', 'success', 'shake-animation');
+        }
       }, 250);
     }
 
