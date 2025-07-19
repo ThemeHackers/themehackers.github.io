@@ -274,6 +274,20 @@
       gap: 0.6em;
       transition: color 0.2s, transform 0.2s;
     }
+    .mobile-edit {
+      color: #00ff41;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6em;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .mobile-edit:hover {
+      color: #00ff6b;
+      transform: scale(1.05);
+    }
     .mobile-delete:hover {
       color: #ff6b81;
       transform: scale(1.05);
@@ -451,6 +465,9 @@
       <i class="fa fa-bars"></i>
     </button>
     <div class="mobile-menu" id="mobile-menu">
+      <a href="#" id="mobile-edit-profile-btn" class="mobile-edit" style="color:#00ff41; font-weight:600; text-decoration:none; font-size:1.1rem; display:flex; align-items:center; gap:0.6em;">
+        <i class="fa fa-edit"></i> Edit Profile
+      </a>
       <a href="../logout/" class="mobile-logout">
         <i class="fa fa-sign-out-alt"></i> Logout
       </a>
@@ -493,9 +510,9 @@
         <div class="th-card-header"><i class="fa fa-id-badge"></i> Profile Details <span class="tooltip" data-tooltip="Your personal information as stored in our system."><i class="fa fa-info-circle"></i></span></div>
         <div class="th-card-body">
           <ul>
-            <li><b>Name:</b> <span id="profile-detail-name">Loading...</span></li>
-            <li><b>Email:</b> <span id="profile-detail-email">Loading...</span></li>
-            <li><b>Phone:</b> <span id="profile-detail-phone">-</span></li>
+            <li><b>Name:</b> <span id="profile-detail-name">Loading...</span> <span id="name-source" style="font-size:0.8em; color:#00ff41; margin-left:0.5em;"></span></li>
+            <li><b>Email:</b> <span id="profile-detail-email">Loading...</span> <span id="email-source" style="font-size:0.8em; color:#00ff41; margin-left:0.5em;"></span></li>
+            <li><b>Phone:</b> <span id="profile-detail-phone">-</span> <span id="phone-source" style="font-size:0.8em; color:#00ff41; margin-left:0.5em;"></span></li>
             <li><b>Created at:</b> <span id="created-at-value">-</span></li>
             <li><b>Last sign in at:</b> <span id="last-login-value">-</span></li>
             <li><b>Role:</b> <span id="profile-role-value">-</span></li>
@@ -646,31 +663,40 @@
       saveProfileBtn.style.background = '#666';
 
       try {
-        const result = await updateUserProfile(newName, newPhone);
+        const result = await updateUserProfileDirect(newName, newPhone);
         
         if (result.success) {
-
-          userNameText.textContent = newName;
-          document.getElementById('profile-detail-name').textContent = newName;
-          
  
-          const phoneElement = document.getElementById('profile-detail-phone');
-          if (phoneElement) {
-            phoneElement.textContent = newPhone || '-';
-          }
-          
-        
-          if (window.currentProfile) {
-            window.currentProfile.name = newName;
-            if (newPhone) {
-              window.currentProfile.phone = newPhone;
-            }
-          }
-          
-   
-          showResultModal(true, 'Profile updated successfully!');
+          saveProfileBtn.textContent = 'Refreshing...';
+          saveProfileBtn.style.background = '#00aaff';
           
          
+          const refreshedProfile = await refreshProfileData();
+          
+          if (refreshedProfile) {
+            console.log('Profile refreshed successfully from database');
+            showResultModal(true, 'Profile updated successfully! Data refreshed from database.');
+          } else {
+            console.log('Failed to refresh profile from database, using local update');
+           
+            userNameText.textContent = newName;
+            document.getElementById('profile-detail-name').textContent = newName;
+            
+            const phoneElement = document.getElementById('profile-detail-phone');
+            if (phoneElement) {
+              phoneElement.textContent = newPhone || '-';
+            }
+            
+            if (window.currentProfile) {
+              window.currentProfile.name = newName;
+              if (newPhone) {
+                window.currentProfile.phone = newPhone;
+              }
+            }
+            
+            showResultModal(true, 'Profile updated successfully! (Using local data)');
+          }
+          
           editProfileForm.style.display = 'none';
           userNameText.style.display = '';
           editNameBtn.style.display = '';
@@ -680,7 +706,7 @@
       } catch (error) {
         showResultModal(false, 'Error updating profile: ' + error.message);
       } finally {
-        
+      
         saveProfileBtn.textContent = originalText;
         saveProfileBtn.disabled = false;
         saveProfileBtn.style.background = '#00ff41';
@@ -769,6 +795,30 @@
         e.preventDefault();
         showDeleteModal();
         mobileMenu.classList.remove('active');
+      });
+    }
+
+    const mobileEditProfileBtn = document.getElementById('mobile-edit-profile-btn');
+    if (mobileEditProfileBtn) {
+      mobileEditProfileBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const currentProfile = window.currentProfile || {};
+        editNameInput.value = currentProfile.name || userNameText.textContent;
+        editPhoneInput.value = currentProfile.phone || '';
+        
+        editProfileForm.style.display = 'block';
+        userNameText.style.display = 'none';
+        editNameBtn.style.display = 'none';
+        
+     
+        mobileMenu.classList.remove('active');
+        
+        
+        document.querySelector('.profile-card').scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
       });
     }
   </script>
