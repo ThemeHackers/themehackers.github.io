@@ -43,6 +43,14 @@ async function getUserAndProfile() {
 
   document.getElementById('profile-detail-name').textContent = profile?.name || user.user_metadata?.full_name || user.email;
   document.getElementById('profile-detail-email').textContent = profile?.email || user.email;
+  
+  const phoneElement = document.getElementById('profile-detail-phone');
+  if (phoneElement) {
+    phoneElement.textContent = profile?.phone || '-';
+  }
+
+
+  window.currentProfile = profile;
 
   const createdAtEl = document.getElementById('created-at-value');
   if (createdAtEl && user.created_at) {
@@ -82,6 +90,43 @@ async function getUserAndProfile() {
   } catch (error) {
     console.error('Error in getUserAndProfile:', error);
     window.location.href = '/login/';
+  }
+}
+
+async function updateUserProfile(name, phone) {
+  try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      throw new Error('User not found');
+    }
+
+    const updateData = {};
+    if (name && name.trim()) {
+      updateData.name = name.trim();
+    }
+    if (phone && phone.trim()) {
+      updateData.phone = phone.trim();
+    }
+
+    if (Object.keys(updateData).length === 0) {
+      throw new Error('No data to update');
+    }
+
+    const { data, error } = await supabase
+      .from('profiles')
+      .update(updateData)
+      .eq('user_id', user.id)
+      .select()
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    return { success: false, error: error.message };
   }
 }
 
