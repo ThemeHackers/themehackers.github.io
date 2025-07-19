@@ -100,7 +100,11 @@ async function updateUserProfile(name, phone) {
       throw new Error('No valid session found');
     }
 
-    const response = await fetch(`${SUPABASE_URL}/functions/v1/update-profiles`, {
+    const edgeFunctionUrl = `${SUPABASE_URL}/functions/v1/update-profiles`;
+    console.log('Calling Edge Function:', edgeFunctionUrl);
+    console.log('Request data:', { name, phone });
+
+    const response = await fetch(edgeFunctionUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -109,12 +113,17 @@ async function updateUserProfile(name, phone) {
       body: JSON.stringify({ name, phone })
     });
 
+    console.log('Response status:', response.status);
+    console.log('Response headers:', response.headers);
+
     if (!response.ok) {
       const errorData = await response.json();
+      console.error('Edge Function error:', errorData);
       throw new Error(errorData.error || 'Failed to update profile');
     }
 
     const result = await response.json();
+    console.log('Edge Function success:', result);
     return { success: true, data: result.data };
   } catch (error) {
     console.error('Error updating profile via Edge Function:', error);
@@ -147,6 +156,47 @@ async function updateUserProfileWithEdgeFunction(name, phone) {
     return { success: true, data: result.data };
   } catch (error) {
     console.error('Error updating profile via Edge Function:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+async function updateUserProfileDirect(name, phone) {
+  try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      throw new Error('User not found');
+    }
+
+    const updateData = {};
+    if (name && name.trim()) {
+      updateData.name = name.trim();
+    }
+    
+    if (phone && phone.trim()) {
+      updateData.phone = phone.trim();
+    }
+
+    if (Object.keys(updateData).length === 0) {
+      throw new Error('No data to update');
+    }
+
+    updateData.updated_at = new Date().toISOString();
+
+    const { data, error } = await supabase
+      .from('profiles')
+      .update(updateData)
+      .eq('user_id', user.id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Direct update error:', error);
+      throw new Error(`Database error: ${error.message}`);
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Error updating profile directly:', error);
     return { success: false, error: error.message };
   }
 }
