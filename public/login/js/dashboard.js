@@ -94,25 +94,38 @@ if (logoutBtn) {
 }
 
 async function handleDeleteAccount() {
+  console.log('=== Delete Account Debug ===');
+  
   const { data: { user }, error } = await supabase.auth.getUser();
   if (error || !user) {
+    console.error('User error:', error);
     alert('User not found');
     return;
   }
+  
+  console.log('User found:', user.id);
   
   
   let accessToken = null;
   const { data: { session }, error: sessionError } = await supabase.auth.getSession();
   
+  console.log('Session data:', session);
+  console.log('Session error:', sessionError);
+  
   if (session && session.access_token) {
     accessToken = session.access_token;
+    console.log('Got token from session');
   } else {
+    console.log('No session token, trying localStorage...');
   
     try {
       const authToken = localStorage.getItem('sb-tcjxrlsebxdyoohcugsr-auth-token');
+      console.log('localStorage token exists:', !!authToken);
+      
       if (authToken) {
         const tokenData = JSON.parse(authToken);
         accessToken = tokenData.access_token;
+        console.log('Got token from localStorage');
       }
     } catch (localStorageError) {
       console.error('Error reading from localStorage:', localStorageError);
@@ -123,9 +136,31 @@ async function handleDeleteAccount() {
     console.error('Session error:', sessionError);
     console.log('Session data:', session);
     console.log('localStorage auth token:', localStorage.getItem('sb-tcjxrlsebxdyoohcugsr-auth-token'));
-    alert('No access token found. Please login again.');
+    
+
+    const authToken = localStorage.getItem('sb-tcjxrlsebxdyoohcugsr-auth-token');
+    if (authToken) {
+      try {
+        const tokenData = JSON.parse(authToken);
+        const isExpired = Date.now() > tokenData.expires_at * 1000;
+        console.log('Token expires at:', new Date(tokenData.expires_at * 1000));
+        console.log('Token is expired:', isExpired);
+        if (isExpired) {
+          alert('Your session has expired. Please login again.');
+        } else {
+          alert('No access token found. Please login again.');
+        }
+      } catch (error) {
+        console.error('Error checking token expiration:', error);
+        alert('No access token found. Please login again.');
+      }
+    } else {
+      alert('No access token found. Please login again.');
+    }
     return;
   }
+  
+  console.log('Access token found:', !!accessToken);
 
   try {
     console.log('Attempting to delete account for user:', user.id);
@@ -259,3 +294,31 @@ function getAccessTokenFromLocalStorage() {
 }
 
 window.getAccessTokenFromLocalStorage = getAccessTokenFromLocalStorage;
+
+
+function testTokenAccess() {
+  console.log('=== Testing Token Access ===');
+  
+
+  const authToken = localStorage.getItem('sb-tcjxrlsebxdyoohcugsr-auth-token');
+  console.log('Raw localStorage token:', authToken);
+  
+  if (authToken) {
+    try {
+      const tokenData = JSON.parse(authToken);
+      console.log('Parsed token data:', tokenData);
+      console.log('Access token exists:', !!tokenData.access_token);
+      console.log('Token expires at:', new Date(tokenData.expires_at * 1000));
+      console.log('Token is expired:', Date.now() > tokenData.expires_at * 1000);
+      return tokenData.access_token;
+    } catch (error) {
+      console.error('Error parsing token:', error);
+    }
+  } else {
+    console.log('No token found in localStorage');
+  }
+  
+  return null;
+}
+
+window.testTokenAccess = testTokenAccess;
