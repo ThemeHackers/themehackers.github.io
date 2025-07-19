@@ -138,7 +138,17 @@ async function handleDeleteAccount() {
     return;
   }
 
-  try {
+  const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+  const mobileDeleteBtn = document.getElementById('mobile-delete-account-btn');
+  const originalText = confirmDeleteBtn.textContent;
+  confirmDeleteBtn.classList.add('loading');
+  confirmDeleteBtn.textContent = '';
+  
+  if (mobileDeleteBtn) {
+    mobileDeleteBtn.classList.add('loading');
+  }
+
+  try { 
     const url = 'https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/smart-task';
     const requestBody = { user_id: user.id };
     
@@ -159,6 +169,23 @@ async function handleDeleteAccount() {
       } catch (parseError) {
         errorMessage = `HTTP ${response.status}: ${response.statusText}`;
       }
+      
+      confirmDeleteBtn.classList.remove('loading');
+      confirmDeleteBtn.classList.add('shake-animation');
+      confirmDeleteBtn.textContent = originalText;
+      
+      if (mobileDeleteBtn) {
+        mobileDeleteBtn.classList.remove('loading');
+        mobileDeleteBtn.classList.add('shake-animation');
+      }
+      
+      setTimeout(() => {
+        confirmDeleteBtn.classList.remove('shake-animation');
+        if (mobileDeleteBtn) {
+          mobileDeleteBtn.classList.remove('shake-animation');
+        }
+      }, 500);
+      
       showResultModal(false, "Error deleting account: " + errorMessage);
       return;
     }
@@ -166,17 +193,49 @@ async function handleDeleteAccount() {
     const result = await response.json();
     
     if (result.success) {
-      showResultModal(true, "Your account has been deleted successfully.");
+
+      confirmDeleteBtn.classList.remove('loading');
+      confirmDeleteBtn.classList.add('success');
+      confirmDeleteBtn.classList.add('success-animation');
+      
+      if (mobileDeleteBtn) {
+        mobileDeleteBtn.classList.remove('loading');
+        mobileDeleteBtn.classList.add('success');
+      }
+      
       setTimeout(() => {
-        supabase.auth.signOut().then(() => {
-          window.location.href = '/';
-        });
-      }, 1500);
+        showResultModal(true, "Your account has been deleted successfully.");
+        setTimeout(() => {
+          supabase.auth.signOut().then(() => {
+            window.location.href = '/';
+          });
+        }, 1500);
+      }, 800);
     } else {
+
+      confirmDeleteBtn.classList.remove('loading');
+      confirmDeleteBtn.classList.add('shake-animation');
+      confirmDeleteBtn.textContent = originalText;
+      
+      if (mobileDeleteBtn) {
+        mobileDeleteBtn.classList.remove('loading');
+        mobileDeleteBtn.classList.add('shake-animation');
+      }
+      
+      setTimeout(() => {
+        confirmDeleteBtn.classList.remove('shake-animation');
+        if (mobileDeleteBtn) {
+          mobileDeleteBtn.classList.remove('shake-animation');
+        }
+      }, 500);
+      
       showResultModal(false, "Error deleting account: " + (result.error || "Unknown error"));
     }
   } catch (error) {
     if (error.message.includes('Failed to fetch')) {
+      confirmDeleteBtn.classList.remove('loading');
+      confirmDeleteBtn.textContent = originalText;
+      
       showResultModal(false, "Edge Function unavailable. Trying alternative method...");
       
       try {
@@ -192,15 +251,58 @@ async function handleDeleteAccount() {
         
         await supabase.auth.signOut();
         
-        showResultModal(true, 'Account deleted successfully');
+        confirmDeleteBtn.classList.add('success');
+        confirmDeleteBtn.classList.add('success-animation');
+        
+        if (mobileDeleteBtn) {
+          mobileDeleteBtn.classList.remove('loading');
+          mobileDeleteBtn.classList.add('success');
+        }
+        
         setTimeout(() => {
-          window.location.href = '/';
-        }, 1500);
+          showResultModal(true, 'Account deleted successfully');
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 1500);
+        }, 800);
         
       } catch (directError) {
+        confirmDeleteBtn.classList.remove('loading');
+        confirmDeleteBtn.classList.add('shake-animation');
+        confirmDeleteBtn.textContent = originalText;
+        
+        if (mobileDeleteBtn) {
+          mobileDeleteBtn.classList.remove('loading');
+          mobileDeleteBtn.classList.add('shake-animation');
+        }
+        
+        setTimeout(() => {
+          confirmDeleteBtn.classList.remove('shake-animation');
+          if (mobileDeleteBtn) {
+            mobileDeleteBtn.classList.remove('shake-animation');
+          }
+        }, 500);
+        
         showResultModal(false, "Both methods failed. Please contact support.");
       }
     } else {
+      
+      confirmDeleteBtn.classList.remove('loading');
+      confirmDeleteBtn.classList.add('shake-animation');
+      confirmDeleteBtn.textContent = originalText;
+      
+      if (mobileDeleteBtn) {
+        mobileDeleteBtn.classList.remove('loading');
+        mobileDeleteBtn.classList.add('shake-animation');
+      }
+      
+      setTimeout(() => {
+        confirmDeleteBtn.classList.remove('shake-animation');
+        if (mobileDeleteBtn) {
+          mobileDeleteBtn.classList.remove('shake-animation');
+        }
+      }, 500);
+      
       showResultModal(false, "Network error: " + error.message);
     }
   }
