@@ -112,7 +112,6 @@ async function updateUserProfile(name, phone) {
       throw new Error('No data to update');
     }
 
-    // Add updated_at timestamp
     updateData.updated_at = new Date().toISOString();
 
     const { data, error } = await supabase
@@ -124,6 +123,7 @@ async function updateUserProfile(name, phone) {
 
     if (error) {
       console.error('Supabase update error:', error);
+      
       if (error.code === '42501') {
         throw new Error('Permission denied. Please check your RLS policies.');
       } else if (error.code === '23505') {
@@ -233,7 +233,7 @@ async function handleDeleteAccount() {
   }
 
   try { 
-    const url = 'https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/delete-user';
+    const url = 'https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/smart-task';
     const requestBody = { user_id: user.id };
     
     const response = await fetch(url, {
@@ -395,3 +395,154 @@ async function handleDeleteAccount() {
 document.getElementById('confirm-delete-btn').addEventListener('click', handleDeleteAccount);
 
 window.addEventListener('DOMContentLoaded', getUserAndProfile);
+
+
+async function getUserId() {
+  try {
+ 
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error || !user) {
+      console.log('No user found');
+      return null;
+    }
+    console.log('User ID:', user.id); 
+    return user.id;
+  } catch (error) {
+    console.error('Error getting user ID:', error);
+    return null;
+  }
+}
+
+async function getUserIdFromSession() {
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (error || !session) {
+      console.log('No session found');
+      return null;
+    }
+    console.log('User ID from session:', session.user.id);
+    return session.user.id;
+  } catch (error) {
+    console.error('Error getting user ID from session:', error);
+    return null;
+  }
+}
+
+function getUserIdFromLocalStorage() {
+  try {
+    const authToken = localStorage.getItem('sb-tcjxrlsebxdyoohcugsr-auth-token');
+    if (authToken) {
+      const tokenData = JSON.parse(authToken);
+      console.log('User ID from localStorage:', tokenData.user.id);
+      return tokenData.user.id;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error getting user ID from localStorage:', error);
+    return null;
+  }
+}
+
+
+function listenToAuthChanges() {
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+      console.log('User signed in, ID:', session.user.id);
+    } else if (event === 'SIGNED_OUT') {
+      console.log('User signed out');
+    }
+  });
+}
+
+async function getUserPhone() {
+  try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      console.log('No user found');
+      return null;
+    }
+
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('phone')
+      .eq('user_id', user.id)
+      .single();
+
+    if (profileError) {
+      console.error('Error getting profile:', profileError);
+      return null;
+    }
+
+    console.log('Phone from profiles:', profile.phone);
+    return profile.phone;
+  } catch (error) {
+    console.error('Error getting phone:', error);
+    return null;
+  }
+}
+
+async function getUserPhoneFromMetadata() {
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error || !user) {
+      return null;
+    }
+
+    const phone = user.user_metadata?.phone;
+    console.log('Phone from metadata:', phone);
+    return phone;
+  } catch (error) {
+    console.error('Error getting phone from metadata:', error);
+    return null;
+  }
+}
+
+async function getUserProfile() {
+  try {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      return null;
+    }
+
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('user_id', user.id)
+      .single();
+
+    if (profileError) {
+      console.error('Error getting profile:', profileError);
+      return null;
+    }
+
+    console.log('Full profile:', profile);
+    console.log('Phone:', profile.phone);
+    console.log('Name:', profile.name);
+    console.log('Email:', profile.email);
+    
+    return profile;
+  } catch (error) {
+    console.error('Error getting user profile:', error);
+    return null;
+  }
+}
+
+async function getAllUserPhones() {
+  try {
+    const { data: profiles, error } = await supabase
+      .from('profiles')
+      .select('user_id, name, phone, email')
+      .not('phone', 'is', null);
+
+    if (error) {
+      console.error('Error getting all profiles:', error);
+      return null;
+    }
+
+    console.log('All users with phones:', profiles);
+    return profiles;
+  } catch (error) {
+    console.error('Error getting all user phones:', error);
+    return null;
+  }
+}
