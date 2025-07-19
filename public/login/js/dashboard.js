@@ -304,34 +304,11 @@ async function getLatestProfileData() {
 
     console.log('Attempting to get profile for user ID:', user.id);
 
-    
     let { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('*')
       .eq('user_id', user.id)
       .single();
-
-    
-    if (profileError && profileError.message.includes('permission denied')) {
-      console.log('Permission denied for profiles table, trying users table...');
-      
-      const { data: userProfile, error: userError } = await supabase
-        .from('users')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-      
-      if (!userError && userProfile) {
-        console.log('Found profile in users table:', userProfile);
-        return {
-          user_id: userProfile.id,
-          name: userProfile.name || userProfile.full_name || user.user_metadata?.full_name || user.email,
-          email: userProfile.email || user.email,
-          phone: userProfile.phone || null,
-          avatar_url: userProfile.avatar_url || user.user_metadata?.avatar_url
-        };
-      }
-    }
 
     if (profileError) {
       console.error('Error getting latest profile:', profileError?.message || JSON.stringify(profileError));
@@ -340,8 +317,7 @@ async function getLatestProfileData() {
         details: profileError?.details,
         hint: profileError?.hint
       });
-      
-
+    
       if (profileError?.message?.includes('permission denied')) {
         console.log('Permission denied for profiles table, using user metadata');
         return {
@@ -352,7 +328,6 @@ async function getLatestProfileData() {
           avatar_url: user.user_metadata?.avatar_url
         };
       }
-      
       return null;
     }
 
