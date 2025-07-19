@@ -649,28 +649,33 @@
         const result = await updateUserProfile(newName, newPhone);
         
         if (result.success) {
-
+          // Update UI
           userNameText.textContent = newName;
           document.getElementById('profile-detail-name').textContent = newName;
           
- 
-          const phoneElement = document.getElementById('profile-detail-phone');
-          if (phoneElement) {
-            phoneElement.textContent = newPhone || '-';
+          // Update phone number display only if no warning
+          if (!result.warning) {
+            const phoneElement = document.getElementById('profile-detail-phone');
+            if (phoneElement) {
+              phoneElement.textContent = newPhone || '-';
+            }
           }
           
-        
+          // Update global profile data
           if (window.currentProfile) {
             window.currentProfile.name = newName;
-            if (newPhone) {
+            if (newPhone && !result.warning) {
               window.currentProfile.phone = newPhone;
             }
           }
           
-   
-          showResultModal(true, 'Profile updated successfully!');
+          // Show success message with warning if applicable
+          const message = result.warning ? 
+            'Profile updated successfully! ' + result.warning : 
+            'Profile updated successfully!';
+          showResultModal(true, message);
           
-         
+          // Hide form
           editProfileForm.style.display = 'none';
           userNameText.style.display = '';
           editNameBtn.style.display = '';
