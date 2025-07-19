@@ -304,11 +304,34 @@ async function getLatestProfileData() {
 
     console.log('Attempting to get profile for user ID:', user.id);
 
-    const { data: profile, error: profileError } = await supabase
+    
+    let { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('*')
       .eq('user_id', user.id)
       .single();
+
+    
+    if (profileError && profileError.message.includes('permission denied')) {
+      console.log('Permission denied for profiles table, trying users table...');
+      
+      const { data: userProfile, error: userError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+      
+      if (!userError && userProfile) {
+        console.log('Found profile in users table:', userProfile);
+        return {
+          user_id: userProfile.id,
+          name: userProfile.name || userProfile.full_name || user.user_metadata?.full_name || user.email,
+          email: userProfile.email || user.email,
+          phone: userProfile.phone || null,
+          avatar_url: userProfile.avatar_url || user.user_metadata?.avatar_url
+        };
+      }
+    }
 
     if (profileError) {
       console.error('Error getting latest profile:', profileError?.message || JSON.stringify(profileError));
@@ -338,6 +361,48 @@ async function getLatestProfileData() {
   } catch (error) {
     console.error('Error getting latest profile data:', error);
     return null;
+  }
+}
+
+async function checkTablePermissions() {
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error || !user) {
+      console.log('No user found for permission check');
+      return { hasPermission: false, reason: 'No user found' };
+    }
+
+    console.log('Checking table permissions for user:', user.id);
+
+    
+    const { data: profileTest, error: profileError } = await supabase
+      .from('profiles')
+      .select('user_id')
+      .eq('user_id', user.id)
+      .limit(1);
+
+    if (profileError) {
+      console.log('Profiles table error:', profileError.message);
+      return { hasPermission: false, reason: `Profiles table: ${profileError.message}` };
+    }
+
+
+    const { data: userTest, error: userError } = await supabase
+      .from('users')
+      .select('id')
+      .eq('id', user.id)
+      .limit(1);
+
+    if (userError) {
+      console.log('Users table error:', userError.message);
+      return { hasPermission: false, reason: `Users table: ${userError.message}` };
+    }
+
+    console.log('Table permissions check passed');
+    return { hasPermission: true, reason: 'All tables accessible' };
+  } catch (error) {
+    console.error('Error checking table permissions:', error);
+    return { hasPermission: false, reason: error.message };
   }
 }
 
@@ -566,7 +631,13 @@ async function handleDeleteAccount() {
 
 document.getElementById('confirm-delete-btn').addEventListener('click', handleDeleteAccount);
 
-window.addEventListener('DOMContentLoaded', getUserAndProfile);
+window.addEventListener('DOMContentLoaded', async () => {
+  
+  const permissionCheck = await checkTablePermissions();
+  console.log('Permission check result:', permissionCheck);
+
+  getUserAndProfile();
+});
 
 
 async function getUserId() {
