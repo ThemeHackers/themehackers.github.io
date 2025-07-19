@@ -339,37 +339,6 @@ async function getLatestProfileData() {
   }
 }
 
-async function checkTablePermissions() {
-  try {
-    const { data: { user }, error } = await supabase.auth.getUser();
-    if (error || !user) {
-      console.log('No user found for permission check');
-      return { hasPermission: false, reason: 'No user found' };
-    }
-
-    console.log('Checking table permissions for user:', user.id);
-
-    
-    const { data: profileTest, error: profileError } = await supabase
-      .from('profiles')
-      .select('user_id')
-      .eq('user_id', user.id)
-      .limit(1);
-
-    if (profileError) {
-      console.log('Profiles table error:', profileError.message);
-      return { hasPermission: false, reason: `Profiles table: ${profileError.message}` };
-    }
-
-
-    console.log('Table permissions check passed');
-    return { hasPermission: true, reason: 'All tables accessible' };
-  } catch (error) {
-    console.error('Error checking table permissions:', error);
-    return { hasPermission: false, reason: error.message };
-  }
-}
-
 const logoutBtn = document.getElementById('logout-btn');
 if (logoutBtn) {
   logoutBtn.addEventListener('click', async () => {
@@ -597,9 +566,6 @@ document.getElementById('confirm-delete-btn').addEventListener('click', handleDe
 
 window.addEventListener('DOMContentLoaded', async () => {
   
-  const permissionCheck = await checkTablePermissions();
-  console.log('Permission check result:', permissionCheck);
-
   getUserAndProfile();
 });
 
