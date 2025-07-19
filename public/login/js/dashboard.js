@@ -145,7 +145,6 @@ async function updateUserProfile(name, phone) {
     }
 
     const result = await response.json();
-    console.log('Edge Function success:', result);
     return { success: true, data: result.data };
   } catch (error) {
     console.error('Error updating profile via Edge Function:', error);
