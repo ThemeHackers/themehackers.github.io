@@ -52,13 +52,16 @@ async function getUserAndProfile() {
 
   document.getElementById('profile-detail-name').textContent = profile?.name || user.user_metadata?.full_name || user.email;
   if (nameSource) {
-    nameSource.textContent = profile?.name ? '(Database)' : profile?.name ? '(Database)' : '(Google)';
+   
+    const isFallbackProfile = !profile?.user_id || profile?.user_id === user.id;
+    nameSource.textContent = profile?.name && isFallbackProfile ? '(Database)' : profile?.name ? '(Database)' : '(Google)';
   }
   
 
   document.getElementById('profile-detail-email').textContent = profile?.email || user.email;
   if (emailSource) {
-    emailSource.textContent = profile?.email ? '(Database)' : '(Google)';
+    const isFallbackProfile = !profile?.user_id || profile?.user_id === user.id;
+    emailSource.textContent = profile?.email && isFallbackProfile ? '(Database)' : '(Google)';
   }
   
 
@@ -67,7 +70,8 @@ async function getUserAndProfile() {
     phoneElement.textContent = profile?.phone || '-';
   }
   if (phoneSource) {
-    phoneSource.textContent = profile?.phone ? '(Database)' : '-';
+    const isFallbackProfile = !profile?.user_id || profile?.user_id === user.id;
+    phoneSource.textContent = profile?.phone && isFallbackProfile ? '(Database)' : '-';
   }
 
   window.currentProfile = profile;
@@ -233,38 +237,40 @@ async function refreshProfileData() {
       return null;
     }
 
-  
+    
     const userNameElement = document.getElementById('user-name');
     const userNameTextElement = document.getElementById('user-name-text');
     
-    const displayName = profile.name || user.user_metadata?.full_name || user.email;
+    
+    const profileDisplayName = profile.name || user.user_metadata?.full_name || user.email;
     
     if (userNameTextElement) {
-      userNameTextElement.textContent = displayName;
+      userNameTextElement.textContent = profileDisplayName;
     } else if (userNameElement) {
-      userNameElement.textContent = displayName;
+      userNameElement.textContent = profileDisplayName;
     }
     
-   
+  
     document.getElementById('user-email').textContent = profile.email || user.email;
     document.getElementById('user-avatar').src = profile.avatar_url || user.user_metadata?.avatar_url || '../img/favicon.png';
-
 
     const nameSource = document.getElementById('name-source');
     const emailSource = document.getElementById('email-source');
     const phoneSource = document.getElementById('phone-source');
     
-   
-    const profileDisplayName = profile.name || user.user_metadata?.full_name || user.email;
-    document.getElementById('profile-detail-name').textContent = profileDisplayName;
+
+    document.getElementById('profile-detail-name').textContent = profile.name || user.user_metadata?.full_name || user.email;
     if (nameSource) {
-      nameSource.textContent = profile.name ? '(Database)' : profile?.name ? '(Database)' : '(Google)';
+    
+      const isFallbackProfile = !profile.user_id || profile.user_id === user.id;
+      nameSource.textContent = profile.name && isFallbackProfile ? '(Database)' : profile.name ? '(Database)' : '(Google)';
     }
     
-
+   
     document.getElementById('profile-detail-email').textContent = profile.email || user.email;
     if (emailSource) {
-      emailSource.textContent = profile.email ? '(Database)' : '(Google)';
+      const isFallbackProfile = !profile.user_id || profile.user_id === user.id;
+      emailSource.textContent = profile.email && isFallbackProfile ? '(Database)' : '(Google)';
     }
     
 
@@ -273,8 +279,10 @@ async function refreshProfileData() {
       phoneElement.textContent = profile.phone || '-';
     }
     if (phoneSource) {
-      phoneSource.textContent = profile.phone ? '(Database)' : '-';
+      const isFallbackProfile = !profile.user_id || profile.user_id === user.id;
+      phoneSource.textContent = profile.phone && isFallbackProfile ? '(Database)' : '-';
     }
+
 
     window.currentProfile = profile;
 
@@ -294,6 +302,8 @@ async function getLatestProfileData() {
       return null;
     }
 
+    console.log('Attempting to get profile for user ID:', user.id);
+
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('*')
@@ -302,6 +312,24 @@ async function getLatestProfileData() {
 
     if (profileError) {
       console.error('Error getting latest profile:', profileError?.message || JSON.stringify(profileError));
+      console.error('Error details:', {
+        code: profileError?.code,
+        details: profileError?.details,
+        hint: profileError?.hint
+      });
+      
+
+      if (profileError?.message?.includes('permission denied')) {
+        console.log('Permission denied for profiles table, using user metadata');
+        return {
+          user_id: user.id,
+          name: user.user_metadata?.full_name || user.email,
+          email: user.email,
+          phone: null,
+          avatar_url: user.user_metadata?.avatar_url
+        };
+      }
+      
       return null;
     }
 
