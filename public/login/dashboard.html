@@ -264,6 +264,158 @@
       gap: 0.6em;
     }
 
+    .mobile-delete {
+      color: #ff4757;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6em;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .mobile-delete:hover {
+      color: #ff6b81;
+      transform: scale(1.05);
+    }
+    .mobile-delete.loading {
+      color: #ff8a9e;
+      pointer-events: none;
+    }
+    .mobile-delete.success {
+      color: #00ff41;
+    }
+
+    /* Modal Animation */
+    #delete-modal {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.28s cubic-bezier(.4,2,.6,1),
+                  background 0.28s cubic-bezier(.4,2,.6,1);
+      display: flex;
+    }
+    #delete-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+      background: rgba(24,28,36,0.85);
+    }
+    #delete-modal .modal-content {
+      transform: scale(0.85);
+      opacity: 0;
+      transition: transform 0.32s cubic-bezier(.4,2,.6,1), opacity 0.22s cubic-bezier(.4,2,.6,1);
+    }
+    #delete-modal.active .modal-content {
+      transform: scale(1);
+      opacity: 1;
+    }
+    /* Modal Button Effects */
+    #delete-modal button {
+      transition: transform 0.13s cubic-bezier(.4,2,.6,1), box-shadow 0.18s, background 0.18s, border 0.18s;
+      outline: none;
+    }
+    #confirm-delete-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    #confirm-delete-btn:hover {
+      transform: scale(1.07) rotate(-1deg);
+      box-shadow: 0 0 16px #ff475799, 0 2px 8px #ff475733;
+      animation: pulse-btn 0.5s;
+    }
+    #confirm-delete-btn:active {
+      transform: scale(0.97) rotate(1deg);
+      box-shadow: 0 0 8px #ff475799;
+    }
+    #confirm-delete-btn.loading {
+      background: linear-gradient(90deg, #ff6b81 60%, #ff8a9e 100%);
+      pointer-events: none;
+      color: rgba(255,255,255,0.8);
+    }
+    #confirm-delete-btn.loading::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2px solid transparent;
+      border-top: 2px solid #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    #confirm-delete-btn.loading::after {
+      content: 'Deleting...';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: rgba(255,255,255,0.8);
+      font-size: 0.9em;
+    }
+    #confirm-delete-btn.success {
+      background: linear-gradient(90deg, #00ff41 60%, #00ff6b 100%);
+      color: #181c24;
+      transform: scale(1.1);
+      box-shadow: 0 0 24px #00ff4199;
+    }
+    #confirm-delete-btn.success::after {
+      content: '✓ Deleted!';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #181c24;
+      font-weight: bold;
+    }
+    #cancel-delete-btn:hover {
+      background: #2e3440;
+      color: #ff4757;
+      border-color: #ff4757;
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #ff475799;
+    }
+    #cancel-delete-btn:active {
+      transform: scale(0.97);
+      background: #181c24;
+    }
+    @keyframes pulse-btn {
+      0% { box-shadow: 0 0 0 #ff475799; }
+      50% { box-shadow: 0 0 24px #ff475799; }
+      100% { box-shadow: 0 0 0 #ff475799; }
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes success-pulse {
+      0% { transform: scale(1.1); box-shadow: 0 0 24px #00ff4199; }
+      50% { transform: scale(1.15); box-shadow: 0 0 32px #00ff41cc; }
+      100% { transform: scale(1.1); box-shadow: 0 0 24px #00ff4199; }
+    }
+    .success-animation {
+      animation: success-pulse 0.6s ease-in-out;
+    }
+    /* Shake animation for error */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+    .shake-animation {
+      animation: shake 0.5s ease-in-out;
+    }
+
+    #result-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+      background: rgba(24,28,36,0.85);
+    }
+    #result-modal.active .modal-content {
+      transform: scale(1);
+      opacity: 1;
+    }
+
     @media (max-width: 900px) {
       .dashboard-grid, .dashboard-row {
         grid-template-columns: 1fr;
@@ -284,6 +436,9 @@
       .dashboard-navbar .logout-btn {
         display: none;
       }
+      #delete-account-btn {
+        display: none !important;
+      }
     }
   </style>
 </head>
@@ -299,14 +454,34 @@
       <a href="../logout/" class="mobile-logout">
         <i class="fa fa-sign-out-alt"></i> Logout
       </a>
+      <a href="#" id="mobile-delete-account-btn" class="mobile-delete" style="color:#ff4757; font-weight:600; text-decoration:none; font-size:1.1rem; display:flex; align-items:center; gap:0.6em; margin-top:1em;">
+        <i class="fa fa-user-times"></i> Delete Account
+      </a>
     </div>
   </nav>
   <div class="dashboard-container th-container">
     <!-- Profile Card -->
-    <div class="profile-card">
+    <div class="profile-card" style="position:relative;">
+      <button id="delete-account-btn" style="position:absolute; top:1.2em; right:1.2em; background:linear-gradient(90deg,#ff4757 60%,#ff6b81 100%); color:#fff; border:none; border-radius:8px; padding:0.5em 1.2em; font-weight:600; cursor:pointer; font-size:0.98em; box-shadow:0 2px 8px #ff475733; transition:background 0.18s, box-shadow 0.18s, transform 0.12s; z-index:2;">Delete Account</button>
       <img id="user-avatar" class="user-avatar" src="../img/favicon.png" alt="User Avatar">
       <div class="user-details">
-        <div id="user-name" class="user-name"><i class="fa fa-user-circle"></i> <span>Loading...</span></div>
+        <div id="user-name" class="user-name"><i class="fa fa-user-circle"></i> <span id="user-name-text">Loading...</span>
+          <button id="edit-name-btn" style="margin-left:0.7em; background:none; border:none; color:#00ff41; cursor:pointer; font-size:1em;" title="Edit Profile"><i class="fa fa-edit"></i></button>
+        </div>
+        <div id="edit-profile-form" style="display:none; margin-top:0.5em; background:#232a36; border:1px solid #00ff41; border-radius:8px; padding:1em;">
+          <div style="margin-bottom:0.8em;">
+            <label style="display:block; color:#00ff41; font-size:0.9em; margin-bottom:0.3em;">Name:</label>
+            <input type="text" id="edit-name-input" style="width:100%; padding:0.5em 0.7em; border-radius:6px; border:1px solid #00ff41; font-size:1em; background:#232a36; color:#fff;" placeholder="Enter your name" />
+          </div>
+          <div style="margin-bottom:0.8em;">
+            <label style="display:block; color:#00ff41; font-size:0.9em; margin-bottom:0.3em;">Phone Number:</label>
+            <input type="tel" id="edit-phone-input" style="width:100%; padding:0.5em 0.7em; border-radius:6px; border:1px solid #00ff41; font-size:1em; background:#232a36; color:#fff;" placeholder="Enter your phone number" />
+          </div>
+          <div style="display:flex; gap:0.5em;">
+            <button id="save-profile-btn" style="background:#00ff41; color:#181c24; border:none; border-radius:6px; padding:0.5em 1em; font-weight:600; cursor:pointer; flex:1; transition:background 0.2s;">Save</button>
+            <button id="cancel-edit-profile-btn" style="background:#ff4757; color:#fff; border:none; border-radius:6px; padding:0.5em 1em; font-weight:600; cursor:pointer; flex:1; transition:background 0.2s;">Cancel</button>
+          </div>
+        </div>
         <div id="user-email" class="user-email"></div>
         <div class="profile-note">This information is loaded from your Profile database.</div>
         <div class="profile-note">Please keep your information confidential in accordance with our policy.</div>
@@ -320,6 +495,7 @@
           <ul>
             <li><b>Name:</b> <span id="profile-detail-name">Loading...</span></li>
             <li><b>Email:</b> <span id="profile-detail-email">Loading...</span></li>
+            <li><b>Phone:</b> <span id="profile-detail-phone">-</span></li>
             <li><b>Created at:</b> <span id="created-at-value">-</span></li>
             <li><b>Last sign in at:</b> <span id="last-login-value">-</span></li>
             <li><b>Role:</b> <span id="profile-role-value">-</span></li>
@@ -336,7 +512,7 @@
             </li>
             <li>
               <a href="/owasp/" target="_blank"><b>OWASP</b></a>
-              <div class="quick-link-desc-en">OWASP Knowledge Base and Core.</span></div>
+              <div class="quick-link-desc-en">Knowledge base and standards for web application security</span></div>
             </li>
             <li>
               <a href="/cc-exam.html" target="_blank"><b>CC Exam</b></a>
@@ -367,7 +543,7 @@
               <div class="quick-link-desc-en">Vulnerability scanning service for systems and web applications based on CVE codes</span></div>
             </li>
             <li>
-              <a href="./bug_bounty_cheat_sheet.html" target="_blank"><b>Bug Bounty Cheat Sheet</b></a>
+              <a href="./bug_bounty_cheat_sheet.html" target="_blank">Bug Bounty Cheat Sheet</b></a>
               <div class="quick-link-desc-en">Revealing real-world vulnerabilities in 2025: What are the vulnerabilities?</span></div>
             </li>
             <li>
@@ -385,13 +561,30 @@
         </div>
       </div>
     </div>
-    <!-- Welcome Card -->
+
     <div class="th-card" style="margin-bottom:0;">
       <div class="th-card-header"><i class="fa fa-handshake"></i> Welcome</div>
       <div class="th-card-body">
         <h2 id="greeting">Welcome to your Dashboard!</h2>
         <p>Manage your security, view your activity, and stay up to date with the latest tips from ThemeHackers.</p>
       </div>
+    </div>
+  </div>
+
+  <div id="delete-modal" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; align-items:center; justify-content:center;">
+    <div class="modal-content" style="background:#232a36; border-radius:16px; box-shadow:0 0 32px #ff475799; padding:2.2em 2em 1.5em 2em; max-width:350px; width:90vw; text-align:center; border:2px solid #ff4757; position:relative;">
+      <div style="position:absolute; top:-2px; left:-2px; right:-2px; bottom:-2px; background:linear-gradient(45deg, #ff4757, #ff6b81, #ff4757); border-radius:16px; z-index:-1; opacity:0.3; filter:blur(8px);"></div>
+      <div style="font-size:1.3em; color:#ff4757; font-weight:bold; margin-bottom:0.7em;"><i class='fa fa-exclamation-triangle'></i> Are you sure?</div>
+      <div style="color:#fff; margin-bottom:1.2em;">Are you sure you want to delete your account?<br>This action cannot be undone.</div>
+      <button id="confirm-delete-btn" style="background:linear-gradient(90deg,#ff4757 60%,#ff6b81 100%); color:#fff; border:none; border-radius:8px; padding:0.5em 1.5em; font-weight:600; font-size:1em; margin-right:0.7em; cursor:pointer;">Delete</button>
+      <button id="cancel-delete-btn" style="background:#232a36; color:#fff; border:1.5px solid #ff4757; border-radius:8px; padding:0.5em 1.5em; font-weight:600; font-size:1em; cursor:pointer;">Cancel</button>
+    </div>
+  </div>
+  <div id="result-modal" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:10000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s;">
+    <div class="modal-content" style="background:#232a36; border-radius:16px; box-shadow:0 0 32px #00ff41cc; padding:2em 2em 1.5em 2em; max-width:350px; width:90vw; text-align:center; border:2px solid #00ff41; transform:scale(0.85); opacity:0; transition:transform 0.32s, opacity 0.22s;">
+      <div id="result-modal-icon" style="font-size:2.2em; margin-bottom:0.5em;"></div>
+      <div id="result-modal-message" style="color:#fff; font-size:1.15em; margin-bottom:1.2em;"></div>
+      <button id="result-modal-close-btn" style="background:#00ff41; color:#181c24; border:none; border-radius:8px; padding:0.5em 1.5em; font-weight:600; font-size:1em; cursor:pointer;">OK</button>
     </div>
   </div>
   <div class="login-footer" style="text-align:center; margin-top:2rem; color:#888; font-size:0.9rem; opacity:0.7;">
@@ -405,12 +598,179 @@
       mobileMenu.classList.toggle('active');
     });
 
-    // Optional: Close menu when clicking outside
+  
     document.addEventListener('click', function(event) {
       if (!hamburgerBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
         mobileMenu.classList.remove('active');
       }
     });
+
+
+    const editNameBtn = document.getElementById('edit-name-btn');
+    const editProfileForm = document.getElementById('edit-profile-form');
+    const userNameText = document.getElementById('user-name-text');
+    const editNameInput = document.getElementById('edit-name-input');
+    const editPhoneInput = document.getElementById('edit-phone-input');
+    const saveProfileBtn = document.getElementById('save-profile-btn');
+    const cancelEditProfileBtn = document.getElementById('cancel-edit-profile-btn');
+
+    editNameBtn.addEventListener('click', function() {
+
+      const currentProfile = window.currentProfile || {};
+      editNameInput.value = currentProfile.name || userNameText.textContent;
+      editPhoneInput.value = currentProfile.phone || '';
+      editProfileForm.style.display = 'block';
+      userNameText.style.display = 'none';
+      editNameBtn.style.display = 'none';
+    });
+
+    saveProfileBtn.addEventListener('click', async function() {
+      const newName = editNameInput.value.trim();
+      const newPhone = editPhoneInput.value.trim();
+      
+      if (!newName) {
+        showResultModal(false, 'Please enter a name');
+        return;
+      }
+
+
+      if (newPhone && !/^[\+]?[0-9\s\-\(\)]{8,}$/.test(newPhone)) {
+        showResultModal(false, 'Please enter a valid phone number');
+        return;
+      }
+
+
+      const originalText = saveProfileBtn.textContent;
+      saveProfileBtn.textContent = 'Saving...';
+      saveProfileBtn.disabled = true;
+      saveProfileBtn.style.background = '#666';
+
+      try {
+        const result = await updateUserProfile(newName, newPhone);
+        
+        if (result.success) {
+
+          userNameText.textContent = newName;
+          document.getElementById('profile-detail-name').textContent = newName;
+          
+ 
+          const phoneElement = document.getElementById('profile-detail-phone');
+          if (phoneElement) {
+            phoneElement.textContent = newPhone || '-';
+          }
+          
+        
+          if (window.currentProfile) {
+            window.currentProfile.name = newName;
+            if (newPhone) {
+              window.currentProfile.phone = newPhone;
+            }
+          }
+          
+   
+          showResultModal(true, 'Profile updated successfully!');
+          
+         
+          editProfileForm.style.display = 'none';
+          userNameText.style.display = '';
+          editNameBtn.style.display = '';
+        } else {
+          showResultModal(false, 'Error updating profile: ' + result.error);
+        }
+      } catch (error) {
+        showResultModal(false, 'Error updating profile: ' + error.message);
+      } finally {
+        
+        saveProfileBtn.textContent = originalText;
+        saveProfileBtn.disabled = false;
+        saveProfileBtn.style.background = '#00ff41';
+      }
+    });
+
+    cancelEditProfileBtn.addEventListener('click', function() {
+      editProfileForm.style.display = 'none';
+      userNameText.style.display = '';
+      editNameBtn.style.display = '';
+    });
+
+    const deleteAccountBtn = document.getElementById('delete-account-btn');
+    const deleteModal = document.getElementById('delete-modal');
+    const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+    const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+    const modalContent = deleteModal.querySelector('.modal-content');
+
+    function showDeleteModal() {
+      deleteModal.classList.add('active');
+      setTimeout(() => {
+        modalContent.classList.add('active');
+      }, 10);
+    }
+    function hideDeleteModal() {
+      modalContent.classList.remove('active');
+      setTimeout(() => {
+        deleteModal.classList.remove('active');
+
+        const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+        const mobileDeleteBtn = document.getElementById('mobile-delete-account-btn');
+        confirmDeleteBtn.classList.remove('loading', 'success', 'success-animation', 'shake-animation');
+        confirmDeleteBtn.textContent = 'Delete';
+        if (mobileDeleteBtn) {
+          mobileDeleteBtn.classList.remove('loading', 'success', 'shake-animation');
+        }
+      }, 250);
+    }
+
+    deleteAccountBtn.addEventListener('click', showDeleteModal);
+    cancelDeleteBtn.addEventListener('click', hideDeleteModal);
+    confirmDeleteBtn.addEventListener('click', function() {
+      hideDeleteModal();
+      handleDeleteAccount(); 
+    });
+
+    deleteModal.addEventListener('click', function(e) {
+      if (e.target === deleteModal) {
+        hideDeleteModal();
+      }
+    });
+
+    const resultModal = document.getElementById('result-modal');
+    const resultModalIcon = document.getElementById('result-modal-icon');
+    const resultModalMessage = document.getElementById('result-modal-message');
+    const resultModalCloseBtn = document.getElementById('result-modal-close-btn');
+
+    function showResultModal(success, message) {
+      if (success) {
+        resultModalIcon.innerHTML = "<i class='fa fa-check-circle' style='color:#00ff41;'></i>";
+      } else {
+        resultModalIcon.innerHTML = "<i class='fa fa-times-circle' style='color:#ff4757;'></i>";
+      }
+      resultModalMessage.textContent = message;
+      resultModal.classList.add('active');
+      setTimeout(() => {
+        resultModal.querySelector('.modal-content').classList.add('active');
+      }, 10);
+    }
+
+    function hideResultModal() {
+      resultModal.querySelector('.modal-content').classList.remove('active');
+      setTimeout(() => {
+        resultModal.classList.remove('active');
+      }, 250);
+    }
+
+    resultModalCloseBtn.addEventListener('click', hideResultModal);
+    resultModal.addEventListener('click', function(e) {
+      if (e.target === resultModal) hideResultModal();
+    });
+
+    const mobileDeleteAccountBtn = document.getElementById('mobile-delete-account-btn');
+    if (mobileDeleteAccountBtn) {
+      mobileDeleteAccountBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showDeleteModal();
+        mobileMenu.classList.remove('active');
+      });
+    }
   </script>
 </body>
 </html>
