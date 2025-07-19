@@ -674,7 +674,6 @@
           const refreshedProfile = await refreshProfileData();
           
           if (refreshedProfile) {
-            console.log('Profile refreshed successfully from database');
             showResultModal(true, 'Profile updated successfully! Data refreshed from database.');
           } else {
             console.log('Failed to refresh profile from database, using local update');
