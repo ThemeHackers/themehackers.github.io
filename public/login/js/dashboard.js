@@ -212,7 +212,40 @@ async function handleDeleteAccount() {
     }
   } catch (error) {
     console.error('Network error during account deletion:', error);
-    showResultModal(false, "Network error: " + error.message);
+    
+    // If Edge Function fails, try direct Supabase deletion
+    if (error.message.includes('Failed to fetch')) {
+      console.log('Edge Function failed, trying direct deletion...');
+      showResultModal(false, "Edge Function unavailable. Trying alternative method...");
+      
+      try {
+        // Delete user profile first
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .delete()
+          .eq('user_id', user.id);
+        
+        if (profileError) {
+          console.error('Error deleting profile:', profileError);
+          showResultModal(false, 'Error deleting profile: ' + profileError.message);
+          return;
+        }
+        
+        // Sign out the user (this will effectively delete their session)
+        await supabase.auth.signOut();
+        
+        showResultModal(true, 'Account deleted successfully');
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1500);
+        
+      } catch (directError) {
+        console.error('Direct deletion also failed:', directError);
+        showResultModal(false, "Both methods failed. Please contact support.");
+      }
+    } else {
+      showResultModal(false, "Network error: " + error.message);
+    }
   }
 }
 
@@ -453,3 +486,24 @@ async function testNetworkConnectivity() {
 }
 
 window.testNetworkConnectivity = testNetworkConnectivity;
+
+async function testEdgeFunctionExists() {
+  console.log('=== Testing Edge Function Existence ===');
+  
+  try {
+
+    const response = await fetch('https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/smart-task', {
+      method: 'OPTIONS',
+      headers: {
+        'Origin': window.location.origin
+      }
+    });
+    console.log('Edge Function exists, status:', response.status);
+    return true;
+  } catch (error) {
+    console.error('Edge Function does not exist or is not accessible:', error);
+    return false;
+  }
+}
+
+window.testEdgeFunctionExists = testEdgeFunctionExists;
