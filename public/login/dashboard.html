@@ -646,36 +646,32 @@
       saveProfileBtn.style.background = '#666';
 
       try {
-        const result = await updateUserProfile(newName, newPhone);
+
+        const result = await updateUserProfileDirect(newName, newPhone);
         
         if (result.success) {
-          // Update UI
+        
           userNameText.textContent = newName;
           document.getElementById('profile-detail-name').textContent = newName;
           
-          // Update phone number display only if no warning
-          if (!result.warning) {
-            const phoneElement = document.getElementById('profile-detail-phone');
-            if (phoneElement) {
-              phoneElement.textContent = newPhone || '-';
-            }
+        
+          const phoneElement = document.getElementById('profile-detail-phone');
+          if (phoneElement) {
+            phoneElement.textContent = newPhone || '-';
           }
           
-          // Update global profile data
+          
           if (window.currentProfile) {
             window.currentProfile.name = newName;
-            if (newPhone && !result.warning) {
+            if (newPhone) {
               window.currentProfile.phone = newPhone;
             }
           }
           
-          // Show success message with warning if applicable
-          const message = result.warning ? 
-            'Profile updated successfully! ' + result.warning : 
-            'Profile updated successfully!';
-          showResultModal(true, message);
+         
+          showResultModal(true, 'Profile updated successfully!');
           
-          // Hide form
+
           editProfileForm.style.display = 'none';
           userNameText.style.display = '';
           editNameBtn.style.display = '';
@@ -685,7 +681,7 @@
       } catch (error) {
         showResultModal(false, 'Error updating profile: ' + error.message);
       } finally {
-        
+      
         saveProfileBtn.textContent = originalText;
         saveProfileBtn.disabled = false;
         saveProfileBtn.style.background = '#00ff41';
