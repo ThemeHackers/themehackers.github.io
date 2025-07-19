@@ -112,6 +112,9 @@ async function updateUserProfile(name, phone) {
       throw new Error('No data to update');
     }
 
+    // Add updated_at timestamp
+    updateData.updated_at = new Date().toISOString();
+
     const { data, error } = await supabase
       .from('profiles')
       .update(updateData)
@@ -120,12 +123,48 @@ async function updateUserProfile(name, phone) {
       .single();
 
     if (error) {
-      throw error;
+      console.error('Supabase update error:', error);
+      if (error.code === '42501') {
+        throw new Error('Permission denied. Please check your RLS policies.');
+      } else if (error.code === '23505') {
+        throw new Error('Profile already exists with this data.');
+      } else {
+        throw new Error(`Database error: ${error.message}`);
+      }
     }
 
     return { success: true, data };
   } catch (error) {
     console.error('Error updating profile:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+async function updateUserProfileWithEdgeFunction(name, phone) {
+  try {
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    if (sessionError || !session) {
+      throw new Error('No valid session found');
+    }
+
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/update-profile`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`
+      },
+      body: JSON.stringify({ name, phone })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to update profile');
+    }
+
+    const result = await response.json();
+    return { success: true, data: result.data };
+  } catch (error) {
+    console.error('Error updating profile via Edge Function:', error);
     return { success: false, error: error.message };
   }
 }
