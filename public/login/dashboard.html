@@ -466,12 +466,21 @@
       <img id="user-avatar" class="user-avatar" src="../img/favicon.png" alt="User Avatar">
       <div class="user-details">
         <div id="user-name" class="user-name"><i class="fa fa-user-circle"></i> <span id="user-name-text">Loading...</span>
-          <button id="edit-name-btn" style="margin-left:0.7em; background:none; border:none; color:#00ff41; cursor:pointer; font-size:1em;" title="Edit Name"><i class="fa fa-edit"></i></button>
+          <button id="edit-name-btn" style="margin-left:0.7em; background:none; border:none; color:#00ff41; cursor:pointer; font-size:1em;" title="Edit Profile"><i class="fa fa-edit"></i></button>
         </div>
-        <div id="edit-name-form" style="display:none; margin-top:0.5em;">
-          <input type="text" id="edit-name-input" style="padding:0.3em 0.7em; border-radius:6px; border:1px solid #00ff41; font-size:1em;" />
-          <button id="save-name-btn" style="background:#00ff41; color:#181c24; border:none; border-radius:6px; padding:0.3em 1em; font-weight:600; margin-left:0.5em; cursor:pointer;">Save</button>
-          <button id="cancel-edit-name-btn" style="background:#ff4757; color:#fff; border:none; border-radius:6px; padding:0.3em 1em; font-weight:600; margin-left:0.3em; cursor:pointer;">Cancel</button>
+        <div id="edit-profile-form" style="display:none; margin-top:0.5em; background:#232a36; border:1px solid #00ff41; border-radius:8px; padding:1em;">
+          <div style="margin-bottom:0.8em;">
+            <label style="display:block; color:#00ff41; font-size:0.9em; margin-bottom:0.3em;">Name:</label>
+            <input type="text" id="edit-name-input" style="width:100%; padding:0.5em 0.7em; border-radius:6px; border:1px solid #00ff41; font-size:1em; background:#232a36; color:#fff;" placeholder="Enter your name" />
+          </div>
+          <div style="margin-bottom:0.8em;">
+            <label style="display:block; color:#00ff41; font-size:0.9em; margin-bottom:0.3em;">Phone Number:</label>
+            <input type="tel" id="edit-phone-input" style="width:100%; padding:0.5em 0.7em; border-radius:6px; border:1px solid #00ff41; font-size:1em; background:#232a36; color:#fff;" placeholder="Enter your phone number" />
+          </div>
+          <div style="display:flex; gap:0.5em;">
+            <button id="save-profile-btn" style="background:#00ff41; color:#181c24; border:none; border-radius:6px; padding:0.5em 1em; font-weight:600; cursor:pointer; flex:1; transition:background 0.2s;">Save</button>
+            <button id="cancel-edit-profile-btn" style="background:#ff4757; color:#fff; border:none; border-radius:6px; padding:0.5em 1em; font-weight:600; cursor:pointer; flex:1; transition:background 0.2s;">Cancel</button>
+          </div>
         </div>
         <div id="user-email" class="user-email"></div>
         <div class="profile-note">This information is loaded from your Profile database.</div>
@@ -486,6 +495,7 @@
           <ul>
             <li><b>Name:</b> <span id="profile-detail-name">Loading...</span></li>
             <li><b>Email:</b> <span id="profile-detail-email">Loading...</span></li>
+            <li><b>Phone:</b> <span id="profile-detail-phone">-</span></li>
             <li><b>Created at:</b> <span id="created-at-value">-</span></li>
             <li><b>Last sign in at:</b> <span id="last-login-value">-</span></li>
             <li><b>Role:</b> <span id="profile-role-value">-</span></li>
@@ -597,32 +607,88 @@
 
 
     const editNameBtn = document.getElementById('edit-name-btn');
-    const editNameForm = document.getElementById('edit-name-form');
+    const editProfileForm = document.getElementById('edit-profile-form');
     const userNameText = document.getElementById('user-name-text');
     const editNameInput = document.getElementById('edit-name-input');
-    const saveNameBtn = document.getElementById('save-name-btn');
-    const cancelEditNameBtn = document.getElementById('cancel-edit-name-btn');
+    const editPhoneInput = document.getElementById('edit-phone-input');
+    const saveProfileBtn = document.getElementById('save-profile-btn');
+    const cancelEditProfileBtn = document.getElementById('cancel-edit-profile-btn');
 
     editNameBtn.addEventListener('click', function() {
-      editNameInput.value = userNameText.textContent;
-      editNameForm.style.display = 'block';
+
+      const currentProfile = window.currentProfile || {};
+      editNameInput.value = currentProfile.name || userNameText.textContent;
+      editPhoneInput.value = currentProfile.phone || '';
+      editProfileForm.style.display = 'block';
       userNameText.style.display = 'none';
       editNameBtn.style.display = 'none';
     });
 
-    saveNameBtn.addEventListener('click', function() {
+    saveProfileBtn.addEventListener('click', async function() {
       const newName = editNameInput.value.trim();
-      if (newName) {
-       
-        userNameText.textContent = newName;
+      const newPhone = editPhoneInput.value.trim();
+      
+      if (!newName) {
+        showResultModal(false, 'Please enter a name');
+        return;
       }
-      editNameForm.style.display = 'none';
-      userNameText.style.display = '';
-      editNameBtn.style.display = '';
+
+
+      if (newPhone && !/^[\+]?[0-9\s\-\(\)]{8,}$/.test(newPhone)) {
+        showResultModal(false, 'Please enter a valid phone number');
+        return;
+      }
+
+
+      const originalText = saveProfileBtn.textContent;
+      saveProfileBtn.textContent = 'Saving...';
+      saveProfileBtn.disabled = true;
+      saveProfileBtn.style.background = '#666';
+
+      try {
+        const result = await updateUserProfile(newName, newPhone);
+        
+        if (result.success) {
+
+          userNameText.textContent = newName;
+          document.getElementById('profile-detail-name').textContent = newName;
+          
+ 
+          const phoneElement = document.getElementById('profile-detail-phone');
+          if (phoneElement) {
+            phoneElement.textContent = newPhone || '-';
+          }
+          
+        
+          if (window.currentProfile) {
+            window.currentProfile.name = newName;
+            if (newPhone) {
+              window.currentProfile.phone = newPhone;
+            }
+          }
+          
+   
+          showResultModal(true, 'Profile updated successfully!');
+          
+         
+          editProfileForm.style.display = 'none';
+          userNameText.style.display = '';
+          editNameBtn.style.display = '';
+        } else {
+          showResultModal(false, 'Error updating profile: ' + result.error);
+        }
+      } catch (error) {
+        showResultModal(false, 'Error updating profile: ' + error.message);
+      } finally {
+        
+        saveProfileBtn.textContent = originalText;
+        saveProfileBtn.disabled = false;
+        saveProfileBtn.style.background = '#00ff41';
+      }
     });
 
-    cancelEditNameBtn.addEventListener('click', function() {
-      editNameForm.style.display = 'none';
+    cancelEditProfileBtn.addEventListener('click', function() {
+      editProfileForm.style.display = 'none';
       userNameText.style.display = '';
       editNameBtn.style.display = '';
     });
