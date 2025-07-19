@@ -233,7 +233,7 @@ async function handleDeleteAccount() {
   }
 
   try { 
-    const url = 'https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/smart-task';
+    const url = 'https://tcjxrlsebxdyoohcugsr.supabase.co/functions/v1/delete-user';
     const requestBody = { user_id: user.id };
     
     const response = await fetch(url, {
