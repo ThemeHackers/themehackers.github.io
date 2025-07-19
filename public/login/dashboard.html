@@ -274,6 +274,20 @@
       gap: 0.6em;
       transition: color 0.2s, transform 0.2s;
     }
+    .mobile-edit {
+      color: #00ff41;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6em;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .mobile-edit:hover {
+      color: #00ff6b;
+      transform: scale(1.05);
+    }
     .mobile-delete:hover {
       color: #ff6b81;
       transform: scale(1.05);
@@ -451,6 +465,9 @@
       <i class="fa fa-bars"></i>
     </button>
     <div class="mobile-menu" id="mobile-menu">
+      <a href="#" id="mobile-edit-profile-btn" class="mobile-edit" style="color:#00ff41; font-weight:600; text-decoration:none; font-size:1.1rem; display:flex; align-items:center; gap:0.6em;">
+        <i class="fa fa-edit"></i> Edit Profile
+      </a>
       <a href="../logout/" class="mobile-logout">
         <i class="fa fa-sign-out-alt"></i> Logout
       </a>
@@ -770,6 +787,30 @@
         e.preventDefault();
         showDeleteModal();
         mobileMenu.classList.remove('active');
+      });
+    }
+
+    const mobileEditProfileBtn = document.getElementById('mobile-edit-profile-btn');
+    if (mobileEditProfileBtn) {
+      mobileEditProfileBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const currentProfile = window.currentProfile || {};
+        editNameInput.value = currentProfile.name || userNameText.textContent;
+        editPhoneInput.value = currentProfile.phone || '';
+        
+        editProfileForm.style.display = 'block';
+        userNameText.style.display = 'none';
+        editNameBtn.style.display = 'none';
+        
+     
+        mobileMenu.classList.remove('active');
+        
+        
+        document.querySelector('.profile-card').scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
       });
     }
   </script>
