@@ -125,8 +125,7 @@ async function updateUserProfile(name, phone) {
     }
 
     const edgeFunctionUrl = `${SUPABASE_URL}/functions/v1/update-profiles`;
-    console.log('Calling Edge Function:', edgeFunctionUrl);
-    console.log('Request data:', { name, phone });
+
 
     const response = await fetch(edgeFunctionUrl, {
       method: 'POST',
@@ -137,8 +136,7 @@ async function updateUserProfile(name, phone) {
       body: JSON.stringify({ name, phone })
     });
 
-    console.log('Response status:', response.status);
-    console.log('Response headers:', response.headers);
+
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -147,7 +145,6 @@ async function updateUserProfile(name, phone) {
     }
 
     const result = await response.json();
-    console.log('Edge Function success:', result);
     return { success: true, data: result.data };
   } catch (error) {
     console.error('Error updating profile via Edge Function:', error);
@@ -193,8 +190,6 @@ async function updateUserProfileDirect(name, phone) {
     }
 
     const edgeFunctionUrl = `${SUPABASE_URL}/functions/v1/update-profiles`;
-    console.log('Calling Edge Function:', edgeFunctionUrl);
-    console.log('Request data:', { name, phone });
 
     const response = await fetch(edgeFunctionUrl, {
       method: 'POST',
@@ -204,8 +199,6 @@ async function updateUserProfileDirect(name, phone) {
       },
       body: JSON.stringify({ name, phone })
     });
-
-    console.log('Response status:', response.status);
 
     if (!response.ok) {
       const errorData = await response.json();
