@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>★彡[Terms of Service]彡★</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="img/favicon.png" rel="icon">
+    <link href="./css/themehackers.css" rel="stylesheet">
+    <style>
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.08;
+        }
+        .th-glass {
+            background: rgba(26, 26, 26, 0.92);
+            border: 2px solid var(--th-primary);
+            border-radius: 20px;
+            box-shadow: var(--th-glow), 0 8px 32px 0 rgba(0,0,0,0.37);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: relative;
+            z-index: 1;
+        }
+        .th-section-card {
+            margin-bottom: 2rem;
+            padding: 2rem 1.5rem;
+            background: rgba(15, 15, 15, 0.98);
+            border-radius: 16px;
+            border: 1.5px solid var(--th-primary);
+            box-shadow: 0 2px 12px rgba(0,255,65,0.07);
+        }
+        .th-section-card h2 {
+            color: var(--th-primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+        .th-section-card ul, .th-section-card p {
+            color: var(--th-light);
+        }
+        .th-tos-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .th-tos-header .th-logo-icon {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .th-tos-header .th-brand-title {
+            font-size: 2.5rem;
+            letter-spacing: 3px;
+        }
+        .th-tos-header .lead {
+            color: var(--th-light);
+            opacity: 0.8;
+        }
+        .th-back-btn {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 10;
+            border-radius: 50%;
+            padding: 0.9rem 1.1rem;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 16px rgba(0,255,65,0.15);
+        }
+        @media (max-width: 768px) {
+            .th-glass { padding: 1rem !important; }
+            .th-section-card { padding: 1.2rem 0.7rem; }
+            .th-tos-header .th-brand-title { font-size: 1.5rem; }
+            .th-tos-header .th-logo-icon { font-size: 2rem; }
+            .th-back-btn { bottom: 16px; right: 16px; font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="matrix-bg" id="matrix-bg"></canvas>
+    <div class="container py-5" style="min-height: 100vh; position: relative; z-index: 1;">
+        <div class="th-glass p-4 p-md-5 mx-auto" style="max-width: 800px;">
+            <div class="th-tos-header mb-5">
+                <div class="th-logo-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="th-brand-title">Terms of Service</div>
+                <p class="lead">Please read these terms carefully before using this service.</p>
+            </div>
+            <div class="th-section-card">
+                <h2>1. Acceptance of Terms</h2>
+                <p>By accessing or using this service, you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the service.</p>
+            </div>
+            <div class="th-section-card">
+                <h2>2. Service Description</h2>
+                <p>This service provides tools and information for security testing and vulnerability assessment purposes only. It is intended for use by authorized individuals on systems for which they have explicit permission to test.</p>
+            </div>
+            <div class="th-section-card">
+                <h2>3. User Responsibilities</h2>
+                <ul>
+                    <li><strong>Authorization:</strong> You must have proper authorization before testing any system with this service. Unauthorized use is strictly prohibited.</li>
+                    <li><strong>Compliance:</strong> You agree to comply with all applicable laws and regulations regarding cybersecurity and data protection.</li>
+                    <li><strong>Ethical Use:</strong> You will not use this service for malicious purposes, unauthorized access, or any activity that could harm others.</li>
+                </ul>
+            </div>
+            <div class="th-section-card">
+                <h2>4. Risks and Disclaimers</h2>
+                <ul>
+                    <li><strong>No Warranty:</strong> This service is provided "as is" without any warranty, express or implied. We do not guarantee the accuracy, completeness, or reliability of the results.</li>
+                    <li><strong>Assumption of Risk:</strong> Use of this service is at your own risk. Security testing may have unintended consequences, including system instability or data loss.</li>
+                    <li><strong>Limitation of Liability:</strong> We are not liable for any damages, losses, or legal consequences resulting from your use or misuse of this service.</li>
+                </ul>
+            </div>
+            <div class="th-section-card">
+                <h2>5. Prohibited Activities</h2>
+                <ul>
+                    <li>Using the service on systems you do not own or have explicit permission to test.</li>
+                    <li>Attempting to exploit, disrupt, or damage any third-party systems.</li>
+                    <li>Violating any applicable laws or regulations.</li>
+                </ul>
+            </div>
+            <div class="th-section-card">
+                <h2>6. Privacy</h2>
+                <p>We respect your privacy and do not collect unnecessary personal information. Please review our <a href="./security-policy.html" class="th-link">Security Policy</a> for more details.</p>
+            </div>
+            <div class="th-section-card">
+                <h2>7. Changes to Terms</h2>
+                <p>We reserve the right to update or modify these Terms of Service at any time. Continued use of the service constitutes acceptance of the revised terms.</p>
+            </div>
+            <div class="th-section-card mb-0">
+                <h2>8. Contact</h2>
+                <p>For questions or concerns regarding these Terms of Service, please contact us at <a href="mailto:security@kpltgroup.com" class="th-link">security@kpltgroup.com</a>.</p>
+            </div>
+        </div>
+    </div>
+    <a href="./index.html" class="th-btn-primary th-back-btn" title="Back to Home"><i class="fas fa-home"></i></a>
+    <script>
+    // Matrix background effect
+    const canvas = document.getElementById('matrix-bg');
+    const ctx = canvas.getContext('2d');
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+    const fontSize = 16;
+    const columns = Math.floor(width / fontSize);
+    const drops = Array(columns).fill(1);
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(10,10,10,0.15)';
+        ctx.fillRect(0, 0, width, height);
+        ctx.font = fontSize + "px Courier New, monospace";
+        ctx.fillStyle = '#00ff41';
+        for (let i = 0; i < drops.length; i++) {
+            const text = String.fromCharCode(0x30A0 + Math.random() * 96);
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (drops[i] * fontSize > height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+    setInterval(drawMatrix, 50);
+    window.addEventListener('resize', () => {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+    });
+    </script>
+</body>
+</html> 
