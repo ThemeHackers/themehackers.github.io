@@ -5,3 +5,5 @@
 /cissp-exam-db/* /403.html 403
 /login/js/* /403.html 403
 /login/js/ /403.html 403
+/basic_linux_for_hacking_exam/js /403.html 403
+/basic_linux_for_hacking_exam/db /403.html 403
