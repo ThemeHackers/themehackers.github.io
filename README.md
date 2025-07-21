@@ -22,7 +22,7 @@ Dashsecurity Society aims to:
 
 ## Contact Information
 Feel free to reach out with questions, suggestions, or collaboration opportunities:
-- **Email**: tigerzaza5678@gmail.com
+- **Email**: security@kpltgroup.com
 - **Mailing Address**: Bang Mae Nang, Bang Yai District, Nonthaburi 11140, Thailand
 
 ---
