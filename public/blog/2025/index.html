@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>★彡[2025 Cybersecurity Blog News]彡★</title>
+  <link href="../img/favicon.png" rel="icon">
+  <link rel="stylesheet" href="../css/themehackers.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../login/js/env.js"></script>
+  <script src="../../login/js/rule.js" defer></script>
+  <style>
+    :root {
+      --th-bg: #101418;
+      --th-surface: #181c22;
+      --th-primary: #00ff41;
+      --th-accent: #00ccff;
+      --th-card: #1a1f25;
+      --th-text: #e0e0e0;
+      --th-muted: #7a7a7a;
+      --th-radius: 14px;
+    }
+    body {
+      background: var(--th-bg);
+      color: var(--th-text);
+      font-family: 'Fira Mono', 'Courier New', monospace;
+      margin: 0;
+      min-height: 100vh;
+    }
+    /* Navbar */
+    .th-navbar {
+      background: var(--th-surface);
+      box-shadow: 0 2px 16px rgba(0,255,65,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.5rem 0;
+    }
+    .th-navbar .th-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .th-logo-icon {
+      font-size: 2.2rem;
+      color: var(--th-primary);
+      margin-right: 0.5rem;
+    }
+    .th-navbar-brand {
+      font-size: 1.3rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+    .th-nav-link {
+      color: var(--th-text);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 1rem;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .th-nav-link.th-text-primary,
+    .th-nav-link:hover {
+      color: var(--th-primary);
+    }
+    /* Hero Section */
+    .th-hero {
+      background: linear-gradient(120deg, rgba(0,255,65,0.08) 0%, rgba(0,204,255,0.08) 100%);
+      border-radius: var(--th-radius);
+      margin: 2.5rem auto 2rem auto;
+      max-width: 900px;
+      text-align: center;
+      padding: 3rem 1.5rem 2.5rem 1.5rem;
+      box-shadow: 0 4px 32px 0 rgba(0,255,65,0.10);
+    }
+    .th-hero .th-logo-icon {
+      font-size: 3.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .th-brand-title {
+      font-size: 2.3rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: var(--th-primary);
+    }
+    .th-brand-subtitle {
+      font-size: 1.1rem;
+      color: var(--th-muted);
+      margin-bottom: 1.5rem;
+    }
+    /* Blog Cards */
+    .th-blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin: 0 auto;
+      max-width: 1100px;
+    }
+    .th-card {
+      background: var(--th-card);
+      border-radius: var(--th-radius);
+      box-shadow: 0 8px 32px 0 rgba(0,255,65,0.10);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      border: 2px solid rgba(0,255,65,0.10);
+    }
+    .th-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 24px 48px rgba(0,255,65,0.18), 0 0 24px var(--th-primary);
+      border-color: var(--th-primary);
+      z-index: 2;
+    }
+    .th-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: var(--th-radius) var(--th-radius) 0 0;
+    }
+    .th-card-body {
+      padding: 1.5rem;
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .th-card-header {
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: var(--th-primary);
+    }
+    .th-tag {
+      background: linear-gradient(90deg, #00ff41 0%, #00ccff 100%);
+      color: #0a0a0a;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      padding: 2px 12px;
+      margin-left: 0.5rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px rgba(0,255,65,0.10);
+    }
+    .th-card .th-tag[style] { color: #0a0a0a; }
+    .th-card-body p {
+      min-height: 48px;
+      color: var(--th-text);
+      margin: 0 0 0.5rem 0;
+    }
+    .th-btn-primary.th-link {
+      width: 100%;
+      font-size: 1rem;
+      margin-top: 1rem;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, var(--th-primary) 0%, var(--th-accent) 100%);
+      color: #0a0a0a;
+      border: none;
+      border-radius: 8px;
+      padding: 0.7rem 0;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      display: inline-block;
+      box-shadow: 0 2px 8px rgba(0,255,65,0.10);
+    }
+    .th-btn-primary.th-link:hover {
+      background: linear-gradient(90deg, var(--th-accent) 0%, var(--th-primary) 100%);
+      color: #101418;
+    }
+    .th-divider {
+      text-align: center;
+      margin: 2.5rem 0 2rem 0;
+      color: var(--th-muted);
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      position: relative;
+    }
+    .th-divider span {
+      background: var(--th-bg);
+      padding: 0 1.2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .th-divider:before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0; right: 0; top: 50%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, var(--th-muted) 50%, transparent 100%);
+      z-index: 0;
+    }
+    /* Footer */
+    .th-footer {
+      width: 100vw;
+      text-align: center;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      z-index: 9999;
+      background: rgba(10,10,10,0.95);
+      color: var(--th-primary);
+      font-size: 1.05rem;
+      padding: 0.5rem 0;
+      letter-spacing: 1px;
+      box-shadow: 0 -2px 16px rgba(0,255,65,0.08);
+    }
+    @media (max-width: 700px) {
+      .th-navbar .th-container { flex-direction: column; gap: 0.5rem; padding: 0 0.5rem; }
+      .th-hero { padding: 2rem 0.5rem 1.5rem 0.5rem; }
+      .th-blog-grid { gap: 1rem; padding: 0 0.2rem; }
+      .th-card-body { padding: 1rem !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="th-hero">
+    <div class="th-logo-icon">&#128274;</div>
+    <div class="th-brand-title">2025 Cybersecurity Blog News</div>
+    <div class="th-brand-subtitle">Latest insights, hacks, and security trends for the new era.<br>Curated by TH - Dashsecurity.</div>
+  </section>
+
+  <!-- Blog Posts Grid -->
+  <main>
+    <div class="th-divider"><span>Latest Posts</span></div>
+    <div class="th-blog-grid">
+
+      <!-- <article class="th-card">
+        <img src="" alt="">
+        <div class="th-card-body">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem;">
+            <div class="th-card-header"></div>
+            <span class="th-tag"></span>
+          </div>
+          <div style="font-size:0.9rem; color:var(--th-muted); margin-bottom:0.5rem;"></div>
+          <p></p>
+          <a href="" class="th-btn-primary th-link"></a>
+        </div>
+      </article> -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="th-footer">
+    &copy; 2025 ThemeHackers. All rights reserved.
+  </footer>
+</body>
+</html>
